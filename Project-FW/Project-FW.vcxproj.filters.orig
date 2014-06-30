@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="System">
+      <UniqueIdentifier>{e6d69aa7-186c-4fbe-b286-544f9c5a3286}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Process">
+      <UniqueIdentifier>{d6d01245-c34a-476b-9b37-ad2694ca19c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input">
+      <UniqueIdentifier>{87261a76-29c9-46b9-97f2-4194d02717a5}</UniqueIdentifier>
+    </Filter>
+<<<<<<< HEAD
+    <Filter Include="Sprite">
+      <UniqueIdentifier>{661a19b8-2bd6-40a3-8681-4cd1102000af}</UniqueIdentifier>
+=======
+    <Filter Include="Camera">
+      <UniqueIdentifier>{5ac00008-7fcf-4a19-b0fa-f6c7589c3271}</UniqueIdentifier>
+>>>>>>> camera
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="WinSystem.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="D3dSystem.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="ProcessManager.cpp">
+      <Filter>Process</Filter>
+    </ClCompile>
+    <ClCompile Include="SampleProcess.cpp" />
+    <ClCompile Include="InputDevice.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Keyboard.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Mouse.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Joystick.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+<<<<<<< HEAD
+    <ClCompile Include="Sprite.cpp">
+      <Filter>Sprite</Filter>
+=======
+    <ClCompile Include="Camera.cpp">
+      <Filter>Camera</Filter>
+>>>>>>> camera
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="WinSystem.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="D3dSystem.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="Process.h">
+      <Filter>Process</Filter>
+    </ClInclude>
+    <ClInclude Include="ProcessManager.h">
+      <Filter>Process</Filter>
+    </ClInclude>
+    <ClInclude Include="Singleton.h" />
+    <ClInclude Include="SampleProcess.h" />
+    <ClInclude Include="InputDevice.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Keyboard.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Mouse.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Joystick.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+<<<<<<< HEAD
+    <ClInclude Include="Sprite.h">
+      <Filter>Sprite</Filter>
+=======
+    <ClInclude Include="Camera.h">
+      <Filter>Camera</Filter>
+>>>>>>> camera
+    </ClInclude>
+  </ItemGroup>
+</Project>
