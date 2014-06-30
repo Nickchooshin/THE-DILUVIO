@@ -2,10 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="SampleProcess.cpp" />
-    <ClCompile Include="ProcessManager.cpp">
-      <Filter>Process</Filter>
-    </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Camera</Filter>
     </ClCompile>
@@ -42,16 +38,13 @@
     <ClCompile Include="MusicManager.cpp">
       <Filter>Music</Filter>
     </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SampleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SampleProcess.h" />
     <ClInclude Include="Singleton.h" />
-    <ClInclude Include="ProcessManager.h">
-      <Filter>Process</Filter>
-    </ClInclude>
-    <ClInclude Include="Process.h">
-      <Filter>Process</Filter>
-    </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>Camera</Filter>
     </ClInclude>
@@ -91,6 +84,13 @@
     <ClInclude Include="MusicManager.h">
       <Filter>Music</Filter>
     </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SampleScene.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Input">
@@ -105,9 +105,6 @@
     <Filter Include="System">
       <UniqueIdentifier>{b458d96c-cd47-42f0-8dce-17f4139ce764}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Process">
-      <UniqueIdentifier>{09e25e2d-2eaa-43b0-b1ef-6b3f56621ca4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Input\Keyboard">
       <UniqueIdentifier>{a98dc42d-dfe3-4853-be59-a0f6e4dc2185}</UniqueIdentifier>
     </Filter>
@@ -119,6 +116,9 @@
     </Filter>
     <Filter Include="Music">
       <UniqueIdentifier>{20f3370a-ac2e-4037-9d8c-c2dd436c93e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{09e25e2d-2eaa-43b0-b1ef-6b3f56621ca4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

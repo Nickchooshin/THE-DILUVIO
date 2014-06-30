@@ -1,6 +1,6 @@
 #include "WinSystem.h"
 #include "D3dSystem.h"
-#include "ProcessManager.h"
+#include "SceneManager.h"
 
 #ifdef _DEBUG
 #pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
@@ -65,7 +65,7 @@ void CWinSystem::WinMsg(int Frame)
 
 	if( SUCCEEDED( D3dSystem.InitD3d( m_hInst, m_hWnd, m_WinWidth, m_WinHeight, ErrorStr ) ) )	// 다이렉트X 초기화 && 시스템 초기화
 	{
-		g_ProcessManager->InitProcess() ;
+		g_SceneManager->InitScene() ;
 
 		ShowWindow( m_hWnd, SW_SHOWDEFAULT );
 		UpdateWindow( m_hWnd );
@@ -110,14 +110,14 @@ void CWinSystem::MsgLoop(int Frame)
 
 void CWinSystem::Update()
 {
-	g_ProcessManager->UpdateProcess(t) ;
+	g_SceneManager->UpdateScene(t) ;
 }
 
 void CWinSystem::Render()
 {
 	if( D3dSystem.BeginScene() )
 	{
-		g_ProcessManager->RenderProcess() ;
+		g_SceneManager->RenderScene() ;
 
 		D3dSystem.EndScene() ;
 	}

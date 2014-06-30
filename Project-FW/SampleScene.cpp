@@ -1,4 +1,4 @@
-#include "SampleProcess.h"
+#include "SampleScene.h"
 
 #include "Keyboard.h"
 #include "Mouse.h"
@@ -15,21 +15,21 @@ CSprite Sprite, Sprite2 ;
 CUISprite UISprite, UISprite2 ;
 FMOD::Sound *sound[3] ;
 
-SampleProcess::SampleProcess()
+SampleScene::SampleScene()
 {
 }
-SampleProcess::~SampleProcess()
+SampleScene::~SampleScene()
 {
 }
 
-Process* SampleProcess::process()
+Scene* SampleScene::scene()
 {
-	Process *process = new SampleProcess ;
+	Scene *scene = new SampleScene ;
 
-	return process ;
+	return scene ;
 }
 
-void SampleProcess::Init()
+void SampleScene::Init()
 {
 	g_CameraManager->AddCamera(new CCamera(), 0) ;
 	g_CameraManager->AddCamera(new CCamera(), 1) ;
@@ -49,11 +49,11 @@ void SampleProcess::Init()
 	sound[2] = g_MusicManager->LoadMusic("eat.mp3", false, false) ;
 }
 
-void SampleProcess::Destroy()
+void SampleScene::Destroy()
 {
 }
 
-void SampleProcess::Update(float dt)
+void SampleScene::Update(float dt)
 {
 	g_Keyboard->Update() ;
 	g_Mouse->Update() ;
@@ -183,7 +183,7 @@ void SampleProcess::Update(float dt)
 	UISprite2.SetPosition(50.0f, 50.0f) ;
 }
 
-void SampleProcess::Render()
+void SampleScene::Render()
 {
 	g_CameraManager->CameraRun() ;
 	

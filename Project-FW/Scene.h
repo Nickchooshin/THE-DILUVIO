@@ -1,10 +1,10 @@
 #pragma once
 
-class Process
+class Scene
 {
 public :
-	Process() {}
-	virtual ~Process() {}
+	Scene() {}
+	virtual ~Scene() {}
 
 	virtual void Init() = 0 ;
 	virtual void Destroy() = 0 ;
