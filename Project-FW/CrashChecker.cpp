@@ -19,24 +19,76 @@ int CCrashChecker::Crash_CharAndTile(CHero *pHero, CTiles *pTile)
 	RECT rtTile = pTile->GetBoundingBox() ;
 	RECT rtTemp, rtSize ;
 
-	int x = rtTile.right - rtTile.left  ;
-	int y = rtTile.top - rtTile.bottom ;
+	int xSize = rtTile.right - rtTile.left  ;
+	int ySize = rtTile.top - rtTile.bottom ;
 
 	int size=0, way=-1 ;
 	int temp ;
 
 	if(Crash(rtHero, rtTile))
 	{
-		Vector vec = pHero->GetForce() ;
-		float xF = abs((int)vec.x) ;
-		float yF = abs((int)vec.y) ;
+		Vector force = pHero->GetForce() ;
+		RECT rtTemp ;
+		int y = (int)pHero->GetPositionY() ;
+		int x = (int)pHero->GetPositionX() ;
 
-		if(xF>=yF)
-			way = vec.x<=0 ? 0 : 1 ;
+		rtTemp = rtTile ;
+		if(force.y<=0.0f)
+		{
+			rtTemp.top += ySize ;
+			rtTemp.bottom += ySize ;
+		}
 		else
-			way = vec.y<=0 ? 2 : 3 ;
+		{
+			rtTemp.top -= ySize ;
+			rtTemp.bottom -= ySize ;
+		}
 
-		RECT rtTemp = rtTile ;
+		if(Crash(rtHero, rtTemp))
+		{
+			Crash(rtHero, rtTile) ;
+			rtSize = GetIntersect() ;
+
+			if(force.y<0.0f)
+				y += (rtSize.top - rtSize.bottom) ;
+			else if(force.y>0.0f)
+				y -= (rtSize.top - rtSize.bottom) ;
+
+			pHero->GravityReset() ;
+		}
+
+
+
+		rtTemp = rtTile ;
+		if(force.x<=0.0f)
+		{
+			rtTemp.left += xSize ;
+			rtTemp.right += xSize ;
+		}
+		else
+		{
+			rtTemp.left -= xSize ;
+			rtTemp.right -= xSize ;
+		}
+
+		pHero->SetPosition(x, y) ;
+		rtHero = pHero->GetBoundingBox() ;
+		if(Crash(rtHero, rtTemp))
+		{
+			Crash(rtHero, rtTile) ;
+			rtSize = GetIntersect() ;
+
+			if(force.x<0.0f)
+				x += (rtSize.right - rtSize.left) ;
+			else if(force.x>0.0f)
+				x -= (rtSize.right - rtSize.left) ;
+		}
+
+		pHero->SetPosition(x, y) ;
+
+		//
+
+		/*RECT rtTemp = rtTile ;
 		switch(way)
 		{
 		case 0 : // RIGHT
@@ -71,12 +123,10 @@ int CCrashChecker::Crash_CharAndTile(CHero *pHero, CTiles *pTile)
 		{
 		case 0 :
 			x += (rtSize.right - rtSize.left) ;
-			pHero->GravityReset() ;
 			break ;
 
 		case 1 :
 			x -= (rtSize.right - rtSize.left) ;
-			pHero->GravityReset() ;
 			break ;
 
 		case 2 :
@@ -90,7 +140,7 @@ int CCrashChecker::Crash_CharAndTile(CHero *pHero, CTiles *pTile)
 			break ;
 		}
 
-		pHero->SetPosition(x, y) ;
+		pHero->SetPosition(x, y) ;*/
 	}
 
 	return way ;

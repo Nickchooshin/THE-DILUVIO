@@ -47,7 +47,6 @@ void CHero::GravityReset()
 {
 	m_bJump = false ;
 	m_fVecAcc = 0.0f ;
-	m_fY = 0.0f ;
 }
 
 void CHero::Update()
@@ -95,5 +94,8 @@ void CHero::Move()
 	m_fY += m_vForce.y ;
 
 	if(m_fY<0.0f)
+	{
+		m_fY = 0.0f ;
 		GravityReset() ;
+	}
 }
