@@ -31,6 +31,7 @@ Scene* SampleScene::scene()
 
 void SampleScene::Init()
 {
+	g_CameraManager->AllCameraClear() ;
 	g_CameraManager->AddCamera(new CCamera(), 0) ;
 	g_CameraManager->AddCamera(new CCamera(), 1) ;
 	g_CameraManager->MovePosition(50.0f, 50.0f, 1) ;

@@ -71,8 +71,8 @@ void CSprite::SetPositionZ(float Z)
 
 void CSprite::SetCenterPosition(float CenterX, float CenterY)
 {
-	m_CenterPosition.x = CenterX ;
-	m_CenterPosition.y = CenterY ;
+	m_CenterPosition.x = -CenterX * (m_fWidth/2) ;
+	m_CenterPosition.y = -CenterY * (m_fHeight/2) ;
 }
 
 void CSprite::SetAngle(float Angle, char Direction)

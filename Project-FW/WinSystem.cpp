@@ -1,6 +1,7 @@
 #include "WinSystem.h"
 #include "D3dSystem.h"
 #include "SceneManager.h"
+#include "D3dDevice.h"
 
 #ifdef _DEBUG
 #pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
@@ -97,8 +98,10 @@ void CWinSystem::MsgLoop(int Frame)
 		{
 			t = (float)(GetTickCount() - dwOldTime) * 0.001f ;
 
-			if(t>=(float)(1/Frame))
+			if(t>=(1.0f/Frame))
 			{
+				g_D3dDevice->Time = t * 60.0f ;
+
 				Update() ;
 				Render() ;
 

@@ -42,6 +42,19 @@
       <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="SampleScene.cpp" />
+    <ClCompile Include="Scene_Gravity.cpp">
+      <Filter>Scene\Gravity</Filter>
+    </ClCompile>
+    <ClCompile Include="Hero.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Tiles_Ground.cpp">
+      <Filter>Objects\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="CrashChecker.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h" />
@@ -91,6 +104,22 @@
       <Filter>Scene</Filter>
     </ClInclude>
     <ClInclude Include="SampleScene.h" />
+    <ClInclude Include="Scene_Gravity.h">
+      <Filter>Scene\Gravity</Filter>
+    </ClInclude>
+    <ClInclude Include="Hero.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Tiles.h">
+      <Filter>Objects\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Tiles_Ground.h">
+      <Filter>Objects\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="CrashChecker.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Input">
@@ -119,6 +148,15 @@
     </Filter>
     <Filter Include="Scene">
       <UniqueIdentifier>{09e25e2d-2eaa-43b0-b1ef-6b3f56621ca4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\Gravity">
+      <UniqueIdentifier>{6e91e47f-8961-413e-821a-8ca705c2ee18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects">
+      <UniqueIdentifier>{593ef434-2a81-4a7c-a2bf-ffc7e79d110a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\Tiles">
+      <UniqueIdentifier>{b6da109d-b495-4dff-8995-f89b3ec83d93}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
