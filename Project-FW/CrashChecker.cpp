@@ -27,89 +27,64 @@ int CCrashChecker::Crash_CharAndTile(CHero *pHero, CTiles *pTile)
 
 	if(Crash(rtHero, rtTile))
 	{
-		rtSize = GetIntersect() ;
+		Vector vec = pHero->GetForce() ;
+		float xF = abs((int)vec.x) ;
+		float yF = abs((int)vec.y) ;
 
-		// left
-		rtTemp = rtTile ;
-		rtTemp.left -= x ;
-		rtTemp.right -= x ;
+		if(xF>=yF)
+			way = vec.x<=0 ? 0 : 1 ;
+		else
+			way = vec.y<=0 ? 2 : 3 ;
 
-		Crash(rtHero, rtTemp) ;
-		rtTemp = GetIntersect() ;
-		temp = (rtTemp.right - rtTemp.left) * (rtTemp.top - rtTemp.bottom) ;
-		if(temp>size)
-		{
-			size = temp ;
-			way = 0 ;
-		}
-
-		// right
-		rtTemp = rtTile ;
-		rtTemp.left += x ;
-		rtTemp.right += x ;
-
-		Crash(rtHero, rtTemp) ;
-		rtTemp = GetIntersect() ;
-		temp = (rtTemp.right - rtTemp.left) * (rtTemp.top - rtTemp.bottom) ;
-		if(temp>size)
-		{
-			size = temp ;
-			way = 1 ;
-		}
-
-		// top
-		rtTemp = rtTile ;
-		rtTemp.top += y ;
-		rtTemp.bottom += y ;
-
-		Crash(rtHero, rtTemp) ;
-		rtTemp = GetIntersect() ;
-		temp = (rtTemp.right - rtTemp.left) * (rtTemp.top - rtTemp.bottom) ;
-		if(temp>size)
-		{
-			size = temp ;
-			way = 2 ;
-		}
-
-		// bottom
-		rtTemp = rtTile ;
-		rtTemp.top -= y ;
-		rtTemp.bottom -= y ;
-
-		Crash(rtHero, rtTemp) ;
-		rtTemp = GetIntersect() ;
-		temp = (rtTemp.right - rtTemp.left) * (rtTemp.top - rtTemp.bottom) ;
-		if(temp>size)
-		{
-			size = temp ;
-			way = 3 ;
-		}
-
-
-
-		//float x = pHero->GetPositionX() ;
-		//float y = pHero->GetPositionY() ;
-		int x = pHero->GetPositionX() ;
-		int y = pHero->GetPositionY() ;
-		// float 사용 시 소수점 차이의 오차로 인하여, 계속해서 1픽셀 간격으로 불균형함을 이룸.
-		// 반올림 단위로 sprite 위치를 지정해서 그런듯
-
+		RECT rtTemp = rtTile ;
 		switch(way)
 		{
-		case 0 : // l
-			x -= (rtSize.right - rtSize.left) ;
+		case 0 : // RIGHT
+			rtTemp.left += x ;
+			rtTemp.right += x ;
 			break ;
 
-		case 1 : // r
+		case 1 : // LEFT
+			rtTemp.left -= x ;
+			rtTemp.right -= x ;
+			break ;
+
+		case 2 : // UP
+			rtTemp.top += y ;
+			rtTemp.bottom += y ;
+			break ;
+
+		case 3 : // DOWN
+			rtTemp.top -= y ;
+			rtTemp.bottom -= y ;
+			break ;
+		}
+
+		if(!Crash(rtHero, rtTemp))
+			return -1 ;
+		Crash(rtHero, rtTile) ;
+		rtSize = GetIntersect() ;
+
+		int x = pHero->GetPositionX() ;
+		int y = pHero->GetPositionY() ;
+		switch(way)
+		{
+		case 0 :
 			x += (rtSize.right - rtSize.left) ;
+			pHero->GravityReset() ;
 			break ;
 
-		case 2 : // t
+		case 1 :
+			x -= (rtSize.right - rtSize.left) ;
+			pHero->GravityReset() ;
+			break ;
+
+		case 2 :
 			y += (rtSize.top - rtSize.bottom) ;
 			pHero->GravityReset() ;
 			break ;
 
-		case 3 : // b
+		case 3 :
 			y -= (rtSize.top - rtSize.bottom) ;
 			pHero->GravityReset() ;
 			break ;

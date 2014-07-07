@@ -6,7 +6,8 @@
 
 CHero::CHero() : m_fVecSpeed(2.0f),
 				 m_fVecAcc(0.0f), m_fVecGravity(-1.0f),
-				 m_bJump(false)
+				 m_bJump(false),
+				 m_vForce()
 {
 }
 CHero::~CHero()
@@ -37,6 +38,11 @@ float CHero::GetPositionY()
 	return m_fY ;
 }
 
+Vector CHero::GetForce()
+{
+	return m_vForce ;
+}
+
 void CHero::GravityReset()
 {
 	m_bJump = false ;
@@ -62,10 +68,15 @@ void CHero::Move()
 	float fTime = g_D3dDevice->GetTime() ;
 	float fSpeed = m_fVecSpeed * fTime ;
 
+	m_vForce.x = 0.0f ;
+	m_vForce.y = 0.0f ;
+
 	if(g_Keyboard->IsButtonDown(DIK_LEFT))
-		m_fX -= fSpeed ;
+		//m_fX -= fSpeed ;
+		m_vForce.x -= fSpeed ;
 	if(g_Keyboard->IsButtonDown(DIK_RIGHT))
-		m_fX += fSpeed ;
+		//m_fX += fSpeed ;
+		m_vForce.x += fSpeed ;
 
 	if(!m_bJump && g_Keyboard->IsButtonDown(DIK_UP))
 	{
@@ -77,7 +88,11 @@ void CHero::Move()
 	
 	
 	m_fVecAcc += m_fVecGravity ;
-	m_fY += m_fVecAcc ;
+	//m_fY += m_fVecAcc ;
+	m_vForce.y = m_fVecAcc ;
+
+	m_fX += m_vForce.x ;
+	m_fY += m_vForce.y ;
 
 	if(m_fY<0.0f)
 		GravityReset() ;

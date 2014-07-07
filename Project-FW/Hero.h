@@ -10,6 +10,8 @@ private :
 
 	bool m_bJump ;
 
+	Vector m_vForce ;
+
 public :
 	CHero() ;
 	~CHero() ;
@@ -18,6 +20,7 @@ public :
 
 	float GetPositionX() ;
 	float GetPositionY() ;
+	Vector GetForce() ;
 
 	void GravityReset() ;
 
