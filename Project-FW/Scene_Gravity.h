@@ -4,14 +4,14 @@
 
 class CHero ;
 class CTilesGround ;
-class CCrashChecker ;
+class CCollision ;
 
 class SceneGravity : public Scene
 {
 private :
 	CHero *m_pHero ;
 	CTilesGround *m_pTiles[5] ;
-	CCrashChecker *m_pCrash ;
+	CCollision *m_pCollision ;
 
 public :
 	static Scene* scene() ;

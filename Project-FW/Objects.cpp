@@ -17,9 +17,9 @@ void CObjects::SetPosition(float fX, float fY)
 	m_fY = fY ;
 }
 
-RECT CObjects::GetBoundingBox()
+Rect CObjects::GetBoundingBox()
 {
-	RECT rt ;
+	Rect rt ;
 	rt.left = m_BoundingBox.left + m_fX ;
 	rt.top = m_BoundingBox.top + m_fY ;
 	rt.right = m_BoundingBox.right + m_fX ;

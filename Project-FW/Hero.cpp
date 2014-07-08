@@ -4,7 +4,7 @@
 #include "Keyboard.h"
 #include "D3dDevice.h"
 
-CHero::CHero() : m_fVecSpeed(2.0f),
+CHero::CHero() : m_fVecSpeed(2.0f), m_fVecJump(6.5f),
 				 m_fVecAcc(0.0f), m_fVecGravity(-1.0f),
 				 m_bJump(false),
 				 m_vForce(),
@@ -96,7 +96,7 @@ void CHero::Move()
 
 	if(!m_bJump && g_Keyboard->IsButtonDown(DIK_UP))
 	{
-		m_fVecAcc = 12.0f ;
+		m_fVecAcc = m_fVecJump * fTime ;
 
 		m_bJump = true ;
 	}

@@ -7,6 +7,7 @@ SceneManager::SceneManager() : m_pScene(0)
 SceneManager::~SceneManager()
 {
 	m_pScene->Destroy() ;
+	delete m_pScene ;
 }
 
 void SceneManager::StartScene(Scene *pScene)

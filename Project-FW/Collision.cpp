@@ -1,19 +1,19 @@
-#include "CrashChecker.h"
+#include "Collision.h"
 #include "Hero.h"
 #include "Tiles.h"
 
-CCrashChecker::CCrashChecker()
+CCollision::CCollision()
 {
 	rtIntersect.left = 0 ;
 	rtIntersect.top = 0 ;
 	rtIntersect.right = 0 ;
 	rtIntersect.bottom = 0 ;
 }
-CCrashChecker::~CCrashChecker()
+CCollision::~CCollision()
 {
 }
 
-bool CCrashChecker::Crash(Rect A, Rect B)
+bool CCollision::AABB(Rect A, Rect B)
 {
 	bool bState=false ;
 
@@ -48,7 +48,7 @@ bool CCrashChecker::Crash(Rect A, Rect B)
 	return bState ;
 }
 
-void CCrashChecker::XCollision(CHero *pHero, CTiles *pTile)
+void CCollision::XCollision(CHero *pHero, CTiles *pTile)
 {
 	int way = -1 ;
 	Vector vec = pHero->GetForce() ;
@@ -56,7 +56,7 @@ void CCrashChecker::XCollision(CHero *pHero, CTiles *pTile)
 	Rect rtTile = pTile->GetBoundingBox() ;
 	int xSize = rtTile.right - rtTile.left  ;
 
-	if(!Crash(rtHero, rtTile))
+	if(!AABB(rtHero, rtTile))
 		return ;
 	Rect rtSize = GetIntersect() ;
 
@@ -77,7 +77,7 @@ void CCrashChecker::XCollision(CHero *pHero, CTiles *pTile)
 		rtTemp.right -= xSize ;
 	}
 
-	if(!Crash(rtHero, rtTemp))
+	if(!AABB(rtHero, rtTemp))
 		return ;
 
 	int x = (int)pHero->GetPositionX() ;
@@ -91,7 +91,7 @@ void CCrashChecker::XCollision(CHero *pHero, CTiles *pTile)
 	pHero->SetPosition((float)x, (float)y) ;
 }
 
-void CCrashChecker::YCollision(CHero *pHero, CTiles *pTile)
+void CCollision::YCollision(CHero *pHero, CTiles *pTile)
 {
 	int way = -1 ;
 	Vector vec = pHero->GetForce() ;
@@ -99,7 +99,7 @@ void CCrashChecker::YCollision(CHero *pHero, CTiles *pTile)
 	Rect rtTile = pTile->GetBoundingBox() ;
 	int ySize = rtTile.top - rtTile.bottom  ;
 
-	if(!Crash(rtHero, rtTile))
+	if(!AABB(rtHero, rtTile))
 		return ;
 	Rect rtSize = GetIntersect() ;
 
@@ -120,9 +120,9 @@ void CCrashChecker::YCollision(CHero *pHero, CTiles *pTile)
 		rtTemp.bottom -= ySize ;
 	}
 
-	if(!Crash(rtHero, rtTemp))
+	if(!AABB(rtHero, rtTemp))
 		return ;
-	Crash(rtHero, rtTile) ;
+	AABB(rtHero, rtTile) ;
 
 	int x = (int)pHero->GetPositionX() ;
 	int y = (int)pHero->GetPositionY() ;
@@ -143,7 +143,7 @@ void CCrashChecker::YCollision(CHero *pHero, CTiles *pTile)
 	pHero->SetPosition((float)x, (float)y) ;
 }
 
-Rect CCrashChecker::GetIntersect()
+Rect CCollision::GetIntersect()
 {
 	return rtIntersect ;
 }

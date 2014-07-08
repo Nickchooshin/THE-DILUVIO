@@ -79,7 +79,7 @@
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraManager.cpp" />
-    <ClCompile Include="CrashChecker.cpp" />
+    <ClCompile Include="Collision.cpp" />
     <ClCompile Include="D3dSystem.cpp" />
     <ClCompile Include="Hero.cpp" />
     <ClCompile Include="InputDevice.cpp" />
@@ -101,7 +101,7 @@
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraManager.h" />
-    <ClInclude Include="CrashChecker.h" />
+    <ClInclude Include="Collision.h" />
     <ClInclude Include="D3dSystem.h" />
     <ClInclude Include="D3dDevice.h" />
     <ClInclude Include="Hero.h" />

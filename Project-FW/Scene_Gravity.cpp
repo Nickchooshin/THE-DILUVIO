@@ -11,7 +11,7 @@
 
 #include "Hero.h"
 #include "Tiles_Ground.h"
-#include "CrashChecker.h"
+#include "Collision.h"
 
 SceneGravity::SceneGravity()
 {
@@ -47,13 +47,13 @@ void SceneGravity::Init()
 	m_pTiles[3]->SetPosition(448.0f, 0.0f) ;
 	m_pTiles[4]->SetPosition(192.0f, 96.0f) ;
 
-	m_pCrash = new CCrashChecker ;
+	m_pCollision = new CCollision ;
 }
 
 void SceneGravity::Destroy()
 {
 	delete m_pHero ;
-	delete m_pCrash ;
+	delete m_pCollision ;
 
 	for(int i=0; i<5; i++)
 		delete m_pTiles[i] ;
@@ -69,10 +69,10 @@ void SceneGravity::Update(float dt)
 	m_pHero->Update() ;
 
 	for(int i=0; i<5; i++)
-		m_pCrash->XCollision(m_pHero, m_pTiles[i]) ;
+		m_pCollision->XCollision(m_pHero, m_pTiles[i]) ;
 	m_pHero->Gravity() ;
 	for(int i=0; i<5; i++)
-		m_pCrash->YCollision(m_pHero, m_pTiles[i]) ;
+		m_pCollision->YCollision(m_pHero, m_pTiles[i]) ;
 }
 
 void SceneGravity::Render()

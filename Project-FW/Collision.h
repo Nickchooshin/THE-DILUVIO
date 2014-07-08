@@ -5,16 +5,16 @@
 class CHero ;
 class CTiles ;
 
-class CCrashChecker
+class CCollision
 {
 private :
 	Rect rtIntersect ;
 
 public :
-	CCrashChecker() ;
-	~CCrashChecker() ;
+	CCollision() ;
+	~CCollision() ;
 
-	bool Crash(Rect A, Rect B) ;
+	bool AABB(Rect A, Rect B) ;	// AABB Collision
 
 	void XCollision(CHero *pHerol, CTiles *pTile) ;
 	void YCollision(CHero *pHerol, CTiles *pTile) ;

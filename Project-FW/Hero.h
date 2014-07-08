@@ -5,7 +5,7 @@
 class CHero : public CObjects
 {
 private :
-	const float m_fVecSpeed ;
+	const float m_fVecSpeed, m_fVecJump ;
 	float m_fVecAcc, m_fVecGravity ;
 
 	bool m_bJump ;

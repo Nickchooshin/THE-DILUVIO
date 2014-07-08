@@ -1,7 +1,5 @@
 #pragma once
 
-#include <Windows.h>
-
 typedef struct _Vector
 {
 	float x ;
@@ -14,7 +12,7 @@ typedef struct _Vector
 								y(Y)
 	{}
 
-	const _Vector& operator+(_Vector vec)
+	const _Vector operator+(_Vector vec)
 	{
 		_Vector temp ;
 		temp.x = x + vec.x ;
@@ -37,6 +35,11 @@ typedef struct _Vector
 	}
 } Vector ;
 
+typedef struct _Rect
+{
+	int left, top, right, bottom ;
+} Rect ;
+
 class CSprite ;
 
 class CObjects
@@ -44,7 +47,7 @@ class CObjects
 protected :
 	CSprite *m_pSprite ;
 	float m_fX, m_fY ;
-	RECT m_BoundingBox ;
+	Rect m_BoundingBox ;
 
 public :
 	CObjects() ;
@@ -54,7 +57,7 @@ public :
 
 	void SetPosition(float fX, float fY) ;
 
-	RECT GetBoundingBox() ;
+	Rect GetBoundingBox() ;
 
 	virtual void Render() ;
 protected :
