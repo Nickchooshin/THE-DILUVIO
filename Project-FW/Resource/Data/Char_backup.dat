@@ -43,25 +43,3 @@ Resource/Image/Char/Main_character.png
 
 <jump_frame>
 1
-
-# Absorb
-
-<absorb_left_index>
-0, 4
-
-<absorb_right_index>
-0, 3
-
-<absorb_frame>
-5
-
-# Release
-
-<release_left_index>
-0, 6
-
-<release_right_index>
-0, 5
-
-<release_frame>
-5

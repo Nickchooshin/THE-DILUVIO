@@ -34,7 +34,7 @@ void SceneGravity::Init()
 
 	m_pHero = new CHero ;
 	m_pHero->Init() ;
-	m_pHero->SetPosition(50.0f, 50.0f) ;
+	m_pHero->SetPosition(50.0f, 125.0f) ;
 
 	for(int i=0; i<5; i++)
 	{
@@ -83,4 +83,9 @@ void SceneGravity::Render()
 		m_pTiles[i]->Render() ;
 
 	m_pHero->Render() ;
+
+	/*CSprite sprite ;
+	sprite.Init("Resource/Image/collision.png") ;
+	//sprite.SetCenterPosition(0.0f, 0.0f) ;
+	sprite.Render() ;*/
 }
