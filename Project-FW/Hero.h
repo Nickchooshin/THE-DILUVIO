@@ -13,6 +13,15 @@ private :
 
 	Vector m_vForce ;
 
+	Size m_ImgSize, m_ColSize ;
+	int m_nNowFrame ;
+	int m_nStandFrame, m_nMoveFrame ;
+	Position m_Stand_LeftIndex, m_Stand_RightIndex ;
+	Position m_Move_LeftIndex, m_Move_RightIndex ;
+
+	enum Direction { LEFT=0, RIGHT, LEFT_MOVE, RIGHT_MOVE } ;
+	Direction m_Direction, m_prevDirection ;
+
 public :
 	CHero() ;
 	~CHero() ;
@@ -33,4 +42,5 @@ private :
 	void SetBoundingBox() ;
 
 	void Move() ;
+	void Animation() ;
 } ;

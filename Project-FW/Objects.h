@@ -35,6 +35,41 @@ typedef struct _Vector
 	}
 } Vector ;
 
+typedef struct _SIZE
+{
+	int x ;
+	int y ;
+
+	_SIZE() : x(0),
+			  y(0)
+	{}
+	_SIZE(int X, int Y) : x(X),
+						  y(Y)
+	{}
+
+	const _SIZE operator+(_SIZE size)
+	{
+		_SIZE temp ;
+		temp.x = x + size.x ;
+		temp.y = y + size.y ;
+
+		return temp ;
+	}
+	const _SIZE& operator=(_SIZE size)
+	{
+		x = size.x ;
+		y = size.y ;
+
+		return *this ;
+	}
+	const _SIZE& operator+=(_SIZE size)
+	{
+		*this = *this + size ;
+
+		return *this ;
+	}
+} Size, Position ;
+
 typedef struct _Rect
 {
 	int left, top, right, bottom ;

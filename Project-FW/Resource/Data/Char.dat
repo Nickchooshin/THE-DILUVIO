@@ -9,7 +9,7 @@ Resource/Image/Char/Main_character.png
 # Collision Box
 
 <collision_box>
-64, 64
+16, 9, 50, 63
 
 # Stand
 

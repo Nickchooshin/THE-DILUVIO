@@ -79,8 +79,8 @@ void SceneGravity::Render()
 {
 	g_CameraManager->CameraRun() ;
 
-	m_pHero->Render() ;
-
 	for(int i=0; i<5; i++)
 		m_pTiles[i]->Render() ;
+
+	m_pHero->Render() ;
 }
