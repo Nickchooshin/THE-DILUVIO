@@ -9,6 +9,7 @@ private :
 	float m_fVecAcc, m_fVecGravity ;
 
 	bool m_bJump ;
+	bool m_bGravity ;
 
 	Vector m_vForce ;
 
@@ -22,7 +23,10 @@ public :
 	float GetPositionY() ;
 	Vector GetForce() ;
 
-	void GravityReset() ;
+	void SetJump(bool bFlag) ;
+
+	void GravityAccReset() ;
+	void Gravity() ;
 
 	void Update() ;
 private :

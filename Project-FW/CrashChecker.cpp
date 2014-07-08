@@ -13,139 +13,6 @@ CCrashChecker::~CCrashChecker()
 {
 }
 
-int CCrashChecker::Crash_CharAndTile(CHero *pHero, CTiles *pTile)
-{
-	RECT rtHero = pHero->GetBoundingBox() ;
-	RECT rtTile = pTile->GetBoundingBox() ;
-	RECT rtTemp, rtSize ;
-
-	int xSize = rtTile.right - rtTile.left  ;
-	int ySize = rtTile.top - rtTile.bottom ;
-
-	int size=0, way=-1 ;
-	int temp ;
-
-	if(Crash(rtHero, rtTile))
-	{
-		Vector force = pHero->GetForce() ;
-		RECT rtTemp ;
-		int y = (int)pHero->GetPositionY() ;
-		int x = (int)pHero->GetPositionX() ;
-
-		rtTemp = rtTile ;
-		if(force.y<=0.0f)
-		{
-			rtTemp.top += ySize ;
-			rtTemp.bottom += ySize ;
-		}
-		else
-		{
-			rtTemp.top -= ySize ;
-			rtTemp.bottom -= ySize ;
-		}
-
-		if(Crash(rtHero, rtTemp))
-		{
-			Crash(rtHero, rtTile) ;
-			rtSize = GetIntersect() ;
-
-			if(force.y<0.0f)
-				y += (rtSize.top - rtSize.bottom) ;
-			else if(force.y>0.0f)
-				y -= (rtSize.top - rtSize.bottom) ;
-
-			pHero->GravityReset() ;
-		}
-
-
-
-		rtTemp = rtTile ;
-		if(force.x<=0.0f)
-		{
-			rtTemp.left += xSize ;
-			rtTemp.right += xSize ;
-		}
-		else
-		{
-			rtTemp.left -= xSize ;
-			rtTemp.right -= xSize ;
-		}
-
-		pHero->SetPosition(x, y) ;
-		rtHero = pHero->GetBoundingBox() ;
-		if(Crash(rtHero, rtTemp))
-		{
-			Crash(rtHero, rtTile) ;
-			rtSize = GetIntersect() ;
-
-			if(force.x<0.0f)
-				x += (rtSize.right - rtSize.left) ;
-			else if(force.x>0.0f)
-				x -= (rtSize.right - rtSize.left) ;
-		}
-
-		pHero->SetPosition(x, y) ;
-
-		//
-
-		/*RECT rtTemp = rtTile ;
-		switch(way)
-		{
-		case 0 : // RIGHT
-			rtTemp.left += x ;
-			rtTemp.right += x ;
-			break ;
-
-		case 1 : // LEFT
-			rtTemp.left -= x ;
-			rtTemp.right -= x ;
-			break ;
-
-		case 2 : // UP
-			rtTemp.top += y ;
-			rtTemp.bottom += y ;
-			break ;
-
-		case 3 : // DOWN
-			rtTemp.top -= y ;
-			rtTemp.bottom -= y ;
-			break ;
-		}
-
-		if(!Crash(rtHero, rtTemp))
-			return -1 ;
-		Crash(rtHero, rtTile) ;
-		rtSize = GetIntersect() ;
-
-		int x = pHero->GetPositionX() ;
-		int y = pHero->GetPositionY() ;
-		switch(way)
-		{
-		case 0 :
-			x += (rtSize.right - rtSize.left) ;
-			break ;
-
-		case 1 :
-			x -= (rtSize.right - rtSize.left) ;
-			break ;
-
-		case 2 :
-			y += (rtSize.top - rtSize.bottom) ;
-			pHero->GravityReset() ;
-			break ;
-
-		case 3 :
-			y -= (rtSize.top - rtSize.bottom) ;
-			pHero->GravityReset() ;
-			break ;
-		}
-
-		pHero->SetPosition(x, y) ;*/
-	}
-
-	return way ;
-}
-
 bool CCrashChecker::Crash(RECT A, RECT B)
 {
 	bool bState=false ;
@@ -179,6 +46,101 @@ bool CCrashChecker::Crash(RECT A, RECT B)
 		rtIntersect.right = B.right ;
 	
 	return bState ;
+}
+
+void CCrashChecker::XCollision(CHero *pHero, CTiles *pTile)
+{
+	int way = -1 ;
+	Vector vec = pHero->GetForce() ;
+	RECT rtHero = pHero->GetBoundingBox() ;
+	RECT rtTile = pTile->GetBoundingBox() ;
+	int xSize = rtTile.right - rtTile.left  ;
+
+	if(!Crash(rtHero, rtTile))
+		return ;
+	RECT rtSize = GetIntersect() ;
+
+	if(vec.x<=0)
+		way = 0 ;
+	else
+		way = 1 ;
+
+	RECT rtTemp = rtTile ;
+	if(way==0)
+	{
+		rtTemp.left += xSize ;
+		rtTemp.right += xSize ;
+	}
+	else
+	{
+		rtTemp.left -= xSize ;
+		rtTemp.right -= xSize ;
+	}
+
+	if(!Crash(rtHero, rtTemp))
+		return ;
+
+	int x = pHero->GetPositionX() ;
+	int y = pHero->GetPositionY() ;
+
+	if(way==0)
+		x += (rtSize.right - rtSize.left) ;
+	else
+		x -= (rtSize.right - rtSize.left) ;
+
+	pHero->SetPosition(x, y) ;
+}
+
+void CCrashChecker::YCollision(CHero *pHero, CTiles *pTile)
+{
+	int way = -1 ;
+	Vector vec = pHero->GetForce() ;
+	RECT rtHero = pHero->GetBoundingBox() ;
+	RECT rtTile = pTile->GetBoundingBox() ;
+	int ySize = rtTile.top - rtTile.bottom  ;
+
+	if(!Crash(rtHero, rtTile))
+		return ;
+	RECT rtSize = GetIntersect() ;
+
+	if(vec.y<=0)
+		way = 0 ;
+	else
+		way = 1 ;
+
+	RECT rtTemp = rtTile ;
+	if(way==0)
+	{
+		rtTemp.top += ySize ;
+		rtTemp.bottom += ySize ;
+	}
+	else
+	{
+		rtTemp.top -= ySize ;
+		rtTemp.bottom -= ySize ;
+	}
+
+	if(!Crash(rtHero, rtTemp))
+		return ;
+	Crash(rtHero, rtTile) ;
+
+	int x = pHero->GetPositionX() ;
+	int y = pHero->GetPositionY() ;
+
+	if(way==0)
+	{
+		y += (rtSize.top - rtSize.bottom) ;
+		pHero->SetJump(false) ;
+		pHero->GravityAccReset() ;
+	}
+	else
+	{
+		y -= (rtSize.top - rtSize.bottom) ;
+		pHero->SetJump(true) ;
+		pHero->GravityAccReset() ;
+	}
+
+	pHero->SetPosition(x, y) ;
 }
 
 RECT CCrashChecker::GetIntersect()

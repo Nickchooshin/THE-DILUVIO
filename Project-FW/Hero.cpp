@@ -7,7 +7,8 @@
 CHero::CHero() : m_fVecSpeed(2.0f),
 				 m_fVecAcc(0.0f), m_fVecGravity(-1.0f),
 				 m_bJump(false),
-				 m_vForce()
+				 m_vForce(),
+				 m_bGravity(true)
 {
 }
 CHero::~CHero()
@@ -43,10 +44,28 @@ Vector CHero::GetForce()
 	return m_vForce ;
 }
 
-void CHero::GravityReset()
+void CHero::SetJump(bool bFlag)
 {
-	m_bJump = false ;
+	m_bJump = bFlag ;
+}
+
+void CHero::GravityAccReset()
+{
 	m_fVecAcc = 0.0f ;
+}
+
+void CHero::Gravity()
+{
+	m_fVecAcc += m_fVecGravity ;
+	m_vForce.y = m_fVecAcc ;
+	m_fY += m_vForce.y ;
+
+	if(m_fY<0.0f)
+	{
+		m_fY = 0.0f ;
+		SetJump(false) ;
+		GravityAccReset() ;
+	}
 }
 
 void CHero::Update()
@@ -71,10 +90,8 @@ void CHero::Move()
 	m_vForce.y = 0.0f ;
 
 	if(g_Keyboard->IsButtonDown(DIK_LEFT))
-		//m_fX -= fSpeed ;
 		m_vForce.x -= fSpeed ;
 	if(g_Keyboard->IsButtonDown(DIK_RIGHT))
-		//m_fX += fSpeed ;
 		m_vForce.x += fSpeed ;
 
 	if(!m_bJump && g_Keyboard->IsButtonDown(DIK_UP))
@@ -83,19 +100,6 @@ void CHero::Move()
 
 		m_bJump = true ;
 	}
-	
-	
-	
-	m_fVecAcc += m_fVecGravity ;
-	//m_fY += m_fVecAcc ;
-	m_vForce.y = m_fVecAcc ;
 
 	m_fX += m_vForce.x ;
-	m_fY += m_vForce.y ;
-
-	if(m_fY<0.0f)
-	{
-		m_fY = 0.0f ;
-		GravityReset() ;
-	}
 }

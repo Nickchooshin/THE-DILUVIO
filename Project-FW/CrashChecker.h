@@ -14,9 +14,10 @@ public :
 	CCrashChecker() ;
 	~CCrashChecker() ;
 
-	int Crash_CharAndTile(CHero *pHero, CTiles *pTile) ;
-
 	bool Crash(RECT A, RECT B) ;
+
+	void XCollision(CHero *pHerol, CTiles *pTile) ;
+	void YCollision(CHero *pHerol, CTiles *pTile) ;
 
 	RECT GetIntersect() ;
 } ;

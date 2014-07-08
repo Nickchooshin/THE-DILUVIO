@@ -10,7 +10,7 @@ class SceneGravity : public Scene
 {
 private :
 	CHero *m_pHero ;
-	CTilesGround *m_pTile ;
+	CTilesGround *m_pTiles[5] ;
 	CCrashChecker *m_pCrash ;
 
 public :

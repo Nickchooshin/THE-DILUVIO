@@ -7,7 +7,7 @@ CSprite::CSprite() : m_pVB(NULL),
 					 m_pTexture(NULL), m_pTexInfo(NULL),
 					 m_fWidth(0.0f), m_fHeight(0.0f),
 					 m_Position(0.0f, 0.0f, 0.5f),
-					 m_CenterPosition(0.0f, 0.0f, 0.0f),
+					 m_CenterPosition(0.5f, 0.5f, 0.5f),
 					 m_fScaleX(1.0f), m_fScaleY(1.0f),
 					 m_R(255), m_G(255), m_B(255),
 					 m_nAlpha(255)
@@ -71,8 +71,8 @@ void CSprite::SetPositionZ(float Z)
 
 void CSprite::SetCenterPosition(float CenterX, float CenterY)
 {
-	m_CenterPosition.x = -CenterX * (m_fWidth/2) ;
-	m_CenterPosition.y = -CenterY * (m_fHeight/2) ;
+	m_CenterPosition.x = (-CenterX + 0.5f) * m_fWidth ;
+	m_CenterPosition.y = (-CenterY + 0.5f) * m_fHeight ;
 }
 
 void CSprite::SetAngle(float Angle, char Direction)
@@ -238,29 +238,29 @@ HRESULT CSprite::InitVB()
 	float Width_Half = m_fWidth / 2.0f ;
 	float Height_Half = m_fHeight / 2.0f ;
 
-	pVertices[0].x = -(Width_Half) - 0.5f ;
-	pVertices[0].y = Height_Half - 0.5f ;
+	pVertices[0].x = -(Width_Half) + 0.5f ;
+	pVertices[0].y = Height_Half + 0.5f ;
 	pVertices[0].z = 0.0f ;
 	pVertices[0].color = D3DCOLOR_XRGB(m_R, m_G, m_B) ;
 	pVertices[0].tu = m_tu[0];
 	pVertices[0].tv = m_tv[0] ;
 
-	pVertices[1].x = Width_Half - 0.5f ;
-	pVertices[1].y = Height_Half - 0.5f ;
+	pVertices[1].x = Width_Half + 0.5f ;
+	pVertices[1].y = Height_Half + 0.5f ;
 	pVertices[1].z = 0.0f ;
 	pVertices[1].color = D3DCOLOR_XRGB(m_R, m_G, m_B) ;
 	pVertices[1].tu = m_tu[1] ;
 	pVertices[1].tv = m_tv[1] ;
 
-	pVertices[2].x = -(Width_Half) - 0.5f ;
-	pVertices[2].y = -(Height_Half) - 0.5f ;
+	pVertices[2].x = -(Width_Half) + 0.5f ;
+	pVertices[2].y = -(Height_Half) + 0.5f ;
 	pVertices[2].z = 0.0f ;
 	pVertices[2].color = D3DCOLOR_XRGB(m_R, m_G, m_B) ;
 	pVertices[2].tu = m_tu[2] ;
 	pVertices[2].tv = m_tv[2] ;
 
-	pVertices[3].x = Width_Half - 0.5f ;
-	pVertices[3].y = -(Height_Half) - 0.5f ;
+	pVertices[3].x = Width_Half + 0.5f ;
+	pVertices[3].y = -(Height_Half) + 0.5f ;
 	pVertices[3].color = D3DCOLOR_XRGB(m_R, m_G, m_B) ;
 	pVertices[3].z = 0.0f ;
 	pVertices[3].tu = m_tu[3] ;
