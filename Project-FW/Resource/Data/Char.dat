@@ -32,3 +32,36 @@ Resource/Image/Char/Main_character.png
 
 <move_frame>
 3
+
+# Jump
+
+<jump_left_index>
+0, 2
+
+<jump_right_index>
+1, 2
+
+<jump_frame>
+1
+
+# Absorb
+
+<absorb_left_index>
+0, 4
+
+<absorb_right_index>
+0, 3
+
+<absorb_frame>
+5
+
+# Release
+
+<release_left_index>
+0, 6
+
+<release_right_index>
+0, 5
+
+<release_frame>
+5

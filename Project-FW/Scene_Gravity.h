@@ -5,6 +5,7 @@
 class CHero ;
 class CTilesGround ;
 class CCollision ;
+class CSprite ;
 
 class SceneGravity : public Scene
 {

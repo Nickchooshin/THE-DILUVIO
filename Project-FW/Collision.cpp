@@ -132,6 +132,7 @@ void CCollision::YCollision(CHero *pHero, CTiles *pTile)
 		y += (rtSize.top - rtSize.bottom) ;
 		pHero->SetJump(false) ;
 		pHero->GravityAccReset() ;
+		pHero->SetGravity(false) ;
 	}
 	else
 	{

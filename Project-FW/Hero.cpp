@@ -11,11 +11,15 @@ CHero::CHero() : m_fVecSpeed(2.0f), m_fVecJump(6.5f),
 				 m_bJump(false),
 				 m_vForce(),
 				 m_bGravity(true),
-				 m_ColSize(0, 0),
-				 m_nStandFrame(0), m_nMoveFrame(0),
+				 m_ImgSize(0, 0), m_ColSize(0, 0),
+				 m_nNowFrame(0),
+				 m_nStandFrame(0), m_nMoveFrame(0), m_nJumpFrame(0), m_nAbsorbFrame(0), m_nReleaseFrame(0),
 				 m_Stand_LeftIndex(0, 0), m_Stand_RightIndex(0, 0),
 				 m_Move_LeftIndex(0, 0), m_Move_RightIndex(0, 0),
-				 m_Direction(RIGHT), m_prevDirection(RIGHT)
+				 m_Jump_LeftIndex(0, 0), m_Jump_RightIndex(0, 0),
+				 m_Absorb_LeftIndex(0, 0), m_Absorb_RightIndex(0, 0),
+				 m_Release_LeftIndex(0, 0), m_Release_RightIndex(0, 0),
+				 m_State(RIGHT), m_prevState(RIGHT)
 {
 }
 CHero::~CHero()
@@ -75,14 +79,56 @@ void CHero::Init()
 			g_LoadManager->GetValue(m_Move_RightIndex.x) ;
 			g_LoadManager->GetValue(m_Move_RightIndex.y) ;
 		}
+		else if(strcmp(item, "JUMP_FRAME")==0)
+		{
+			g_LoadManager->GetValue(m_nJumpFrame) ;
+		}
+		else if(strcmp(item, "JUMP_LEFT_INDEX")==0)
+		{
+			g_LoadManager->GetValue(m_Jump_LeftIndex.x) ;
+			g_LoadManager->GetValue(m_Jump_LeftIndex.y) ;
+		}
+		else if(strcmp(item, "JUMP_RIGHT_INDEX")==0)
+		{
+			g_LoadManager->GetValue(m_Jump_RightIndex.x) ;
+			g_LoadManager->GetValue(m_Jump_RightIndex.y) ;
+		}
+		else if(strcmp(item, "ABSORB_LEFT_INDEX")==0)
+		{
+			g_LoadManager->GetValue(m_Absorb_LeftIndex.x) ;
+			g_LoadManager->GetValue(m_Absorb_LeftIndex.y) ;
+		}
+		else if(strcmp(item, "ABSORB_RIGHT_INDEX")==0)
+		{
+			g_LoadManager->GetValue(m_Absorb_RightIndex.x) ;
+			g_LoadManager->GetValue(m_Absorb_RightIndex.y) ;
+		}
+		else if(strcmp(item, "ABSORB_FRAME")==0)
+		{
+			g_LoadManager->GetValue(m_nAbsorbFrame) ;
+		}
+		else if(strcmp(item, "RELEASE_LEFT_INDEX")==0)
+		{
+			g_LoadManager->GetValue(m_Release_LeftIndex.x) ;
+			g_LoadManager->GetValue(m_Release_LeftIndex.y) ;
+		}
+		else if(strcmp(item, "RELEASE_RIGHT_INDEX")==0)
+		{
+			g_LoadManager->GetValue(m_Release_RightIndex.x) ;
+			g_LoadManager->GetValue(m_Release_RightIndex.y) ;
+		}
+		else if(strcmp(item, "RELEASE_FRAME")==0)
+		{
+			g_LoadManager->GetValue(m_nReleaseFrame) ;
+		}
 	}
 
 	g_LoadManager->CloseDat() ;
 
 	m_pSprite = new CSprite ;
 	m_pSprite->Init((float)m_ImgSize.x, (float)m_ImgSize.y, image_path) ;
-	m_pSprite->SetTextureUV((float)(m_Stand_LeftIndex.x * m_ImgSize.x), (float)(m_Stand_LeftIndex.y * m_ImgSize.y),
-							(float)((m_Stand_LeftIndex.x+1) * m_ImgSize.x), (float)((m_Stand_LeftIndex.y+1) * m_ImgSize.y)) ;
+	m_pSprite->SetTextureUV((float)(m_Stand_RightIndex.x * m_ImgSize.x), (float)(m_Stand_RightIndex.y * m_ImgSize.y),
+							(float)((m_Stand_RightIndex.x+1) * m_ImgSize.x), (float)((m_Stand_RightIndex.y+1) * m_ImgSize.y)) ;
 	//m_pSprite->SetPositionZ(0.4f) ;
 
 	m_fX = 0.0f ;
@@ -111,6 +157,11 @@ void CHero::SetJump(bool bFlag)
 	m_bJump = bFlag ;
 }
 
+void CHero::SetGravity(bool bFlag)
+{
+	m_bGravity = bFlag ;
+}
+
 void CHero::GravityAccReset()
 {
 	m_fVecAcc = 0.0f ;
@@ -121,10 +172,12 @@ void CHero::Gravity()
 	m_fVecAcc += m_fVecGravity ;
 	m_vForce.y = m_fVecAcc ;
 	m_fY += m_vForce.y ;
+	m_bGravity = true ;
 
 	if(m_fY<0.0f)
 	{
 		m_fY = 0.0f ;
+		m_bGravity = false ;
 		SetJump(false) ;
 		GravityAccReset() ;
 	}
@@ -153,16 +206,47 @@ void CHero::Move()
 	m_vForce.x = 0.0f ;
 	m_vForce.y = 0.0f ;
 
-	if(g_Keyboard->IsButtonDown(DIK_LEFT))
-		m_vForce.x -= fSpeed ;
-	if(g_Keyboard->IsButtonDown(DIK_RIGHT))
-		m_vForce.x += fSpeed ;
-
-	if(!m_bJump && g_Keyboard->IsButtonDown(DIK_UP))
+	if(!m_bGravity && g_Keyboard->IsButtonDown(DIK_Z))
 	{
-		m_fVecAcc = m_fVecJump * fTime ;
+		m_State = (State)((m_State / RIGHT) * RIGHT + LEFT_ABSORB) ;
 
-		m_bJump = true ;
+		// 烙矫 林籍 贸府
+		/*if(m_State==LEFT || m_State==LEFT_MOVE)
+			m_State = LEFT_ABSORB ;
+		else if(m_State==RIGHT || m_State==RIGHT_MOVE)
+			m_State = RIGHT_ABSORB ;*/
+	}
+	else if(!m_bGravity && g_Keyboard->IsButtonDown(DIK_X))
+	{
+		m_State = (State)((m_State / RIGHT) * RIGHT + LEFT_RELEASE) ;
+		
+		// 烙矫 林籍 贸府
+		/*if(m_State==LEFT)
+			m_State = LEFT_RELEASE ;
+		else if(m_State==RIGHT)
+			m_State = RIGHT_RELEASE ;*/
+	}
+	else
+	{
+		m_State = (State)((m_State / RIGHT) * RIGHT + LEFT) ;
+		
+		// 烙矫 林籍 贸府
+		/*if(m_State==LEFT_ABSORB || m_State==LEFT_RELEASE)
+			m_State = LEFT ;
+		else if(m_State==RIGHT_ABSORB || m_State==RIGHT_RELEASE)
+			m_State = RIGHT ;*/
+
+		if(g_Keyboard->IsButtonDown(DIK_LEFT))
+			m_vForce.x -= fSpeed ;
+		if(g_Keyboard->IsButtonDown(DIK_RIGHT))
+			m_vForce.x += fSpeed ;
+
+		if(!m_bJump && g_Keyboard->IsButtonDown(DIK_UP))
+		{
+			m_fVecAcc = m_fVecJump * fTime ;
+
+			m_bJump = true ;
+		}
 	}
 
 	m_fX += m_vForce.x ;
@@ -171,36 +255,58 @@ void CHero::Move()
 void CHero::Animation()
 {
 	// Direction
-	if(m_vForce.x<0)
+	//if(m_vForce.y!=0.0f || m_bGravity)
+	if(m_bGravity)
 	{
-		m_Direction = LEFT_MOVE ;
+		if(m_vForce.x<0)
+			m_State = LEFT_JUMP ;
+		else if(m_vForce.x>0)
+			m_State = RIGHT_JUMP ;
+		else
+		{
+			m_State = (State)((m_State / RIGHT) * RIGHT + LEFT_JUMP) ;
+
+			// 烙矫 林籍 贸府
+			/*if(m_State==LEFT || m_State==LEFT_MOVE)
+				m_State = LEFT_JUMP ;
+			else if(m_State==RIGHT || m_State==RIGHT_MOVE)
+				m_State = RIGHT_JUMP ;*/
+		}
+	}
+	else if(m_vForce.x<0)
+	{
+		m_State = LEFT_MOVE ;
 	}
 	else if(m_vForce.x>0)
 	{
-		m_Direction = RIGHT_MOVE ;
+		m_State = RIGHT_MOVE ;
 	}
 	else
 	{
-		if(m_Direction==LEFT_MOVE)
-			m_Direction = LEFT ;
-		else if(m_Direction==RIGHT_MOVE)
-			m_Direction = RIGHT ;
+		State Temp = (State)(m_State % RIGHT) ;
+		if(Temp==LEFT_MOVE || Temp==LEFT_JUMP)
+			m_State = (State)((m_State / RIGHT) * RIGHT + LEFT) ;
+
+		// 烙矫 林籍 贸府
+		/*if(m_State==LEFT_MOVE || m_State==LEFT_JUMP)
+			m_State = LEFT ;
+		else if(m_State==RIGHT_MOVE || m_State==RIGHT_JUMP)
+			m_State = RIGHT ;*/
 	}
 
-	if(m_Direction!=m_prevDirection)
+	if(m_State!=m_prevState)
 		m_nNowFrame = 0 ;
 
 	// Animation Frame, Index
 	int MaxFrame ;
 	Position Index ;
 
-	switch(m_Direction)
+	switch(m_State)
 	{
 	case LEFT :
 		MaxFrame = m_nStandFrame ;
 		Index = m_Stand_LeftIndex ;
 		break ;
-
 	case RIGHT :
 		MaxFrame = m_nStandFrame ;
 		Index = m_Stand_RightIndex ;
@@ -210,10 +316,36 @@ void CHero::Animation()
 		MaxFrame = m_nMoveFrame ;
 		Index = m_Move_LeftIndex ;
 		break ;
-
 	case RIGHT_MOVE :
 		MaxFrame = m_nMoveFrame ;
 		Index = m_Move_RightIndex ;
+		break ;
+
+	case LEFT_JUMP :
+		MaxFrame = m_nJumpFrame ;
+		Index = m_Jump_LeftIndex ;
+		break ;
+	case RIGHT_JUMP :
+		MaxFrame = m_nJumpFrame ;
+		Index = m_Jump_RightIndex ;
+		break ;
+
+	case LEFT_ABSORB :
+		MaxFrame = m_nAbsorbFrame ;
+		Index = m_Absorb_LeftIndex ;
+		break ;
+	case RIGHT_ABSORB :
+		MaxFrame = m_nAbsorbFrame ;
+		Index = m_Absorb_RightIndex ;
+		break ;
+
+	case LEFT_RELEASE :
+		MaxFrame = m_nReleaseFrame ;
+		Index = m_Release_LeftIndex ;
+		break ;
+	case RIGHT_RELEASE :
+		MaxFrame = m_nReleaseFrame ;
+		Index = m_Release_RightIndex ;
 		break ;
 	}
 
@@ -221,7 +353,7 @@ void CHero::Animation()
 	static float fTime = 0.0f ;
 	fTime += g_D3dDevice->GetTime() ;
 
-	if(fTime>=0.1f)
+	if(fTime>=0.2f)
 	{
 		int Frame = fTime / 0.2f ;
 		fTime -= Frame * 0.2f ;
@@ -229,9 +361,14 @@ void CHero::Animation()
 		m_nNowFrame += Frame ;
 		m_nNowFrame %= MaxFrame ;
 
-		m_pSprite->SetTextureUV((float)(Index.x + m_nNowFrame) * m_ImgSize.x, (float)(Index.y) * m_ImgSize.y,
-								(float)(Index.x + m_nNowFrame+1) * m_ImgSize.x, (float)(Index.y+1) * m_ImgSize.y) ;
+		float left, top, right, bottom ;
+		left = (float)((Index.x + m_nNowFrame) * m_ImgSize.x) ;
+		top = (float)((Index.y) * m_ImgSize.y) ;
+		right = (float)((Index.x + m_nNowFrame+1) * m_ImgSize.x) ;
+		bottom = (float)((Index.y+1) * m_ImgSize.y) ;
+
+		m_pSprite->SetTextureUV(left, top, right, bottom) ;
 	}
 
-	m_prevDirection = m_Direction ;
+	m_prevState = m_State ;
 }

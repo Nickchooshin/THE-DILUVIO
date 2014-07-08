@@ -4,7 +4,12 @@
 Resource/Image/Char/Main_character.png
 
 <size>
-64 64
+64, 64
+
+# Collision Box
+
+<collision_box>
+16, 9, 50, 63
 
 # Stand
 
@@ -27,3 +32,14 @@ Resource/Image/Char/Main_character.png
 
 <move_frame>
 3
+
+# Jump
+
+<jump_left_index>
+0, 2
+
+<jump_right_index>
+1, 2
+
+<jump_frame>
+1
