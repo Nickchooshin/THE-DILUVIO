@@ -1,0 +1,34 @@
+# Image
+
+<image>
+Resource/Image/Char/Main_character.png
+
+<size>
+64, 64
+
+# Collision Box
+
+<collision_box>
+64, 64
+
+# Stand
+
+<stand_left_index>
+0, 0
+
+<stand_right_index>
+0, 1
+
+<stand_frame>
+1
+
+# Move
+
+<move_left_index>
+1, 0
+
+<move_right_index>
+1, 1
+
+<move_frame>
+3

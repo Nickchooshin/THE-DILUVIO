@@ -18,9 +18,9 @@ CHero::~CHero()
 void CHero::Init()
 {
 	m_pSprite = new CSprite ;
-	m_pSprite->Init(64.0f, 64.0f, "Resource/collision.png") ;
-	//m_pSprite->Init(64.0f, 64.0f, "Resource/Char/Main_character.png") ;
-	//m_pSprite->SetTextureUV(0.0f, 0.0f, 32.0f, 32.0f) ;
+	//m_pSprite->Init(64.0f, 64.0f, "Resource/Image/collision.png") ;
+	m_pSprite->Init(64.0f, 64.0f, "Resource/Image/Char/Main_character.png") ;
+	m_pSprite->SetTextureUV(0.0f, 0.0f, 64.0f, 64.0f) ;
 	//m_pSprite->SetCenterPosition(0.5f, -1.0f) ;
 
 	m_fX = 0.0f ;

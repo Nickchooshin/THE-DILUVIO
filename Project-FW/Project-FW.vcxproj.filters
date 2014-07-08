@@ -55,6 +55,9 @@
       <Filter>Objects\Tiles</Filter>
     </ClCompile>
     <ClCompile Include="Collision.cpp" />
+    <ClCompile Include="LoadManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h" />
@@ -120,6 +123,9 @@
       <Filter>Objects\Tiles</Filter>
     </ClInclude>
     <ClInclude Include="Collision.h" />
+    <ClInclude Include="LoadManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Input">
@@ -157,6 +163,9 @@
     </Filter>
     <Filter Include="Objects\Tiles">
       <UniqueIdentifier>{b6da109d-b495-4dff-8995-f89b3ec83d93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager">
+      <UniqueIdentifier>{c436f5c8-0495-4ecb-9a0d-d9c3d641bb81}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
