@@ -6,6 +6,9 @@
 
 #include "LoadManager.h"
 
+//
+#include "Sample_Friend.h"
+
 CHero::CHero() : m_fVecSpeed(2.0f), m_fVecJump(6.5f),
 				 m_fVecAcc(0.0f), m_fVecGravity(-1.0f),
 				 m_bJump(false),
@@ -19,11 +22,14 @@ CHero::CHero() : m_fVecSpeed(2.0f), m_fVecJump(6.5f),
 				 m_Jump_LeftIndex(0, 0), m_Jump_RightIndex(0, 0),
 				 m_Absorb_LeftIndex(0, 0), m_Absorb_RightIndex(0, 0),
 				 m_Release_LeftIndex(0, 0), m_Release_RightIndex(0, 0),
-				 m_State(RIGHT), m_prevState(RIGHT)
+				 m_State(RIGHT), m_prevState(RIGHT),
+				 m_pFriends(NULL)
 {
 }
 CHero::~CHero()
 {
+	if(m_pFriends!=NULL)
+		delete m_pFriends ;
 }
 
 void CHero::Init()
@@ -131,10 +137,10 @@ void CHero::Init()
 							(float)((m_Stand_RightIndex.x+1) * m_ImgSize.x), (float)((m_Stand_RightIndex.y+1) * m_ImgSize.y)) ;
 	//m_pSprite->SetPositionZ(0.4f) ;
 
-	m_fX = 0.0f ;
-	m_fY = 0.0f ;
-
 	SetBoundingBox() ;
+
+	//
+	m_pFriends = new CSampleFriend ;
 }
 
 float CHero::GetPositionX()
@@ -174,9 +180,9 @@ void CHero::Gravity()
 	m_fY += m_vForce.y ;
 	m_bGravity = true ;
 
-	if(m_fY<0.0f)
+	if(m_fY<32.0f)
 	{
-		m_fY = 0.0f ;
+		m_fY = 32.0f ;
 		m_bGravity = false ;
 		SetJump(false) ;
 		GravityAccReset() ;
@@ -355,7 +361,7 @@ void CHero::Animation()
 
 	if(fTime>=0.2f)
 	{
-		int Frame = fTime / 0.2f ;
+		int Frame = (int)(fTime / 0.2f) ;
 		fTime -= Frame * 0.2f ;
 		Frame %= MaxFrame ;
 		m_nNowFrame += Frame ;

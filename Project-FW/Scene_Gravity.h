@@ -4,6 +4,7 @@
 
 class CHero ;
 class CTilesGround ;
+class CSampleFriend ;
 class CCollision ;
 class CSprite ;
 
@@ -12,6 +13,7 @@ class SceneGravity : public Scene
 private :
 	CHero *m_pHero ;
 	CTilesGround *m_pTiles[5] ;
+	CSampleFriend *m_pFriend ;
 	CCollision *m_pCollision ;
 
 public :

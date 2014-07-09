@@ -1,0 +1,36 @@
+# Image
+
+<image>
+Resource/Image/Friend/Makzelo.png
+
+<size>
+64, 64
+
+# Collision Box
+
+<collision_box>
+0, 0, 64, 64
+
+# Stand
+
+<stand_index>
+0, 0
+
+<stand_frame>
+1
+
+# Absorb
+
+<absorb_index>
+0, 2
+
+<absorb_frame>
+4
+
+# Release
+
+<release_index>
+0, 1
+
+<release_frame>
+4

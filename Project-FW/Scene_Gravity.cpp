@@ -11,6 +11,7 @@
 
 #include "Hero.h"
 #include "Tiles_Ground.h"
+#include "Sample_Friend.h"
 #include "Collision.h"
 
 SceneGravity::SceneGravity()
@@ -41,11 +42,14 @@ void SceneGravity::Init()
 		m_pTiles[i] = new CTilesGround ;
 		m_pTiles[i]->Init() ;
 	}
-	m_pTiles[0]->SetPosition(320.0f, 0.0f) ;
-	m_pTiles[1]->SetPosition(384.0f, 0.0f) ;
-	m_pTiles[2]->SetPosition(384.0f, 64.0f) ;
-	m_pTiles[3]->SetPosition(448.0f, 0.0f) ;
-	m_pTiles[4]->SetPosition(192.0f, 96.0f) ;
+	m_pTiles[0]->SetPosition(320.0f, 32.0f) ;
+	m_pTiles[1]->SetPosition(384.0f, 32.0f) ;
+	m_pTiles[2]->SetPosition(384.0f, 96.0f) ;
+	m_pTiles[3]->SetPosition(448.0f, 32.0f) ;
+	m_pTiles[4]->SetPosition(192.0f, 128.0f) ;
+
+	m_pFriend = new CSampleFriend ;
+	m_pFriend->Init() ;
 
 	m_pCollision = new CCollision ;
 }
@@ -57,6 +61,8 @@ void SceneGravity::Destroy()
 
 	for(int i=0; i<5; i++)
 		delete m_pTiles[i] ;
+
+	delete m_pFriend ;
 }
 
 void SceneGravity::Update(float dt)
@@ -67,6 +73,7 @@ void SceneGravity::Update(float dt)
 	g_MusicManager->Loop() ;
 
 	m_pHero->Update() ;
+	m_pFriend->Update() ;
 
 	for(int i=0; i<5; i++)
 		m_pCollision->XCollision(m_pHero, m_pTiles[i]) ;
@@ -81,6 +88,8 @@ void SceneGravity::Render()
 
 	for(int i=0; i<5; i++)
 		m_pTiles[i]->Render() ;
+
+	m_pFriend->Render() ;
 
 	m_pHero->Render() ;
 

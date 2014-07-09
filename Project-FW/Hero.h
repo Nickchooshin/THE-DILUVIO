@@ -2,6 +2,10 @@
 
 #include "Objects.h"
 
+#include "Friends.h"
+
+class CFriends ;
+
 class CHero : public CObjects
 {
 private :
@@ -26,6 +30,9 @@ private :
 	enum State { LEFT=0, LEFT_MOVE, LEFT_JUMP, LEFT_ABSORB, LEFT_RELEASE,
 				 RIGHT, RIGHT_MOVE, RIGHT_JUMP, RIGHT_ABSORB, RIGHT_RELEASE } ;
 	State m_State, m_prevState ;
+
+	//
+	CFriends *m_pFriends ;
 
 public :
 	CHero() ;

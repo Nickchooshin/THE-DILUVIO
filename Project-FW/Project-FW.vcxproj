@@ -90,6 +90,7 @@
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="MusicManager.cpp" />
     <ClCompile Include="Objects.cpp" />
+    <ClCompile Include="Sample_Friend.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SampleScene.cpp" />
     <ClCompile Include="Scene_Gravity.cpp" />
@@ -105,6 +106,7 @@
     <ClInclude Include="Collision.h" />
     <ClInclude Include="D3dSystem.h" />
     <ClInclude Include="D3dDevice.h" />
+    <ClInclude Include="Friends.h" />
     <ClInclude Include="Hero.h" />
     <ClInclude Include="InputDevice.h" />
     <ClInclude Include="Joystick.h" />
@@ -113,6 +115,7 @@
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="MusicManager.h" />
     <ClInclude Include="Objects.h" />
+    <ClInclude Include="Sample_Friend.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SampleScene.h" />
