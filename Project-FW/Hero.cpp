@@ -135,7 +135,6 @@ void CHero::Init()
 	m_pSprite->Init((float)m_ImgSize.x, (float)m_ImgSize.y, image_path) ;
 	m_pSprite->SetTextureUV((float)(m_Stand_RightIndex.x * m_ImgSize.x), (float)(m_Stand_RightIndex.y * m_ImgSize.y),
 							(float)((m_Stand_RightIndex.x+1) * m_ImgSize.x), (float)((m_Stand_RightIndex.y+1) * m_ImgSize.y)) ;
-	//m_pSprite->SetPositionZ(0.4f) ;
 
 	SetBoundingBox() ;
 

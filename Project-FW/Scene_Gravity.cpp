@@ -14,6 +14,8 @@
 #include "Sample_Friend.h"
 #include "Collision.h"
 
+#include "FriendChange_UI.h"
+
 SceneGravity::SceneGravity()
 {
 }
@@ -52,6 +54,9 @@ void SceneGravity::Init()
 	m_pFriend->Init() ;
 
 	m_pCollision = new CCollision ;
+
+	m_pFC_UI = new CFriendChange_UI ;
+	m_pFC_UI->Init() ;
 }
 
 void SceneGravity::Destroy()
@@ -63,6 +68,8 @@ void SceneGravity::Destroy()
 		delete m_pTiles[i] ;
 
 	delete m_pFriend ;
+
+	delete m_pFC_UI ;
 }
 
 void SceneGravity::Update(float dt)
@@ -80,6 +87,8 @@ void SceneGravity::Update(float dt)
 	m_pHero->Gravity() ;
 	for(int i=0; i<5; i++)
 		m_pCollision->YCollision(m_pHero, m_pTiles[i]) ;
+
+	m_pFC_UI->Update() ;
 }
 
 void SceneGravity::Render()
@@ -91,7 +100,12 @@ void SceneGravity::Render()
 
 	m_pFriend->Render() ;
 
+	m_pFC_UI->SetPosition(m_pHero->GetPositionX(), m_pHero->GetPositionY()) ;
+	m_pFC_UI->Render_Behind() ;
+
 	m_pHero->Render() ;
+
+	m_pFC_UI->Render_Front() ;
 
 	/*CSprite sprite ;
 	sprite.Init("Resource/Image/collision.png") ;

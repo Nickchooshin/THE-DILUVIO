@@ -8,6 +8,8 @@ class CSampleFriend ;
 class CCollision ;
 class CSprite ;
 
+class CFriendChange_UI ;
+
 class SceneGravity : public Scene
 {
 private :
@@ -15,6 +17,8 @@ private :
 	CTilesGround *m_pTiles[5] ;
 	CSampleFriend *m_pFriend ;
 	CCollision *m_pCollision ;
+
+	CFriendChange_UI *m_pFC_UI ;
 
 public :
 	static Scene* scene() ;

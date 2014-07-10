@@ -81,6 +81,7 @@
     <ClCompile Include="CameraManager.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="D3dSystem.cpp" />
+    <ClCompile Include="FriendChange_UI.cpp" />
     <ClCompile Include="Hero.cpp" />
     <ClCompile Include="InputDevice.cpp" />
     <ClCompile Include="Joystick.cpp" />
@@ -106,6 +107,7 @@
     <ClInclude Include="Collision.h" />
     <ClInclude Include="D3dSystem.h" />
     <ClInclude Include="D3dDevice.h" />
+    <ClInclude Include="FriendChange_UI.h" />
     <ClInclude Include="Friends.h" />
     <ClInclude Include="Hero.h" />
     <ClInclude Include="InputDevice.h" />
