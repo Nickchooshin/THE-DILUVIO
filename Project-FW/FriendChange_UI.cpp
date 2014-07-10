@@ -60,11 +60,11 @@ void CFriendChange_UI::Update()
 
 	if(m_State==NONE && g_Keyboard->IsButtonDown(DIK_A))
 	{
-		fSpeed += -2.0f ;
+		m_State = RIGHT ;
 	}
-	if(m_State==NONE && g_Keyboard->IsButtonDown(DIK_S))
+	else if(m_State==NONE && g_Keyboard->IsButtonDown(DIK_S))
 	{
-		fSpeed += 2.0f ;
+		m_State = LEFT ;
 	}
 
 	for(int i=0; i<5; i++)
@@ -76,7 +76,7 @@ void CFriendChange_UI::Update()
 			m_fDegree[i] += 360.0f ;
 	}
 
-	//Animation() ;
+	Animation() ;
 
 	SetCirclePosition() ;
 }
@@ -108,22 +108,36 @@ void CFriendChange_UI::Render_Behind()
 void CFriendChange_UI::Animation()
 {
 	static float fTime=0.0f ;
-	fTime += g_D3dDevice->GetTime() ;
 
-	if(m_fNowDegree<m_fMaxDegree && fTime>=0.2f)
+	if(m_State!=NONE)
 	{
-		float Degree = fTime / 0.2f ;
-		fTime = 0.0f ;
-		m_fNowDegree += Degree ;
+		fTime += g_D3dDevice->GetTime() ;
 
-		for(int i=0; i<5; i++)
+		if(m_fNowDegree<=m_fMaxDegree && fTime>=0.2f)
 		{
-			if(m_State==LEFT)
-				m_fDegree[i] -= Degree ;
-			else
-				m_fDegree[i] += Degree ;
+			float Degree = fTime / 0.2f ;
+			fTime = 0.0f ;
+			m_fNowDegree += Degree ;
+			if(m_fNowDegree>m_fMaxDegree)
+				Degree -= m_fNowDegree - m_fMaxDegree ;
+
+			for(int i=0; i<5; i++)
+			{
+				if(m_State==LEFT)
+					m_fDegree[i] -= Degree ;
+				else if(m_State==RIGHT)
+					m_fDegree[i] += Degree ;
+			}
+
+			if(m_fNowDegree>=m_fMaxDegree)
+			{
+				m_State = NONE ;
+				m_fNowDegree = 0.0f ;
+			}
 		}
 	}
+
+	fTime = 0.0f ;
 }
 
 void CFriendChange_UI::SetCirclePosition()
