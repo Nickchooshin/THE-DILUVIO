@@ -23,9 +23,9 @@ public :
 	void AllCameraClear() ;
 
 	void SetPosition(float x, float y) ;
-	void SetPosition(float x, float y, float Number) ;
+	void SetPosition(float x, float y, int Number) ;
 	void MovePosition(float x, float y) ;
-	void MovePosition(float x, float y, float Number) ;
+	void MovePosition(float x, float y, int Number) ;
 
 	void CameraRun() ;
 } ;

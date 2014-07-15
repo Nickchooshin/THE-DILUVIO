@@ -4,11 +4,29 @@
 #include "Keyboard.h"
 #include "D3dDevice.h"
 
+
+///
+#include "Friends_List.h"
+#include "Friends_Okulo.h"
+#include "Friends_Montrilo.h"
+//#include "Friends_Mano.h"
+#include "Friends_Pilo.h"
+#include "Friends_Makzelo.h"
+#include "Friends_Vento.h"
+#include "Friends_Busxo.h"
+#include "Friends_Saltado.h"
+#include "Friends_Elitro.h"
+///
+
+CFriends_List Friends_List ;
+
 CFriendChange_UI::CFriendChange_UI() : m_fX(0.0f), m_fY(0.0f),
 									   m_fRX(0.0f), m_fRY(0.0f),
 									   m_State(NONE),
 									   m_fNowDegree(0.0f),
-									   m_fMaxDegree(0.0f)
+									   m_fMaxDegree(0.0f),
+									   m_nIconIndex(0),
+									   m_bIconChange(false)
 {
 	for(int i=0; i<5; i++)
 	{
@@ -16,6 +34,12 @@ CFriendChange_UI::CFriendChange_UI() : m_fX(0.0f), m_fY(0.0f),
 		m_fDegree[i] = 0.0f ;
 		m_fScale[i] = 1.0f ;
 	}
+
+	m_nIconListIndex[0] = 0 ;
+	m_nIconListIndex[1] = 1 ;
+	m_nIconListIndex[2] = 2 ;
+	m_nIconListIndex[3] = -2 ;
+	m_nIconListIndex[4] = -1 ;
 }
 CFriendChange_UI::~CFriendChange_UI()
 {
@@ -39,12 +63,45 @@ void CFriendChange_UI::Init()
 		m_fScale[i] = 1.0f ;
 
 		m_pSIcon[i] = new CSprite ;
+		m_pSIcon[i]->Init(24.0f, 24.0f, "Resource/Image/Friends/Icon/SP_Symbol.png") ;
+		m_pSIcon[i]->SetTextureUV((float)(i * 24), 24.0f, (float)((i+1) * 24), 48.0f) ;
 	}
-	m_pSIcon[0]->Init("Resource/Image/Friend/Icon/SP_Symbol_Busxo.png") ;
-	m_pSIcon[1]->Init("Resource/Image/Friend/Icon/SP_Symbol_Elitro.png") ;
-	m_pSIcon[2]->Init("Resource/Image/Friend/Icon/SP_Symbol_Makzelo.png") ;
-	m_pSIcon[3]->Init("Resource/Image/Friend/Icon/SP_Symbol_Man-o.png") ;
-	m_pSIcon[4]->Init("Resource/Image/Friend/Icon/SP_Symbol_Montrilo.png") ;
+
+	///
+	CFriends *pFriends ;
+	Friends_List.SetMaxFriends(8) ;
+
+	pFriends = new CFriends_Okulo ;
+	pFriends->Init() ;
+	Friends_List.AddFriend(pFriends) ;
+
+	pFriends = new CFriends_Montrilo ;
+	pFriends->Init() ;
+	Friends_List.AddFriend(pFriends) ;
+
+	pFriends = new CFriends_Pilo ;
+	pFriends->Init() ;
+	Friends_List.AddFriend(pFriends) ;
+
+	pFriends = new CFriends_Makzelo ;
+	pFriends->Init() ;
+	Friends_List.AddFriend(pFriends) ;
+
+	pFriends = new CFriends_Vento ;
+	pFriends->Init() ;
+	Friends_List.AddFriend(pFriends) ;
+
+	pFriends = new CFriends_Busxo ;
+	pFriends->Init() ;
+	Friends_List.AddFriend(pFriends) ;
+
+	pFriends = new CFriends_Saltado ;
+	pFriends->Init() ;
+	Friends_List.AddFriend(pFriends) ;
+
+	pFriends = new CFriends_Elitro ;
+	pFriends->Init() ;
+	Friends_List.AddFriend(pFriends) ;
 }
 
 void CFriendChange_UI::SetPosition(float fX, float fY)
@@ -79,12 +136,6 @@ void CFriendChange_UI::Update()
 	Animation() ;
 
 	SetCirclePosition() ;
-}
-
-void CFriendChange_UI::Render()
-{
-	for(int i=0; i<5; i++)
-		m_pSIcon[i]->Render() ;
 }
 
 void CFriendChange_UI::Render_Front()
@@ -133,6 +184,34 @@ void CFriendChange_UI::Animation()
 			{
 				m_State = NONE ;
 				m_fNowDegree = 0.0f ;
+				m_bIconChange = false ;
+			}
+			else if(!m_bIconChange && m_fNowDegree>=m_fMaxDegree/2.0f)
+			{
+				m_bIconChange = true ;
+
+				int nextIndex, prevIndex ;
+				int size = Friends_List.GetSize() ;
+				if(m_State==LEFT)
+				{
+					nextIndex = (m_nIconIndex + 3) % 5 ;
+					prevIndex = (m_nIconIndex + 2) % 5 ;
+					m_nIconListIndex[nextIndex] = m_nIconListIndex[prevIndex] + 1 ;
+					if(m_nIconListIndex[nextIndex]>=size)
+						m_nIconListIndex[nextIndex] -= size ;
+					m_nIconIndex = (m_nIconIndex + 1) % 5 ;
+				}
+				else if(m_State==RIGHT)
+				{
+					nextIndex = (m_nIconIndex + 2) % 5 ;
+					prevIndex = (m_nIconIndex + 3) % 5 ;
+					m_nIconListIndex[nextIndex] = m_nIconListIndex[prevIndex] - 1 ;
+					if(m_nIconListIndex[nextIndex]<0)
+						m_nIconListIndex[nextIndex] += size ;
+					m_nIconIndex = (m_nIconIndex - 1) % 5 ;
+					if(m_nIconIndex<0)
+						m_nIconIndex += 5 ;
+				}
 			}
 		}
 	}
@@ -154,6 +233,13 @@ void CFriendChange_UI::SetCirclePosition()
 		x = (x * m_fRX) + m_fX ;
 		y = (y * m_fRY) + m_fY ;
 
+		///
+		Position index ;
+		//index = Friends_List.GetFriend(i)->GetIconIndex() ;
+		index = Friends_List.GetFriend(m_nIconListIndex[i])->GetIconIndex() ;
+		m_pSIcon[i]->SetTextureUV((float)(index.x * 24), (float)(index.y * 24),
+								  (float)((index.x+1) * 24), (float)((index.y+1) * 24)) ;
+		///
 		m_pSIcon[i]->SetScale(m_fScale[i], m_fScale[i]) ;
 		m_pSIcon[i]->SetPosition(x, y) ;
 	}

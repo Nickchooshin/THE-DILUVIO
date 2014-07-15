@@ -11,7 +11,7 @@
 
 #include "Hero.h"
 #include "Tiles_Ground.h"
-#include "Sample_Friend.h"
+#include "Friends_Okulo.h"
 #include "Collision.h"
 
 #include "FriendChange_UI.h"
@@ -50,7 +50,7 @@ void SceneGravity::Init()
 	m_pTiles[3]->SetPosition(448.0f, 32.0f) ;
 	m_pTiles[4]->SetPosition(192.0f, 128.0f) ;
 
-	m_pFriend = new CSampleFriend ;
+	m_pFriend = new CFriends_Okulo ;
 	m_pFriend->Init() ;
 
 	m_pCollision = new CCollision ;

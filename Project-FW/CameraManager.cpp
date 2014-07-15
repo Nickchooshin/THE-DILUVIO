@@ -53,7 +53,7 @@ void CameraManager::SetPosition(float x, float y)
 	SetPosition(x, y, m_nCameraNumber) ;
 }
 
-void CameraManager::SetPosition(float x, float y, float Number)
+void CameraManager::SetPosition(float x, float y, int Number)
 {
 	m_Camera[Number]->SetPosition(x, y) ;
 }
@@ -63,7 +63,7 @@ void CameraManager::MovePosition(float x, float y)
 	MovePosition(x, y, m_nCameraNumber) ;
 }
 
-void CameraManager::MovePosition(float x, float y, float Number)
+void CameraManager::MovePosition(float x, float y, int Number)
 {
 	m_Camera[Number]->MovePosition(x, y) ;
 }

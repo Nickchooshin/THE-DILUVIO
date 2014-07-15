@@ -39,6 +39,8 @@ bool CSprite::Init(char *texfile)
 
 	if(FAILED(InitVB()))
 		return false ;
+
+	return true ;
 }
 
 bool CSprite::Init(float Width, float Height, char *texfile)

@@ -6,9 +6,6 @@
 
 #include "LoadManager.h"
 
-//
-#include "Sample_Friend.h"
-
 CHero::CHero() : m_fVecSpeed(2.0f), m_fVecJump(6.5f),
 				 m_fVecAcc(0.0f), m_fVecGravity(-1.0f),
 				 m_bJump(false),
@@ -22,14 +19,11 @@ CHero::CHero() : m_fVecSpeed(2.0f), m_fVecJump(6.5f),
 				 m_Jump_LeftIndex(0, 0), m_Jump_RightIndex(0, 0),
 				 m_Absorb_LeftIndex(0, 0), m_Absorb_RightIndex(0, 0),
 				 m_Release_LeftIndex(0, 0), m_Release_RightIndex(0, 0),
-				 m_State(RIGHT), m_prevState(RIGHT),
-				 m_pFriends(NULL)
+				 m_State(RIGHT), m_prevState(RIGHT)
 {
 }
 CHero::~CHero()
 {
-	if(m_pFriends!=NULL)
-		delete m_pFriends ;
 }
 
 void CHero::Init()
@@ -137,9 +131,6 @@ void CHero::Init()
 							(float)((m_Stand_RightIndex.x+1) * m_ImgSize.x), (float)((m_Stand_RightIndex.y+1) * m_ImgSize.y)) ;
 
 	SetBoundingBox() ;
-
-	//
-	m_pFriends = new CSampleFriend ;
 }
 
 float CHero::GetPositionX()

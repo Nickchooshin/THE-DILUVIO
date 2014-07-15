@@ -1,7 +1,8 @@
+### Busxo ###
 # Image
 
 <image>
-Resource/Image/Friend/Makzelo.png
+Resource/Image/Friends/Busxo.png
 
 <size>
 64, 64
@@ -10,6 +11,11 @@ Resource/Image/Friend/Makzelo.png
 
 <collision_box>
 0, 0, 64, 64
+
+# Icon
+
+<icon_index>
+1, 2
 
 # Stand
 

@@ -34,6 +34,8 @@ bool CUISprite::Init(char *texfile)
 
 	if(FAILED(InitVB()))
 		return false ;
+
+	return true ;
 }
 
 bool CUISprite::Init(float Width, float Height, char *texfile)

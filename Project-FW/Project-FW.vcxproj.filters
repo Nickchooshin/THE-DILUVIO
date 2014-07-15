@@ -58,11 +58,41 @@
     <ClCompile Include="LoadManager.cpp">
       <Filter>Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Sample_Friend.cpp">
-      <Filter>Objects\Friends</Filter>
-    </ClCompile>
     <ClCompile Include="FriendChange_UI.cpp">
       <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Friends_List.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Friends.cpp">
+      <Filter>Objects\Friends</Filter>
+    </ClCompile>
+    <ClCompile Include="Friends_Okulo.cpp">
+      <Filter>Objects\Friends</Filter>
+    </ClCompile>
+    <ClCompile Include="Friends_Montrilo.cpp">
+      <Filter>Objects\Friends</Filter>
+    </ClCompile>
+    <ClCompile Include="Friends_Mano.cpp">
+      <Filter>Objects\Friends</Filter>
+    </ClCompile>
+    <ClCompile Include="Friends_Pilo.cpp">
+      <Filter>Objects\Friends</Filter>
+    </ClCompile>
+    <ClCompile Include="Friends_Makzelo.cpp">
+      <Filter>Objects\Friends</Filter>
+    </ClCompile>
+    <ClCompile Include="Friends_Vento.cpp">
+      <Filter>Objects\Friends</Filter>
+    </ClCompile>
+    <ClCompile Include="Friends_Busxo.cpp">
+      <Filter>Objects\Friends</Filter>
+    </ClCompile>
+    <ClCompile Include="Friends_Saltado.cpp">
+      <Filter>Objects\Friends</Filter>
+    </ClCompile>
+    <ClCompile Include="Friends_Elitro.cpp">
+      <Filter>Objects\Friends</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -135,11 +165,38 @@
     <ClInclude Include="Friends.h">
       <Filter>Objects\Friends</Filter>
     </ClInclude>
-    <ClInclude Include="Sample_Friend.h">
-      <Filter>Objects\Friends</Filter>
-    </ClInclude>
     <ClInclude Include="FriendChange_UI.h">
       <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Friends_List.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Friends_Okulo.h">
+      <Filter>Objects\Friends</Filter>
+    </ClInclude>
+    <ClInclude Include="Friends_Montrilo.h">
+      <Filter>Objects\Friends</Filter>
+    </ClInclude>
+    <ClInclude Include="Friends_Mano.h">
+      <Filter>Objects\Friends</Filter>
+    </ClInclude>
+    <ClInclude Include="Friends_Pilo.h">
+      <Filter>Objects\Friends</Filter>
+    </ClInclude>
+    <ClInclude Include="Friends_Makzelo.h">
+      <Filter>Objects\Friends</Filter>
+    </ClInclude>
+    <ClInclude Include="Friends_Vento.h">
+      <Filter>Objects\Friends</Filter>
+    </ClInclude>
+    <ClInclude Include="Friends_Busxo.h">
+      <Filter>Objects\Friends</Filter>
+    </ClInclude>
+    <ClInclude Include="Friends_Saltado.h">
+      <Filter>Objects\Friends</Filter>
+    </ClInclude>
+    <ClInclude Include="Friends_Elitro.h">
+      <Filter>Objects\Friends</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -187,6 +244,9 @@
     </Filter>
     <Filter Include="UI">
       <UniqueIdentifier>{54b15f07-6efa-4c74-9c17-7e046de19846}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data">
+      <UniqueIdentifier>{2b3d3912-94b2-468b-91f4-d411edb16678}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

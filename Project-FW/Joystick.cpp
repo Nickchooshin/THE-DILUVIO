@@ -82,7 +82,7 @@ BOOL CALLBACK EnumAxesCallback(const DIDEVICEOBJECTINSTANCE* instance, VOID* con
     return DIENUM_CONTINUE;
 }
 
-bool Joystick::Update()
+HRESULT Joystick::Update()
 {
 	if(!m_bReady)
 		return false ;
@@ -109,7 +109,7 @@ bool Joystick::Update()
 	if( FAILED( hr = m_pDIDJoystick->GetDeviceState(sizeof(DIJOYSTATE2), &JoystickBuffer) ) )
 		return hr ;
 
-	return true ;
+	return S_OK ;
 }
 
 bool Joystick::IsButtonDown(BYTE Button)

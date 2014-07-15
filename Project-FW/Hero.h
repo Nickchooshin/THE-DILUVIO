@@ -31,9 +31,6 @@ private :
 				 RIGHT, RIGHT_MOVE, RIGHT_JUMP, RIGHT_ABSORB, RIGHT_RELEASE } ;
 	State m_State, m_prevState ;
 
-	//
-	CFriends *m_pFriends ;
-
 public :
 	CHero() ;
 	~CHero() ;

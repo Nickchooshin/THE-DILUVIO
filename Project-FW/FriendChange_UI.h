@@ -17,6 +17,9 @@ public :
 	float m_fMaxDegree ;
 	float m_fDegree[5], m_fScale[5] ;
 
+	int m_nIconIndex, m_nIconListIndex[5] ;
+	bool m_bIconChange ;
+
 public :
 	CFriendChange_UI() ;
 	~CFriendChange_UI() ;
@@ -27,7 +30,6 @@ public :
 
 	void Update() ;
 
-	void Render() ;
 	void Render_Front() ;
 	void Render_Behind() ;
 private :

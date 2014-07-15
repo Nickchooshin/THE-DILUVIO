@@ -42,9 +42,11 @@ bool Keyboard::Init()
 
 	m_pDIDKeyboard->Acquire() ;										// 키보드 DirectInputDevice 습득
 	m_pDIDKeyboard->GetDeviceState(sizeof(KeyBuffer), &KeyBuffer) ;	// 키보드 DirectInputDevice 에서 키보드의 상태를 가져온다
+
+	return true ;
 }
 
-bool Keyboard::Update()
+HRESULT Keyboard::Update()
 {
 	HRESULT hr ;
 	ZeroMemory(KeyBuffer, sizeof(KeyBuffer)) ;
@@ -64,7 +66,7 @@ bool Keyboard::Update()
 			return hr ;
 	}
 
-	return true ;
+	return S_OK ;
 }
 
 bool Keyboard::IsButtonDown(BYTE Button)

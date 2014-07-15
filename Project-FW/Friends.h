@@ -4,16 +4,29 @@
 
 class CFriends : public CObjects
 {
+protected :
+	Size m_ImgSize, m_ColSize ;
+	int m_nNowFrame ;
+	int m_nStandFrame, m_nAbsorbFrame, m_nReleaseFrame ;
+	Position m_Stand_Index ;
+	Position m_Absorb_Index ;
+	Position m_Release_Index ;
+	Position m_Icon_Index ;
+
+	enum State { STAND=0, ABSORB, RELEASE } ;
+	State m_State ;
+
 public :
-	CFriends() {}
-	virtual ~CFriends() {}
+	CFriends() ;
+	virtual ~CFriends() ;
+
+	Position GetIconIndex() ;
+
+	virtual void Update() ;
 
 protected :
-	void SetBoundingBox()
-	{
-		m_BoundingBox.left = -32 ;
-		m_BoundingBox.top = 32 ;
-		m_BoundingBox.right = 32 ;
-		m_BoundingBox.bottom = -32 ;
-	}
+	void LoadDat(char *filepath) ;
+	void SetBoundingBox() ;
+
+	virtual void Animation() ;
 } ;

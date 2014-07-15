@@ -18,7 +18,7 @@ public :
 
 	bool Init() ;
 
-	bool Update() ;
+	HRESULT Update() ;
 
 	bool IsMouse(MouseButtonType ButtonType) ;
 } ;

@@ -20,7 +20,7 @@ public :
 
 	bool Init() ;
 
-	bool Update() ;
+	HRESULT Update() ;
 
 	bool IsButtonDown(BYTE Button) ;
 	bool IsButtonUp(BYTE Button) ;

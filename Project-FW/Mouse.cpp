@@ -44,7 +44,7 @@ bool Mouse::Init()
 	return true ;
 }
 
-bool Mouse::Update()
+HRESULT Mouse::Update()
 {
 	HRESULT hr ;
 
@@ -63,7 +63,7 @@ bool Mouse::Update()
 			return hr ;
 	}
 
-	return true ;
+	return S_OK ;
 }
 
 bool Mouse::IsMouse(MouseButtonType ButtonType)
