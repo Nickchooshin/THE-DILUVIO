@@ -15,7 +15,7 @@ CHero::CHero() : m_fVecSpeed(2.0f), m_fVecJump(6.5f),
 				 m_bJump(false),
 				 m_vForce(),
 				 m_bGravity(true),
-				 m_ImgSize(0, 0), m_ColSize(0, 0),
+				 m_ImgSize(0, 0),
 				 m_nNowFrame(0),
 				 m_nStandFrame(0), m_nMoveFrame(0), m_nJumpFrame(0), m_nAbsorbFrame(0), m_nReleaseFrame(0),
 				 m_Stand_LeftIndex(0, 0), m_Stand_RightIndex(0, 0),
@@ -227,20 +227,43 @@ void CHero::Move()
 
 	if(!m_bGravity && g_Keyboard->IsButtonDown(DIK_Z))
 	{
-		m_State = (State)((m_State / RIGHT) * RIGHT + LEFT_ABSORB) ;
-
-		//
-		int index = m_pFC_UI->GetSelectedIndex() ;
-		g_Friends_List->GetFriend(index)->Absorb() ;
-		//
-	}
-	else if(!m_bGravity && g_Keyboard->IsButtonDown(DIK_X))
-	{
 		m_State = (State)((m_State / RIGHT) * RIGHT + LEFT_RELEASE) ;
 
 		//
 		int index = m_pFC_UI->GetSelectedIndex() ;
-		g_Friends_List->GetFriend(index)->Release() ;
+		CFriends *pFriend = g_Friends_List->GetFriend(index) ;
+		if(!pFriend->GetRelease())
+		{
+			pFriend->Release() ;
+
+			float fX ;
+			float tile_x ;
+			if(m_State==LEFT_RELEASE)
+			{
+				fX = m_fX + (m_BoundingBox.left + 32.0f) ;
+				tile_x = (int)(fX / 64.0f) - 1 ;
+			}
+			else if(m_State==RIGHT_RELEASE)
+			{
+				fX = m_fX + (m_BoundingBox.right + 32.0f) ;
+				tile_x = (int)(fX / 64.0f) + 1 ;
+			}
+			fX = (float)(tile_x * 64) ;
+			pFriend->SetPosition(fX, m_fY) ;
+		}
+		//
+	}
+	else if(!m_bGravity && g_Keyboard->IsButtonDown(DIK_X))
+	{
+		m_State = (State)((m_State / RIGHT) * RIGHT + LEFT_ABSORB) ;
+
+		//
+		int index = m_pFC_UI->GetSelectedIndex() ;
+		CFriends *pFriend = g_Friends_List->GetFriend(index) ;
+		if(pFriend->GetRelease())
+		{
+			pFriend->Absorb() ;
+		}
 		//
 	}
 	else

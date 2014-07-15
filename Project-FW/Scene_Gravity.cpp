@@ -14,6 +14,9 @@
 #include "Friends_Okulo.h"
 #include "Collision.h"
 
+//
+#include "Friends_List.h"
+
 SceneGravity::SceneGravity()
 {
 }
@@ -80,6 +83,9 @@ void SceneGravity::Update(float dt)
 	m_pHero->Gravity() ;
 	for(int i=0; i<5; i++)
 		m_pCollision->YCollision(m_pHero, m_pTiles[i]) ;
+
+	//
+	g_Friends_List->Update() ;
 }
 
 void SceneGravity::Render()
@@ -90,6 +96,8 @@ void SceneGravity::Render()
 		m_pTiles[i]->Render() ;
 
 	m_pFriend->Render() ;
+
+	g_Friends_List->Render() ;
 
 	m_pHero->Render() ;
 

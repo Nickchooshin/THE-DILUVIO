@@ -14,6 +14,20 @@ const int CFriends_List::GetSize()
 	return m_Friends_List.size() ;
 }
 
+CFriends* CFriends_List::GetFriend(int index)
+{
+	const int size = m_Friends_List.size() ;
+
+	if(size==0)
+		return NULL ;
+	else if(index<0)
+		index = size + (index % size) ;
+	else if(index>=size)
+		index %= size ;
+
+	return m_Friends_List[index] ;
+}
+
 bool CFriends_List::AddFriend(CFriends *pFriends)
 {
 	if(m_Friends_List.size()>=m_nMaxFriends)
@@ -63,16 +77,30 @@ void CFriends_List::Clear()
 	m_Friends_List.clear() ;
 }
 
-CFriends* CFriends_List::GetFriend(int index)
+void CFriends_List::Update()
 {
-	const int size = m_Friends_List.size() ;
+	CFriends *pFriends ;
+	std::vector<CFriends*>::iterator iter ;
+	std::vector<CFriends*>::iterator end=m_Friends_List.end() ;
 
-	if(size==0)
-		return NULL ;
-	else if(index<0)
-		index = size + (index % size) ;
-	else if(index>=size)
-		index %= size ;
+	for(iter=m_Friends_List.begin(); iter!=end; iter++)
+	{
+		pFriends = *iter ;
+		if(pFriends->GetRelease())
+			pFriends->Update() ;
+	}
+}
 
-	return m_Friends_List[index] ;
+void CFriends_List::Render()
+{
+	CFriends *pFriends ;
+	std::vector<CFriends*>::iterator iter ;
+	std::vector<CFriends*>::iterator end=m_Friends_List.end() ;
+
+	for(iter=m_Friends_List.begin(); iter!=end; iter++)
+	{
+		pFriends = *iter ;
+		if(pFriends->GetRelease())
+			pFriends->Render() ;
+	}
 }

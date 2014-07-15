@@ -17,11 +17,15 @@ public :
 
 	const int GetSize() ;
 
+	CFriends* GetFriend(int index) ;
+
 	bool AddFriend(CFriends* pFriends) ;
 	void SetMaxFriends(int nMaxFriends) ;
 	void Clear() ;
 
-	CFriends* GetFriend(int index) ;
+	void Update() ;
+
+	void Render() ;
 } ;
 
 #define g_Friends_List CFriends_List::GetInstance()

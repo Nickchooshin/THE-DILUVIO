@@ -15,7 +15,7 @@ private :
 
 	Vector m_vForce ;
 
-	Size m_ImgSize, m_ColSize ;
+	Size m_ImgSize ;
 	int m_nNowFrame ;
 	int m_nStandFrame, m_nMoveFrame, m_nJumpFrame, m_nAbsorbFrame, m_nReleaseFrame ;
 	Position m_Stand_LeftIndex, m_Stand_RightIndex ;

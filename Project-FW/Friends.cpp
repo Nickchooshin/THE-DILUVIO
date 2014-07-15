@@ -19,11 +19,15 @@ CFriends::~CFriends()
 
 void CFriends::Absorb()
 {
+	m_nNowFrame = 0 ;
+	m_State = ABSORB ;
 	m_bRelease = false ;
 }
 
 void CFriends::Release()
 {
+	m_nNowFrame = 0 ;
+	m_State = RELEASE ;
 	m_bRelease = true ;
 }
 
@@ -156,7 +160,14 @@ void CFriends::Animation()
 		fTime -= Frame * 0.2f ;
 		Frame %= MaxFrame ;
 		m_nNowFrame += Frame ;
+		//
+		if(m_nNowFrame>=MaxFrame)
+		{
+			m_nNowFrame = 0 ;
+			m_State = STAND ;
+		}
 		m_nNowFrame %= MaxFrame ;
+		//
 
 		float left, top, right, bottom ;
 		left = (float)((Index.x + m_nNowFrame) * m_ImgSize.x) ;
