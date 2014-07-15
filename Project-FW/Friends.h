@@ -13,6 +13,8 @@ protected :
 	Position m_Release_Index ;
 	Position m_Icon_Index ;
 
+	bool m_bRelease ;
+
 	enum State { STAND=0, ABSORB, RELEASE } ;
 	State m_State ;
 
@@ -20,7 +22,13 @@ public :
 	CFriends() ;
 	virtual ~CFriends() ;
 
-	Position GetIconIndex() ;
+	virtual void Init() = 0 ;
+
+	void Absorb() ;
+	void Release() ;
+
+	const bool GetRelease() ;
+	const Position GetIconIndex() ;
 
 	virtual void Update() ;
 

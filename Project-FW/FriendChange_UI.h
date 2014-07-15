@@ -28,6 +28,8 @@ public :
 
 	void SetPosition(float fX, float fY) ;
 
+	int GetSelectedIndex() ;
+
 	void Update() ;
 
 	void Render_Front() ;

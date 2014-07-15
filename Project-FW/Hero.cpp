@@ -1,10 +1,14 @@
 #include "Hero.h"
 #include "Sprite.h"
+#include "FriendChange_UI.h"
 
 #include "Keyboard.h"
 #include "D3dDevice.h"
 
 #include "LoadManager.h"
+
+#include "Friends_List.h"
+#include "Friends.h"
 
 CHero::CHero() : m_fVecSpeed(2.0f), m_fVecJump(6.5f),
 				 m_fVecAcc(0.0f), m_fVecGravity(-1.0f),
@@ -19,11 +23,14 @@ CHero::CHero() : m_fVecSpeed(2.0f), m_fVecJump(6.5f),
 				 m_Jump_LeftIndex(0, 0), m_Jump_RightIndex(0, 0),
 				 m_Absorb_LeftIndex(0, 0), m_Absorb_RightIndex(0, 0),
 				 m_Release_LeftIndex(0, 0), m_Release_RightIndex(0, 0),
-				 m_State(RIGHT), m_prevState(RIGHT)
+				 m_State(RIGHT), m_prevState(RIGHT),
+				 m_pFC_UI(NULL)
 {
 }
 CHero::~CHero()
 {
+	if(m_pFC_UI!=NULL)
+		delete m_pFC_UI ;
 }
 
 void CHero::Init()
@@ -131,6 +138,9 @@ void CHero::Init()
 							(float)((m_Stand_RightIndex.x+1) * m_ImgSize.x), (float)((m_Stand_RightIndex.y+1) * m_ImgSize.y)) ;
 
 	SetBoundingBox() ;
+
+	m_pFC_UI = new CFriendChange_UI ;
+	m_pFC_UI->Init() ;
 }
 
 float CHero::GetPositionX()
@@ -183,6 +193,19 @@ void CHero::Update()
 {
 	Move() ;
 	Animation() ;
+
+	m_pFC_UI->Update() ;
+}
+
+void CHero::Render()
+{
+	m_pFC_UI->SetPosition(m_fX, m_fY) ;
+	m_pFC_UI->Render_Behind() ;
+
+	m_pSprite->SetPosition(m_fX, m_fY) ;
+	m_pSprite->Render() ;
+
+	m_pFC_UI->Render_Front() ;
 }
 
 void CHero::SetBoundingBox()
@@ -206,31 +229,23 @@ void CHero::Move()
 	{
 		m_State = (State)((m_State / RIGHT) * RIGHT + LEFT_ABSORB) ;
 
-		// 烙矫 林籍 贸府
-		/*if(m_State==LEFT || m_State==LEFT_MOVE)
-			m_State = LEFT_ABSORB ;
-		else if(m_State==RIGHT || m_State==RIGHT_MOVE)
-			m_State = RIGHT_ABSORB ;*/
+		//
+		int index = m_pFC_UI->GetSelectedIndex() ;
+		g_Friends_List->GetFriend(index)->Absorb() ;
+		//
 	}
 	else if(!m_bGravity && g_Keyboard->IsButtonDown(DIK_X))
 	{
 		m_State = (State)((m_State / RIGHT) * RIGHT + LEFT_RELEASE) ;
-		
-		// 烙矫 林籍 贸府
-		/*if(m_State==LEFT)
-			m_State = LEFT_RELEASE ;
-		else if(m_State==RIGHT)
-			m_State = RIGHT_RELEASE ;*/
+
+		//
+		int index = m_pFC_UI->GetSelectedIndex() ;
+		g_Friends_List->GetFriend(index)->Release() ;
+		//
 	}
 	else
 	{
 		m_State = (State)((m_State / RIGHT) * RIGHT + LEFT) ;
-		
-		// 烙矫 林籍 贸府
-		/*if(m_State==LEFT_ABSORB || m_State==LEFT_RELEASE)
-			m_State = LEFT ;
-		else if(m_State==RIGHT_ABSORB || m_State==RIGHT_RELEASE)
-			m_State = RIGHT ;*/
 
 		if(g_Keyboard->IsButtonDown(DIK_LEFT))
 			m_vForce.x -= fSpeed ;
@@ -251,7 +266,6 @@ void CHero::Move()
 void CHero::Animation()
 {
 	// Direction
-	//if(m_vForce.y!=0.0f || m_bGravity)
 	if(m_bGravity)
 	{
 		if(m_vForce.x<0)
@@ -261,12 +275,6 @@ void CHero::Animation()
 		else
 		{
 			m_State = (State)((m_State / RIGHT) * RIGHT + LEFT_JUMP) ;
-
-			// 烙矫 林籍 贸府
-			/*if(m_State==LEFT || m_State==LEFT_MOVE)
-				m_State = LEFT_JUMP ;
-			else if(m_State==RIGHT || m_State==RIGHT_MOVE)
-				m_State = RIGHT_JUMP ;*/
 		}
 	}
 	else if(m_vForce.x<0)
@@ -282,12 +290,6 @@ void CHero::Animation()
 		State Temp = (State)(m_State % RIGHT) ;
 		if(Temp==LEFT_MOVE || Temp==LEFT_JUMP)
 			m_State = (State)((m_State / RIGHT) * RIGHT + LEFT) ;
-
-		// 烙矫 林籍 贸府
-		/*if(m_State==LEFT_MOVE || m_State==LEFT_JUMP)
-			m_State = LEFT ;
-		else if(m_State==RIGHT_MOVE || m_State==RIGHT_JUMP)
-			m_State = RIGHT ;*/
 	}
 
 	if(m_State!=m_prevState)

@@ -7,6 +7,7 @@
 
 ///
 #include "Friends_List.h"
+
 #include "Friends_Okulo.h"
 #include "Friends_Montrilo.h"
 //#include "Friends_Mano.h"
@@ -17,8 +18,6 @@
 #include "Friends_Saltado.h"
 #include "Friends_Elitro.h"
 ///
-
-CFriends_List Friends_List ;
 
 CFriendChange_UI::CFriendChange_UI() : m_fX(0.0f), m_fY(0.0f),
 									   m_fRX(0.0f), m_fRY(0.0f),
@@ -69,45 +68,50 @@ void CFriendChange_UI::Init()
 
 	///
 	CFriends *pFriends ;
-	Friends_List.SetMaxFriends(8) ;
+	g_Friends_List->SetMaxFriends(8) ;
 
 	pFriends = new CFriends_Okulo ;
 	pFriends->Init() ;
-	Friends_List.AddFriend(pFriends) ;
+	g_Friends_List->AddFriend(pFriends) ;
 
 	pFriends = new CFriends_Montrilo ;
 	pFriends->Init() ;
-	Friends_List.AddFriend(pFriends) ;
+	g_Friends_List->AddFriend(pFriends) ;
 
 	pFriends = new CFriends_Pilo ;
 	pFriends->Init() ;
-	Friends_List.AddFriend(pFriends) ;
+	g_Friends_List->AddFriend(pFriends) ;
 
 	pFriends = new CFriends_Makzelo ;
 	pFriends->Init() ;
-	Friends_List.AddFriend(pFriends) ;
+	g_Friends_List->AddFriend(pFriends) ;
 
 	pFriends = new CFriends_Vento ;
 	pFriends->Init() ;
-	Friends_List.AddFriend(pFriends) ;
+	g_Friends_List->AddFriend(pFriends) ;
 
 	pFriends = new CFriends_Busxo ;
 	pFriends->Init() ;
-	Friends_List.AddFriend(pFriends) ;
+	g_Friends_List->AddFriend(pFriends) ;
 
 	pFriends = new CFriends_Saltado ;
 	pFriends->Init() ;
-	Friends_List.AddFriend(pFriends) ;
+	g_Friends_List->AddFriend(pFriends) ;
 
 	pFriends = new CFriends_Elitro ;
 	pFriends->Init() ;
-	Friends_List.AddFriend(pFriends) ;
+	g_Friends_List->AddFriend(pFriends) ;
 }
 
 void CFriendChange_UI::SetPosition(float fX, float fY)
 {
 	m_fX = fX ;
 	m_fY = fY ;
+}
+
+int CFriendChange_UI::GetSelectedIndex()
+{
+	return m_nIconListIndex[m_nIconIndex] ;
 }
 
 void CFriendChange_UI::Update()
@@ -191,7 +195,7 @@ void CFriendChange_UI::Animation()
 				m_bIconChange = true ;
 
 				int nextIndex, prevIndex ;
-				int size = Friends_List.GetSize() ;
+				int size = g_Friends_List->GetSize() ;
 				if(m_State==LEFT)
 				{
 					nextIndex = (m_nIconIndex + 3) % 5 ;
@@ -233,13 +237,11 @@ void CFriendChange_UI::SetCirclePosition()
 		x = (x * m_fRX) + m_fX ;
 		y = (y * m_fRY) + m_fY ;
 
-		///
 		Position index ;
-		//index = Friends_List.GetFriend(i)->GetIconIndex() ;
-		index = Friends_List.GetFriend(m_nIconListIndex[i])->GetIconIndex() ;
+		index = g_Friends_List->GetFriend(m_nIconListIndex[i])->GetIconIndex() ;
 		m_pSIcon[i]->SetTextureUV((float)(index.x * 24), (float)(index.y * 24),
 								  (float)((index.x+1) * 24), (float)((index.y+1) * 24)) ;
-		///
+
 		m_pSIcon[i]->SetScale(m_fScale[i], m_fScale[i]) ;
 		m_pSIcon[i]->SetPosition(x, y) ;
 	}

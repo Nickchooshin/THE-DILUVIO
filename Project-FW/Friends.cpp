@@ -9,6 +9,7 @@ CFriends::CFriends() : m_ImgSize(0, 0), m_ColSize(0, 0),
 					   m_nStandFrame(0), m_nAbsorbFrame(0), m_nReleaseFrame(0),
 					   m_Stand_Index(0, 0), m_Absorb_Index(0, 0), m_Release_Index(0, 0),
 					   m_Icon_Index(0, 0),
+					   m_bRelease(false),
 					   m_State(STAND)
 {
 }
@@ -16,8 +17,26 @@ CFriends::~CFriends()
 {
 }
 
-Position CFriends::GetIconIndex()
+void CFriends::Absorb()
 {
+	m_bRelease = false ;
+}
+
+void CFriends::Release()
+{
+	m_bRelease = true ;
+}
+
+const bool CFriends::GetRelease()
+{
+	return m_bRelease ;
+}
+
+const Position CFriends::GetIconIndex()
+{
+	if(m_bRelease)
+		return Position(0, 0) ;
+
 	return m_Icon_Index ;
 }
 

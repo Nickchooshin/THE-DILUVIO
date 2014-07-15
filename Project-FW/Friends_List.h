@@ -1,10 +1,11 @@
 #pragma once
 
+#include "Singleton.h"
 #include <vector>
 
 class CFriends ;
 
-class CFriends_List
+class CFriends_List : public Singleton<CFriends_List>
 {
 private :
 	std::vector<CFriends*> m_Friends_List ;
@@ -22,3 +23,5 @@ public :
 
 	CFriends* GetFriend(int index) ;
 } ;
+
+#define g_Friends_List CFriends_List::GetInstance()

@@ -32,9 +32,6 @@ void CFriends_List::SetMaxFriends(int nMaxFriends)
 {
 	m_nMaxFriends = nMaxFriends ;
 
-
-
-	//
 	if(nMaxFriends<m_nMaxFriends)
 	{
 		std::vector<CFriends*> temp ;
@@ -42,7 +39,6 @@ void CFriends_List::SetMaxFriends(int nMaxFriends)
 		for(int i=0; i<size; i++)
 		{
 			temp.push_back(m_Friends_List.front()) ;
-			//m_Friends_List.pop_front() ;
 			m_Friends_List.erase(m_Friends_List.begin()) ;
 		}
 
@@ -69,19 +65,12 @@ void CFriends_List::Clear()
 
 CFriends* CFriends_List::GetFriend(int index)
 {
-	/*index %= m_Friends_List.size() ;
-
-	for(int i=0; i<index; i++)
-	{
-	}*/
-
 	const int size = m_Friends_List.size() ;
 
 	if(size==0)
 		return NULL ;
 	else if(index<0)
-		//index += size ;
-		index = (size - ((size - index) % size)) % size ;
+		index = size + (index % size) ;
 	else if(index>=size)
 		index %= size ;
 

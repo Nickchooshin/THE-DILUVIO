@@ -2,9 +2,7 @@
 
 #include "Objects.h"
 
-#include "Friends.h"
-
-class CFriends ;
+class CFriendChange_UI ;
 
 class CHero : public CObjects
 {
@@ -31,6 +29,8 @@ private :
 				 RIGHT, RIGHT_MOVE, RIGHT_JUMP, RIGHT_ABSORB, RIGHT_RELEASE } ;
 	State m_State, m_prevState ;
 
+	CFriendChange_UI *m_pFC_UI ;
+
 public :
 	CHero() ;
 	~CHero() ;
@@ -48,6 +48,8 @@ public :
 	void Gravity() ;
 
 	void Update() ;
+
+	void Render() ;
 private :
 	void SetBoundingBox() ;
 
