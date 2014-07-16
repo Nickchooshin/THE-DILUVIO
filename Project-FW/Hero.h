@@ -1,20 +1,12 @@
 #pragma once
 
-#include "Objects.h"
+#include "DynamicObjects.h"
 
 class CFriendChange_UI ;
 
-class CHero : public CObjects
+class CHero : public CDynamicObjects
 {
 private :
-	const float m_fVecSpeed, m_fVecJump ;
-	float m_fVecAcc, m_fVecGravity ;
-
-	bool m_bJump ;
-	bool m_bGravity ;
-
-	Vector m_vForce ;
-
 	Size m_ImgSize ;
 	int m_nNowFrame ;
 	int m_nStandFrame, m_nMoveFrame, m_nJumpFrame, m_nAbsorbFrame, m_nReleaseFrame ;
@@ -36,16 +28,6 @@ public :
 	~CHero() ;
 
 	void Init() ;
-
-	float GetPositionX() ;
-	float GetPositionY() ;
-	Vector GetForce() ;
-
-	void SetJump(bool bFlag) ;
-	void SetGravity(bool bFlag) ;
-
-	void GravityAccReset() ;
-	void Gravity() ;
 
 	void Update() ;
 

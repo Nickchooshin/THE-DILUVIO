@@ -81,6 +81,7 @@
     <ClCompile Include="CameraManager.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="D3dSystem.cpp" />
+    <ClCompile Include="DynamicObjects.cpp" />
     <ClCompile Include="FriendChange_UI.cpp" />
     <ClCompile Include="Friends.cpp" />
     <ClCompile Include="Friends_Busxo.cpp" />
@@ -98,6 +99,7 @@
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="LoadManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MapTiles.cpp" />
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="MusicManager.cpp" />
     <ClCompile Include="Objects.cpp" />
@@ -117,6 +119,7 @@
     <ClInclude Include="Collision.h" />
     <ClInclude Include="D3dSystem.h" />
     <ClInclude Include="D3dDevice.h" />
+    <ClInclude Include="DynamicObjects.h" />
     <ClInclude Include="FriendChange_UI.h" />
     <ClInclude Include="Friends.h" />
     <ClInclude Include="Friends_Busxo.h" />
@@ -133,6 +136,7 @@
     <ClInclude Include="Joystick.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="LoadManager.h" />
+    <ClInclude Include="MapTiles.h" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="MusicManager.h" />
     <ClInclude Include="Objects.h" />

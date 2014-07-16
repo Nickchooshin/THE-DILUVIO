@@ -12,6 +12,7 @@ CFriends::CFriends() : m_ImgSize(0, 0), m_ColSize(0, 0),
 					   m_bRelease(false),
 					   m_State(STAND)
 {
+	m_fVecGravity = -1.0f ;
 }
 CFriends::~CFriends()
 {

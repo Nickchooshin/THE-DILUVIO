@@ -23,6 +23,8 @@ public :
 	void SetMaxFriends(int nMaxFriends) ;
 	void Clear() ;
 
+	void Gravity() ;
+
 	void Update() ;
 
 	void Render() ;

@@ -3,8 +3,7 @@
 #include "Scene.h"
 
 class CHero ;
-class CTilesGround ;
-class CFriends_Okulo ;
+class CMapTiles ;
 class CCollision ;
 class CSprite ;
 
@@ -12,8 +11,7 @@ class SceneGravity : public Scene
 {
 private :
 	CHero *m_pHero ;
-	CTilesGround *m_pTiles[5] ;
-	CFriends_Okulo *m_pFriend ;
+	CMapTiles *m_MapTiles ;
 	CCollision *m_pCollision ;
 
 public :

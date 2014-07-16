@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Objects.h"
+#include "DynamicObjects.h"
 
-class CFriends : public CObjects
+class CFriends : public CDynamicObjects
 {
 protected :
 	Size m_ImgSize, m_ColSize ;

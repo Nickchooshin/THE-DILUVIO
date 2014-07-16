@@ -48,15 +48,15 @@ bool CCollision::AABB(Rect A, Rect B)
 	return bState ;
 }
 
-void CCollision::XCollision(CHero *pHero, CTiles *pTile)
+void CCollision::XCollision(CDynamicObjects *pDynamicObject, CObjects *pObject)
 {
 	int way = -1 ;
-	Vector vec = pHero->GetForce() ;
-	Rect rtHero = pHero->GetBoundingBox() ;
-	Rect rtTile = pTile->GetBoundingBox() ;
-	int xSize = rtTile.right - rtTile.left  ;
+	Vector vec = pDynamicObject->GetForce() ;
+	Rect rtDynamic = pDynamicObject->GetBoundingBox() ;
+	Rect rtObject = pObject->GetBoundingBox() ;
+	int xSize = rtObject.right - rtObject.left  ;
 
-	if(!AABB(rtHero, rtTile))
+	if(!AABB(rtDynamic, rtObject))
 		return ;
 	Rect rtSize = GetIntersect() ;
 
@@ -65,7 +65,7 @@ void CCollision::XCollision(CHero *pHero, CTiles *pTile)
 	else
 		way = 1 ;
 
-	Rect rtTemp = rtTile ;
+	Rect rtTemp = rtObject ;
 	if(way==0)
 	{
 		rtTemp.left += xSize ;
@@ -77,29 +77,29 @@ void CCollision::XCollision(CHero *pHero, CTiles *pTile)
 		rtTemp.right -= xSize ;
 	}
 
-	if(!AABB(rtHero, rtTemp))
+	if(!AABB(rtDynamic, rtTemp))
 		return ;
 
-	int x = (int)pHero->GetPositionX() ;
-	int y = (int)pHero->GetPositionY() ;
+	int x = (int)pDynamicObject->GetPositionX() ;
+	int y = (int)pDynamicObject->GetPositionY() ;
 
 	if(way==0)
 		x += (rtSize.right - rtSize.left) ;
 	else
 		x -= (rtSize.right - rtSize.left) ;
 
-	pHero->SetPosition((float)x, (float)y) ;
+	pDynamicObject->SetPosition((float)x, (float)y) ;
 }
 
-void CCollision::YCollision(CHero *pHero, CTiles *pTile)
+void CCollision::YCollision(CDynamicObjects *pDynamicObject, CObjects *pObject)
 {
 	int way = -1 ;
-	Vector vec = pHero->GetForce() ;
-	Rect rtHero = pHero->GetBoundingBox() ;
-	Rect rtTile = pTile->GetBoundingBox() ;
-	int ySize = rtTile.top - rtTile.bottom  ;
+	Vector vec = pDynamicObject->GetForce() ;
+	Rect rtDynamic = pDynamicObject->GetBoundingBox() ;
+	Rect rtObject = pObject->GetBoundingBox() ;
+	int ySize = rtObject.top - rtObject.bottom  ;
 
-	if(!AABB(rtHero, rtTile))
+	if(!AABB(rtDynamic, rtObject))
 		return ;
 	Rect rtSize = GetIntersect() ;
 
@@ -108,7 +108,7 @@ void CCollision::YCollision(CHero *pHero, CTiles *pTile)
 	else
 		way = 1 ;
 
-	Rect rtTemp = rtTile ;
+	Rect rtTemp = rtObject ;
 	if(way==0)
 	{
 		rtTemp.top += ySize ;
@@ -120,28 +120,28 @@ void CCollision::YCollision(CHero *pHero, CTiles *pTile)
 		rtTemp.bottom -= ySize ;
 	}
 
-	if(!AABB(rtHero, rtTemp))
+	if(!AABB(rtDynamic, rtTemp))
 		return ;
-	AABB(rtHero, rtTile) ;
+	AABB(rtDynamic, rtObject) ;
 
-	int x = (int)pHero->GetPositionX() ;
-	int y = (int)pHero->GetPositionY() ;
+	int x = (int)pDynamicObject->GetPositionX() ;
+	int y = (int)pDynamicObject->GetPositionY() ;
 
 	if(way==0)
 	{
 		y += (rtSize.top - rtSize.bottom) ;
-		pHero->SetJump(false) ;
-		pHero->GravityAccReset() ;
-		pHero->SetGravity(false) ;
+		pDynamicObject->SetJump(false) ;
+		pDynamicObject->GravityAccReset() ;
+		pDynamicObject->SetGravity(false) ;
 	}
 	else
 	{
 		y -= (rtSize.top - rtSize.bottom) ;
-		pHero->SetJump(true) ;
-		pHero->GravityAccReset() ;
+		pDynamicObject->SetJump(true) ;
+		pDynamicObject->GravityAccReset() ;
 	}
 
-	pHero->SetPosition((float)x, (float)y) ;
+	pDynamicObject->SetPosition((float)x, (float)y) ;
 }
 
 Rect CCollision::GetIntersect()

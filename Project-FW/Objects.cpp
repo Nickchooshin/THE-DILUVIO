@@ -11,13 +11,23 @@ CObjects::~CObjects()
 		delete m_pSprite ;
 }
 
+const float CObjects::GetPositionX()
+{
+	return m_fX ;
+}
+
+const float CObjects::GetPositionY()
+{
+	return m_fY ;
+}
+
 void CObjects::SetPosition(float fX, float fY)
 {
 	m_fX = fX ;
 	m_fY = fY ;
 }
 
-Rect CObjects::GetBoundingBox()
+const Rect CObjects::GetBoundingBox()
 {
 	Rect rt ;
 	rt.left = m_BoundingBox.left + (int)m_fX ;

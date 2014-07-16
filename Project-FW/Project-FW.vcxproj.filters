@@ -94,6 +94,12 @@
     <ClCompile Include="Friends_Elitro.cpp">
       <Filter>Objects\Friends</Filter>
     </ClCompile>
+    <ClCompile Include="MapTiles.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="DynamicObjects.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h" />
@@ -197,6 +203,12 @@
     </ClInclude>
     <ClInclude Include="Friends_Elitro.h">
       <Filter>Objects\Friends</Filter>
+    </ClInclude>
+    <ClInclude Include="MapTiles.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="DynamicObjects.h">
+      <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -10,12 +10,15 @@
 #include "MusicManager.h"
 
 #include "Hero.h"
-#include "Tiles_Ground.h"
-#include "Friends_Okulo.h"
+#include "MapTiles.h"
 #include "Collision.h"
 
 //
 #include "Friends_List.h"
+#include "Friends.h"
+
+#include "Collision.h"
+//
 
 SceneGravity::SceneGravity()
 {
@@ -38,21 +41,10 @@ void SceneGravity::Init()
 
 	m_pHero = new CHero ;
 	m_pHero->Init() ;
-	m_pHero->SetPosition(50.0f, 125.0f) ;
+	m_pHero->SetPosition(50.0f, 250.0f) ;
 
-	for(int i=0; i<5; i++)
-	{
-		m_pTiles[i] = new CTilesGround ;
-		m_pTiles[i]->Init() ;
-	}
-	m_pTiles[0]->SetPosition(320.0f, 32.0f) ;
-	m_pTiles[1]->SetPosition(384.0f, 32.0f) ;
-	m_pTiles[2]->SetPosition(384.0f, 96.0f) ;
-	m_pTiles[3]->SetPosition(448.0f, 32.0f) ;
-	m_pTiles[4]->SetPosition(192.0f, 128.0f) ;
-
-	m_pFriend = new CFriends_Okulo ;
-	m_pFriend->Init() ;
+	m_MapTiles = new CMapTiles ;
+	m_MapTiles->LoadMap(1) ;
 
 	m_pCollision = new CCollision ;
 }
@@ -60,12 +52,8 @@ void SceneGravity::Init()
 void SceneGravity::Destroy()
 {
 	delete m_pHero ;
+	delete m_MapTiles ;
 	delete m_pCollision ;
-
-	for(int i=0; i<5; i++)
-		delete m_pTiles[i] ;
-
-	delete m_pFriend ;
 }
 
 void SceneGravity::Update(float dt)
@@ -76,29 +64,108 @@ void SceneGravity::Update(float dt)
 	g_MusicManager->Loop() ;
 
 	m_pHero->Update() ;
-	m_pFriend->Update() ;
-
-	for(int i=0; i<5; i++)
-		m_pCollision->XCollision(m_pHero, m_pTiles[i]) ;
-	m_pHero->Gravity() ;
-	for(int i=0; i<5; i++)
-		m_pCollision->YCollision(m_pHero, m_pTiles[i]) ;
+	g_Friends_List->Update() ;
 
 	//
-	g_Friends_List->Update() ;
+	int i, j ;
+	int size = g_Friends_List->GetSize() ;
+
+	m_MapTiles->ClearCollisionList() ;
+	m_MapTiles->AddCollisionList(m_pHero) ;
+	for(int i=0; i<size; i++)
+	{
+		CFriends *pFriend = g_Friends_List->GetFriend(i) ;
+		if(pFriend->GetRelease())
+			m_MapTiles->AddCollisionList(pFriend) ;
+	}
+
+	m_MapTiles->Collision('x') ;
+	///
+	CCollision col ;
+	for(i=0; i<size; i++)
+	{
+		CFriends *pFriend1 = g_Friends_List->GetFriend(i) ;
+		if(!pFriend1->GetRelease())
+			continue ;
+		//col.XCollision(m_pHero, pFriend1) ;
+
+		for(j=0; j<size; j++)
+		{
+			if(i==j)
+				continue ;
+
+			CFriends *pFriend2 = g_Friends_List->GetFriend(j) ;
+			if(!pFriend2->GetRelease())
+				continue ;
+			col.XCollision(pFriend1, pFriend2) ;
+		}
+		col.XCollision(m_pHero, pFriend1) ;
+	}
+	///
+
+	m_pHero->Gravity() ;
+	g_Friends_List->Gravity() ;
+
+	m_MapTiles->Collision('y') ;
+	///
+	for(i=0; i<size; i++)
+	{
+		CFriends *pFriend1 = g_Friends_List->GetFriend(i) ;
+		if(!pFriend1->GetRelease())
+			continue ;
+		//col.YCollision(m_pHero, pFriend1) ;
+
+		for(j=0; j<size; j++)
+		{
+			if(i==j)
+				continue ;
+
+			CFriends *pFriend2 = g_Friends_List->GetFriend(j) ;
+			if(!pFriend2->GetRelease())
+				continue ;
+			col.YCollision(pFriend1, pFriend2) ;
+		}
+		col.YCollision(m_pHero, pFriend1) ;
+	}
+	///
+	//
+
+	/*m_MapTiles->Collision(m_pHero, 'x') ;
+	int size = g_Friends_List->GetSize() ;
+	CFriends *pFriends ;
+	for(int i=0; i<size; i++)
+	{
+		pFriends = g_Friends_List->GetFriend(i) ;
+		if(pFriends->GetRelease())
+		{
+			m_MapTiles->Collision(pFriends, 'x') ;
+			CCollision col ;
+			col.XCollision(m_pHero, pFriends) ;
+		}
+	}
+
+	m_pHero->Gravity() ;
+	g_Friends_List->Gravity() ;
+
+	m_MapTiles->Collision(m_pHero, 'y') ;
+	for(int i=0; i<size; i++)
+	{
+		pFriends = g_Friends_List->GetFriend(i) ;
+		if(pFriends->GetRelease())
+		{
+			m_MapTiles->Collision(pFriends, 'y') ;
+			CCollision col ;
+			col.YCollision(m_pHero, pFriends) ;
+		}
+	}*/
 }
 
 void SceneGravity::Render()
 {
 	g_CameraManager->CameraRun() ;
 
-	for(int i=0; i<5; i++)
-		m_pTiles[i]->Render() ;
-
-	m_pFriend->Render() ;
-
+	m_MapTiles->Render() ;
 	g_Friends_List->Render() ;
-
 	m_pHero->Render() ;
 
 	/*CSprite sprite ;

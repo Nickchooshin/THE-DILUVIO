@@ -4,6 +4,8 @@
 
 class CHero ;
 class CTiles ;
+class CObjects ;
+class CDynamicObjects ;
 
 class CCollision
 {
@@ -16,8 +18,8 @@ public :
 
 	bool AABB(Rect A, Rect B) ;	// AABB Collision
 
-	void XCollision(CHero *pHerol, CTiles *pTile) ;
-	void YCollision(CHero *pHerol, CTiles *pTile) ;
+	void XCollision(CDynamicObjects *pDynamicObject, CObjects *pObject) ;
+	void YCollision(CDynamicObjects *pDynamicObject, CObjects *pObject) ;
 
 	Rect GetIntersect() ;
 } ;

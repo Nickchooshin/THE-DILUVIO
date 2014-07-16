@@ -10,12 +10,7 @@
 #include "Friends_List.h"
 #include "Friends.h"
 
-CHero::CHero() : m_fVecSpeed(2.0f), m_fVecJump(6.5f),
-				 m_fVecAcc(0.0f), m_fVecGravity(-1.0f),
-				 m_bJump(false),
-				 m_vForce(),
-				 m_bGravity(true),
-				 m_ImgSize(0, 0),
+CHero::CHero() : m_ImgSize(0, 0),
 				 m_nNowFrame(0),
 				 m_nStandFrame(0), m_nMoveFrame(0), m_nJumpFrame(0), m_nAbsorbFrame(0), m_nReleaseFrame(0),
 				 m_Stand_LeftIndex(0, 0), m_Stand_RightIndex(0, 0),
@@ -26,6 +21,10 @@ CHero::CHero() : m_fVecSpeed(2.0f), m_fVecJump(6.5f),
 				 m_State(RIGHT), m_prevState(RIGHT),
 				 m_pFC_UI(NULL)
 {
+	m_fVecSpeed = 2.0f ;
+	m_fVecJump = 6.5f ;
+
+	m_fVecGravity = -1.0f ;
 }
 CHero::~CHero()
 {
@@ -143,52 +142,6 @@ void CHero::Init()
 	m_pFC_UI->Init() ;
 }
 
-float CHero::GetPositionX()
-{
-	return m_fX ;
-}
-
-float CHero::GetPositionY()
-{
-	return m_fY ;
-}
-
-Vector CHero::GetForce()
-{
-	return m_vForce ;
-}
-
-void CHero::SetJump(bool bFlag)
-{
-	m_bJump = bFlag ;
-}
-
-void CHero::SetGravity(bool bFlag)
-{
-	m_bGravity = bFlag ;
-}
-
-void CHero::GravityAccReset()
-{
-	m_fVecAcc = 0.0f ;
-}
-
-void CHero::Gravity()
-{
-	m_fVecAcc += m_fVecGravity ;
-	m_vForce.y = m_fVecAcc ;
-	m_fY += m_vForce.y ;
-	m_bGravity = true ;
-
-	if(m_fY<32.0f)
-	{
-		m_fY = 32.0f ;
-		m_bGravity = false ;
-		SetJump(false) ;
-		GravityAccReset() ;
-	}
-}
-
 void CHero::Update()
 {
 	Move() ;
@@ -240,16 +193,16 @@ void CHero::Move()
 			float tile_x ;
 			if(m_State==LEFT_RELEASE)
 			{
-				fX = m_fX + (m_BoundingBox.left + 32.0f) ;
+				fX = m_fX + (m_BoundingBox.left + 32.0f + 32.0f) ;
 				tile_x = (int)(fX / 64.0f) - 1 ;
 			}
 			else if(m_State==RIGHT_RELEASE)
 			{
-				fX = m_fX + (m_BoundingBox.right + 32.0f) ;
+				fX = m_fX + (m_BoundingBox.right + 32.0f + 32.0f - 1.0f) ;
 				tile_x = (int)(fX / 64.0f) + 1 ;
 			}
 			fX = (float)(tile_x * 64) ;
-			pFriend->SetPosition(fX, m_fY) ;
+			pFriend->SetPosition(fX - 32.0f, m_fY) ;
 		}
 		//
 	}

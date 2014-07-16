@@ -90,9 +90,12 @@ public :
 
 	virtual void Init() = 0 ;
 
+	const float GetPositionX() ;
+	const float GetPositionY() ;
+
 	void SetPosition(float fX, float fY) ;
 
-	Rect GetBoundingBox() ;
+	const Rect GetBoundingBox() ;
 
 	virtual void Render() ;
 protected :

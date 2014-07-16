@@ -77,6 +77,20 @@ void CFriends_List::Clear()
 	m_Friends_List.clear() ;
 }
 
+void CFriends_List::Gravity()
+{
+	CFriends *pFriends ;
+	std::vector<CFriends*>::iterator iter ;
+	std::vector<CFriends*>::iterator end=m_Friends_List.end() ;
+
+	for(iter=m_Friends_List.begin(); iter!=end; iter++)
+	{
+		pFriends = *iter ;
+		if(pFriends->GetRelease())
+			pFriends->Gravity() ;
+	}
+}
+
 void CFriends_List::Update()
 {
 	CFriends *pFriends ;

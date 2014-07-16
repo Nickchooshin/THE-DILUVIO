@@ -8,6 +8,8 @@ public :
 	CTiles() {}
 	virtual ~CTiles() {}
 
+	virtual void Init() = 0 ;
+
 protected :
 	void SetBoundingBox()
 	{
