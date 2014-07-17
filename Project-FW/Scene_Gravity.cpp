@@ -108,6 +108,7 @@ void SceneGravity::Update(float dt)
 
 	m_MapTiles->Collision('y') ;
 	///
+	g_Friends_List->Collision() ;
 	for(i=0; i<size; i++)
 	{
 		CFriends *pFriend1 = g_Friends_List->GetFriend(i) ;
@@ -115,7 +116,7 @@ void SceneGravity::Update(float dt)
 			continue ;
 		//col.YCollision(m_pHero, pFriend1) ;
 
-		for(j=0; j<size; j++)
+		/*for(j=0; j<size; j++)
 		{
 			if(i==j)
 				continue ;
@@ -124,7 +125,7 @@ void SceneGravity::Update(float dt)
 			if(!pFriend2->GetRelease())
 				continue ;
 			col.YCollision(pFriend1, pFriend2) ;
-		}
+		}*/
 		col.YCollision(m_pHero, pFriend1) ;
 	}
 	///

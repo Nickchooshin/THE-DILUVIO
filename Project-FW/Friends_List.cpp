@@ -1,6 +1,9 @@
 #include "Friends_List.h"
 #include "Friends.h"
 
+#include <algorithm>
+#include "Collision.h"
+
 CFriends_List::CFriends_List() : m_nMaxFriends(0)
 {
 }
@@ -87,7 +90,10 @@ void CFriends_List::Gravity()
 	{
 		pFriends = *iter ;
 		if(pFriends->GetRelease())
+		{
 			pFriends->Gravity() ;
+			m_CollisionList.push_back(pFriends) ;
+		}
 	}
 }
 
@@ -117,4 +123,30 @@ void CFriends_List::Render()
 		if(pFriends->GetRelease())
 			pFriends->Render() ;
 	}
+}
+
+bool Compare(CFriends* pF1, CFriends* pF2)
+{
+	return pF1->GetPositionY() < pF2->GetPositionY() ;
+}
+
+void CFriends_List::Collision()
+{
+	std::sort(m_CollisionList.begin(), m_CollisionList.end(), Compare) ;
+
+	int size = m_CollisionList.size() ;
+
+	for(int i=0; i<size; i++)
+	{
+		for(int j=0; j<size; j++)
+		{
+			if(i==j)
+				continue ;
+
+			CCollision col ;
+			col.YCollision(m_CollisionList[j], m_CollisionList[i]) ;
+		}
+	}
+
+	m_CollisionList.clear() ;
 }
