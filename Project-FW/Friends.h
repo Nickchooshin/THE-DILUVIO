@@ -14,9 +14,11 @@ protected :
 	Position m_Icon_Index ;
 
 	bool m_bRelease ;
+	
+	float m_fAnimationTime ;
 
 	enum State { STAND=0, ABSORB, RELEASE } ;
-	State m_State ;
+	State m_State, m_prevState ;
 
 public :
 	CFriends() ;

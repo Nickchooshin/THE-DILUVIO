@@ -1,4 +1,5 @@
 #include "DynamicObjects.h"
+#include "D3dDevice.h"
 
 CDynamicObjects::CDynamicObjects() : m_fVecSpeed(0.0f), m_fVecJump(0.0f),
 									 m_fVecAcc(0.0f), m_fVecGravity(0.0f),
@@ -33,7 +34,10 @@ void CDynamicObjects::GravityAccReset()
 
 void CDynamicObjects::Gravity()
 {
-	m_fVecAcc += m_fVecGravity ;
+	float fTime = g_D3dDevice->GetMoveTime() ;
+	float fVecGravity = m_fVecGravity * fTime ;
+
+	m_fVecAcc += fVecGravity ;
 	m_vForce.y = m_fVecAcc ;
 	m_fY += m_vForce.y ;
 	m_bGravity = true ;
@@ -41,7 +45,7 @@ void CDynamicObjects::Gravity()
 	if(m_fY<32.0f)
 	{
 		m_fY = 32.0f ;
-		m_bGravity = false ;
+		SetGravity(false) ;
 		SetJump(false) ;
 		GravityAccReset() ;
 	}

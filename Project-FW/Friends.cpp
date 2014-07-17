@@ -10,7 +10,8 @@ CFriends::CFriends() : m_ImgSize(0, 0), m_ColSize(0, 0),
 					   m_Stand_Index(0, 0), m_Absorb_Index(0, 0), m_Release_Index(0, 0),
 					   m_Icon_Index(0, 0),
 					   m_bRelease(false),
-					   m_State(STAND)
+					   m_fAnimationTime(0.0f),
+					   m_State(STAND), m_prevState(STAND)
 {
 	m_fVecGravity = -1.0f ;
 }
@@ -23,6 +24,7 @@ void CFriends::Absorb()
 	m_nNowFrame = 0 ;
 	m_State = ABSORB ;
 	m_bRelease = false ;
+	GravityAccReset() ;
 }
 
 void CFriends::Release()
@@ -47,7 +49,8 @@ const Position CFriends::GetIconIndex()
 
 void CFriends::Update()
 {
-	Animation() ;
+	if(m_bRelease)
+		Animation() ;
 }
 
 void CFriends::LoadDat(char *filepath)
@@ -152,12 +155,26 @@ void CFriends::Animation()
 	}
 
 	// Animation
-	static float fTime = 0.0f ;
-	fTime += g_D3dDevice->GetTime() ;
+	//static float fTime = 0.0f ;
+	//fTime += g_D3dDevice->GetTime() ;
+	m_fAnimationTime += g_D3dDevice->GetTime() ;
 
-	if(fTime>=0.2f)
+	/*if(m_State!=m_prevState)
 	{
-		int Frame = (int)(fTime / 0.2f) ;
+		float left, top, right, bottom ;
+		left = (float)(Index.x * m_ImgSize.x) ;
+		top = (float)(Index.y * m_ImgSize.y) ;
+		right = (float)((Index.x + 1) * m_ImgSize.x) ;
+		bottom = (float)((Index.y + 1) * m_ImgSize.y) ;
+
+		m_pSprite->SetTextureUV(left, top, right, bottom) ;
+
+		m_fAnimationTime = 0.0f ;
+	}
+	else if(m_fAnimationTime>=0.2f)*/
+	if(m_fAnimationTime>=0.2f || (m_State!=m_prevState))
+	{
+		/*int Frame = (int)(fTime / 0.2f) ;
 		fTime -= Frame * 0.2f ;
 		Frame %= MaxFrame ;
 		m_nNowFrame += Frame ;
@@ -176,6 +193,32 @@ void CFriends::Animation()
 		right = (float)((Index.x + m_nNowFrame+1) * m_ImgSize.x) ;
 		bottom = (float)((Index.y+1) * m_ImgSize.y) ;
 
+		m_pSprite->SetTextureUV(left, top, right, bottom) ;*/
+		float left, top, right, bottom ;
+		left = (float)((Index.x + m_nNowFrame) * m_ImgSize.x) ;
+		top = (float)((Index.y) * m_ImgSize.y) ;
+		right = (float)((Index.x + m_nNowFrame+1) * m_ImgSize.x) ;
+		bottom = (float)((Index.y+1) * m_ImgSize.y) ;
+
 		m_pSprite->SetTextureUV(left, top, right, bottom) ;
+
+		int Frame = (int)(m_fAnimationTime / 0.2f) ;
+		m_fAnimationTime -= Frame * 0.2f ;
+		Frame %= MaxFrame ;
+		m_nNowFrame += Frame ;
+		//
+		if(m_nNowFrame>=MaxFrame)
+		{
+			m_nNowFrame = 0 ;
+			m_State = STAND ;
+		}
+		m_nNowFrame %= MaxFrame ;
+		//
+
+		if(m_State!=m_prevState)
+			m_fAnimationTime = 0.0f ;
 	}
+
+	//
+	m_prevState = m_State ;
 }

@@ -24,7 +24,8 @@ CHero::CHero() : m_ImgSize(0, 0),
 	m_fVecSpeed = 2.0f ;
 	m_fVecJump = 6.5f ;
 
-	m_fVecGravity = -1.0f ;
+	//m_fVecGravity = -1.0f ;
+	m_fVecGravity = -0.5f ;
 }
 CHero::~CHero()
 {
@@ -172,7 +173,7 @@ void CHero::SetBoundingBox()
 
 void CHero::Move()
 {
-	float fTime = g_D3dDevice->GetTime() ;
+	float fTime = g_D3dDevice->GetMoveTime() ;
 	float fSpeed = m_fVecSpeed * fTime ;
 
 	m_vForce.x = 0.0f ;
