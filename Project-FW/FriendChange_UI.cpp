@@ -166,7 +166,6 @@ void CFriendChange_UI::Animation()
 
 	if(m_State!=NONE)
 	{
-		//fTime += g_D3dDevice->GetTime() ;
 		fTime += g_D3dDevice->GetMoveTime() ;
 
 		if(m_fNowDegree<=m_fMaxDegree && fTime>=0.2f)

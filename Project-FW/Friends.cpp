@@ -21,7 +21,6 @@ CFriends::~CFriends()
 
 void CFriends::Absorb()
 {
-	m_nNowFrame = 0 ;
 	m_State = ABSORB ;
 	m_bRelease = false ;
 	GravityAccReset() ;
@@ -29,7 +28,6 @@ void CFriends::Absorb()
 
 void CFriends::Release()
 {
-	m_nNowFrame = 0 ;
 	m_State = RELEASE ;
 	m_bRelease = true ;
 }
@@ -155,45 +153,16 @@ void CFriends::Animation()
 	}
 
 	// Animation
-	//static float fTime = 0.0f ;
-	//fTime += g_D3dDevice->GetTime() ;
 	m_fAnimationTime += g_D3dDevice->GetTime() ;
 
-	/*if(m_State!=m_prevState)
-	{
-		float left, top, right, bottom ;
-		left = (float)(Index.x * m_ImgSize.x) ;
-		top = (float)(Index.y * m_ImgSize.y) ;
-		right = (float)((Index.x + 1) * m_ImgSize.x) ;
-		bottom = (float)((Index.y + 1) * m_ImgSize.y) ;
-
-		m_pSprite->SetTextureUV(left, top, right, bottom) ;
-
-		m_fAnimationTime = 0.0f ;
-	}
-	else if(m_fAnimationTime>=0.2f)*/
 	if(m_fAnimationTime>=0.2f || (m_State!=m_prevState))
 	{
-		/*int Frame = (int)(fTime / 0.2f) ;
-		fTime -= Frame * 0.2f ;
-		Frame %= MaxFrame ;
-		m_nNowFrame += Frame ;
-		//
-		if(m_nNowFrame>=MaxFrame)
+		if(m_State!=m_prevState)
 		{
 			m_nNowFrame = 0 ;
-			m_State = STAND ;
+			m_fAnimationTime = 0.0f ;
 		}
-		m_nNowFrame %= MaxFrame ;
-		//
 
-		float left, top, right, bottom ;
-		left = (float)((Index.x + m_nNowFrame) * m_ImgSize.x) ;
-		top = (float)((Index.y) * m_ImgSize.y) ;
-		right = (float)((Index.x + m_nNowFrame+1) * m_ImgSize.x) ;
-		bottom = (float)((Index.y+1) * m_ImgSize.y) ;
-
-		m_pSprite->SetTextureUV(left, top, right, bottom) ;*/
 		float left, top, right, bottom ;
 		left = (float)((Index.x + m_nNowFrame) * m_ImgSize.x) ;
 		top = (float)((Index.y) * m_ImgSize.y) ;
@@ -206,19 +175,13 @@ void CFriends::Animation()
 		m_fAnimationTime -= Frame * 0.2f ;
 		Frame %= MaxFrame ;
 		m_nNowFrame += Frame ;
-		//
 		if(m_nNowFrame>=MaxFrame)
 		{
 			m_nNowFrame = 0 ;
 			m_State = STAND ;
 		}
 		m_nNowFrame %= MaxFrame ;
-		//
-
-		if(m_State!=m_prevState)
-			m_fAnimationTime = 0.0f ;
 	}
 
-	//
 	m_prevState = m_State ;
 }

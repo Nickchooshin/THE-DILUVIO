@@ -18,6 +18,7 @@ CHero::CHero() : m_ImgSize(0, 0),
 				 m_Jump_LeftIndex(0, 0), m_Jump_RightIndex(0, 0),
 				 m_Absorb_LeftIndex(0, 0), m_Absorb_RightIndex(0, 0),
 				 m_Release_LeftIndex(0, 0), m_Release_RightIndex(0, 0),
+				 m_fAnimationTime(0.0f),
 				 m_State(RIGHT), m_prevState(RIGHT),
 				 m_pFC_UI(NULL)
 {
@@ -25,7 +26,7 @@ CHero::CHero() : m_ImgSize(0, 0),
 	m_fVecJump = 6.5f ;
 
 	//m_fVecGravity = -1.0f ;
-	m_fVecGravity = -0.5f ;
+	m_fVecGravity = -0.25 ;
 }
 CHero::~CHero()
 {
@@ -269,9 +270,6 @@ void CHero::Animation()
 			m_State = (State)((m_State / RIGHT) * RIGHT + LEFT) ;
 	}
 
-	if(m_State!=m_prevState)
-		m_nNowFrame = 0 ;
-
 	// Animation Frame, Index
 	int MaxFrame ;
 	Position Index ;
@@ -325,13 +323,18 @@ void CHero::Animation()
 	}
 
 	// Animation
-	static float fTime = 0.0f ;
-	fTime += g_D3dDevice->GetTime() ;
+	m_fAnimationTime += g_D3dDevice->GetTime() ;
 
-	if(fTime>=0.2f)
+	if(m_fAnimationTime>=0.2f || (m_State!=m_prevState))
 	{
-		int Frame = (int)(fTime / 0.2f) ;
-		fTime -= Frame * 0.2f ;
+		if(m_State!=m_prevState)
+		{
+			m_fAnimationTime = 0.0f ;
+			m_nNowFrame = 0 ;
+		}
+
+		int Frame = (int)(m_fAnimationTime / 0.2f) ;
+		m_fAnimationTime -= Frame * 0.2f ;
 		Frame %= MaxFrame ;
 		m_nNowFrame += Frame ;
 		m_nNowFrame %= MaxFrame ;

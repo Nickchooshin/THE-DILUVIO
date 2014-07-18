@@ -16,6 +16,8 @@ private :
 	Position m_Absorb_LeftIndex, m_Absorb_RightIndex ;
 	Position m_Release_LeftIndex, m_Release_RightIndex ;
 
+	float m_fAnimationTime ;
+
 	//enum State { LEFT=0, RIGHT, LEFT_MOVE, RIGHT_MOVE, LEFT_JUMP, RIGHT_JUMP, LEFT_ABSORB, RIGHT_ABSORB, LEFT_RELEASE, RIGHT_RELEASE } ;
 	enum State { LEFT=0, LEFT_MOVE, LEFT_JUMP, LEFT_ABSORB, LEFT_RELEASE,
 				 RIGHT, RIGHT_MOVE, RIGHT_JUMP, RIGHT_ABSORB, RIGHT_RELEASE } ;
