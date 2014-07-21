@@ -21,10 +21,10 @@
 
 CFriendChange_UI::CFriendChange_UI() : m_fX(0.0f), m_fY(0.0f),
 									   m_fRX(0.0f), m_fRY(0.0f),
-									   m_State(NONE),
-									   m_fNowDegree(0.0f),
-									   m_fMaxDegree(0.0f),
-									   m_fAnimationTime(0.0f),
+									   m_StateC(NONE), m_StateF(DISABLE),
+									   m_fNowDegree(0.0f), m_fMaxDegree(0.0f),
+									   m_fAnimationTime(0.0f), m_fFadeTime(0.0f),
+									   m_nNowAlpha(0), m_nAlphaSign(1),
 									   m_nIconIndex(0),
 									   m_bIconChange(false)
 {
@@ -120,13 +120,21 @@ void CFriendChange_UI::Update()
 	float fTime = g_D3dDevice->GetTime() ;
 	float fSpeed = 0.0f ;
 
-	if(m_State==NONE && g_Keyboard->IsButtonDown(DIK_A))
+	if(m_StateC==NONE && g_Keyboard->IsButtonDown(DIK_A))
 	{
-		m_State = RIGHT ;
+		if(m_StateF==DISABLE)
+			SetFadeState(FADE_IN) ;
+
+		m_fFadeTime = 0.0f ;
+		m_StateC = RIGHT ;
 	}
-	else if(m_State==NONE && g_Keyboard->IsButtonDown(DIK_S))
+	else if(m_StateC==NONE && g_Keyboard->IsButtonDown(DIK_S))
 	{
-		m_State = LEFT ;
+		if(m_StateF==DISABLE)
+			SetFadeState(FADE_IN) ;
+		
+		m_fFadeTime = 0.0f ;
+		m_StateC = LEFT ;
 	}
 
 	for(int i=0; i<5; i++)
@@ -139,31 +147,62 @@ void CFriendChange_UI::Update()
 	}
 
 	Animation() ;
+	Fade() ;
 
 	SetCirclePosition() ;
 }
 
 void CFriendChange_UI::Render_Front()
 {
+	if(m_StateF==DISABLE)
+		return ;
+
 	for(int i=0; i<5; i++)
 	{
 		if(m_fScale[i]>=0.5f)
+		{
+			m_pSIcon[i]->SetAlpha(m_nNowAlpha) ;
 			m_pSIcon[i]->Render() ;
+		}
 	}
 }
 
 void CFriendChange_UI::Render_Behind()
 {
+	if(m_StateF==DISABLE)
+		return ;
+
 	for(int i=0; i<5; i++)
 	{
 		if(m_fScale[i]<0.5f)
+		{
+			m_pSIcon[i]->SetAlpha(m_nNowAlpha) ;
 			m_pSIcon[i]->Render() ;
+		}
+	}
+}
+
+void CFriendChange_UI::SetFadeState(State_Fade State)
+{
+	if(State==FADE_IN)
+	{
+		m_nNowAlpha = 102 ;
+		m_nAlphaSign = 1 ;
+		m_StateF = FADE_IN ;
+	}
+	else if(State==FADE_OUT)
+	{
+		m_nNowAlpha = 255 ;
+		m_nAlphaSign = -1 ;
+		m_StateF = FADE_OUT ;
+		
+		m_fFadeTime = 0.0f ;
 	}
 }
 
 void CFriendChange_UI::Animation()
 {
-	if(m_State!=NONE)
+	if(m_StateC!=NONE)
 	{
 		m_fAnimationTime += g_D3dDevice->GetMoveTime() ;
 
@@ -177,15 +216,15 @@ void CFriendChange_UI::Animation()
 
 			for(int i=0; i<5; i++)
 			{
-				if(m_State==LEFT)
+				if(m_StateC==LEFT)
 					m_fDegree[i] -= Degree ;
-				else if(m_State==RIGHT)
+				else if(m_StateC==RIGHT)
 					m_fDegree[i] += Degree ;
 			}
 
 			if(m_fNowDegree>=m_fMaxDegree)
 			{
-				m_State = NONE ;
+				m_StateC = NONE ;
 				m_fNowDegree = 0.0f ;
 				m_bIconChange = false ;
 			}
@@ -195,7 +234,7 @@ void CFriendChange_UI::Animation()
 
 				int nextIndex, prevIndex ;
 				int size = g_Friends_List->GetSize() ;
-				if(m_State==LEFT)
+				if(m_StateC==LEFT)
 				{
 					nextIndex = (m_nIconIndex + 3) % 5 ;
 					prevIndex = (m_nIconIndex + 2) % 5 ;
@@ -204,7 +243,7 @@ void CFriendChange_UI::Animation()
 						m_nIconListIndex[nextIndex] -= size ;
 					m_nIconIndex = (m_nIconIndex + 1) % 5 ;
 				}
-				else if(m_State==RIGHT)
+				else if(m_StateC==RIGHT)
 				{
 					nextIndex = (m_nIconIndex + 2) % 5 ;
 					prevIndex = (m_nIconIndex + 3) % 5 ;
@@ -222,6 +261,40 @@ void CFriendChange_UI::Animation()
 	}
 	else
 		m_fAnimationTime = 0.0f ;
+}
+
+void CFriendChange_UI::Fade()
+{
+	if(m_StateF!=DISABLE)
+	{
+		m_fFadeTime += g_D3dDevice->GetTime() ;
+
+		if(m_StateF==FADE_IN || m_StateF==FADE_OUT)
+		{
+			if(m_fFadeTime>=0.1f)
+			{
+				float Alpha = m_fFadeTime / 0.1f ;
+				m_fFadeTime = 0.0f ;
+				m_nNowAlpha += (int)(Alpha * 51.0f) * m_nAlphaSign ;
+
+				if(m_StateF==FADE_IN && m_nNowAlpha>=255)
+				{
+					m_nNowAlpha = 255 ;
+					m_StateF = ENABLE ;
+				}
+				else if(m_StateF==FADE_OUT && m_nNowAlpha<=102)
+				{
+					m_nNowAlpha = 0 ;
+					m_StateF = DISABLE ;
+				}
+			}
+		}
+		else if(m_StateF==ENABLE)
+		{
+			if(m_fFadeTime>=3.0f)
+				SetFadeState(FADE_OUT) ;
+		}
+	}
 }
 
 void CFriendChange_UI::SetCirclePosition()

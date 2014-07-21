@@ -67,7 +67,6 @@ void SceneGravity::Update(float dt)
 	g_Friends_List->Update() ;
 
 	//
-	int i, j ;
 	int size = g_Friends_List->GetSize() ;
 
 	// Add Collision Object List

@@ -15,5 +15,7 @@
 #git ignore
 /ipch
 /Debug
+/Release
 /Project-FW/Debug
+/Project-FW/Release
 *.sdf

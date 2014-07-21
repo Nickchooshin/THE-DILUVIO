@@ -194,7 +194,7 @@ void CHero::Move()
 			pFriend->Release() ;
 
 			float fX ;
-			float tileX ;
+			int tileX ;
 			if(m_State==LEFT_RELEASE)
 			{
 				fX = m_fX + (m_BoundingBox.left + 32.0f + 32.0f) ;
@@ -216,7 +216,7 @@ void CHero::Move()
 
 		// 캐릭터가 바라보는 방향의 타일 좌표를 구한다
 		///
-		int fX ;
+		float fX ;
 		int tileX, tileY ;
 		if(m_State==LEFT_ABSORB)
 		{

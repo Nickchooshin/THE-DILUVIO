@@ -10,14 +10,18 @@ public :
 
 	CSprite *m_pSIcon[5] ;
 
-	enum State { NONE=0, LEFT, RIGHT } ;
-	State m_State ;
+	enum State_Change { NONE=0, LEFT, RIGHT } ;
+	State_Change m_StateC ;
 
-	float m_fNowDegree ;
-	float m_fMaxDegree ;
+	enum State_Fade { DISABLE=0, FADE_IN, ENABLE, FADE_OUT } ;
+	State_Fade m_StateF ;
+
+	float m_fNowDegree, m_fMaxDegree ;
 	float m_fDegree[5], m_fScale[5] ;
 
-	float m_fAnimationTime ;
+	int m_nNowAlpha, m_nAlphaSign ;
+
+	float m_fAnimationTime, m_fFadeTime ;
 
 	int m_nIconIndex, m_nIconListIndex[5] ;
 	bool m_bIconChange ;
@@ -37,6 +41,9 @@ public :
 	void Render_Front() ;
 	void Render_Behind() ;
 private :
+	void SetFadeState(State_Fade State) ;
+
 	void Animation() ;
+	void Fade() ;
 	void SetCirclePosition() ;
 } ;
