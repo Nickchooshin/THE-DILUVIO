@@ -4,6 +4,8 @@
 #include <algorithm>
 #include "Collision.h"
 
+#include "Hero.h"
+
 CFriends_List::CFriends_List() : m_nMaxFriends(0)
 {
 }
@@ -130,10 +132,11 @@ bool Compare(CFriends* pF1, CFriends* pF2)
 	return pF1->GetPositionY() < pF2->GetPositionY() ;
 }
 
-void CFriends_List::Collision()
+void CFriends_List::Collision(char coord)
 {
 	std::sort(m_CollisionList.begin(), m_CollisionList.end(), Compare) ;
-
+	
+	CCollision col ;
 	int size = m_CollisionList.size() ;
 
 	for(int i=0; i<size; i++)
@@ -143,10 +146,33 @@ void CFriends_List::Collision()
 			if(i==j)
 				continue ;
 
-			CCollision col ;
-			col.YCollision(m_CollisionList[j], m_CollisionList[i]) ;
+			if(coord=='x' || coord=='X')
+				col.XCollision(m_CollisionList[j], m_CollisionList[i]) ;
+			else if(coord=='y' || coord=='Y')
+				col.YCollision(m_CollisionList[j], m_CollisionList[i]) ;
 		}
 	}
 
 	m_CollisionList.clear() ;
+}
+
+void CFriends_List::Collision(CHero *pHero, char coord)
+{
+	CFriends *pFriends ;
+	std::vector<CFriends*>::iterator iter ;
+	std::vector<CFriends*>::iterator end=m_Friends_List.end() ;
+
+	CCollision col ;
+
+	for(iter=m_Friends_List.begin(); iter!=end; iter++)
+	{
+		pFriends = *iter ;
+		if(!pFriends->GetRelease())
+			continue ;
+
+		if(coord=='x' || coord=='X')
+			col.XCollision(pHero, pFriends) ;
+		else if(coord=='y' || coord=='Y')
+			col.YCollision(pHero, pFriends) ;
+	}
 }

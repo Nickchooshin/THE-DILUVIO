@@ -43,7 +43,7 @@ HRESULT CD3dSystem::InitD3d(const HINSTANCE hInst, const HWND hWnd, const int nW
 	d3dpp.MultiSampleQuality = 0 ;				// 멀티샘플링(1x 2x 4x 8x ...)
 	d3dpp.EnableAutoDepthStencil = true ;		// Direct3D가 깊이버퍼를 만들고 관리한다
 	d3dpp.AutoDepthStencilFormat = D3DFMT_D16 ;	// 깊이버퍼의 크기 설정(16bit 정도면 충분히 깊이를 판단 가능)
-	//d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE ; // 모니터 주사율에 따른 수직 동기화 해제
+	d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE ; // 모니터 주사율에 따른 수직 동기화 해제
 	//
 
 	if( FAILED( m_pD3d->CreateDevice( D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd, D3DCREATE_MIXED_VERTEXPROCESSING, &d3dpp, &m_pd3dDevice ) ) )

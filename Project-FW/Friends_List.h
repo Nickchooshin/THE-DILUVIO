@@ -3,6 +3,8 @@
 #include "Singleton.h"
 #include <vector>
 
+class CHero ;
+
 class CFriends ;
 
 class CFriends_List : public Singleton<CFriends_List>
@@ -31,6 +33,9 @@ public :
 	void Render() ;
 
 	void Collision() ;
+	
+	void Collision(char coord) ;
+	void Collision(CHero *pHero, char coord) ;
 } ;
 
 #define g_Friends_List CFriends_List::GetInstance()

@@ -22,11 +22,11 @@ CHero::CHero() : m_ImgSize(0, 0),
 				 m_State(RIGHT), m_prevState(RIGHT),
 				 m_pFC_UI(NULL)
 {
-	m_fVecSpeed = 2.0f ;
-	m_fVecJump = 6.5f ;
+	m_fVecSpeed = 2.5f ;
+	m_fVecJump = 7.5f ;
 
 	//m_fVecGravity = -1.0f ;
-	m_fVecGravity = -0.25 ;
+	m_fVecGravity = -0.3f ;
 }
 CHero::~CHero()
 {

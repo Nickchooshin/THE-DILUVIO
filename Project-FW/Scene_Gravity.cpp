@@ -70,6 +70,7 @@ void SceneGravity::Update(float dt)
 	int i, j ;
 	int size = g_Friends_List->GetSize() ;
 
+	// Add Collision Object List
 	m_MapTiles->ClearCollisionList() ;
 	m_MapTiles->AddCollisionList(m_pHero) ;
 	for(int i=0; i<size; i++)
@@ -79,86 +80,22 @@ void SceneGravity::Update(float dt)
 			m_MapTiles->AddCollisionList(pFriend) ;
 	}
 
+	// Collision X
 	m_MapTiles->Collision('x') ;
-	///
-	CCollision col ;
-	for(i=0; i<size; i++)
-	{
-		CFriends *pFriend1 = g_Friends_List->GetFriend(i) ;
-		if(!pFriend1->GetRelease())
-			continue ;
-		//col.XCollision(m_pHero, pFriend1) ;
 
-		for(j=0; j<size; j++)
-		{
-			if(i==j)
-				continue ;
+	g_Friends_List->Collision('x') ;
+	g_Friends_List->Collision(m_pHero, 'x') ;
 
-			CFriends *pFriend2 = g_Friends_List->GetFriend(j) ;
-			if(!pFriend2->GetRelease())
-				continue ;
-			col.XCollision(pFriend1, pFriend2) ;
-		}
-		col.XCollision(m_pHero, pFriend1) ;
-	}
-	///
-
+	// Gravity
 	m_pHero->Gravity() ;
 	g_Friends_List->Gravity() ;
 
+
+	// Collision Y
 	m_MapTiles->Collision('y') ;
-	///
-	g_Friends_List->Collision() ;
-	for(i=0; i<size; i++)
-	{
-		CFriends *pFriend1 = g_Friends_List->GetFriend(i) ;
-		if(!pFriend1->GetRelease())
-			continue ;
-		//col.YCollision(m_pHero, pFriend1) ;
 
-		/*for(j=0; j<size; j++)
-		{
-			if(i==j)
-				continue ;
-
-			CFriends *pFriend2 = g_Friends_List->GetFriend(j) ;
-			if(!pFriend2->GetRelease())
-				continue ;
-			col.YCollision(pFriend1, pFriend2) ;
-		}*/
-		col.YCollision(m_pHero, pFriend1) ;
-	}
-	///
-	//
-
-	/*m_MapTiles->Collision(m_pHero, 'x') ;
-	int size = g_Friends_List->GetSize() ;
-	CFriends *pFriends ;
-	for(int i=0; i<size; i++)
-	{
-		pFriends = g_Friends_List->GetFriend(i) ;
-		if(pFriends->GetRelease())
-		{
-			m_MapTiles->Collision(pFriends, 'x') ;
-			CCollision col ;
-			col.XCollision(m_pHero, pFriends) ;
-		}
-	}
-
-	m_pHero->Gravity() ;
-	g_Friends_List->Gravity() ;
-
-	m_MapTiles->Collision(m_pHero, 'y') ;
-	for(int i=0; i<size; i++)
-	{
-		pFriends = g_Friends_List->GetFriend(i) ;
-		if(pFriends->GetRelease())
-		{
-			m_MapTiles->Collision(pFriends, 'y') ;
-			CCollision col ;
-			col.YCollision(m_pHero, pFriends) ;
-		}
-	}*/
+	g_Friends_List->Collision('y') ;
+	g_Friends_List->Collision(m_pHero, 'y') ;
 }
 
 void SceneGravity::Render()
