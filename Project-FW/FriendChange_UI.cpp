@@ -24,6 +24,7 @@ CFriendChange_UI::CFriendChange_UI() : m_fX(0.0f), m_fY(0.0f),
 									   m_State(NONE),
 									   m_fNowDegree(0.0f),
 									   m_fMaxDegree(0.0f),
+									   m_fAnimationTime(0.0f),
 									   m_nIconIndex(0),
 									   m_bIconChange(false)
 {
@@ -162,16 +163,14 @@ void CFriendChange_UI::Render_Behind()
 
 void CFriendChange_UI::Animation()
 {
-	static float fTime=0.0f ;
-
 	if(m_State!=NONE)
 	{
-		fTime += g_D3dDevice->GetMoveTime() ;
+		m_fAnimationTime += g_D3dDevice->GetMoveTime() ;
 
-		if(m_fNowDegree<=m_fMaxDegree && fTime>=0.2f)
+		if(m_fNowDegree<=m_fMaxDegree && m_fAnimationTime>=0.2f)
 		{
-			float Degree = fTime / 0.2f ;
-			fTime = 0.0f ;
+			float Degree = m_fAnimationTime / 0.2f ;
+			m_fAnimationTime = 0.0f ;
 			m_fNowDegree += Degree ;
 			if(m_fNowDegree>m_fMaxDegree)
 				Degree -= m_fNowDegree - m_fMaxDegree ;
@@ -218,13 +217,11 @@ void CFriendChange_UI::Animation()
 				}
 			}
 
-			fTime = 0.0f ;
+			m_fAnimationTime = 0.0f ;
 		}
 	}
 	else
-		fTime = 0.0f ;
-
-	//fTime = 0.0f ;
+		m_fAnimationTime = 0.0f ;
 }
 
 void CFriendChange_UI::SetCirclePosition()

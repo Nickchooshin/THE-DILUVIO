@@ -21,6 +21,7 @@ public :
 	const int GetSize() ;
 
 	CFriends* GetFriend(int index) ;
+	CFriends* GetFriend(int tileX, int tileY) ;
 
 	bool AddFriend(CFriends* pFriends) ;
 	void SetMaxFriends(int nMaxFriends) ;

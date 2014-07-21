@@ -17,6 +17,8 @@ public :
 	float m_fMaxDegree ;
 	float m_fDegree[5], m_fScale[5] ;
 
+	float m_fAnimationTime ;
+
 	int m_nIconIndex, m_nIconListIndex[5] ;
 	bool m_bIconChange ;
 

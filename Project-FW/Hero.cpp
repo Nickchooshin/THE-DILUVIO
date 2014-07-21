@@ -184,6 +184,8 @@ void CHero::Move()
 	{
 		m_State = (State)((m_State / RIGHT) * RIGHT + LEFT_RELEASE) ;
 
+		// 현재 선택되어있는 친구를
+		// 캐릭터가 바라보는 방향의 타일 좌표에 방출한다
 		//
 		int index = m_pFC_UI->GetSelectedIndex() ;
 		CFriends *pFriend = g_Friends_List->GetFriend(index) ;
@@ -192,18 +194,18 @@ void CHero::Move()
 			pFriend->Release() ;
 
 			float fX ;
-			float tile_x ;
+			float tileX ;
 			if(m_State==LEFT_RELEASE)
 			{
 				fX = m_fX + (m_BoundingBox.left + 32.0f + 32.0f) ;
-				tile_x = (int)(fX / 64.0f) - 1 ;
+				tileX = (int)(fX / 64.0f) - 1 ;
 			}
 			else if(m_State==RIGHT_RELEASE)
 			{
 				fX = m_fX + (m_BoundingBox.right + 32.0f + 32.0f - 1.0f) ;
-				tile_x = (int)(fX / 64.0f) + 1 ;
+				tileX = (int)(fX / 64.0f) + 1 ;
 			}
-			fX = (float)(tile_x * 64) ;
+			fX = (float)(tileX * 64) ;
 			pFriend->SetPosition(fX - 32.0f, m_fY) ;
 		}
 		//
@@ -212,14 +214,29 @@ void CHero::Move()
 	{
 		m_State = (State)((m_State / RIGHT) * RIGHT + LEFT_ABSORB) ;
 
-		//
-		int index = m_pFC_UI->GetSelectedIndex() ;
-		CFriends *pFriend = g_Friends_List->GetFriend(index) ;
-		if(pFriend->GetRelease())
+		// 캐릭터가 바라보는 방향의 타일 좌표를 구한다
+		///
+		int fX ;
+		int tileX, tileY ;
+		if(m_State==LEFT_ABSORB)
 		{
-			pFriend->Absorb() ;
+			fX = m_fX + (m_BoundingBox.left + 32.0f + 32.0f) ;
+			tileX = (int)(fX / 64.0f) - 1 ;
 		}
-		//
+		else if(m_State==RIGHT_ABSORB)
+		{
+			fX = m_fX + (m_BoundingBox.right + 32.0f + 32.0f - 1.0f) ;
+			tileX = (int)(fX / 64.0f) + 1 ;
+		}
+		tileY = (int)((m_fY + 64.0f) / 64.0f) ;
+
+		// 해당 좌표에 있는 친구를 흡수한다
+		CFriends *pFriends = g_Friends_List->GetFriend(tileX, tileY) ;
+		if(pFriends!=NULL)
+		{
+			pFriends->Absorb() ;
+		}
+		///
 	}
 	else
 	{

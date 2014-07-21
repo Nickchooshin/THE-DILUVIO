@@ -241,7 +241,6 @@ HRESULT CSprite::InitVB()
 	float Height_Half = m_fHeight / 2.0f ;
 
 	pVertices[0].x = -(Width_Half) ;
-
 	pVertices[0].y = Height_Half ;
 	pVertices[0].z = 0.0f ;
 	pVertices[0].color = D3DCOLOR_XRGB(m_R, m_G, m_B) ;

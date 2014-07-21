@@ -33,6 +33,29 @@ CFriends* CFriends_List::GetFriend(int index)
 	return m_Friends_List[index] ;
 }
 
+CFriends* CFriends_List::GetFriend(int tileX, int tileY)
+{
+	CFriends *pFriends ;
+	std::vector<CFriends*>::iterator iter ;
+	std::vector<CFriends*>::iterator end=m_Friends_List.end() ;
+
+	for(iter=m_Friends_List.begin(); iter!=end; iter++)
+	{
+		pFriends = *iter ;
+
+		if(pFriends->GetRelease())
+		{
+			int x = (int)((pFriends->GetPositionX() + 32.0f) / 64.0f) ;
+			int y = (int)((pFriends->GetPositionY() + 64.0f) / 64.0f) ;
+
+			if(tileX==x && tileY==y)
+				return pFriends ;
+		}
+	}
+
+	return NULL ;
+}
+
 bool CFriends_List::AddFriend(CFriends *pFriends)
 {
 	if(m_Friends_List.size()>=m_nMaxFriends)
