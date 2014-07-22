@@ -112,6 +112,8 @@
     <ClCompile Include="Scene_Gravity.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="TextureManager.cpp" />
+    <ClCompile Include="Tiles.cpp" />
+    <ClCompile Include="Tiles_Arrival.cpp" />
     <ClCompile Include="Tiles_Glass.cpp" />
     <ClCompile Include="Tiles_GroundCreeper.cpp" />
     <ClCompile Include="Tiles_GroundEarth.cpp" />
@@ -161,6 +163,7 @@
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="Tiles.h" />
+    <ClInclude Include="Tiles_Arrival.h" />
     <ClInclude Include="Tiles_Glass.h" />
     <ClInclude Include="Tiles_GroundCreeper.h" />
     <ClInclude Include="Tiles_GroundEarth.h" />

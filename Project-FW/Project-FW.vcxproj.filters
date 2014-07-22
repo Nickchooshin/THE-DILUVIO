@@ -127,6 +127,12 @@
     <ClCompile Include="Tiles_MontriloDoor.cpp">
       <Filter>Objects\Tiles</Filter>
     </ClCompile>
+    <ClCompile Include="Tiles.cpp">
+      <Filter>Objects\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Tiles_Arrival.cpp">
+      <Filter>Objects\Tiles</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h" />
@@ -262,6 +268,9 @@
       <Filter>Objects\Tiles</Filter>
     </ClInclude>
     <ClInclude Include="Tiles_MontriloDoor.h">
+      <Filter>Objects\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Tiles_Arrival.h">
       <Filter>Objects\Tiles</Filter>
     </ClInclude>
   </ItemGroup>

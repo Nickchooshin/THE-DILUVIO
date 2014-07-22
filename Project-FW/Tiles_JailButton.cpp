@@ -10,8 +10,5 @@ CTiles_JailButton::~CTiles_JailButton()
 
 void CTiles_JailButton::Init()
 {
-	m_pSprite = new CSprite ;
-	m_pSprite->Init(64.0f, 64.0f, "Resource/Image/Terrain/Jail_button.png") ;
-
-	SetBoundingBox() ;
+	LoadDat("Resource/Data/Tiles/Jail_button.dat") ;
 }

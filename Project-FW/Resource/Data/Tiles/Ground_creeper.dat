@@ -1,0 +1,21 @@
+### Ground_creeper ###
+# Image
+
+<image>
+Resource/Image/Terrain/Tiles.png
+
+<size>
+64, 64
+
+# Collision Box
+
+<collision_box>
+0, 0, 64, 64
+
+# Tile Image
+
+<tile_index>
+3, 0
+
+<tile_frame>
+1

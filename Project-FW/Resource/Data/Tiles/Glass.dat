@@ -1,0 +1,29 @@
+### Glass ###
+# Image
+
+<image>
+Resource/Image/Terrain/Tiles.png
+
+<size>
+64, 64
+
+# Collision Box
+
+<collision_box>
+0, 0, 64, 64
+
+# Tile Image
+
+<tile_index>
+0, 3
+
+<tile_frame>
+1
+
+# Tile Animation(Effect)
+
+<effect_index>
+4, 3
+
+<effect_frame>
+3

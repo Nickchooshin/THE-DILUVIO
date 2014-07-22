@@ -12,6 +12,7 @@
 #include "Tiles_JailTrap.h"
 #include "Tiles_JailButton.h"
 #include "Tiles_Glass.h"
+#include "Tiles_Arrival.h"
 #include "Tiles_MontriloDoor.h"
 
 #include <string>
@@ -88,7 +89,7 @@ void CMapTiles::LoadMap(int num)
 				break ;
 
 			case 11 :
-				// Arrival
+				pTiles = new CTiles_Arrival ;
 				break ;
 
 			case 12 :
@@ -113,7 +114,7 @@ void CMapTiles::LoadMap(int num)
 
 void CMapTiles::Clear()
 {
-	CTiles* temp ;
+	CTiles *temp ;
 	std::vector<CTiles*>::iterator iter ;
 	std::vector<CTiles*>::iterator end=m_Tiles.end() ;
 
@@ -175,18 +176,18 @@ void CMapTiles::Collision(CDynamicObjects *pObjects, char coord)
 {
 	CCollision col ;
 
-	CTiles* temp ;
+	CTiles *pTiles ;
 	std::vector<CTiles*>::iterator iter ;
 	std::vector<CTiles*>::iterator end=m_Tiles.end() ;
 
 	for(iter=m_Tiles.begin(); iter!=end; iter++)
 	{
-		temp = *iter ;
+		pTiles = *iter ;
 
 		if(coord=='x' || coord=='X')
-			col.XCollision(pObjects, temp) ;
+			col.XCollision(pObjects, pTiles) ;
 		else if(coord=='y' || coord=='Y')
-			col.YCollision(pObjects, temp) ;
+			col.YCollision(pObjects, pTiles) ;
 	}
 }
 
@@ -195,35 +196,48 @@ void CMapTiles::Collision(char coord)
 	CCollision col ;
 
 	CDynamicObjects *pObject ;
-	CTiles *pTile ;
+	CTiles *pTiles ;
 	std::vector<CTiles*>::iterator iter_t, end_t=m_Tiles.end() ;
 	std::vector<CDynamicObjects*>::iterator iter_o, end_o=m_CollisionList.end() ;
 
 	for(iter_t=m_Tiles.begin(); iter_t!=end_t; iter_t++)
 	{
-		pTile = *iter_t ;
+		pTiles = *iter_t ;
 
 		for(iter_o=m_CollisionList.begin(); iter_o!=end_o; iter_o++)
 		{
 			pObject = *iter_o ;
 
 			if(coord=='x' || coord=='X')
-				col.XCollision(pObject, pTile) ;
+				col.XCollision(pObject, pTiles) ;
 			else if(coord=='y' || coord=='Y')
-				col.YCollision(pObject, pTile) ;
+				col.YCollision(pObject, pTiles) ;
 		}
 	}
 }
 
-void CMapTiles::Render()
+void CMapTiles::Update()
 {
-	CTiles* temp ;
+	CTiles *pTiles ;
 	std::vector<CTiles*>::iterator iter ;
 	std::vector<CTiles*>::iterator end=m_Tiles.end() ;
 
 	for(iter=m_Tiles.begin(); iter!=end; iter++)
 	{
-		temp = *iter ;
-		temp->Render() ;
+		pTiles = *iter ;
+		pTiles->Update() ;
+	}
+}
+
+void CMapTiles::Render()
+{
+	CTiles *pTiles ;
+	std::vector<CTiles*>::iterator iter ;
+	std::vector<CTiles*>::iterator end=m_Tiles.end() ;
+
+	for(iter=m_Tiles.begin(); iter!=end; iter++)
+	{
+		pTiles = *iter ;
+		pTiles->Render() ;
 	}
 }

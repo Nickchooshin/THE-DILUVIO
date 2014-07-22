@@ -64,6 +64,7 @@ void SceneGravity::Update(float dt)
 
 	m_pHero->Update() ;
 	g_Friends_List->Update() ;
+	m_MapTiles->Update() ;
 
 	//
 	int size = g_Friends_List->GetSize() ;

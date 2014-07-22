@@ -32,5 +32,7 @@ public :
 	void Collision(CDynamicObjects *pObjects, char coord) ;
 	void Collision(char coord) ;
 
+	void Update() ;
+
 	void Render() ;
 } ;
