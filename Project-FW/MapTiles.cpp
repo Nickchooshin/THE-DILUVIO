@@ -75,6 +75,31 @@ void CMapTiles::Clear()
 	m_Tiles.clear() ;
 }
 
+CTiles* CMapTiles::GetTile(int x, int y)
+{
+	CTiles *pTiles ;
+	std::vector<CTiles*>::iterator iter ;
+	std::vector<CTiles*>::iterator end=m_Tiles.end() ;
+
+	float fX, fY ;
+	float fTileX, fTileY ;
+	fX = (float)(x-1) * 64.0f + 32.0f ;
+	fY = (float)(y-1) * 64.0f + 32.0f ;
+
+	for(iter=m_Tiles.begin(); iter!=end; iter++)
+	{
+		pTiles = *iter ;
+
+		fTileX = pTiles->GetPositionX() ;
+		fTileY = pTiles->GetPositionY() ;
+
+		if(fTileX==fX && fTileY==fY)
+			return pTiles ;
+	}
+
+	return NULL ;
+}
+
 void CMapTiles::AddCollisionList(CDynamicObjects *pObjects)
 {
 	m_CollisionList.push_back(pObjects) ;

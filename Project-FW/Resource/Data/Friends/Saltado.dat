@@ -5,12 +5,12 @@
 Resource/Image/Friends/Saltado.png
 
 <size>
-64, 64
+64, 96
 
 # Collision Box
 
 <collision_box>
-0, 0, 64, 64
+0, 32, 64, 96
 
 # Icon
 

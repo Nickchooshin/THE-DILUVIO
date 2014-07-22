@@ -21,9 +21,8 @@ CFriends::~CFriends()
 
 void CFriends::Absorb()
 {
-	m_State = ABSORB ;
-	m_bRelease = false ;
-	GravityAccReset() ;
+	if(m_State!=RELEASE)
+		m_State = ABSORB ;
 }
 
 void CFriends::Release()
@@ -177,6 +176,13 @@ void CFriends::Animation()
 		m_nNowFrame += Frame ;
 		if(m_nNowFrame>=MaxFrame)
 		{
+			// 흡수였을 경우, 캐릭터를 집어넣는다
+			if(m_State==ABSORB)
+			{
+				m_bRelease = false ;
+				GravityAccReset() ;
+			}
+
 			m_nNowFrame = 0 ;
 			m_State = STAND ;
 		}

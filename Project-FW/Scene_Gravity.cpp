@@ -45,6 +45,7 @@ void SceneGravity::Init()
 
 	m_MapTiles = new CMapTiles ;
 	m_MapTiles->LoadMap(1) ;
+	m_pHero->SetMapTiles(m_MapTiles) ;
 
 	m_pCollision = new CCollision ;
 }

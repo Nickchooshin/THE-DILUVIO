@@ -10,6 +10,8 @@
 #include "Friends_List.h"
 #include "Friends.h"
 
+#include "MapTiles.h"
+
 CHero::CHero() : m_ImgSize(0, 0),
 				 m_nNowFrame(0),
 				 m_nStandFrame(0), m_nMoveFrame(0), m_nJumpFrame(0), m_nAbsorbFrame(0), m_nReleaseFrame(0),
@@ -20,7 +22,8 @@ CHero::CHero() : m_ImgSize(0, 0),
 				 m_Release_LeftIndex(0, 0), m_Release_RightIndex(0, 0),
 				 m_fAnimationTime(0.0f),
 				 m_State(RIGHT), m_prevState(RIGHT),
-				 m_pFC_UI(NULL)
+				 m_pFC_UI(NULL),
+				 m_pMapTiles(NULL)
 {
 	m_fVecSpeed = 2.5f ;
 	m_fVecJump = 7.5f ;
@@ -144,6 +147,11 @@ void CHero::Init()
 	m_pFC_UI->Init() ;
 }
 
+void CHero::SetMapTiles(CMapTiles *pMapTiles)
+{
+	m_pMapTiles = pMapTiles ;
+}
+
 void CHero::Update()
 {
 	Move() ;
@@ -184,48 +192,53 @@ void CHero::Move()
 	{
 		m_State = (State)((m_State / RIGHT) * RIGHT + LEFT_RELEASE) ;
 
-		// 현재 선택되어있는 친구를
-		// 캐릭터가 바라보는 방향의 타일 좌표에 방출한다
-		//
+		// 현재 선택되어있는 친구가 방출되어 있지 않다면
 		int index = m_pFC_UI->GetSelectedIndex() ;
 		CFriends *pFriend = g_Friends_List->GetFriend(index) ;
 		if(!pFriend->GetRelease())
 		{
-			pFriend->Release() ;
-
+			// 캐릭터가 바라보는 방향의 타일 좌표를 구한다
 			float fX ;
-			int tileX ;
+			int tileX, tileY ;
 			if(m_State==LEFT_RELEASE)
 			{
-				fX = m_fX + (m_BoundingBox.left + 32.0f + 32.0f) ;
+				fX = m_fX + (m_BoundingBox.left + 64.0f) ;
 				tileX = (int)(fX / 64.0f) - 1 ;
 			}
 			else if(m_State==RIGHT_RELEASE)
 			{
-				fX = m_fX + (m_BoundingBox.right + 32.0f + 32.0f - 1.0f) ;
+				fX = m_fX + (m_BoundingBox.right + 64.0f - 1.0f) ;
 				tileX = (int)(fX / 64.0f) + 1 ;
 			}
-			fX = (float)(tileX * 64) ;
-			pFriend->SetPosition(fX - 32.0f, m_fY) ;
+			tileY = (int)((m_fY + 64.0f) / 64.0f) ;
+
+			// 해당 좌표에 친구가 없을경우, 현재 선택된 친구를 방출
+			// 해당 좌표에 친구/타일 이 없을경우, 현재 선택된 친구를 방출
+			if( g_Friends_List->GetFriend(tileX, tileY)==NULL &&
+				m_pMapTiles->GetTile(tileX, tileY)==NULL )
+			{
+				fX = (float)(tileX * 64) ;
+				pFriend->SetPosition(fX - 32.0f, m_fY) ;
+
+				pFriend->Release() ;
+			}
 		}
-		//
 	}
 	else if(!m_bGravity && g_Keyboard->IsButtonDown(DIK_X))
 	{
 		m_State = (State)((m_State / RIGHT) * RIGHT + LEFT_ABSORB) ;
 
 		// 캐릭터가 바라보는 방향의 타일 좌표를 구한다
-		///
 		float fX ;
 		int tileX, tileY ;
 		if(m_State==LEFT_ABSORB)
 		{
-			fX = m_fX + (m_BoundingBox.left + 32.0f + 32.0f) ;
+			fX = m_fX + (m_BoundingBox.left + 64.0f) ;
 			tileX = (int)(fX / 64.0f) - 1 ;
 		}
 		else if(m_State==RIGHT_ABSORB)
 		{
-			fX = m_fX + (m_BoundingBox.right + 32.0f + 32.0f - 1.0f) ;
+			fX = m_fX + (m_BoundingBox.right + 64.0f - 1.0f) ;
 			tileX = (int)(fX / 64.0f) + 1 ;
 		}
 		tileY = (int)((m_fY + 64.0f) / 64.0f) ;
@@ -236,7 +249,6 @@ void CHero::Move()
 		{
 			pFriends->Absorb() ;
 		}
-		///
 	}
 	else
 	{
@@ -247,7 +259,7 @@ void CHero::Move()
 		if(g_Keyboard->IsButtonDown(DIK_RIGHT))
 			m_vForce.x += fSpeed ;
 
-		if(!m_bJump && g_Keyboard->IsButtonDown(DIK_UP))
+		if(!m_bGravity && !m_bJump && g_Keyboard->IsButtonDown(DIK_UP))
 		{
 			m_fVecAcc = m_fVecJump * fTime ;
 

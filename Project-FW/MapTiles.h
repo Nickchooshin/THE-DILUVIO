@@ -19,6 +19,8 @@ public :
 
 	void Clear() ;
 
+	CTiles* GetTile(int x, int y) ;
+
 	void AddCollisionList(CDynamicObjects *pObjects) ;
 	void ClearCollisionList() ;
 	void Collision(CDynamicObjects *pObjects, char coord) ;
