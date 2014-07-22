@@ -11,13 +11,10 @@
 
 #include "Hero.h"
 #include "MapTiles.h"
-#include "Collision.h"
 
 //
 #include "Friends_List.h"
 #include "Friends.h"
-
-#include "Collision.h"
 //
 
 SceneGravity::SceneGravity()
@@ -36,25 +33,26 @@ Scene* SceneGravity::scene()
 
 void SceneGravity::Init()
 {
-	g_CameraManager->AllCameraClear() ;
-	g_CameraManager->AddCamera(new CCamera(), 0) ;
-
-	m_pHero = new CHero ;
-	m_pHero->Init() ;
-	m_pHero->SetPosition(50.0f, 250.0f) ;
-
 	m_MapTiles = new CMapTiles ;
 	m_MapTiles->LoadMap(1) ;
-	m_pHero->SetMapTiles(m_MapTiles) ;
 
-	m_pCollision = new CCollision ;
+	Size MapSize = m_MapTiles->GetMapSize() ;
+	CCamera *pCamera = new CCamera() ;
+	pCamera->SetWolrdSize(MapSize.x * 64.0f, MapSize.y * 64.0f) ;
+	g_CameraManager->AllCameraClear() ;
+	g_CameraManager->AddCamera(pCamera, 0) ;
+
+	Position HeroPos = m_MapTiles->GetHeroPosition() ;
+	m_pHero = new CHero ;
+	m_pHero->Init() ;
+	m_pHero->SetPosition(HeroPos.x * 64.0f + 32.0f, HeroPos.y * 64.0f + 32.0f) ;
+	m_pHero->SetMapTiles(m_MapTiles) ;
 }
 
 void SceneGravity::Destroy()
 {
 	delete m_pHero ;
 	delete m_MapTiles ;
-	delete m_pCollision ;
 }
 
 void SceneGravity::Update(float dt)
@@ -100,6 +98,7 @@ void SceneGravity::Update(float dt)
 
 void SceneGravity::Render()
 {
+	g_CameraManager->SetPosition(m_pHero->GetPositionX(), m_pHero->GetPositionY()) ;
 	g_CameraManager->CameraRun() ;
 
 	m_MapTiles->Render() ;

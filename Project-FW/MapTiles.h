@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include "Objects.h"
 
 class CTiles ;
 class CDynamicObjects ;
@@ -11,6 +12,9 @@ private :
 	std::vector<CTiles*> m_Tiles ;
 	std::vector<CDynamicObjects*> m_CollisionList ;
 
+	Position m_HeroPos ;
+	Size m_MapSize ;
+
 public :
 	CMapTiles() ;
 	~CMapTiles() ;
@@ -19,6 +23,8 @@ public :
 
 	void Clear() ;
 
+	const Position GetHeroPosition() ;
+	const Size GetMapSize() ;
 	CTiles* GetTile(int x, int y) ;
 
 	void AddCollisionList(CDynamicObjects *pObjects) ;

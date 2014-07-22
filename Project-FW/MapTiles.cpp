@@ -3,7 +3,16 @@
 #include "DynamicObjects.h"
 #include "Collision.h"
 
-#include "Tiles_Ground.h"
+#include "Tiles_GroundStone.h"
+#include "Tiles_GroundEarth.h"
+#include "Tiles_GroundEarthUp.h"
+#include "Tiles_GroundCreeper.h"
+#include "Tiles_GroundWater.h"
+#include "Tiles_GroundWaterUp.h"
+#include "Tiles_JailTrap.h"
+#include "Tiles_JailButton.h"
+#include "Tiles_Glass.h"
+#include "Tiles_MontriloDoor.h"
 
 #include <string>
 
@@ -30,7 +39,7 @@ void CMapTiles::LoadMap(int num)
 
 	for(int y=mapSizeY-1; y>=0; y--)
 	{
-		for(int x=mapSizeX-1; x>=0; x--)
+		for(int x=0; x<mapSizeX; x++)
 		{
 			fscanf(map, "%d ", &tileNumber) ;
 
@@ -43,8 +52,47 @@ void CMapTiles::LoadMap(int num)
 				break ;
 
 			case 1 :
+				pTiles = NULL ;
+				m_HeroPos.x = x ;
+				m_HeroPos.y = y ;
+				break ;
+
 			case 2 :
-				pTiles = new CTilesGround ;
+				pTiles = new CTiles_GroundStone ;
+				break ;
+			case 3 :
+				pTiles = new CTiles_GroundEarth ;
+				break ;
+			case 4 :
+				pTiles = new CTiles_GroundEarthUp ;
+				break ;
+			case 5 :
+				pTiles = new CTiles_GroundCreeper ;
+				break ;
+			case 6 :
+				pTiles = new CTiles_GroundWater ;
+				break ;
+			case 7 :
+				pTiles = new CTiles_GroundWaterUp ;
+				break ;
+
+			case 8 :
+				pTiles = new CTiles_JailTrap ;
+				break ;
+			case 9 :
+				pTiles = new CTiles_JailButton ;
+				break ;
+
+			case 10 :
+				pTiles = new CTiles_Glass ;
+				break ;
+
+			case 11 :
+				// Arrival
+				break ;
+
+			case 12 :
+				pTiles = new CTiles_MontriloDoor ;
 				break ;
 			}
 
@@ -58,6 +106,9 @@ void CMapTiles::LoadMap(int num)
 	}
 
 	fclose(map) ;
+
+	m_MapSize.x = mapSizeX ;
+	m_MapSize.y = mapSizeY ;
 }
 
 void CMapTiles::Clear()
@@ -73,6 +124,16 @@ void CMapTiles::Clear()
 	}
 
 	m_Tiles.clear() ;
+}
+
+const Position CMapTiles::GetHeroPosition()
+{
+	return m_HeroPos ;
+}
+
+const Size CMapTiles::GetMapSize()
+{
+	return m_MapSize ;
 }
 
 CTiles* CMapTiles::GetTile(int x, int y)

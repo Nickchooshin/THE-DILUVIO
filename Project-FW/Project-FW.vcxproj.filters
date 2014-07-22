@@ -51,9 +51,6 @@
     <ClCompile Include="Objects.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
-    <ClCompile Include="Tiles_Ground.cpp">
-      <Filter>Objects\Tiles</Filter>
-    </ClCompile>
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="LoadManager.cpp">
       <Filter>Manager</Filter>
@@ -99,6 +96,36 @@
     </ClCompile>
     <ClCompile Include="DynamicObjects.cpp">
       <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Tiles_Glass.cpp">
+      <Filter>Objects\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Tiles_GroundEarth.cpp">
+      <Filter>Objects\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Tiles_GroundEarthUp.cpp">
+      <Filter>Objects\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Tiles_GroundStone.cpp">
+      <Filter>Objects\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Tiles_GroundCreeper.cpp">
+      <Filter>Objects\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Tiles_GroundWater.cpp">
+      <Filter>Objects\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Tiles_GroundWaterUp.cpp">
+      <Filter>Objects\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Tiles_JailTrap.cpp">
+      <Filter>Objects\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Tiles_JailButton.cpp">
+      <Filter>Objects\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Tiles_MontriloDoor.cpp">
+      <Filter>Objects\Tiles</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -161,9 +188,6 @@
     <ClInclude Include="Objects.h">
       <Filter>Objects</Filter>
     </ClInclude>
-    <ClInclude Include="Tiles_Ground.h">
-      <Filter>Objects\Tiles</Filter>
-    </ClInclude>
     <ClInclude Include="Collision.h" />
     <ClInclude Include="LoadManager.h">
       <Filter>Manager</Filter>
@@ -209,6 +233,36 @@
     </ClInclude>
     <ClInclude Include="DynamicObjects.h">
       <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Tiles_Glass.h">
+      <Filter>Objects\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Tiles_GroundEarth.h">
+      <Filter>Objects\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Tiles_GroundEarthUp.h">
+      <Filter>Objects\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Tiles_GroundStone.h">
+      <Filter>Objects\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Tiles_GroundCreeper.h">
+      <Filter>Objects\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Tiles_GroundWater.h">
+      <Filter>Objects\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Tiles_GroundWaterUp.h">
+      <Filter>Objects\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Tiles_JailTrap.h">
+      <Filter>Objects\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Tiles_JailButton.h">
+      <Filter>Objects\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Tiles_MontriloDoor.h">
+      <Filter>Objects\Tiles</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
