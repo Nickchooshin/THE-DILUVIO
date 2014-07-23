@@ -80,15 +80,15 @@ void CCollision::XCollision(CDynamicObjects *pDynamicObject, CObjects *pObject)
 	if(!AABB(rtDynamic, rtTemp))
 		return ;
 
-	int x = (int)pDynamicObject->GetPositionX() ;
+	float x = pDynamicObject->GetPositionX() ;
 	int y = (int)pDynamicObject->GetPositionY() ;
 
 	if(way==0)
-		x += (rtSize.right - rtSize.left) ;
+		x += (float)(rtSize.right - rtSize.left) ;
 	else
-		x -= (rtSize.right - rtSize.left) ;
+		x -= (float)(rtSize.right - rtSize.left) ;
 
-	pDynamicObject->SetPosition((float)x, (float)y) ;
+	pDynamicObject->SetPosition(x, (float)y) ;
 }
 
 void CCollision::YCollision(CDynamicObjects *pDynamicObject, CObjects *pObject)
@@ -124,7 +124,7 @@ void CCollision::YCollision(CDynamicObjects *pDynamicObject, CObjects *pObject)
 		return ;
 	AABB(rtDynamic, rtObject) ;
 
-	int x = (int)pDynamicObject->GetPositionX() ;
+	float x = pDynamicObject->GetPositionX() ;
 	int y = (int)pDynamicObject->GetPositionY() ;
 
 	if(way==0)
@@ -141,7 +141,7 @@ void CCollision::YCollision(CDynamicObjects *pDynamicObject, CObjects *pObject)
 		pDynamicObject->GravityAccReset() ;
 	}
 
-	pDynamicObject->SetPosition((float)x, (float)y) ;
+	pDynamicObject->SetPosition(x, (float)y) ;
 }
 
 Rect CCollision::GetIntersect()
