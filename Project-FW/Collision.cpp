@@ -1,5 +1,5 @@
 #include "Collision.h"
-#include "Hero.h"
+#include "DynamicObjects.h"
 #include "Tiles.h"
 
 CCollision::CCollision()
@@ -139,6 +139,116 @@ void CCollision::YCollision(CDynamicObjects *pDynamicObject, CObjects *pObject)
 		y -= (rtSize.top - rtSize.bottom) ;
 		pDynamicObject->SetJump(true) ;
 		pDynamicObject->GravityAccReset() ;
+	}
+
+	pDynamicObject->SetPosition(x, (float)y) ;
+}
+
+void CCollision::XCollision(CDynamicObjects *pDynamicObject, CTiles *pTile)
+{
+	if(!pTile->BeCollision())
+		return ;
+
+	int way = -1 ;
+	Vector vec = pDynamicObject->GetForce() ;
+	Rect rtDynamic = pDynamicObject->GetBoundingBox() ;
+	Rect rtTile = pTile->GetBoundingBox() ;
+	int xSize = rtTile.right - rtTile.left  ;
+
+	if(!AABB(rtDynamic, rtTile))
+		return ;
+	Rect rtSize = GetIntersect() ;
+
+	if(vec.x<=0)
+		way = 0 ;
+	else
+		way = 1 ;
+
+	Rect rtTemp = rtTile ;
+	if(way==0)
+	{
+		rtTemp.left += xSize ;
+		rtTemp.right += xSize ;
+	}
+	else
+	{
+		rtTemp.left -= xSize ;
+		rtTemp.right -= xSize ;
+	}
+
+	if(!AABB(rtDynamic, rtTemp))
+		return ;
+
+	float x = pDynamicObject->GetPositionX() ;
+	int y = (int)pDynamicObject->GetPositionY() ;
+
+	if(way==0)
+	{
+		x += (float)(rtSize.right - rtSize.left) ;
+		pTile->CollisionDirection(CTiles::COLLISION_RIGHT) ;
+	}
+	else
+	{
+		x -= (float)(rtSize.right - rtSize.left) ;
+		pTile->CollisionDirection(CTiles::COLLISION_LEFT) ;
+	}
+
+	pDynamicObject->SetPosition(x, (float)y) ;
+}
+
+void CCollision::YCollision(CDynamicObjects *pDynamicObject, CTiles *pTile)
+{
+	if(!pTile->BeCollision())
+		return ;
+
+	int way = -1 ;
+	Vector vec = pDynamicObject->GetForce() ;
+	Rect rtDynamic = pDynamicObject->GetBoundingBox() ;
+	Rect rtTile = pTile->GetBoundingBox() ;
+	int ySize = rtTile.top - rtTile.bottom  ;
+
+	if(!AABB(rtDynamic, rtTile))
+		return ;
+	Rect rtSize = GetIntersect() ;
+
+	if(vec.y<=0)
+		way = 0 ;
+	else
+		way = 1 ;
+
+	Rect rtTemp = rtTile ;
+	if(way==0)
+	{
+		rtTemp.top += ySize ;
+		rtTemp.bottom += ySize ;
+	}
+	else
+	{
+		rtTemp.top -= ySize ;
+		rtTemp.bottom -= ySize ;
+	}
+
+	if(!AABB(rtDynamic, rtTemp))
+		return ;
+	AABB(rtDynamic, rtTile) ;
+
+	float x = pDynamicObject->GetPositionX() ;
+	int y = (int)pDynamicObject->GetPositionY() ;
+
+	if(way==0)
+	{
+		y += (rtSize.top - rtSize.bottom) ;
+		pDynamicObject->SetJump(false) ;
+		pDynamicObject->GravityAccReset() ;
+		pDynamicObject->SetGravity(false) ;
+		pTile->CollisionDirection(CTiles::COLLISION_UP) ;
+	}
+	else
+	{
+		y -= (rtSize.top - rtSize.bottom) ;
+		pDynamicObject->SetJump(true) ;
+		pDynamicObject->GravityAccReset() ;
+		pTile->CollisionDirection(CTiles::COLLISION_DOWN) ;
 	}
 
 	pDynamicObject->SetPosition(x, (float)y) ;

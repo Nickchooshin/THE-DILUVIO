@@ -33,7 +33,6 @@ public :
 	const Position GetIconIndex() ;
 
 	virtual void Update() ;
-
 protected :
 	void LoadDat(char *filepath) ;
 	void SetBoundingBox() ;

@@ -9,4 +9,10 @@ public :
 	~CTiles_Glass() ;
 
 	void Init() ;
+
+	void Update() ;
+
+	void Render() ;
+private :
+	void Animation() ;
 } ;

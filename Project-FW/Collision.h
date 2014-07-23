@@ -2,10 +2,9 @@
 
 #include "Objects.h"
 
-class CHero ;
-class CTiles ;
 class CObjects ;
 class CDynamicObjects ;
+class CTiles ;
 
 class CCollision
 {
@@ -20,6 +19,9 @@ public :
 
 	void XCollision(CDynamicObjects *pDynamicObject, CObjects *pObject) ;
 	void YCollision(CDynamicObjects *pDynamicObject, CObjects *pObject) ;
+
+	void XCollision(CDynamicObjects *pDynamicObject, CTiles *pTile) ;
+	void YCollision(CDynamicObjects *pDynamicObject, CTiles *pTile) ;
 
 	Rect GetIntersect() ;
 } ;
