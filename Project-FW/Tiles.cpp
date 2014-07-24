@@ -59,6 +59,16 @@ void CTiles::LoadDat(char *filepath)
 			g_LoadManager->GetValue(m_ImgSize.x) ;
 			g_LoadManager->GetValue(m_ImgSize.y) ;
 		}
+		else if(strcmp(item, "EFFECT_ENABLE")==0)
+		{
+			char str[10] ;
+			g_LoadManager->GetString(str) ;
+
+			if(strcmp(str, "true")==0 || strcmp(str, "TRUE")==0)
+				m_bCollision = false ;
+			else if(strcmp(str, "false")==0 || strcmp(str, "FALSE")==0)
+				m_bCollision = true ;
+		}
 		else if(strcmp(item, "COLLISION_BOX")==0)
 		{
 			g_LoadManager->GetValue(m_BoundingBox.left) ;

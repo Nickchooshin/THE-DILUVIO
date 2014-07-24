@@ -42,9 +42,9 @@ void CDynamicObjects::Gravity()
 	m_fY += m_vForce.y ;
 	m_bGravity = true ;
 
-	if(m_fY<32.0f)
+	if(m_fY<0.0f)
 	{
-		m_fY = 32.0f ;
+		m_fY = 0.0f ;
 		SetGravity(false) ;
 		SetJump(false) ;
 		GravityAccReset() ;

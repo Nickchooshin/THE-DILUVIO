@@ -7,6 +7,10 @@ Resource/Image/Terrain/Jail_trap.png
 <size>
 64, 128
 
+# Effect
+<effect_enable>
+true
+
 # Collision Box
 
 <collision_box>
