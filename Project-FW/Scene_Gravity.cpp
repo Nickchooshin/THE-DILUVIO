@@ -38,7 +38,7 @@ void SceneGravity::Init()
 
 	Size MapSize = m_MapTiles->GetMapSize() ;
 	CCamera *pCamera = new CCamera() ;
-	pCamera->SetWolrdSize(MapSize.x * 64.0f, MapSize.y * 64.0f) ;
+	pCamera->SetWorldSize(-32.0f, -32.0f, (MapSize.x*64.0f)-32.0f, (MapSize.y*64.0f)-32.0f) ;
 	g_CameraManager->AllCameraClear() ;
 	g_CameraManager->AddCamera(pCamera, 0) ;
 

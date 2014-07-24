@@ -4,6 +4,7 @@
 CCamera::CCamera() : m_Position((float)(g_D3dDevice->GetWinWidth()/2),
 								(float)(g_D3dDevice->GetWinHeight()/2),
 								0.0f),
+					 m_MinPosition(0.0f, 0.0f, 0.0f), m_MaxPosition(0.0f, 0.0f, 0.0f),
 					 m_fWidth(0.0f), m_fHeight(0.0f)
 {
 }
@@ -27,6 +28,16 @@ void CCamera::SetWolrdSize(float width, float height)
 {
 	m_fWidth = width ;
 	m_fHeight = height ;
+
+	SetWorldPosition_MinMax(0.0f, 0.0f, width, height) ;
+}
+
+void CCamera::SetWorldSize(float w1, float h1, float w2, float h2)
+{
+	m_fWidth = w2 - w1 ;
+	m_fHeight = h2 - h1 ;
+
+	SetWorldPosition_MinMax(w1, h1, w2, h2) ;
 }
 
 void CCamera::Run()
@@ -59,24 +70,25 @@ void CCamera::CorrectionPosition()
 	if(m_fWidth==0.0f && m_fHeight==0.0f)
 		return ;
 
+	if(m_Position.x < m_MinPosition.x)
+		m_Position.x = m_MinPosition.x ;
+	else if(m_Position.x > m_MaxPosition.x)
+		m_Position.x = m_MaxPosition.x ;
+
+	if(m_Position.y < m_MinPosition.y)
+		m_Position.y = m_MinPosition.y ;
+	else if(m_Position.y > m_MaxPosition.y)
+		m_Position.y = m_MaxPosition.y ;
+}
+
+void CCamera::SetWorldPosition_MinMax(float w1, float h1, float w2, float h2)
+{
 	float fWinWidthHalf = g_D3dDevice->GetWinWidth() / 2.0f ;
 	float fWinHeightHalf = g_D3dDevice->GetWinHeight() / 2.0f ;
 
-	float PosX_Min, PosX_Max ;
-	float PosY_Min, PosY_Max ;
+	m_MinPosition.x = w1 + fWinWidthHalf ;
+	m_MinPosition.y = h1 + fWinHeightHalf ;
 
-	PosX_Min = fWinWidthHalf ;
-	PosX_Max = m_fWidth - fWinWidthHalf ;
-	PosY_Min = fWinHeightHalf ;
-	PosY_Max = m_fHeight - fWinHeightHalf ;
-
-	if(m_Position.x < PosX_Min)
-		m_Position.x = PosX_Min ;
-	else if(m_Position.x > PosX_Max)
-		m_Position.x = PosX_Max ;
-
-	if(m_Position.y < PosY_Min)
-		m_Position.y = PosY_Min ;
-	else if(m_Position.y > PosY_Max)
-		m_Position.y = PosY_Max ;
+	m_MaxPosition.x = w2 - fWinWidthHalf ;
+	m_MaxPosition.y = h2 - fWinHeightHalf ;
 }

@@ -202,15 +202,15 @@ void CHero::Move()
 			int tileX, tileY ;
 			if(m_State==LEFT_RELEASE)
 			{
-				fX = m_fX + (m_BoundingBox.left + 64.0f) ;
+				fX = m_fX + (m_BoundingBox.left + 32.0f) ;
 				tileX = (int)(fX / 64.0f) - 1 ;
 			}
 			else if(m_State==RIGHT_RELEASE)
 			{
-				fX = m_fX + (m_BoundingBox.right + 64.0f - 1.0f) ;
+				fX = m_fX + (m_BoundingBox.right + 32.0f - 1.0f) ;
 				tileX = (int)(fX / 64.0f) + 1 ;
 			}
-			tileY = (int)((m_fY + 64.0f) / 64.0f) ;
+			tileY = (int)((m_fY + 32.0f) / 64.0f) ;
 
 			// 해당 좌표에 친구가 없을경우, 현재 선택된 친구를 방출
 			// 해당 좌표에 친구/타일 이 없을경우, 현재 선택된 친구를 방출
@@ -218,7 +218,7 @@ void CHero::Move()
 				m_pMapTiles->GetTile(tileX, tileY)==NULL )
 			{
 				fX = (float)(tileX * 64) ;
-				pFriend->SetPosition(fX - 32.0f, m_fY) ;
+				pFriend->SetPosition(fX, m_fY) ;
 
 				pFriend->Release() ;
 			}
@@ -233,15 +233,15 @@ void CHero::Move()
 		int tileX, tileY ;
 		if(m_State==LEFT_ABSORB)
 		{
-			fX = m_fX + (m_BoundingBox.left + 64.0f) ;
+			fX = m_fX + (m_BoundingBox.left + 32.0f) ;
 			tileX = (int)(fX / 64.0f) - 1 ;
 		}
 		else if(m_State==RIGHT_ABSORB)
 		{
-			fX = m_fX + (m_BoundingBox.right + 64.0f - 1.0f) ;
+			fX = m_fX + (m_BoundingBox.right + 32.0f - 1.0f) ;
 			tileX = (int)(fX / 64.0f) + 1 ;
 		}
-		tileY = (int)((m_fY + 64.0f) / 64.0f) ;
+		tileY = (int)((m_fY + 32.0f) / 64.0f) ;
 
 		// 해당 좌표에 있는 친구를 흡수한다
 		CFriends *pFriends = g_Friends_List->GetFriend(tileX, tileY) ;

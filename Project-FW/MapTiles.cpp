@@ -100,7 +100,7 @@ void CMapTiles::LoadMap(int num)
 			if(pTiles!=NULL)
 			{
 				pTiles->Init() ;
-				pTiles->SetPosition((float)(x * 64 + 32), (float)(y * 64 + 32)) ;
+				pTiles->SetPosition((float)(x * 64), (float)(y * 64)) ;
 				m_Tiles.push_back(pTiles) ;
 			}
 		}
@@ -145,8 +145,8 @@ CTiles* CMapTiles::GetTile(int x, int y)
 
 	float fX, fY ;
 	float fTileX, fTileY ;
-	fX = (float)(x-1) * 64.0f + 32.0f ;
-	fY = (float)(y-1) * 64.0f + 32.0f ;
+	fX = (float)x * 64.0f ;
+	fY = (float)y * 64.0f ;
 
 	for(iter=m_Tiles.begin(); iter!=end; iter++)
 	{

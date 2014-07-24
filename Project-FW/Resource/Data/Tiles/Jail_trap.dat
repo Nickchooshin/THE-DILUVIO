@@ -1,0 +1,37 @@
+### Jail_trap ###
+# Image
+
+<image>
+Resource/Image/Terrain/Jail_trap.png
+
+<size>
+64, 128
+
+# Collision Box
+
+<collision_box>
+0, 0, 64, 128
+
+# Tile Image
+
+<tile_index>
+0, 0
+
+<tile_frame>
+1
+
+# Tile Animation(Effect)
+
+<effect_index>
+1, 0
+
+<effect_frame>
+2
+
+# Tile Animation(Effect)
+
+#<effect_index>
+#0, 1
+
+#<effect_frame>
+#7

@@ -13,7 +13,7 @@ CFriends::CFriends() : m_ImgSize(0, 0), m_ColSize(0, 0),
 					   m_fAnimationTime(0.0f),
 					   m_State(STAND), m_prevState(STAND)
 {
-	m_fVecGravity = -1.0f ;
+	m_fVecGravity = -0.3f ;
 }
 CFriends::~CFriends()
 {
