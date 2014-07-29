@@ -121,9 +121,6 @@
     <ClCompile Include="Tiles_JailTrap.cpp">
       <Filter>Objects\Tiles</Filter>
     </ClCompile>
-    <ClCompile Include="Tiles_JailButton.cpp">
-      <Filter>Objects\Tiles</Filter>
-    </ClCompile>
     <ClCompile Include="Tiles_MontriloDoor.cpp">
       <Filter>Objects\Tiles</Filter>
     </ClCompile>
@@ -131,6 +128,9 @@
       <Filter>Objects\Tiles</Filter>
     </ClCompile>
     <ClCompile Include="Tiles_Arrival.cpp">
+      <Filter>Objects\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Tiles_JailLever.cpp">
       <Filter>Objects\Tiles</Filter>
     </ClCompile>
   </ItemGroup>
@@ -264,13 +264,13 @@
     <ClInclude Include="Tiles_JailTrap.h">
       <Filter>Objects\Tiles</Filter>
     </ClInclude>
-    <ClInclude Include="Tiles_JailButton.h">
-      <Filter>Objects\Tiles</Filter>
-    </ClInclude>
     <ClInclude Include="Tiles_MontriloDoor.h">
       <Filter>Objects\Tiles</Filter>
     </ClInclude>
     <ClInclude Include="Tiles_Arrival.h">
+      <Filter>Objects\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Tiles_JailLever.h">
       <Filter>Objects\Tiles</Filter>
     </ClInclude>
   </ItemGroup>

@@ -9,6 +9,7 @@ protected :
 	int m_nTileFrame, m_nEffectFrame ;
 	Position m_Tile_Index ;
 	Position m_Effect_Index ;
+	CTiles *m_pLinkedTile ;
 
 	bool m_bCollision ;
 
@@ -28,7 +29,9 @@ public :
 	virtual void Init() = 0 ;
 	
 	virtual void Update() ;
+	virtual void Effect() ;
 
+	void SetLinkedTile(CTiles *pLinkedTile) ;
 	void SetCollision(bool bFlag) ;
 	const bool BeCollision() ;
 

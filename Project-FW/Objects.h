@@ -68,6 +68,11 @@ typedef struct _SIZE
 
 		return *this ;
 	}
+	//
+	const bool operator<(_SIZE size) const
+	{
+		return (this->x + this->y) < (size.x + size.y) ;
+	}
 } Size, Position ;
 
 typedef struct _Rect

@@ -12,3 +12,8 @@ void CTiles_JailTrap::Init()
 {
 	LoadDat("Resource/Data/Tiles/Jail_trap.dat") ;
 }
+
+void CTiles_JailTrap::Effect()
+{
+	m_State = EFFECT ;
+}

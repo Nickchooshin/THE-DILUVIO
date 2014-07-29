@@ -148,8 +148,18 @@ void CCollision::YCollision(CDynamicObjects *pDynamicObject, CObjects *pObject)
 
 void CCollision::XCollision(CDynamicObjects *pDynamicObject, CTiles *pTile)
 {
+	//
 	if(!pTile->BeCollision())
+	{
+		Rect rtDynamic = pDynamicObject->GetBoundingBox() ;
+		Rect rtTile = pTile->GetBoundingBox() ;
+
+		if(AABB(rtDynamic, rtTile))
+			pTile->Effect() ;
+
 		return ;
+	}
+	//
 
 	int way = -1 ;
 	Vector vec = pDynamicObject->GetForce() ;
@@ -202,8 +212,18 @@ void CCollision::XCollision(CDynamicObjects *pDynamicObject, CTiles *pTile)
 
 void CCollision::YCollision(CDynamicObjects *pDynamicObject, CTiles *pTile)
 {
+	//
 	if(!pTile->BeCollision())
+	{
+		Rect rtDynamic = pDynamicObject->GetBoundingBox() ;
+		Rect rtTile = pTile->GetBoundingBox() ;
+
+		if(AABB(rtDynamic, rtTile))
+			pTile->Effect() ;
+
 		return ;
+	}
+	//
 
 	int way = -1 ;
 	Vector vec = pDynamicObject->GetForce() ;

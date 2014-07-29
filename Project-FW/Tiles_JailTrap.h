@@ -9,4 +9,6 @@ public :
 	~CTiles_JailTrap() ;
 
 	void Init() ;
+
+	void Effect() ;
 } ;

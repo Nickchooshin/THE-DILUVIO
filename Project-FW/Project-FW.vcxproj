@@ -121,7 +121,7 @@
     <ClCompile Include="Tiles_GroundStone.cpp" />
     <ClCompile Include="Tiles_GroundWater.cpp" />
     <ClCompile Include="Tiles_GroundWaterUp.cpp" />
-    <ClCompile Include="Tiles_JailButton.cpp" />
+    <ClCompile Include="Tiles_JailLever.cpp" />
     <ClCompile Include="Tiles_JailTrap.cpp" />
     <ClCompile Include="Tiles_MontriloDoor.cpp" />
     <ClCompile Include="UISprite.cpp" />
@@ -171,7 +171,7 @@
     <ClInclude Include="Tiles_GroundStone.h" />
     <ClInclude Include="Tiles_GroundWater.h" />
     <ClInclude Include="Tiles_GroundWaterUp.h" />
-    <ClInclude Include="Tiles_JailButton.h" />
+    <ClInclude Include="Tiles_JailLever.h" />
     <ClInclude Include="Tiles_JailTrap.h" />
     <ClInclude Include="Tiles_MontriloDoor.h" />
     <ClInclude Include="UISprite.h" />

@@ -10,12 +10,15 @@
 #include "Tiles_GroundWater.h"
 #include "Tiles_GroundWaterUp.h"
 #include "Tiles_JailTrap.h"
-#include "Tiles_JailButton.h"
+#include "Tiles_JailLever.h"
 #include "Tiles_Glass.h"
 #include "Tiles_Arrival.h"
 #include "Tiles_MontriloDoor.h"
 
 #include <string>
+//
+#include <map>
+//
 
 CMapTiles::CMapTiles()
 {
@@ -31,6 +34,10 @@ void CMapTiles::LoadMap(int num)
 	char filepath[100] ;
 	int mapSizeX, mapSizeY ;
 	int tileNumber ;
+
+	//
+	std::map<std::string, CTiles*> TileList ;
+	//
 
 	sprintf_s(filepath, "Resource/Data/Maps/%d.dat", num) ;
 
@@ -81,7 +88,7 @@ void CMapTiles::LoadMap(int num)
 				pTiles = new CTiles_JailTrap ;
 				break ;
 			case 9 :
-				pTiles = new CTiles_JailButton ;
+				pTiles = new CTiles_JailLever ;
 				break ;
 
 			case 10 :
@@ -102,11 +109,47 @@ void CMapTiles::LoadMap(int num)
 				pTiles->Init() ;
 				pTiles->SetPosition((float)(x * 64), (float)(y * 64)) ;
 				m_Tiles.push_back(pTiles) ;
+
+				//
+				char index[100] ;
+				sprintf(index, "%d, %d", x, mapSizeY-y-1) ;
+				TileList[index] = pTiles ;
+				//
 			}
 		}
 	}
 
 	fclose(map) ;
+
+	//
+	sprintf_s(filepath, "Resource/Data/Maps/%d.link", num) ;
+
+	map = fopen(filepath, "r") ;
+	if(map!=NULL)
+	{
+		int LinkNum ;
+
+		fscanf(map, "%d\n", &LinkNum) ;
+
+		for(int i=0; i<LinkNum; i++)
+		{
+			int LinkX, LinkY ;
+			int LinkedX, LinkedY ;
+			char LinkIndex[100], LinkedIndex[100] ;
+
+			fscanf(map, "%d %d\t%d %d\n", &LinkX, &LinkY, &LinkedX, &LinkedY) ;
+
+			sprintf(LinkIndex, "%d, %d", LinkX, LinkY) ;
+			sprintf(LinkedIndex, "%d, %d", LinkedX, LinkedY) ;
+
+			CTiles *pLinkTile = TileList[LinkIndex] ;
+			CTiles *pLinkedTile = TileList[LinkedIndex] ;
+			pLinkTile->SetLinkedTile(pLinkedTile) ;
+		}
+
+		fclose(map) ;
+	}
+	//
 
 	m_MapSize.x = mapSizeX ;
 	m_MapSize.y = mapSizeY ;

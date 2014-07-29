@@ -9,6 +9,7 @@ CTiles::CTiles() : m_ImgSize(0, 0), m_ColSize(0, 0),
 				   m_nTileFrame(0), m_nEffectFrame(0),
 				   m_Tile_Index(0, 0),
 				   m_Effect_Index(0, 0),
+				   m_pLinkedTile(NULL),
 				   m_bCollision(true),
 				   m_fAnimationTime(0.0f),
 				   m_State(NORMAL), m_prevState(NORMAL),
@@ -24,6 +25,15 @@ void CTiles::Update()
 	Animation() ;
 
 	m_CollisionDirection = 0 ;
+}
+
+void CTiles::Effect()
+{
+}
+
+void CTiles::SetLinkedTile(CTiles *pLinkedTile)
+{
+	m_pLinkedTile = pLinkedTile ;
 }
 
 void CTiles::SetCollision(bool bFlag)
