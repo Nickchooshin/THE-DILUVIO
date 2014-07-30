@@ -5,7 +5,7 @@
 Resource/Image/Terrain/Jail_trap.png
 
 <size>
-64, 128
+128, 64
 
 # Effect
 <effect_enable>
@@ -14,7 +14,7 @@ true
 # Collision Box
 
 <collision_box>
-0, 0, 64, 128
+32, 0, 96, 64
 
 # Tile Image
 
@@ -22,20 +22,20 @@ true
 0, 0
 
 <tile_frame>
-1
+6
 
 # Tile Animation(Effect)
 
-<effect_index>
-1, 0
+<effect1_index>
+0, 1
 
-<effect_frame>
-2
+<effect1_frame>
+4
 
-# Tile Animation(Effect)
+# Tile Animation(Effect2)
 
-#<effect_index>
-#0, 1
+<effect2_index>
+0, 2
 
-#<effect_frame>
-#7
+<effect2_frame>
+6

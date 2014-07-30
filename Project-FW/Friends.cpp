@@ -59,50 +59,52 @@ void CFriends::LoadDat(char *filepath)
 
 	while(g_LoadManager->GetItem(item))
 	{
-		if(strcmp(item, "IMAGE")==0)
+		int len = strlen(item) ;
+
+		if(len==5 && strcmp(item, "IMAGE")==0)
 		{
 			g_LoadManager->GetString(image_path) ;
 		}
-		else if(strcmp(item, "SIZE")==0)
+		else if(len==4 && strcmp(item, "SIZE")==0)
 		{
 			g_LoadManager->GetValue(m_ImgSize.x) ;
 			g_LoadManager->GetValue(m_ImgSize.y) ;
 		}
-		else if(strcmp(item, "COLLISION_BOX")==0)
+		else if(len==13 && strcmp(item, "COLLISION_BOX")==0)
 		{
 			g_LoadManager->GetValue(m_BoundingBox.left) ;
 			g_LoadManager->GetValue(m_BoundingBox.top) ;
 			g_LoadManager->GetValue(m_BoundingBox.right) ;
 			g_LoadManager->GetValue(m_BoundingBox.bottom) ;
 		}
-		else if(strcmp(item, "STAND_FRAME")==0)
+		else if(len==11 && strcmp(item, "STAND_FRAME")==0)
 		{
 			g_LoadManager->GetValue(m_nStandFrame) ;
 		}
-		else if(strcmp(item, "STAND_INDEX")==0)
+		else if(len==11 && strcmp(item, "STAND_INDEX")==0)
 		{
 			g_LoadManager->GetValue(m_Stand_Index.x) ;
 			g_LoadManager->GetValue(m_Stand_Index.y) ;
 		}
-		else if(strcmp(item, "ABSORB_FRAME")==0)
+		else if(len==12 && strcmp(item, "ABSORB_FRAME")==0)
 		{
 			g_LoadManager->GetValue(m_nAbsorbFrame) ;
 		}
-		else if(strcmp(item, "ABSORB_INDEX")==0)
+		else if(len==12 && strcmp(item, "ABSORB_INDEX")==0)
 		{
 			g_LoadManager->GetValue(m_Absorb_Index.x) ;
 			g_LoadManager->GetValue(m_Absorb_Index.y) ;
 		}
-		else if(strcmp(item, "RELEASE_FRAME")==0)
+		else if(len==13 && strcmp(item, "RELEASE_FRAME")==0)
 		{
 			g_LoadManager->GetValue(m_nReleaseFrame) ;
 		}
-		else if(strcmp(item, "RELEASE_INDEX")==0)
+		else if(len==13 && strcmp(item, "RELEASE_INDEX")==0)
 		{
 			g_LoadManager->GetValue(m_Release_Index.x) ;
 			g_LoadManager->GetValue(m_Release_Index.y) ;
 		}
-		else if(strcmp(item, "ICON_INDEX")==0)
+		else if(len==10 && strcmp(item, "ICON_INDEX")==0)
 		{
 			g_LoadManager->GetValue(m_Icon_Index.x) ;
 			g_LoadManager->GetValue(m_Icon_Index.y) ;

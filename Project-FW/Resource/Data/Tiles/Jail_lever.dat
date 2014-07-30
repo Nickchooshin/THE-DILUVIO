@@ -24,10 +24,10 @@ true
 <tile_frame>
 1
 
-# Tile Animation(Effect)
+# Tile Animation(Effect1)
 
-<effect_index>
+<effect1_index>
 1, 2
 
-<effect_frame>
+<effect1_frame>
 3

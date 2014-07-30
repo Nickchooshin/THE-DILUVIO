@@ -13,5 +13,7 @@ public :
 
 	void Init() ;
 
-	void Effect() ;
+	void Effect1() ;
+private :
+	void Animation() ;
 } ;

@@ -6,9 +6,9 @@
 
 CTiles::CTiles() : m_ImgSize(0, 0), m_ColSize(0, 0),
 				   m_nNowFrame(0),
-				   m_nTileFrame(0), m_nEffectFrame(0),
+				   m_nTileFrame(0), m_nEffect1Frame(0), m_nEffect2Frame(0),
 				   m_Tile_Index(0, 0),
-				   m_Effect_Index(0, 0),
+				   m_Effect1_Index(0, 0), m_Effect2_Index(0, 0),
 				   m_pLinkedTile(NULL),
 				   m_bCollision(true),
 				   m_fAnimationTime(0.0f),
@@ -27,7 +27,11 @@ void CTiles::Update()
 	m_CollisionDirection = 0 ;
 }
 
-void CTiles::Effect()
+void CTiles::Effect1()
+{
+}
+
+void CTiles::Effect2()
 {
 }
 
@@ -60,16 +64,18 @@ void CTiles::LoadDat(char *filepath)
 
 	while(g_LoadManager->GetItem(item))
 	{
-		if(strcmp(item, "IMAGE")==0)
+		int len = strlen(item) ;
+
+		if(len==5 && strcmp(item, "IMAGE")==0)
 		{
 			g_LoadManager->GetString(image_path) ;
 		}
-		else if(strcmp(item, "SIZE")==0)
+		else if(len==4 && strcmp(item, "SIZE")==0)
 		{
 			g_LoadManager->GetValue(m_ImgSize.x) ;
 			g_LoadManager->GetValue(m_ImgSize.y) ;
 		}
-		else if(strcmp(item, "EFFECT_ENABLE")==0)
+		else if(len==13 && strcmp(item, "EFFECT_ENABLE")==0)
 		{
 			char str[10] ;
 			g_LoadManager->GetString(str) ;
@@ -79,30 +85,39 @@ void CTiles::LoadDat(char *filepath)
 			else if(strcmp(str, "false")==0 || strcmp(str, "FALSE")==0)
 				m_bCollision = true ;
 		}
-		else if(strcmp(item, "COLLISION_BOX")==0)
+		else if(len==13 && strcmp(item, "COLLISION_BOX")==0)
 		{
 			g_LoadManager->GetValue(m_BoundingBox.left) ;
 			g_LoadManager->GetValue(m_BoundingBox.top) ;
 			g_LoadManager->GetValue(m_BoundingBox.right) ;
 			g_LoadManager->GetValue(m_BoundingBox.bottom) ;
 		}
-		else if(strcmp(item, "TILE_FRAME")==0)
+		else if(len==10 && strcmp(item, "TILE_FRAME")==0)
 		{
 			g_LoadManager->GetValue(m_nTileFrame) ;
 		}
-		else if(strcmp(item, "TILE_INDEX")==0)
+		else if(len==10 && strcmp(item, "TILE_INDEX")==0)
 		{
 			g_LoadManager->GetValue(m_Tile_Index.x) ;
 			g_LoadManager->GetValue(m_Tile_Index.y) ;
 		}
-		else if(strcmp(item, "EFFECT_FRAME")==0)
+		else if(len==13 && strcmp(item, "EFFECT1_FRAME")==0)
 		{
-			g_LoadManager->GetValue(m_nEffectFrame) ;
+			g_LoadManager->GetValue(m_nEffect1Frame) ;
 		}
-		else if(strcmp(item, "EFFECT_INDEX")==0)
+		else if(len==13 && strcmp(item, "EFFECT1_INDEX")==0)
 		{
-			g_LoadManager->GetValue(m_Effect_Index.x) ;
-			g_LoadManager->GetValue(m_Effect_Index.y) ;
+			g_LoadManager->GetValue(m_Effect1_Index.x) ;
+			g_LoadManager->GetValue(m_Effect1_Index.y) ;
+		}
+		else if(len==13 && strcmp(item, "EFFECT2_FRAME")==0)
+		{
+			g_LoadManager->GetValue(m_nEffect2Frame) ;
+		}
+		else if(len==13 && strcmp(item, "EFFECT2_INDEX")==0)
+		{
+			g_LoadManager->GetValue(m_Effect2_Index.x) ;
+			g_LoadManager->GetValue(m_Effect2_Index.y) ;
 		}
 	}
 
@@ -137,10 +152,14 @@ void CTiles::Animation()
 		Index = m_Tile_Index ;
 		break ;
 
-	case EFFECT :
-		MaxFrame = m_nEffectFrame ;
-		Index = m_Effect_Index ;
+	case EFFECT1 :
+		MaxFrame = m_nEffect1Frame ;
+		Index = m_Effect1_Index ;
 		break ;
+
+	case EFFECT2 :
+		MaxFrame = m_nEffect2Frame ;
+		Index = m_Effect2_Index ;
 	}
 
 	// Animation

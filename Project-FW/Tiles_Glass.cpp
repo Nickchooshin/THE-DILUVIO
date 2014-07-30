@@ -19,7 +19,7 @@ void CTiles_Glass::Update()
 {
 	if(m_CollisionDirection & COLLISION_UP)
 	{
-		m_State = EFFECT ;
+		m_State = EFFECT1 ;
 	}
 
 	Animation() ;
@@ -49,10 +49,14 @@ void CTiles_Glass::Animation()
 		Index = m_Tile_Index ;
 		break ;
 
-	case EFFECT :
-		MaxFrame = m_nEffectFrame ;
-		Index = m_Effect_Index ;
+	case EFFECT1 :
+		MaxFrame = m_nEffect1Frame ;
+		Index = m_Effect1_Index ;
 		break ;
+
+	case EFFECT2 :
+		MaxFrame = m_nEffect2Frame ;
+		Index = m_Effect2_Index ;
 	}
 
 	// Animation
@@ -80,7 +84,7 @@ void CTiles_Glass::Animation()
 		m_nNowFrame += Frame ;
 		if(m_nNowFrame>=MaxFrame)
 		{
-			if(m_State==EFFECT)
+			if(m_State==EFFECT1)
 				m_bCollision = false ;
 			m_nNowFrame = 0 ;
 			m_State = NORMAL ;
