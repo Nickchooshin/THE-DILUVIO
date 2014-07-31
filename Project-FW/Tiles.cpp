@@ -13,6 +13,7 @@ CTiles::CTiles() : m_ImgSize(0, 0), m_ColSize(0, 0),
 				   m_Effect1_Index(0, 0), m_Effect2_Index(0, 0),
 				   m_pLinkedTile(NULL),
 				   m_bCollision(true),
+				   m_bGravityMultiples(false),
 				   m_fAnimationTime(0.0f),
 				   m_State(NORMAL), m_prevState(NORMAL),
 				   m_CollisionDirection(0)
@@ -50,6 +51,11 @@ void CTiles::SetCollision(bool bFlag)
 const bool CTiles::BeCollision()
 {
 	return m_bCollision ;
+}
+
+const bool CTiles::BeGravityMultiples()
+{
+	return m_bGravityMultiples ;
 }
 
 void CTiles::CollisionDirection(int direction)

@@ -112,12 +112,6 @@
     <ClCompile Include="Tiles_GroundCreeper.cpp">
       <Filter>Objects\Tiles</Filter>
     </ClCompile>
-    <ClCompile Include="Tiles_GroundWater.cpp">
-      <Filter>Objects\Tiles</Filter>
-    </ClCompile>
-    <ClCompile Include="Tiles_GroundWaterUp.cpp">
-      <Filter>Objects\Tiles</Filter>
-    </ClCompile>
     <ClCompile Include="Tiles_JailTrap.cpp">
       <Filter>Objects\Tiles</Filter>
     </ClCompile>
@@ -132,6 +126,15 @@
     </ClCompile>
     <ClCompile Include="Tiles_JailLever.cpp">
       <Filter>Objects\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="TilesWater.cpp">
+      <Filter>Objects\Tiles\Water</Filter>
+    </ClCompile>
+    <ClCompile Include="Tiles_GroundWaterUp.cpp">
+      <Filter>Objects\Tiles\Water</Filter>
+    </ClCompile>
+    <ClCompile Include="Tiles_GroundWater.cpp">
+      <Filter>Objects\Tiles\Water</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -255,12 +258,6 @@
     <ClInclude Include="Tiles_GroundCreeper.h">
       <Filter>Objects\Tiles</Filter>
     </ClInclude>
-    <ClInclude Include="Tiles_GroundWater.h">
-      <Filter>Objects\Tiles</Filter>
-    </ClInclude>
-    <ClInclude Include="Tiles_GroundWaterUp.h">
-      <Filter>Objects\Tiles</Filter>
-    </ClInclude>
     <ClInclude Include="Tiles_JailTrap.h">
       <Filter>Objects\Tiles</Filter>
     </ClInclude>
@@ -272,6 +269,15 @@
     </ClInclude>
     <ClInclude Include="Tiles_JailLever.h">
       <Filter>Objects\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="TilesWater.h">
+      <Filter>Objects\Tiles\Water</Filter>
+    </ClInclude>
+    <ClInclude Include="Tiles_GroundWaterUp.h">
+      <Filter>Objects\Tiles\Water</Filter>
+    </ClInclude>
+    <ClInclude Include="Tiles_GroundWater.h">
+      <Filter>Objects\Tiles\Water</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -322,6 +328,9 @@
     </Filter>
     <Filter Include="Data">
       <UniqueIdentifier>{2b3d3912-94b2-468b-91f4-d411edb16678}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\Tiles\Water">
+      <UniqueIdentifier>{3455ecec-03a2-4ed1-ae6c-abc88be4ef07}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

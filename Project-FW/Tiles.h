@@ -1,8 +1,9 @@
 #pragma once
 
+#include "Objects.h"
+
 class CDynamicObjects ;
 
-#include "Objects.h"
 class CTiles : public CObjects
 {
 protected :
@@ -14,6 +15,7 @@ protected :
 	CTiles *m_pLinkedTile ;
 
 	bool m_bCollision ;
+	bool m_bGravityMultiples ;
 
 	float m_fAnimationTime ;
 
@@ -37,6 +39,7 @@ public :
 	void SetLinkedTile(CTiles *pLinkedTile) ;
 	void SetCollision(bool bFlag) ;
 	const bool BeCollision() ;
+	const bool BeGravityMultiples() ;
 
 	void CollisionDirection(int direction) ;
 protected :

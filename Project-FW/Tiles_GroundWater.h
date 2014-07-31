@@ -1,14 +1,12 @@
 #pragma once
 
-#include "Tiles.h"
+#include "TilesWater.h"
 
-class CTiles_GroundWater : public CTiles
+class CTiles_GroundWater : public CTilesWater
 {
 public :
 	CTiles_GroundWater() ;
 	~CTiles_GroundWater() ;
 
 	void Init() ;
-
-	void Effect1(CDynamicObjects* pDynamicObject) ;
 } ;

@@ -160,6 +160,14 @@ bool CCollision::XCollision(CDynamicObjects *pDynamicObject, CTiles *pTile)
 
 		if(AABB(rtDynamic, rtTile))
 		{
+			//
+			Vector vec = pDynamicObject->GetForce() ;
+			if(vec.x<=0)
+				pTile->CollisionDirection(CTiles::COLLISION_RIGHT) ;
+			else
+				pTile->CollisionDirection(CTiles::COLLISION_LEFT) ;
+			//
+
 			pTile->Effect1(pDynamicObject) ;
 			return true ;
 		}
@@ -229,6 +237,14 @@ bool CCollision::YCollision(CDynamicObjects *pDynamicObject, CTiles *pTile)
 
 		if(AABB(rtDynamic, rtTile))
 		{
+			//
+			Vector vec = pDynamicObject->GetForce() ;
+			if(vec.y<=0)
+				pTile->CollisionDirection(CTiles::COLLISION_UP) ;
+			else
+				pTile->CollisionDirection(CTiles::COLLISION_DOWN) ;
+			//
+
 			pTile->Effect1(pDynamicObject) ;
 			return true ;
 		}

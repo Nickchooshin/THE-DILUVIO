@@ -12,6 +12,8 @@
 
 #include "MapTiles.h"
 
+#include <stdio.h>
+
 CHero::CHero() : m_ImgSize(0, 0),
 				 m_nNowFrame(0),
 				 m_nStandFrame(0), m_nMoveFrame(0), m_nJumpFrame(0), m_nAbsorbFrame(0), m_nReleaseFrame(0),
@@ -264,6 +266,14 @@ void CHero::Move()
 
 		if(!m_bGravity && !m_bJump && g_Keyboard->IsButtonDown(DIK_UP))
 		{
+			static int count=0 ;
+			static DWORD time=0 ;
+			DWORD now = timeGetTime() ;
+
+			if(now - time<600)
+				printf("%d - %f\n", count++, (now-time)*0.001f) ;
+			time = now ;
+
 			m_fVecAcc = m_fVecJump * fTime ;
 
 			m_bJump = true ;
