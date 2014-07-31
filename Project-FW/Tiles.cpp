@@ -27,11 +27,11 @@ void CTiles::Update()
 	m_CollisionDirection = 0 ;
 }
 
-void CTiles::Effect1()
+void CTiles::Effect1(CDynamicObjects* pDynamicObject)
 {
 }
 
-void CTiles::Effect2()
+void CTiles::Effect2(CDynamicObjects* pDynamicObject)
 {
 }
 

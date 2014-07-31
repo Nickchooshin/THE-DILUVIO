@@ -13,7 +13,7 @@ public :
 
 	void Init() ;
 
-	void Effect1() ;
+	void Effect1(CDynamicObjects* pDynamicObject) ;
 private :
 	void Animation() ;
 } ;

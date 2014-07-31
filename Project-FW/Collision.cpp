@@ -155,7 +155,7 @@ void CCollision::XCollision(CDynamicObjects *pDynamicObject, CTiles *pTile)
 		Rect rtTile = pTile->GetBoundingBox() ;
 
 		if(AABB(rtDynamic, rtTile))
-			pTile->Effect1() ;
+			pTile->Effect1(pDynamicObject) ;
 
 		return ;
 	}
@@ -219,7 +219,7 @@ void CCollision::YCollision(CDynamicObjects *pDynamicObject, CTiles *pTile)
 		Rect rtTile = pTile->GetBoundingBox() ;
 
 		if(AABB(rtDynamic, rtTile))
-			pTile->Effect1() ;
+			pTile->Effect1(pDynamicObject) ;
 
 		return ;
 	}

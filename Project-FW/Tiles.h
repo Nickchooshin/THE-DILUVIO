@@ -1,5 +1,7 @@
 #pragma once
 
+class CDynamicObjects ;
+
 #include "Objects.h"
 class CTiles : public CObjects
 {
@@ -29,8 +31,8 @@ public :
 	virtual void Init() = 0 ;
 	
 	virtual void Update() ;
-	virtual void Effect1() ;
-	virtual void Effect2() ;
+	virtual void Effect1(CDynamicObjects* pDynamicObject) ;
+	virtual void Effect2(CDynamicObjects* pDynamicObject) ;
 
 	void SetLinkedTile(CTiles *pLinkedTile) ;
 	void SetCollision(bool bFlag) ;

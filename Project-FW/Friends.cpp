@@ -156,7 +156,7 @@ void CFriends::Animation()
 	// Animation
 	m_fAnimationTime += g_D3dDevice->GetTime() ;
 
-	if(m_fAnimationTime>=0.2f || (m_State!=m_prevState))
+	if(m_fAnimationTime>=0.1f || (m_State!=m_prevState))
 	{
 		if(m_State!=m_prevState)
 		{
@@ -172,8 +172,8 @@ void CFriends::Animation()
 
 		m_pSprite->SetTextureUV(left, top, right, bottom) ;
 
-		int Frame = (int)(m_fAnimationTime / 0.2f) ;
-		m_fAnimationTime -= Frame * 0.2f ;
+		int Frame = (int)(m_fAnimationTime / 0.1f) ;
+		m_fAnimationTime -= Frame * 0.1f ;
 		Frame %= MaxFrame ;
 		m_nNowFrame += Frame ;
 		if(m_nNowFrame>=MaxFrame)

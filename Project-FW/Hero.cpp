@@ -245,7 +245,7 @@ void CHero::Move()
 
 		// 해당 좌표에 있는 친구를 흡수한다
 		CFriends *pFriends = g_Friends_List->GetFriend(tileX, tileY) ;
-		if(pFriends!=NULL)
+		if(pFriends!=NULL && m_pMapTiles->GetTile(tileX, tileY)==NULL)
 		{
 			pFriends->Absorb() ;
 		}

@@ -15,14 +15,14 @@ void CTiles_JailLever::Init()
 	LoadDat("Resource/Data/Tiles/Jail_lever.dat") ;
 }
 
-void CTiles_JailLever::Effect1()
+void CTiles_JailLever::Effect1(CDynamicObjects* pDynamicObject)
 {
 	if(m_State==NORMAL)
 	{
 		m_State = EFFECT1 ;
 
 		if(m_pLinkedTile!=NULL)
-			m_pLinkedTile->Effect2() ;
+			m_pLinkedTile->Effect2(pDynamicObject) ;
 	}
 }
 

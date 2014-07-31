@@ -1,10 +1,15 @@
 #include "Tiles_JailTrap.h"
 #include "Sprite.h"
 
+#include "DynamicObjects.h"
+
 #include "D3dDevice.h"
 
 CTiles_JailTrap::CTiles_JailTrap() : m_bWork(false),
-									 m_bDestory(false)
+									 m_bDestory(false),
+									 m_bConfined(false),
+									 m_pTrappedObject(NULL),
+									 m_nPulledCount(0)
 {
 }
 CTiles_JailTrap::~CTiles_JailTrap()
@@ -16,6 +21,45 @@ void CTiles_JailTrap::Init()
 	LoadDat("Resource/Data/Tiles/Jail_trap.dat") ;
 }
 
+void CTiles_JailTrap::Update()
+{
+	Animation() ;
+
+	if(m_State==EFFECT1)
+	{
+		float x = m_pTrappedObject->GetPositionX() ;
+		float y = m_pTrappedObject->GetPositionY() ;
+
+		int Length = 45 - (m_nNowFrame * 15) ;
+		float distance = abs(m_fX - x) ;
+
+		if(distance>(float)Length)
+		{
+			if(x>m_fX)
+				x = m_fX + (float)Length ;
+			else if(x<m_fX)
+				x = m_fX - (float)Length ;
+		}
+
+		if(m_fX==x && m_fY==y)
+		{
+			m_bConfined = true ;
+			m_bCollision = true ;
+		}
+
+		if(m_bConfined)
+		{
+			x = m_fX ;
+			y = m_fY ;
+			m_pTrappedObject->GravityAccReset() ;
+		}
+
+		m_pTrappedObject->SetPosition(x, y) ;
+	}
+
+	m_CollisionDirection = 0 ;
+}
+
 void CTiles_JailTrap::Render()
 {
 	if(!m_bDestory)
@@ -25,17 +69,20 @@ void CTiles_JailTrap::Render()
 	}
 }
 
-void CTiles_JailTrap::Effect1()
+void CTiles_JailTrap::Effect1(CDynamicObjects* pDynamicObject)
 {
 	if(m_State==NORMAL)
 	{
 		m_State = EFFECT1 ;
-		m_bCollision = true ;
+		//m_bCollision = true ;
 		m_bWork = true ;
+
+		m_pTrappedObject = pDynamicObject ;
+		//pDynamicObject->SetPosition(m_fX, m_fY) ;
 	}
 }
 
-void CTiles_JailTrap::Effect2()
+void CTiles_JailTrap::Effect2(CDynamicObjects* pDynamicObject)
 {
 	if(m_State!=EFFECT2)
 	{
