@@ -9,4 +9,6 @@ public :
 	~CTiles_GroundWaterUp() ;
 
 	void Init() ;
+
+	void Effect1(CDynamicObjects* pDynamicObject) ;
 } ;

@@ -17,11 +17,11 @@ public :
 
 	bool AABB(Rect A, Rect B) ;	// AABB Collision
 
-	void XCollision(CDynamicObjects *pDynamicObject, CObjects *pObject) ;
-	void YCollision(CDynamicObjects *pDynamicObject, CObjects *pObject) ;
+	bool XCollision(CDynamicObjects *pDynamicObject, CObjects *pObject) ;
+	bool YCollision(CDynamicObjects *pDynamicObject, CObjects *pObject) ;
 
-	void XCollision(CDynamicObjects *pDynamicObject, CTiles *pTile) ;
-	void YCollision(CDynamicObjects *pDynamicObject, CTiles *pTile) ;
+	bool XCollision(CDynamicObjects *pDynamicObject, CTiles *pTile) ;
+	bool YCollision(CDynamicObjects *pDynamicObject, CTiles *pTile) ;
 
 	Rect GetIntersect() ;
 } ;

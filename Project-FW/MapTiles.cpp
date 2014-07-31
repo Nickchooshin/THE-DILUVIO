@@ -243,19 +243,25 @@ void CMapTiles::Collision(char coord)
 	std::vector<CTiles*>::iterator iter_t, end_t=m_Tiles.end() ;
 	std::vector<CDynamicObjects*>::iterator iter_o, end_o=m_CollisionList.end() ;
 
-	for(iter_t=m_Tiles.begin(); iter_t!=end_t; iter_t++)
-	{
-		pTiles = *iter_t ;
+	bool bCollision ;
 
-		for(iter_o=m_CollisionList.begin(); iter_o!=end_o; iter_o++)
+	for(iter_o=m_CollisionList.begin(); iter_o!=end_o; iter_o++)
+	{
+		pObject = *iter_o ;
+		bCollision = false ;
+
+		for(iter_t=m_Tiles.begin(); iter_t!=end_t; iter_t++)
 		{
-			pObject = *iter_o ;
+			pTiles = *iter_t ;
 
 			if(coord=='x' || coord=='X')
-				col.XCollision(pObject, pTiles) ;
+				bCollision |= col.XCollision(pObject, pTiles) ;
 			else if(coord=='y' || coord=='Y')
-				col.YCollision(pObject, pTiles) ;
+				bCollision |= col.YCollision(pObject, pTiles) ;
 		}
+
+		if(!bCollision)
+			pObject->SetGravityMultiples(1.0f) ;
 	}
 }
 

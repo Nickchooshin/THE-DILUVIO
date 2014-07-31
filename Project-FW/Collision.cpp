@@ -48,7 +48,7 @@ bool CCollision::AABB(Rect A, Rect B)
 	return bState ;
 }
 
-void CCollision::XCollision(CDynamicObjects *pDynamicObject, CObjects *pObject)
+bool CCollision::XCollision(CDynamicObjects *pDynamicObject, CObjects *pObject)
 {
 	int way = -1 ;
 	Vector vec = pDynamicObject->GetForce() ;
@@ -57,7 +57,7 @@ void CCollision::XCollision(CDynamicObjects *pDynamicObject, CObjects *pObject)
 	int xSize = rtObject.right - rtObject.left  ;
 
 	if(!AABB(rtDynamic, rtObject))
-		return ;
+		return false ;
 	Rect rtSize = GetIntersect() ;
 
 	if(vec.x<=0)
@@ -78,7 +78,7 @@ void CCollision::XCollision(CDynamicObjects *pDynamicObject, CObjects *pObject)
 	}
 
 	if(!AABB(rtDynamic, rtTemp))
-		return ;
+		return false ;
 
 	float x = pDynamicObject->GetPositionX() ;
 	int y = (int)pDynamicObject->GetPositionY() ;
@@ -89,9 +89,11 @@ void CCollision::XCollision(CDynamicObjects *pDynamicObject, CObjects *pObject)
 		x -= (float)(rtSize.right - rtSize.left) ;
 
 	pDynamicObject->SetPosition(x, (float)y) ;
+
+	return true ;
 }
 
-void CCollision::YCollision(CDynamicObjects *pDynamicObject, CObjects *pObject)
+bool CCollision::YCollision(CDynamicObjects *pDynamicObject, CObjects *pObject)
 {
 	int way = -1 ;
 	Vector vec = pDynamicObject->GetForce() ;
@@ -100,7 +102,7 @@ void CCollision::YCollision(CDynamicObjects *pDynamicObject, CObjects *pObject)
 	int ySize = rtObject.top - rtObject.bottom  ;
 
 	if(!AABB(rtDynamic, rtObject))
-		return ;
+		return false ;
 	Rect rtSize = GetIntersect() ;
 
 	if(vec.y<=0)
@@ -121,7 +123,7 @@ void CCollision::YCollision(CDynamicObjects *pDynamicObject, CObjects *pObject)
 	}
 
 	if(!AABB(rtDynamic, rtTemp))
-		return ;
+		return false ;
 	AABB(rtDynamic, rtObject) ;
 
 	float x = pDynamicObject->GetPositionX() ;
@@ -142,11 +144,13 @@ void CCollision::YCollision(CDynamicObjects *pDynamicObject, CObjects *pObject)
 	}
 
 	pDynamicObject->SetPosition(x, (float)y) ;
+
+	return true ;
 }
 
 //
 
-void CCollision::XCollision(CDynamicObjects *pDynamicObject, CTiles *pTile)
+bool CCollision::XCollision(CDynamicObjects *pDynamicObject, CTiles *pTile)
 {
 	//
 	if(!pTile->BeCollision())
@@ -155,9 +159,12 @@ void CCollision::XCollision(CDynamicObjects *pDynamicObject, CTiles *pTile)
 		Rect rtTile = pTile->GetBoundingBox() ;
 
 		if(AABB(rtDynamic, rtTile))
+		{
 			pTile->Effect1(pDynamicObject) ;
+			return true ;
+		}
 
-		return ;
+		return false ;
 	}
 	//
 
@@ -168,7 +175,7 @@ void CCollision::XCollision(CDynamicObjects *pDynamicObject, CTiles *pTile)
 	int xSize = rtTile.right - rtTile.left  ;
 
 	if(!AABB(rtDynamic, rtTile))
-		return ;
+		return false ;
 	Rect rtSize = GetIntersect() ;
 
 	if(vec.x<=0)
@@ -189,7 +196,7 @@ void CCollision::XCollision(CDynamicObjects *pDynamicObject, CTiles *pTile)
 	}
 
 	if(!AABB(rtDynamic, rtTemp))
-		return ;
+		return false ;
 
 	float x = pDynamicObject->GetPositionX() ;
 	float y = pDynamicObject->GetPositionY() ;
@@ -208,9 +215,11 @@ void CCollision::XCollision(CDynamicObjects *pDynamicObject, CTiles *pTile)
 	}
 
 	pDynamicObject->SetPosition(x, y) ;
+
+	return true ;
 }
 
-void CCollision::YCollision(CDynamicObjects *pDynamicObject, CTiles *pTile)
+bool CCollision::YCollision(CDynamicObjects *pDynamicObject, CTiles *pTile)
 {
 	//
 	if(!pTile->BeCollision())
@@ -219,9 +228,12 @@ void CCollision::YCollision(CDynamicObjects *pDynamicObject, CTiles *pTile)
 		Rect rtTile = pTile->GetBoundingBox() ;
 
 		if(AABB(rtDynamic, rtTile))
+		{
 			pTile->Effect1(pDynamicObject) ;
+			return true ;
+		}
 
-		return ;
+		return false ;
 	}
 	//
 
@@ -232,7 +244,7 @@ void CCollision::YCollision(CDynamicObjects *pDynamicObject, CTiles *pTile)
 	int ySize = rtTile.top - rtTile.bottom  ;
 
 	if(!AABB(rtDynamic, rtTile))
-		return ;
+		return false ;
 	Rect rtSize = GetIntersect() ;
 
 	if(vec.y<=0)
@@ -253,7 +265,7 @@ void CCollision::YCollision(CDynamicObjects *pDynamicObject, CTiles *pTile)
 	}
 
 	if(!AABB(rtDynamic, rtTemp))
-		return ;
+		return false ;
 	AABB(rtDynamic, rtTile) ;
 
 	float x = pDynamicObject->GetPositionX() ;
@@ -278,6 +290,8 @@ void CCollision::YCollision(CDynamicObjects *pDynamicObject, CTiles *pTile)
 	}
 
 	pDynamicObject->SetPosition(x, y) ;
+
+	return true ;
 }
 
 Rect CCollision::GetIntersect()

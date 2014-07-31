@@ -2,6 +2,8 @@
 #include "Sprite.h"
 #include "LoadManager.h"
 
+#include "DynamicObjects.h"
+
 #include "D3dDevice.h"
 
 CTiles::CTiles() : m_ImgSize(0, 0), m_ColSize(0, 0),

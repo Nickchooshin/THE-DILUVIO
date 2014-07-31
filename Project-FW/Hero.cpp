@@ -182,6 +182,9 @@ void CHero::SetBoundingBox()
 
 void CHero::Move()
 {
+	//if(m_bDeath)
+	//	return ;
+
 	float fTime = g_D3dDevice->GetMoveTime() ;
 	float fSpeed = m_fVecSpeed * fTime ;
 

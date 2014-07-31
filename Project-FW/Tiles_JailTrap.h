@@ -2,8 +2,6 @@
 
 #include "Tiles.h"
 
-class CDynamicObjects ;
-
 class CTiles_JailTrap : public CTiles
 {
 private :
