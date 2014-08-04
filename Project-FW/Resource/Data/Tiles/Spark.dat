@@ -1,0 +1,29 @@
+### Spark ###
+# Image
+
+<image>
+Resource/Image/Terrain/Tiles.png
+
+<size>
+64, 64
+
+# Collision Box
+
+<collision_box>
+0, 0, 64, 64
+
+# Tile Image
+
+<tile_index>
+0, 5
+
+<tile_frame>
+1
+
+# Tile Animation(Effect2)
+
+<effect2_index>
+1, 5
+
+<effect2_frame>
+4

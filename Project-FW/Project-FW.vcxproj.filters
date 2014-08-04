@@ -136,6 +136,15 @@
     <ClCompile Include="Tiles_GroundWater.cpp">
       <Filter>Objects\Tiles\Water</Filter>
     </ClCompile>
+    <ClCompile Include="Tiles_Spark.cpp">
+      <Filter>Objects\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect.cpp">
+      <Filter>Objects\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect_SparkArea.cpp">
+      <Filter>Objects\Effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h" />
@@ -279,6 +288,15 @@
     <ClInclude Include="Tiles_GroundWater.h">
       <Filter>Objects\Tiles\Water</Filter>
     </ClInclude>
+    <ClInclude Include="Tiles_Spark.h">
+      <Filter>Objects\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect.h">
+      <Filter>Objects\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect_SparkArea.h">
+      <Filter>Objects\Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Input">
@@ -331,6 +349,9 @@
     </Filter>
     <Filter Include="Objects\Tiles\Water">
       <UniqueIdentifier>{3455ecec-03a2-4ed1-ae6c-abc88be4ef07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\Effect">
+      <UniqueIdentifier>{a3e72b43-8121-4f55-8c1c-c522bafea8b7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

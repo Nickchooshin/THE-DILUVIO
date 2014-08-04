@@ -1,0 +1,21 @@
+### Spark_ability ###
+# Image
+
+<image>
+Resource/Image/Effect/Spark_ability.png
+
+<size>
+192, 192
+
+# Collision Box
+
+#<collision_box>
+#0, 0, 64, 64
+
+# Effect Image
+
+<effect_index>
+0, 0
+
+<effect_frame>
+4

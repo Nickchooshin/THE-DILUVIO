@@ -14,6 +14,7 @@
 #include "Tiles_Glass.h"
 #include "Tiles_Arrival.h"
 #include "Tiles_MontriloDoor.h"
+#include "Tiles_Spark.h"
 
 #include <string>
 //
@@ -101,6 +102,10 @@ void CMapTiles::LoadMap(int num)
 
 			case 12 :
 				pTiles = new CTiles_MontriloDoor ;
+				break ;
+
+			case 13 :
+				pTiles = new CTiles_Spark ;
 				break ;
 			}
 

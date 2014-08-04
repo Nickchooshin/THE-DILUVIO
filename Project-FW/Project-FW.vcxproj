@@ -85,6 +85,8 @@
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="D3dSystem.cpp" />
     <ClCompile Include="DynamicObjects.cpp" />
+    <ClCompile Include="Effect.cpp" />
+    <ClCompile Include="Effect_SparkArea.cpp" />
     <ClCompile Include="FriendChange_UI.cpp" />
     <ClCompile Include="Friends.cpp" />
     <ClCompile Include="Friends_Busxo.cpp" />
@@ -125,6 +127,7 @@
     <ClCompile Include="Tiles_JailLever.cpp" />
     <ClCompile Include="Tiles_JailTrap.cpp" />
     <ClCompile Include="Tiles_MontriloDoor.cpp" />
+    <ClCompile Include="Tiles_Spark.cpp" />
     <ClCompile Include="UISprite.cpp" />
     <ClCompile Include="WinSystem.cpp" />
   </ItemGroup>
@@ -135,6 +138,8 @@
     <ClInclude Include="D3dSystem.h" />
     <ClInclude Include="D3dDevice.h" />
     <ClInclude Include="DynamicObjects.h" />
+    <ClInclude Include="Effect.h" />
+    <ClInclude Include="Effect_SparkArea.h" />
     <ClInclude Include="FriendChange_UI.h" />
     <ClInclude Include="Friends.h" />
     <ClInclude Include="Friends_Busxo.h" />
@@ -176,6 +181,7 @@
     <ClInclude Include="Tiles_JailLever.h" />
     <ClInclude Include="Tiles_JailTrap.h" />
     <ClInclude Include="Tiles_MontriloDoor.h" />
+    <ClInclude Include="Tiles_Spark.h" />
     <ClInclude Include="UISprite.h" />
     <ClInclude Include="WinSystem.h" />
   </ItemGroup>
