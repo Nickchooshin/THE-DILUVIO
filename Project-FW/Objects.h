@@ -80,6 +80,12 @@ typedef struct _Rect
 	int left, top, right, bottom ;
 } Rect ;
 
+typedef struct _Circle
+{
+	Position pos ;
+	float radius ;
+} Circle ;
+
 class CSprite ;
 
 class CObjects

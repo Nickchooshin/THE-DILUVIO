@@ -7,10 +7,10 @@ Resource/Image/Effect/Spark_ability.png
 <size>
 192, 192
 
-# Collision Box
+# Collision Circle
 
-#<collision_box>
-#0, 0, 64, 64
+<collision_circle>
+96.0f
 
 # Effect Image
 

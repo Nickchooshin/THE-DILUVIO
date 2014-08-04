@@ -87,6 +87,7 @@
     <ClCompile Include="DynamicObjects.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="Effect_SparkArea.cpp" />
+    <ClCompile Include="Effect_SprakImpact.cpp" />
     <ClCompile Include="FriendChange_UI.cpp" />
     <ClCompile Include="Friends.cpp" />
     <ClCompile Include="Friends_Busxo.cpp" />
@@ -140,6 +141,7 @@
     <ClInclude Include="DynamicObjects.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="Effect_SparkArea.h" />
+    <ClInclude Include="Effect_SparkImpact.h" />
     <ClInclude Include="FriendChange_UI.h" />
     <ClInclude Include="Friends.h" />
     <ClInclude Include="Friends_Busxo.h" />

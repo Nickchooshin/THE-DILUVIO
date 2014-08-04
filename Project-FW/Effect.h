@@ -5,6 +5,8 @@
 class CEffect : public CObjects
 {
 protected :
+	Circle m_BoundingCircle ;
+
 	Size m_ImgSize, m_ColSize ;
 	int m_nNowFrame ;
 	int m_nEffectFrame ;
@@ -20,6 +22,8 @@ public :
 	virtual ~CEffect() ;
 
 	virtual void Init() = 0 ;
+
+	const Circle GetBoundingCircle() ;
 	
 	virtual void Update() ;
 protected :

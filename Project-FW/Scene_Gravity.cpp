@@ -17,6 +17,10 @@
 #include "Friends.h"
 //
 
+//
+#include "Effect_SparkArea.h"
+#include "Collision.h"
+
 SceneGravity::SceneGravity()
 {
 }

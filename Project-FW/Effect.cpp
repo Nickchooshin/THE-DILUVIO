@@ -1,6 +1,7 @@
 #include "Effect.h"
 #include "Sprite.h"
 #include "LoadManager.h"
+#include <stdlib.h>
 
 #include "D3dDevice.h"
 
@@ -41,6 +42,12 @@ void CEffect::LoadDat(char *filepath)
 			g_LoadManager->GetValue(m_ImgSize.x) ;
 			g_LoadManager->GetValue(m_ImgSize.y) ;
 		}
+		else if(len==16 && strcmp(item, "COLLISION_CIRCLE")==0)
+		{
+			char radius[100] ;
+			g_LoadManager->GetString(radius) ;
+			m_BoundingCircle.radius = (float)strtod(radius, NULL) ;
+		}
 		else if(len==12 && strcmp(item, "EFFECT_FRAME")==0)
 		{
 			g_LoadManager->GetValue(m_nEffectFrame) ;
@@ -68,6 +75,16 @@ void CEffect::SetBoundingBox()
 	m_BoundingBox.top = 0 ;
 	m_BoundingBox.right = 0 ;
 	m_BoundingBox.bottom = 0 ;
+}
+
+const Circle CEffect::GetBoundingCircle()
+{
+	Circle circle ;
+	circle.pos.x = (int)m_fX ;
+	circle.pos.y = (int)m_fY ;
+	circle.radius = m_BoundingCircle.radius ;
+
+	return circle ;
 }
 
 void CEffect::Animation()

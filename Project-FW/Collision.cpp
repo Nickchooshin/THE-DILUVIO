@@ -1,6 +1,10 @@
 #include "Collision.h"
+#include <math.h>
 #include "DynamicObjects.h"
 #include "Tiles.h"
+#include "Effect.h"
+
+#include <stdio.h>
 
 CCollision::CCollision()
 {
@@ -313,4 +317,49 @@ bool CCollision::YCollision(CDynamicObjects *pDynamicObject, CTiles *pTile)
 Rect CCollision::GetIntersect()
 {
 	return rtIntersect ;
+}
+
+bool CCollision::DotCirleCollision(Position dot, Circle circle)
+{
+	float distance ;
+	float x = (float)(circle.pos.x - dot.x) ;
+	float y = (float)(circle.pos.y - dot.y) ;
+
+	distance = sqrt((x*x) + (y*y)) ;
+
+	if(distance<=circle.radius)
+		return true ;
+
+	return false ;
+}
+
+bool CCollision::DotCirleCollision(CObjects *pObject, CEffect *pEffect)
+{
+	float X, Y ;
+	Rect ObjectRect ;
+	Circle EffectCircle ;
+	Position NearbyDot ;
+
+	X = pObject->GetPositionX() ;
+	Y = pObject->GetPositionY() ;
+
+	ObjectRect = pObject->GetBoundingBox() ;
+	EffectCircle = pEffect->GetBoundingCircle() ;
+
+	if(X>EffectCircle.pos.x)
+		NearbyDot.x = ObjectRect.left ;
+	//else if(X<EffectCircle.pos.x)
+	else
+		NearbyDot.x = ObjectRect.right ;
+
+	if(Y>EffectCircle.pos.y)
+		NearbyDot.y = ObjectRect.bottom ;
+	//else if(Y<EffectCircle.pos.y)
+	else
+		NearbyDot.y = ObjectRect.top ;
+
+	if(DotCirleCollision(NearbyDot, EffectCircle))
+		return true ;
+
+	return false ;
 }

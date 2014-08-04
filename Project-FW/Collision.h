@@ -5,6 +5,7 @@
 class CObjects ;
 class CDynamicObjects ;
 class CTiles ;
+class CEffect ;
 
 class CCollision
 {
@@ -24,4 +25,8 @@ public :
 	bool YCollision(CDynamicObjects *pDynamicObject, CTiles *pTile) ;
 
 	Rect GetIntersect() ;
+
+	bool DotCirleCollision(Position dot, Circle circle) ;	// Dot & Circle Collision
+
+	bool DotCirleCollision(CObjects *pObject, CEffect *pEffect) ;
 } ;

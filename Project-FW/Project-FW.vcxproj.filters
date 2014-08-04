@@ -145,6 +145,9 @@
     <ClCompile Include="Effect_SparkArea.cpp">
       <Filter>Objects\Effect</Filter>
     </ClCompile>
+    <ClCompile Include="Effect_SprakImpact.cpp">
+      <Filter>Objects\Effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h" />
@@ -295,6 +298,9 @@
       <Filter>Objects\Effect</Filter>
     </ClInclude>
     <ClInclude Include="Effect_SparkArea.h">
+      <Filter>Objects\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect_SparkImpact.h">
       <Filter>Objects\Effect</Filter>
     </ClInclude>
   </ItemGroup>
