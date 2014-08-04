@@ -80,12 +80,13 @@ void CDynamicObjects::Gravity()
 	m_vForce.y = m_fVecAcc * m_fGravityMultiples ;
 	m_fY += m_vForce.y ;
 	m_bGravity = true ;
+	m_bJump = true ;
 
 	if(m_fY<0.0f)
 	{
 		m_fY = 0.0f ;
-		SetGravity(false) ;
-		SetJump(false) ;
+		m_bGravity = false ;
+		m_bJump = false ;
 		GravityAccReset() ;
 	}
 }

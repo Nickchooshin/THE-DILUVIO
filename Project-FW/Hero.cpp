@@ -264,16 +264,8 @@ void CHero::Move()
 		if(g_Keyboard->IsButtonDown(DIK_RIGHT))
 			m_vForce.x += fSpeed ;
 
-		if(!m_bGravity && !m_bJump && g_Keyboard->IsButtonDown(DIK_UP))
+		if(!m_bJump && g_Keyboard->IsButtonDown(DIK_UP))
 		{
-			static int count=0 ;
-			static DWORD time=0 ;
-			DWORD now = timeGetTime() ;
-
-			if(now - time<600)
-				printf("%d - %f\n", count++, (now-time)*0.001f) ;
-			time = now ;
-
 			m_fVecAcc = m_fVecJump * fTime ;
 
 			m_bJump = true ;

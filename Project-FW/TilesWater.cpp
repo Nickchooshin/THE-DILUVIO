@@ -20,8 +20,6 @@ void CTilesWater::Effect1(CDynamicObjects* pDynamicObject)
 		m_CollisionDirection & COLLISION_DOWN )
 	{
 		pDynamicObject->SetGravityMultiples(0.5f) ;
-		//pDynamicObject->SetJump(false) ;
-		pDynamicObject->SetGravity(false) ;
 		//pDynamicObject->SetDeath(true) ;
 
 		if(m_bMultipleJump)
@@ -30,14 +28,11 @@ void CTilesWater::Effect1(CDynamicObjects* pDynamicObject)
 			DWORD dwElapsedTime = dwNowTime - m_dwMultipleJumpDelay ;
 			float fDelay = dwElapsedTime * 0.001f ;
 
-			//if(dwElapsedTime>=100)
-			if(fDelay>=0.6f)
+			if(fDelay>=0.5f)
 			{
-				//m_dwMultipleJumpDelay = dwNowTime - (dwElapsedTime % 600) ;
 				m_bMultipleJump = false ;
 
 				pDynamicObject->SetJump(false) ;
-				pDynamicObject->SetGravity(false) ;
 			}
 		}
 
@@ -47,7 +42,6 @@ void CTilesWater::Effect1(CDynamicObjects* pDynamicObject)
 			DWORD now = timeGetTime() ;
 
 			m_bMultipleJump = true ;
-			//if(m_dwMultipleJumpDelay==0)
 			m_dwMultipleJumpDelay = timeGetTime() ;
 		}
 	}
