@@ -26,7 +26,8 @@ void CTiles_Spark::Init()
 void CTiles_Spark::Update()
 {
 	Animation() ;
-
+	
+	m_pESparkArea->SetPosition(m_fX, m_fY) ;
 	m_pESparkArea->Update() ;
 }
 

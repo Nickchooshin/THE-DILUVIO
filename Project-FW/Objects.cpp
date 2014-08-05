@@ -43,3 +43,8 @@ void CObjects::Render()
 	m_pSprite->SetPosition(m_fX, m_fY) ;
 	m_pSprite->Render() ;
 }
+
+//
+void CObjects::SendEventMessage(char *EventMessage)
+{
+}

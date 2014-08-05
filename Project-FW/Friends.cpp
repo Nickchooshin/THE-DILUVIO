@@ -4,19 +4,31 @@
 
 #include "D3dDevice.h"
 
+//
+#include "Effect_SparkImpact.h"
+
 CFriends::CFriends() : m_ImgSize(0, 0), m_ColSize(0, 0),
 					   m_nNowFrame(0),
 					   m_nStandFrame(0), m_nAbsorbFrame(0), m_nReleaseFrame(0),
 					   m_Stand_Index(0, 0), m_Absorb_Index(0, 0), m_Release_Index(0, 0),
 					   m_Icon_Index(0, 0),
 					   m_bRelease(false),
+					   m_bStun(false),
 					   m_fAnimationTime(0.0f),
-					   m_State(STAND), m_prevState(STAND)
+					   m_State(STAND), m_prevState(STAND),
+					   //
+					   m_pESparkImpact(NULL)
 {
 	m_fVecGravity = -0.3f ;
+
+	m_pESparkImpact = new CEffect_SparkImpact() ;
+	m_pESparkImpact->Init() ;
 }
 CFriends::~CFriends()
 {
+	//
+	if(m_pESparkImpact!=NULL)
+		delete m_pESparkImpact ;
 }
 
 void CFriends::Absorb()
@@ -47,8 +59,35 @@ const Position CFriends::GetIconIndex()
 void CFriends::Update()
 {
 	if(m_bRelease)
+	{
 		Animation() ;
+		//
+		m_pESparkImpact->Update() ;
+		m_bStun = false ;
+	}
 }
+
+//
+void CFriends::SendEventMessage(char *EventMessage)
+{
+	int len = strlen(EventMessage) ;
+
+	if(len==5 && strcmp(EventMessage, "SPARK")==0)
+	{
+		m_bStun = true ;
+	}
+}
+
+void CFriends::Render()
+{
+	m_pSprite->SetPosition(m_fX, m_fY) ;
+	m_pESparkImpact->SetPosition(m_fX, m_fY) ;
+
+	m_pSprite->Render() ;
+	if(m_bStun)
+		m_pESparkImpact->Render() ;
+}
+//
 
 void CFriends::LoadDat(char *filepath)
 {

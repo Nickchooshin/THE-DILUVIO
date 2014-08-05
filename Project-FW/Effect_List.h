@@ -15,8 +15,9 @@ public :
 	~CEffect_List() ;
 
 	void AddEffect(CEffect* pEffect) ;
-	//void RemoveEffect(CEffect* pEffect) ;
 	void Clear() ;
+
+	void Collision() ;
 } ;
 
 #define g_Effect_List CEffect_List::GetInstance()

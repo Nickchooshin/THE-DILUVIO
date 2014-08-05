@@ -168,7 +168,7 @@ void CMapTiles::Clear()
 
 	for(iter=m_Tiles.begin(); iter!=end; iter++)
 	{
-		temp = *iter ;
+		temp = (*iter) ;
 		delete temp ;
 	}
 
@@ -198,7 +198,7 @@ CTiles* CMapTiles::GetTile(int x, int y)
 
 	for(iter=m_Tiles.begin(); iter!=end; iter++)
 	{
-		pTiles = *iter ;
+		pTiles = (*iter) ;
 
 		fTileX = pTiles->GetPositionX() ;
 		fTileY = pTiles->GetPositionY() ;
@@ -220,7 +220,7 @@ void CMapTiles::Collision(CDynamicObjects *pObjects, char coord)
 
 	for(iter=m_Tiles.begin(); iter!=end; iter++)
 	{
-		pTiles = *iter ;
+		pTiles = (*iter) ;
 
 		if(coord=='x' || coord=='X')
 			col.XCollision(pObjects, pTiles) ;
@@ -236,19 +236,19 @@ void CMapTiles::Collision(char coord)
 	CDynamicObjects *pObject ;
 	CTiles *pTiles ;
 	std::vector<CDynamicObjects*> DynamicObjects_List = g_DynamicObjects_List->GetDynamicObjectsList() ;
-	std::vector<CDynamicObjects*>::iterator iter_o, end_o=DynamicObjects_List.end() ;
-	std::vector<CTiles*>::iterator iter_t, end_t=m_Tiles.end() ;
+	const int ObjectSize = DynamicObjects_List.size() ;
+	const int TileSize = m_Tiles.size() ;
 
 	bool BeGravityMultiples ;
 
-	for(iter_o=DynamicObjects_List.begin(); iter_o!=end_o; iter_o++)
+	for(int Index_o=0; Index_o<ObjectSize; Index_o++)
 	{
-		pObject = (*iter_o) ;
+		pObject = DynamicObjects_List[Index_o] ;
 		BeGravityMultiples = false ;
 
-		for(iter_t=m_Tiles.begin(); iter_t!=end_t; iter_t++)
+		for(int Index_t=0; Index_t<TileSize; Index_t++)
 		{
-			pTiles = *iter_t ;
+			pTiles = m_Tiles[Index_t] ;
 			bool bCollision=false ;
 
 			if(coord=='x' || coord=='X')
@@ -273,7 +273,7 @@ void CMapTiles::Update()
 
 	for(iter=m_Tiles.begin(); iter!=end; iter++)
 	{
-		pTiles = *iter ;
+		pTiles = (*iter) ;
 		pTiles->Update() ;
 	}
 }
@@ -286,7 +286,7 @@ void CMapTiles::Render()
 
 	for(iter=m_Tiles.begin(); iter!=end; iter++)
 	{
-		pTiles = *iter ;
+		pTiles = (*iter) ;
 		pTiles->Render() ;
 	}
 }

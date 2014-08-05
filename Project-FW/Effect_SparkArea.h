@@ -9,4 +9,6 @@ public :
 	~CEffect_SparkArea() ;
 
 	void Init() ;
+
+	void Effect(CObjects* pObject) ;
 } ;

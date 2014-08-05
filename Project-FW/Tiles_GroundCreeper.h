@@ -9,4 +9,6 @@ public :
 	~CTiles_GroundCreeper() ;
 
 	void Init() ;
+
+	void SendEventMessage(char *EventMessage) ;
 } ;

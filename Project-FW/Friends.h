@@ -2,9 +2,16 @@
 
 #include "DynamicObjects.h"
 
+//
+class CEffect_SparkImpact ;
+//
+
 class CFriends : public CDynamicObjects
 {
 protected :
+	//
+	CEffect_SparkImpact *m_pESparkImpact ;
+	//
 	Size m_ImgSize, m_ColSize ;
 	int m_nNowFrame ;
 	int m_nStandFrame, m_nAbsorbFrame, m_nReleaseFrame ;
@@ -14,6 +21,7 @@ protected :
 	Position m_Icon_Index ;
 
 	bool m_bRelease ;
+	bool m_bStun ;
 	
 	float m_fAnimationTime ;
 
@@ -33,6 +41,10 @@ public :
 	const Position GetIconIndex() ;
 
 	virtual void Update() ;
+
+	//
+	virtual void SendEventMessage(char *EventMessage) ;
+	virtual void Render() ;
 protected :
 	void LoadDat(char *filepath) ;
 	void SetBoundingBox() ;

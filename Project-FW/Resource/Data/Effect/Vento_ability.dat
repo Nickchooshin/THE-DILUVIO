@@ -1,0 +1,21 @@
+### Vento_ability ###
+# Image
+
+<image>
+Resource/Image/Effect/Vento_ability.png
+
+<size>
+448, 448
+
+# Collision Circle
+
+<collision_circle>
+224.0f
+
+# Effect Image
+
+<effect_index>
+0, 0
+
+<effect_frame>
+1

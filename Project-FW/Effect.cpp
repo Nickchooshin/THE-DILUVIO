@@ -3,9 +3,9 @@
 #include "LoadManager.h"
 #include <stdlib.h>
 
-#include "D3dDevice.h"
+#include "Objects.h"
 
-#include "Effect_List.h"
+#include "D3dDevice.h"
 
 CEffect::CEffect() : m_ImgSize(0, 0), m_ColSize(0, 0),
 					 m_nNowFrame(0),
@@ -22,6 +22,10 @@ CEffect::~CEffect()
 void CEffect::Update()
 {
 	Animation() ;
+}
+
+void CEffect::Effect(CObjects* pObject)
+{
 }
 
 void CEffect::LoadDat(char *filepath)

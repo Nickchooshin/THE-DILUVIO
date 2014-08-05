@@ -10,14 +10,11 @@
 #include "MusicManager.h"
 
 #include "Hero.h"
+
 #include "MapTiles.h"
-
-//
 #include "Friends_List.h"
-#include "Friends.h"
-//
-
 #include "DynamicObjects_List.h"
+#include "Effect_List.h"
 
 SceneGravity::SceneGravity()
 {
@@ -80,11 +77,14 @@ void SceneGravity::Update(float dt)
 	// Gravity
 	g_DynamicObjects_List->Gravity() ;
 
-
+	
 	// Collision Y
 	m_MapTiles->Collision('y') ;
 
 	g_DynamicObjects_List->Collision('y') ;
+
+	// Effect Collision
+	g_Effect_List->Collision() ;
 }
 
 void SceneGravity::Render()

@@ -90,6 +90,7 @@
     <ClCompile Include="Effect_List.cpp" />
     <ClCompile Include="Effect_SparkArea.cpp" />
     <ClCompile Include="Effect_SprakImpact.cpp" />
+    <ClCompile Include="Effect_VentoAbility.cpp" />
     <ClCompile Include="FriendChange_UI.cpp" />
     <ClCompile Include="Friends.cpp" />
     <ClCompile Include="Friends_Busxo.cpp" />
@@ -146,6 +147,7 @@
     <ClInclude Include="Effect_List.h" />
     <ClInclude Include="Effect_SparkArea.h" />
     <ClInclude Include="Effect_SparkImpact.h" />
+    <ClInclude Include="Effect_VentoAbility.h" />
     <ClInclude Include="FriendChange_UI.h" />
     <ClInclude Include="Friends.h" />
     <ClInclude Include="Friends_Busxo.h" />

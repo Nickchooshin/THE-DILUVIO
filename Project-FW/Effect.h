@@ -2,6 +2,8 @@
 
 #include "Objects.h"
 
+class CObjects ;
+
 class CEffect : public CObjects
 {
 protected :
@@ -26,6 +28,7 @@ public :
 	const Circle GetBoundingCircle() ;
 	
 	virtual void Update() ;
+	virtual void Effect(CObjects* pObject) ;
 protected :
 	void LoadDat(char *filepath) ;
 	void SetBoundingBox() ;

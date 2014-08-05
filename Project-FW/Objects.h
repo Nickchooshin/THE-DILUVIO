@@ -109,6 +109,9 @@ public :
 	const Rect GetBoundingBox() ;
 
 	virtual void Render() ;
+
+	//
+	virtual void SendEventMessage(char *EventMessage) ;
 protected :
 	virtual void SetBoundingBox() = 0 ;
 } ;

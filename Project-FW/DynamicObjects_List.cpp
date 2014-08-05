@@ -48,7 +48,7 @@ void CDynamicObjects_List::Update()
 
 	for(iter=m_DynamicObjects_List.begin(); iter!=end; iter++)
 	{
-		pDynamicObjects = *iter ;
+		pDynamicObjects = (*iter) ;
 		pDynamicObjects->Update() ;
 	}
 }
@@ -61,7 +61,7 @@ void CDynamicObjects_List::Gravity()
 
 	for(iter=m_DynamicObjects_List.begin(); iter!=end; iter++)
 	{
-		pDynamicObjects = *iter ;
+		pDynamicObjects = (*iter) ;
 		pDynamicObjects->Gravity() ;
 	}
 }
