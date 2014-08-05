@@ -85,7 +85,9 @@
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="D3dSystem.cpp" />
     <ClCompile Include="DynamicObjects.cpp" />
+    <ClCompile Include="DynamicObjects_List.cpp" />
     <ClCompile Include="Effect.cpp" />
+    <ClCompile Include="Effect_List.cpp" />
     <ClCompile Include="Effect_SparkArea.cpp" />
     <ClCompile Include="Effect_SprakImpact.cpp" />
     <ClCompile Include="FriendChange_UI.cpp" />
@@ -139,7 +141,9 @@
     <ClInclude Include="D3dSystem.h" />
     <ClInclude Include="D3dDevice.h" />
     <ClInclude Include="DynamicObjects.h" />
+    <ClInclude Include="DynamicObjects_List.h" />
     <ClInclude Include="Effect.h" />
+    <ClInclude Include="Effect_List.h" />
     <ClInclude Include="Effect_SparkArea.h" />
     <ClInclude Include="Effect_SparkImpact.h" />
     <ClInclude Include="FriendChange_UI.h" />

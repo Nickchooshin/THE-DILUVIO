@@ -85,14 +85,19 @@ bool CCollision::XCollision(CDynamicObjects *pDynamicObject, CObjects *pObject)
 		return false ;
 
 	float x = pDynamicObject->GetPositionX() ;
-	int y = (int)pDynamicObject->GetPositionY() ;
+	float y = pDynamicObject->GetPositionY() ;
 
 	if(way==0)
+	{
 		x += (float)(rtSize.right - rtSize.left) ;
+	}
 	else
+	{
 		x -= (float)(rtSize.right - rtSize.left) ;
+	}
+	x = (int)x ;
 
-	pDynamicObject->SetPosition(x, (float)y) ;
+	pDynamicObject->SetPosition(x, y) ;
 
 	return true ;
 }
@@ -131,7 +136,7 @@ bool CCollision::YCollision(CDynamicObjects *pDynamicObject, CObjects *pObject)
 	AABB(rtDynamic, rtObject) ;
 
 	float x = pDynamicObject->GetPositionX() ;
-	int y = (int)pDynamicObject->GetPositionY() ;
+	float y = pDynamicObject->GetPositionY() ;
 
 	if(way==0)
 	{
@@ -146,8 +151,9 @@ bool CCollision::YCollision(CDynamicObjects *pDynamicObject, CObjects *pObject)
 		pDynamicObject->SetJump(true) ;
 		pDynamicObject->GravityAccReset() ;
 	}
+	y = (int)y ;
 
-	pDynamicObject->SetPosition(x, (float)y) ;
+	pDynamicObject->SetPosition(x, y) ;
 
 	return true ;
 }
@@ -216,15 +222,14 @@ bool CCollision::XCollision(CDynamicObjects *pDynamicObject, CTiles *pTile)
 	if(way==0)
 	{
 		x += (rtSize.right - rtSize.left) ;
-		x = (int)x ;
 		pTile->CollisionDirection(CTiles::COLLISION_RIGHT) ;
 	}
 	else
 	{
 		x -= (rtSize.right - rtSize.left) ;
-		x = (int)x ;
 		pTile->CollisionDirection(CTiles::COLLISION_LEFT) ;
 	}
+	x = (int)x ;
 
 	pDynamicObject->SetPosition(x, y) ;
 
@@ -294,7 +299,6 @@ bool CCollision::YCollision(CDynamicObjects *pDynamicObject, CTiles *pTile)
 	if(way==0)
 	{
 		y += (rtSize.top - rtSize.bottom) ;
-		y = (int)y ;
 		pDynamicObject->SetJump(false) ;
 		pDynamicObject->GravityAccReset() ;
 		pDynamicObject->SetGravity(false) ;
@@ -303,11 +307,11 @@ bool CCollision::YCollision(CDynamicObjects *pDynamicObject, CTiles *pTile)
 	else
 	{
 		y -= (rtSize.top - rtSize.bottom) ;
-		y = (int)y ;
 		pDynamicObject->SetJump(true) ;
 		pDynamicObject->GravityAccReset() ;
 		pTile->CollisionDirection(CTiles::COLLISION_DOWN) ;
 	}
+	y = (int)y ;
 
 	pDynamicObject->SetPosition(x, y) ;
 

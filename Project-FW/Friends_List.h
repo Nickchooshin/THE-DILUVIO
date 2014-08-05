@@ -12,6 +12,7 @@ class CFriends_List : public Singleton<CFriends_List>
 private :
 	std::vector<CFriends*> m_Friends_List ;
 	std::vector<CFriends*> m_CollisionList ;
+	std::vector<bool> m_Friends_BeRelease ;
 	int m_nMaxFriends ;
 
 public :
@@ -29,14 +30,14 @@ public :
 
 	void Gravity() ;
 
-	void Update() ;
+	void ReleaseCheck() ;
 
 	void Render() ;
 
-	void Collision() ;
-	
-	void Collision(char coord) ;
-	void Collision(CHero *pHero, char coord) ;
+	//void Collision() ;
+	//
+	//void Collision(char coord) ;
+	//void Collision(CHero *pHero, char coord) ;
 } ;
 
 #define g_Friends_List CFriends_List::GetInstance()

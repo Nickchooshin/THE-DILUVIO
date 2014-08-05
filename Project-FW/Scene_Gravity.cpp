@@ -17,9 +17,7 @@
 #include "Friends.h"
 //
 
-//
-#include "Effect_SparkArea.h"
-#include "Collision.h"
+#include "DynamicObjects_List.h"
 
 SceneGravity::SceneGravity()
 {
@@ -51,6 +49,9 @@ void SceneGravity::Init()
 	m_pHero->Init() ;
 	m_pHero->SetPosition(HeroPos.x * 64.0f + 32.0f, HeroPos.y * 64.0f + 32.0f) ;
 	m_pHero->SetMapTiles(m_MapTiles) ;
+
+	//
+	g_DynamicObjects_List->AddMainCharObjects(m_pHero) ;
 }
 
 void SceneGravity::Destroy()
@@ -66,8 +67,9 @@ void SceneGravity::Update(float dt)
 	g_Joystick->Update() ;
 	g_MusicManager->Loop() ;
 
-	m_pHero->Update() ;
-	g_Friends_List->Update() ;
+	//m_pHero->Update() ;
+	g_Friends_List->ReleaseCheck() ;
+	g_DynamicObjects_List->Update() ;
 	m_MapTiles->Update() ;
 
 	//
@@ -86,19 +88,16 @@ void SceneGravity::Update(float dt)
 	// Collision X
 	m_MapTiles->Collision('x') ;
 
-	g_Friends_List->Collision('x') ;
-	g_Friends_List->Collision(m_pHero, 'x') ;
+	g_DynamicObjects_List->Collision('x') ;
 
 	// Gravity
-	m_pHero->Gravity() ;
-	g_Friends_List->Gravity() ;
+	g_DynamicObjects_List->Gravity() ;
 
 
 	// Collision Y
 	m_MapTiles->Collision('y') ;
 
-	g_Friends_List->Collision('y') ;
-	g_Friends_List->Collision(m_pHero, 'y') ;
+	g_DynamicObjects_List->Collision('y') ;
 }
 
 void SceneGravity::Render()

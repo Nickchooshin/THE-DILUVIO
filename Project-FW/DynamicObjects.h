@@ -21,6 +21,8 @@ public :
 
 	virtual void Init() = 0 ;
 
+	virtual void Update() = 0 ;
+
 	void SetJump(bool bFlag) ;
 	void SetGravity(bool bFlag) ;
 	void SetDeath(bool bFlag) ;

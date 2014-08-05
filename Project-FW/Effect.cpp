@@ -5,6 +5,8 @@
 
 #include "D3dDevice.h"
 
+#include "Effect_List.h"
+
 CEffect::CEffect() : m_ImgSize(0, 0), m_ColSize(0, 0),
 					 m_nNowFrame(0),
 					 m_nEffectFrame(0),

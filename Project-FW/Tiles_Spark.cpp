@@ -2,6 +2,8 @@
 #include "Effect_SparkArea.h"
 #include "Sprite.h"
 
+#include "Effect_List.h"
+
 CTiles_Spark::CTiles_Spark() : m_pESparkArea(0)
 {
 }
@@ -17,6 +19,8 @@ void CTiles_Spark::Init()
 
 	m_pESparkArea = new CEffect_SparkArea ;
 	m_pESparkArea->Init() ;
+
+	g_Effect_List->AddEffect(m_pESparkArea) ;
 }
 
 void CTiles_Spark::Update()
