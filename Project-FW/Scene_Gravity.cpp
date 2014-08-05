@@ -72,19 +72,6 @@ void SceneGravity::Update(float dt)
 	g_DynamicObjects_List->Update() ;
 	m_MapTiles->Update() ;
 
-	//
-	int size = g_Friends_List->GetSize() ;
-
-	// Add Collision Object List
-	m_MapTiles->ClearCollisionList() ;
-	m_MapTiles->AddCollisionList(m_pHero) ;
-	for(int i=0; i<size; i++)
-	{
-		CFriends *pFriend = g_Friends_List->GetFriend(i) ;
-		if(pFriend->GetRelease())
-			m_MapTiles->AddCollisionList(pFriend) ;
-	}
-
 	// Collision X
 	m_MapTiles->Collision('x') ;
 

@@ -3,6 +3,8 @@
 
 #include "D3dDevice.h"
 
+#include "DynamicObjects_List.h"
+
 DWORD CTilesWater::m_dwMultipleJumpDelay = 0 ;
 bool CTilesWater::m_bMultipleJump = false ;
 
@@ -16,6 +18,9 @@ CTilesWater::~CTilesWater()
 
 void CTilesWater::Effect1(CDynamicObjects* pDynamicObject)
 {
+	if(pDynamicObject!=g_DynamicObjects_List->GetMainChar())
+		return ;
+
 	if( m_CollisionDirection & COLLISION_UP ||
 		m_CollisionDirection & COLLISION_DOWN )
 	{

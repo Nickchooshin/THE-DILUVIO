@@ -5,18 +5,18 @@
 
 #include <algorithm>
 
-CDynamicObjects_List::CDynamicObjects_List() : m_MainChar(NULL)
+CDynamicObjects_List::CDynamicObjects_List() : m_pMainChar(NULL)
 {
 }
 CDynamicObjects_List::~CDynamicObjects_List()
 {
-	m_MainChar = NULL ;
+	m_pMainChar = NULL ;
 	m_DynamicObjects_List.clear() ;
 }
 
 void CDynamicObjects_List::AddMainCharObjects(CDynamicObjects *pObjects)
 {
-	m_MainChar = pObjects ;
+	m_pMainChar = pObjects ;
 	AddObjects(pObjects) ;
 }
 
@@ -80,7 +80,7 @@ void CDynamicObjects_List::Collision(char coord)
 
 	for(int i=0; i<size; i++)
 	{
-		if(m_DynamicObjects_List[i]==m_MainChar)
+		if(m_DynamicObjects_List[i]==m_pMainChar)
 			continue ;
 
 		for(int j=0; j<size; j++)
@@ -94,4 +94,14 @@ void CDynamicObjects_List::Collision(char coord)
 				col.YCollision(m_DynamicObjects_List[j], m_DynamicObjects_List[i]) ;
 		}
 	}
+}
+
+const std::vector<CDynamicObjects*> CDynamicObjects_List::GetDynamicObjectsList()
+{
+	return m_DynamicObjects_List ;
+}
+
+const CDynamicObjects* CDynamicObjects_List::GetMainChar()
+{
+	return m_pMainChar ;
 }

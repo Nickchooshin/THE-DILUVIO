@@ -3,6 +3,8 @@
 #include "DynamicObjects.h"
 #include "Collision.h"
 
+#include "DynamicObjects_List.h"
+
 #include "Tiles_GroundStone.h"
 #include "Tiles_GroundEarth.h"
 #include "Tiles_GroundEarthUp.h"
@@ -17,9 +19,7 @@
 #include "Tiles_Spark.h"
 
 #include <string>
-//
 #include <map>
-//
 
 CMapTiles::CMapTiles()
 {
@@ -210,16 +210,6 @@ CTiles* CMapTiles::GetTile(int x, int y)
 	return NULL ;
 }
 
-void CMapTiles::AddCollisionList(CDynamicObjects *pObjects)
-{
-	m_CollisionList.push_back(pObjects) ;
-}
-
-void CMapTiles::ClearCollisionList()
-{
-	m_CollisionList.clear() ;
-}
-
 void CMapTiles::Collision(CDynamicObjects *pObjects, char coord)
 {
 	CCollision col ;
@@ -245,14 +235,15 @@ void CMapTiles::Collision(char coord)
 
 	CDynamicObjects *pObject ;
 	CTiles *pTiles ;
+	std::vector<CDynamicObjects*> DynamicObjects_List = g_DynamicObjects_List->GetDynamicObjectsList() ;
+	std::vector<CDynamicObjects*>::iterator iter_o, end_o=DynamicObjects_List.end() ;
 	std::vector<CTiles*>::iterator iter_t, end_t=m_Tiles.end() ;
-	std::vector<CDynamicObjects*>::iterator iter_o, end_o=m_CollisionList.end() ;
 
 	bool BeGravityMultiples ;
 
-	for(iter_o=m_CollisionList.begin(); iter_o!=end_o; iter_o++)
+	for(iter_o=DynamicObjects_List.begin(); iter_o!=end_o; iter_o++)
 	{
-		pObject = *iter_o ;
+		pObject = (*iter_o) ;
 		BeGravityMultiples = false ;
 
 		for(iter_t=m_Tiles.begin(); iter_t!=end_t; iter_t++)

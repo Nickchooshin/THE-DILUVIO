@@ -125,7 +125,7 @@ void CFriends_List::Gravity()
 		if(pFriends->GetRelease())
 		{
 			pFriends->Gravity() ;
-			m_CollisionList.push_back(pFriends) ;
+			//m_CollisionList.push_back(pFriends) ;
 		}
 	}
 }

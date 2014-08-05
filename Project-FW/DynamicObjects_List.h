@@ -8,7 +8,7 @@ class CDynamicObjects ;
 class CDynamicObjects_List : public Singleton<CDynamicObjects_List>
 {
 private :
-	CDynamicObjects *m_MainChar ;
+	CDynamicObjects *m_pMainChar ;
 	std::vector<CDynamicObjects*> m_DynamicObjects_List ;
 
 public :
@@ -24,6 +24,9 @@ public :
 	void Gravity() ;
 
 	void Collision(char coord) ;
+
+	const std::vector<CDynamicObjects*> GetDynamicObjectsList() ;
+	const CDynamicObjects* GetMainChar() ;
 } ;
 
 #define g_DynamicObjects_List CDynamicObjects_List::GetInstance()

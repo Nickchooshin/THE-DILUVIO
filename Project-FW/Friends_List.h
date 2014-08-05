@@ -11,7 +11,7 @@ class CFriends_List : public Singleton<CFriends_List>
 {
 private :
 	std::vector<CFriends*> m_Friends_List ;
-	std::vector<CFriends*> m_CollisionList ;
+	//std::vector<CFriends*> m_CollisionList ;
 	std::vector<bool> m_Friends_BeRelease ;
 	int m_nMaxFriends ;
 
