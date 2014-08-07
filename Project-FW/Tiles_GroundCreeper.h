@@ -11,4 +11,5 @@ public :
 	void Init() ;
 
 	void SendEventMessage(char *EventMessage) ;
+	void EventClear() ;
 } ;

@@ -63,7 +63,6 @@ void CFriends::Update()
 		Animation() ;
 		//
 		m_pESparkImpact->Update() ;
-		m_bStun = false ;
 	}
 }
 
@@ -76,6 +75,11 @@ void CFriends::SendEventMessage(char *EventMessage)
 	{
 		m_bStun = true ;
 	}
+}
+
+void CFriends::EventClear()
+{
+	m_bStun = false ;
 }
 
 void CFriends::Render()

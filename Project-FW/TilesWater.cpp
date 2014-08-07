@@ -21,10 +21,11 @@ void CTilesWater::Effect1(CDynamicObjects* pDynamicObject)
 	if(pDynamicObject!=g_DynamicObjects_List->GetMainChar())
 		return ;
 
-	if( m_CollisionDirection & COLLISION_UP ||
-		m_CollisionDirection & COLLISION_DOWN )
+	//if( m_CollisionDirection & COLLISION_UP ||
+	//	m_CollisionDirection & COLLISION_DOWN )
 	{
 		pDynamicObject->SetGravityMultiples(0.5f) ;
+		pDynamicObject->SetMultipleJump(true) ;
 		//pDynamicObject->SetDeath(true) ;
 
 		if(m_bMultipleJump)

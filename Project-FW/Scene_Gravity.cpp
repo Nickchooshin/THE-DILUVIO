@@ -11,7 +11,7 @@
 
 #include "Hero.h"
 
-#include "MapTiles.h"
+#include "MapTiles_List.h"
 #include "Friends_List.h"
 #include "DynamicObjects_List.h"
 #include "Effect_List.h"
@@ -32,20 +32,18 @@ Scene* SceneGravity::scene()
 
 void SceneGravity::Init()
 {
-	m_MapTiles = new CMapTiles ;
-	m_MapTiles->LoadMap(4) ;
+	g_MapTiles_List->LoadMap(4) ;
 
-	Size MapSize = m_MapTiles->GetMapSize() ;
+	Size MapSize = g_MapTiles_List->GetMapSize() ;
 	CCamera *pCamera = new CCamera() ;
 	pCamera->SetWorldSize(-32.0f, -32.0f, (MapSize.x*64.0f)-32.0f, (MapSize.y*64.0f)-32.0f) ;
 	g_CameraManager->AllCameraClear() ;
 	g_CameraManager->AddCamera(pCamera, 0) ;
 
-	Position HeroPos = m_MapTiles->GetHeroPosition() ;
+	Position HeroPos = g_MapTiles_List->GetHeroPosition() ;
 	m_pHero = new CHero ;
 	m_pHero->Init() ;
 	m_pHero->SetPosition(HeroPos.x * 64.0f + 32.0f, HeroPos.y * 64.0f + 32.0f) ;
-	m_pHero->SetMapTiles(m_MapTiles) ;
 
 	//
 	g_DynamicObjects_List->AddMainCharObjects(m_pHero) ;
@@ -54,7 +52,6 @@ void SceneGravity::Init()
 void SceneGravity::Destroy()
 {
 	delete m_pHero ;
-	delete m_MapTiles ;
 }
 
 void SceneGravity::Update(float dt)
@@ -67,19 +64,18 @@ void SceneGravity::Update(float dt)
 	//m_pHero->Update() ;
 	g_Friends_List->ReleaseCheck() ;
 	g_DynamicObjects_List->Update() ;
-	m_MapTiles->Update() ;
+	g_MapTiles_List->Update() ;
 
 	// Collision X
-	m_MapTiles->Collision('x') ;
+	g_MapTiles_List->Collision('x') ;
 
 	g_DynamicObjects_List->Collision('x') ;
 
 	// Gravity
 	g_DynamicObjects_List->Gravity() ;
 
-	
 	// Collision Y
-	m_MapTiles->Collision('y') ;
+	g_MapTiles_List->Collision('y') ;
 
 	g_DynamicObjects_List->Collision('y') ;
 
@@ -92,7 +88,7 @@ void SceneGravity::Render()
 	g_CameraManager->SetPosition(m_pHero->GetPositionX(), m_pHero->GetPositionY()) ;
 	g_CameraManager->CameraRun() ;
 
-	m_MapTiles->Render() ;
+	g_MapTiles_List->Render() ;
 	g_Friends_List->Render() ;
 	m_pHero->Render() ;
 

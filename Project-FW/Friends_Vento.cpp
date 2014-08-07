@@ -1,7 +1,9 @@
 #include "Friends_Vento.h"
-#include "Sprite.h"
 #include "Effect_VentoAbility.h"
 #include "Effect_SparkImpact.h"
+#include "Sprite.h"
+
+#include "Effect_List.h"
 
 CFriends_Vento::CFriends_Vento() : m_pEAbillty(0)
 {
@@ -19,7 +21,7 @@ void CFriends_Vento::Init()
 	m_pEAbillty = new CEffect_VentoAbility ;
 	m_pEAbillty->Init() ;
 
-	m_pEAbillty->SetPosition(m_fX, m_fY) ;
+	g_Effect_List->AddEffect(m_pEAbillty) ;
 }
 
 void CFriends_Vento::Update()

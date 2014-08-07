@@ -4,8 +4,6 @@
 #include "Tiles.h"
 #include "Effect.h"
 
-#include <stdio.h>
-
 CCollision::CCollision()
 {
 	rtIntersect.left = 0 ;

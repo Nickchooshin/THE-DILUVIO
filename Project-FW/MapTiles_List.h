@@ -1,22 +1,23 @@
 #pragma once
 
+#include "Singleton.h"
 #include <vector>
 #include "Objects.h"
 
 class CTiles ;
 class CDynamicObjects ;
 
-class CMapTiles
+class CMapTiles_List : public Singleton<CMapTiles_List>
 {
 private :
-	std::vector<CTiles*> m_Tiles ;
+	std::vector<CTiles*> m_MapTiles_List ;
 
 	Position m_HeroPos ;
 	Size m_MapSize ;
 
 public :
-	CMapTiles() ;
-	~CMapTiles() ;
+	CMapTiles_List() ;
+	~CMapTiles_List() ;
 
 	void LoadMap(int num) ;
 
@@ -26,10 +27,14 @@ public :
 	const Size GetMapSize() ;
 	CTiles* GetTile(int x, int y) ;
 
-	void Collision(CDynamicObjects *pObjects, char coord) ;
+	void Collision(CDynamicObjects *pObject, char coord) ;
 	void Collision(char coord) ;
+
+	const std::vector<CTiles*> GetMapTilesList() ;
 
 	void Update() ;
 
 	void Render() ;
 } ;
+
+#define g_MapTiles_List CMapTiles_List::GetInstance()

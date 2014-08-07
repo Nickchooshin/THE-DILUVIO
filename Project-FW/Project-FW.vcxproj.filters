@@ -91,9 +91,6 @@
     <ClCompile Include="Friends_Elitro.cpp">
       <Filter>Objects\Friends</Filter>
     </ClCompile>
-    <ClCompile Include="MapTiles.cpp">
-      <Filter>Data</Filter>
-    </ClCompile>
     <ClCompile Include="DynamicObjects.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
@@ -156,6 +153,9 @@
     </ClCompile>
     <ClCompile Include="Effect_VentoAbility.cpp">
       <Filter>Objects\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="MapTiles_List.cpp">
+      <Filter>Data</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -258,9 +258,6 @@
     <ClInclude Include="Friends_Elitro.h">
       <Filter>Objects\Friends</Filter>
     </ClInclude>
-    <ClInclude Include="MapTiles.h">
-      <Filter>Data</Filter>
-    </ClInclude>
     <ClInclude Include="DynamicObjects.h">
       <Filter>Objects</Filter>
     </ClInclude>
@@ -320,6 +317,9 @@
     </ClInclude>
     <ClInclude Include="Effect_VentoAbility.h">
       <Filter>Objects\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="MapTiles_List.h">
+      <Filter>Data</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

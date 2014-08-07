@@ -1,4 +1,4 @@
-#include "MapTiles.h"
+#include "MapTiles_List.h"
 #include "Tiles.h"
 #include "DynamicObjects.h"
 #include "Collision.h"
@@ -21,15 +21,15 @@
 #include <string>
 #include <map>
 
-CMapTiles::CMapTiles()
+CMapTiles_List::CMapTiles_List()
 {
 }
-CMapTiles::~CMapTiles()
+CMapTiles_List::~CMapTiles_List()
 {
 	Clear() ;
 }
 
-void CMapTiles::LoadMap(int num)
+void CMapTiles_List::LoadMap(int num)
 {
 	FILE *map ;
 	char filepath[100] ;
@@ -52,73 +52,73 @@ void CMapTiles::LoadMap(int num)
 		{
 			fscanf(map, "%d ", &tileNumber) ;
 
-			CTiles *pTiles=NULL ;
+			CTiles *pTile=NULL ;
 
 			switch(tileNumber)
 			{
 			case 0 :
-				pTiles = NULL ;
+				pTile = NULL ;
 				break ;
 
 			case 1 :
-				pTiles = NULL ;
+				pTile = NULL ;
 				m_HeroPos.x = x ;
 				m_HeroPos.y = y ;
 				break ;
 
 			case 2 :
-				pTiles = new CTiles_GroundStone ;
+				pTile = new CTiles_GroundStone ;
 				break ;
 			case 3 :
-				pTiles = new CTiles_GroundEarth ;
+				pTile = new CTiles_GroundEarth ;
 				break ;
 			case 4 :
-				pTiles = new CTiles_GroundEarthUp ;
+				pTile = new CTiles_GroundEarthUp ;
 				break ;
 			case 5 :
-				pTiles = new CTiles_GroundCreeper ;
+				pTile = new CTiles_GroundCreeper ;
 				break ;
 			case 6 :
-				pTiles = new CTiles_GroundWater ;
+				pTile = new CTiles_GroundWater ;
 				break ;
 			case 7 :
-				pTiles = new CTiles_GroundWaterUp ;
+				pTile = new CTiles_GroundWaterUp ;
 				break ;
 
 			case 8 :
-				pTiles = new CTiles_JailTrap ;
+				pTile = new CTiles_JailTrap ;
 				break ;
 			case 9 :
-				pTiles = new CTiles_JailLever ;
+				pTile = new CTiles_JailLever ;
 				break ;
 
 			case 10 :
-				pTiles = new CTiles_Glass ;
+				pTile = new CTiles_Glass ;
 				break ;
 
 			case 11 :
-				pTiles = new CTiles_Arrival ;
+				pTile = new CTiles_Arrival ;
 				break ;
 
 			case 12 :
-				pTiles = new CTiles_MontriloDoor ;
+				pTile = new CTiles_MontriloDoor ;
 				break ;
 
 			case 13 :
-				pTiles = new CTiles_Spark ;
+				pTile = new CTiles_Spark ;
 				break ;
 			}
 
-			if(pTiles!=NULL)
+			if(pTile!=NULL)
 			{
-				pTiles->Init() ;
-				pTiles->SetPosition((float)(x * 64), (float)(y * 64)) ;
-				m_Tiles.push_back(pTiles) ;
+				pTile->Init() ;
+				pTile->SetPosition((float)(x * 64), (float)(y * 64)) ;
+				m_MapTiles_List.push_back(pTile) ;
 
 				//
 				char index[100] ;
 				sprintf(index, "%d, %d", x, mapSizeY-y-1) ;
-				TileList[index] = pTiles ;
+				TileList[index] = pTile ;
 				//
 			}
 		}
@@ -160,133 +160,136 @@ void CMapTiles::LoadMap(int num)
 	m_MapSize.y = mapSizeY ;
 }
 
-void CMapTiles::Clear()
+void CMapTiles_List::Clear()
 {
 	CTiles *temp ;
-	std::vector<CTiles*>::iterator iter ;
-	std::vector<CTiles*>::iterator end=m_Tiles.end() ;
+	const int size = m_MapTiles_List.size() ;
 
-	for(iter=m_Tiles.begin(); iter!=end; iter++)
+	for(int i=0; i<size; i++)
 	{
-		temp = (*iter) ;
+		temp = m_MapTiles_List[i] ;
 		delete temp ;
 	}
 
-	m_Tiles.clear() ;
+	m_MapTiles_List.clear() ;
 }
 
-const Position CMapTiles::GetHeroPosition()
+const Position CMapTiles_List::GetHeroPosition()
 {
 	return m_HeroPos ;
 }
 
-const Size CMapTiles::GetMapSize()
+const Size CMapTiles_List::GetMapSize()
 {
 	return m_MapSize ;
 }
 
-CTiles* CMapTiles::GetTile(int x, int y)
+CTiles* CMapTiles_List::GetTile(int x, int y)
 {
-	CTiles *pTiles ;
-	std::vector<CTiles*>::iterator iter ;
-	std::vector<CTiles*>::iterator end=m_Tiles.end() ;
+	CTiles *pTile ;
+	const int size = m_MapTiles_List.size() ;
 
 	float fX, fY ;
 	float fTileX, fTileY ;
 	fX = (float)x * 64.0f ;
 	fY = (float)y * 64.0f ;
 
-	for(iter=m_Tiles.begin(); iter!=end; iter++)
+	for(int i=0; i<size; i++)
 	{
-		pTiles = (*iter) ;
+		pTile = m_MapTiles_List[i] ;
 
-		fTileX = pTiles->GetPositionX() ;
-		fTileY = pTiles->GetPositionY() ;
+		fTileX = pTile->GetPositionX() ;
+		fTileY = pTile->GetPositionY() ;
 
-		if(pTiles->BeCollision() && (fTileX==fX && fTileY==fY))
-			return pTiles ;
+		if(pTile->BeCollision() && (fTileX==fX && fTileY==fY))
+			return pTile ;
 	}
 
 	return NULL ;
 }
 
-void CMapTiles::Collision(CDynamicObjects *pObjects, char coord)
+void CMapTiles_List::Collision(CDynamicObjects *pDynamicObject, char coord)
 {
 	CCollision col ;
 
-	CTiles *pTiles ;
-	std::vector<CTiles*>::iterator iter ;
-	std::vector<CTiles*>::iterator end=m_Tiles.end() ;
+	CTiles *pTile ;
+	const int size = m_MapTiles_List.size() ;
 
-	for(iter=m_Tiles.begin(); iter!=end; iter++)
+	for(int i=0; i<size; i++)
 	{
-		pTiles = (*iter) ;
+		pTile = m_MapTiles_List[i] ;
 
 		if(coord=='x' || coord=='X')
-			col.XCollision(pObjects, pTiles) ;
+			col.XCollision(pDynamicObject, pTile) ;
 		else if(coord=='y' || coord=='Y')
-			col.YCollision(pObjects, pTiles) ;
+			col.YCollision(pDynamicObject, pTile) ;
 	}
 }
 
-void CMapTiles::Collision(char coord)
+void CMapTiles_List::Collision(char coord)
 {
 	CCollision col ;
 
-	CDynamicObjects *pObject ;
-	CTiles *pTiles ;
+	CDynamicObjects *pDynamicObject ;
+	CTiles *pTile ;
 	std::vector<CDynamicObjects*> DynamicObjects_List = g_DynamicObjects_List->GetDynamicObjectsList() ;
 	const int ObjectSize = DynamicObjects_List.size() ;
-	const int TileSize = m_Tiles.size() ;
+	const int TileSize = m_MapTiles_List.size() ;
 
 	bool BeGravityMultiples ;
 
 	for(int Index_o=0; Index_o<ObjectSize; Index_o++)
 	{
-		pObject = DynamicObjects_List[Index_o] ;
-		BeGravityMultiples = false ;
+		pDynamicObject = DynamicObjects_List[Index_o] ;
+		//BeGravityMultiples = false ;
+		//
+		pDynamicObject->SetGravityMultiples(1.0f) ;
+		pDynamicObject->SetMultipleJump(false) ;
 
 		for(int Index_t=0; Index_t<TileSize; Index_t++)
 		{
-			pTiles = m_Tiles[Index_t] ;
+			pTile = m_MapTiles_List[Index_t] ;
 			bool bCollision=false ;
 
 			if(coord=='x' || coord=='X')
-				bCollision = col.XCollision(pObject, pTiles) ;
+				bCollision = col.XCollision(pDynamicObject, pTile) ;
 			else if(coord=='y' || coord=='Y')
-				bCollision = col.YCollision(pObject, pTiles) ;
+				bCollision = col.YCollision(pDynamicObject, pTile) ;
 
-			if(bCollision && pTiles->BeGravityMultiples())
-				BeGravityMultiples = true ;
+			//if(bCollision && pTile->BeGravityMultiples())
+			//	BeGravityMultiples = true ;
 		}
 
-		if(!BeGravityMultiples)
-			pObject->SetGravityMultiples(1.0f) ;
+		//if(!BeGravityMultiples)
+		//	pDynamicObject->SetGravityMultiples(1.0f) ;
 	}
 }
 
-void CMapTiles::Update()
+const std::vector<CTiles*> CMapTiles_List::GetMapTilesList()
 {
-	CTiles *pTiles ;
-	std::vector<CTiles*>::iterator iter ;
-	std::vector<CTiles*>::iterator end=m_Tiles.end() ;
+	return m_MapTiles_List ;
+}
 
-	for(iter=m_Tiles.begin(); iter!=end; iter++)
+void CMapTiles_List::Update()
+{
+	CTiles *pTile ;
+	const int size = m_MapTiles_List.size() ;
+
+	for(int i=0; i<size; i++)
 	{
-		pTiles = (*iter) ;
-		pTiles->Update() ;
+		pTile = m_MapTiles_List[i] ;
+		pTile->Update() ;
 	}
 }
 
-void CMapTiles::Render()
+void CMapTiles_List::Render()
 {
-	CTiles *pTiles ;
-	std::vector<CTiles*>::iterator iter ;
-	std::vector<CTiles*>::iterator end=m_Tiles.end() ;
+	CTiles *pTile ;
+	const int size = m_MapTiles_List.size() ;
 
-	for(iter=m_Tiles.begin(); iter!=end; iter++)
+	for(int i=0; i<size; i++)
 	{
-		pTiles = (*iter) ;
-		pTiles->Render() ;
+		pTile = m_MapTiles_List[i] ;
+		pTile->Render() ;
 	}
 }

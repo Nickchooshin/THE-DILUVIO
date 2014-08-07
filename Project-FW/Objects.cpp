@@ -48,3 +48,7 @@ void CObjects::Render()
 void CObjects::SendEventMessage(char *EventMessage)
 {
 }
+
+void CObjects::EventClear()
+{
+}

@@ -15,9 +15,9 @@ public :
 	CDynamicObjects_List() ;
 	~CDynamicObjects_List() ;
 
-	void AddMainCharObjects(CDynamicObjects *pObjects) ;
-	void AddObjects(CDynamicObjects *pObjects) ;
-	void RemoveObjects(CDynamicObjects *pObjects) ;
+	void AddMainCharObjects(CDynamicObjects *pDynamicObject) ;
+	void AddObjects(CDynamicObjects *pDynamicObject) ;
+	void RemoveObjects(CDynamicObjects *pDynamicObject) ;
 
 	void Update() ;
 

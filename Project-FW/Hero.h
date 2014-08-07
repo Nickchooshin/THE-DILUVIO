@@ -3,7 +3,6 @@
 #include "DynamicObjects.h"
 
 class CFriendChange_UI ;
-class CMapTiles ;
 
 class CHero : public CDynamicObjects
 {
@@ -25,15 +24,12 @@ private :
 	State m_State, m_prevState ;
 
 	CFriendChange_UI *m_pFC_UI ;
-	CMapTiles *m_pMapTiles ;
 
 public :
 	CHero() ;
 	~CHero() ;
 
 	void Init() ;
-
-	void SetMapTiles(CMapTiles *pMapTiles) ;
 
 	void Update() ;
 

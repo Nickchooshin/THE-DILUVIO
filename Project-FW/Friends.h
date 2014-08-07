@@ -44,6 +44,8 @@ public :
 
 	//
 	virtual void SendEventMessage(char *EventMessage) ;
+	virtual void EventClear() ;
+
 	virtual void Render() ;
 protected :
 	void LoadDat(char *filepath) ;

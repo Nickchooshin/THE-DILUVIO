@@ -10,6 +10,7 @@ protected :
 	float m_fGravityMultiples ;
 
 	bool m_bJump ;
+	bool m_bMultipleJump ;
 	bool m_bGravity ;
 	bool m_bDeath ;
 
@@ -24,6 +25,7 @@ public :
 	virtual void Update() = 0 ;
 
 	void SetJump(bool bFlag) ;
+	void SetMultipleJump(bool bFlag) ;
 	void SetGravity(bool bFlag) ;
 	void SetDeath(bool bFlag) ;
 
@@ -31,6 +33,8 @@ public :
 	void SetGravityMultiples(float fGravityMultiples) ;
 
 	const bool BeJump() ;
+	const bool BeMultipleJump() ;
+	const bool BeJumping() ;
 	const bool BeGravity() ;
 	const bool BeDeath() ;
 

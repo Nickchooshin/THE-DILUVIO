@@ -112,6 +112,7 @@ public :
 
 	//
 	virtual void SendEventMessage(char *EventMessage) ;
+	virtual void EventClear() ;
 protected :
 	virtual void SetBoundingBox() = 0 ;
 } ;

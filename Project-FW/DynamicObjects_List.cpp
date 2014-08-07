@@ -14,27 +14,29 @@ CDynamicObjects_List::~CDynamicObjects_List()
 	m_DynamicObjects_List.clear() ;
 }
 
-void CDynamicObjects_List::AddMainCharObjects(CDynamicObjects *pObjects)
+void CDynamicObjects_List::AddMainCharObjects(CDynamicObjects *pDynamicObject)
 {
-	m_pMainChar = pObjects ;
-	AddObjects(pObjects) ;
+	m_pMainChar = pDynamicObject ;
+	AddObjects(pDynamicObject) ;
 }
 
-void CDynamicObjects_List::AddObjects(CDynamicObjects *pObjects)
+void CDynamicObjects_List::AddObjects(CDynamicObjects *pDynamicObject)
 {
-	m_DynamicObjects_List.push_back(pObjects) ;
+	m_DynamicObjects_List.push_back(pDynamicObject) ;
 }
 
-void CDynamicObjects_List::RemoveObjects(CDynamicObjects *pObjects)
+void CDynamicObjects_List::RemoveObjects(CDynamicObjects *pDynamicObject)
 {
-	std::vector<CDynamicObjects*>::iterator iter ;
-	std::vector<CDynamicObjects*>::iterator end = m_DynamicObjects_List.end() ;
+	CDynamicObjects *pTemp ;
+	const int size = m_DynamicObjects_List.size() ;
 
-	for(iter=m_DynamicObjects_List.begin(); iter!=end; iter++)
+	for(int i=0; i<size; i++)
 	{
-		if((*iter)==pObjects)
+		pTemp = m_DynamicObjects_List[i] ;
+
+		if(pTemp==pDynamicObject)
 		{
-			m_DynamicObjects_List.erase(iter) ;
+			m_DynamicObjects_List.erase(m_DynamicObjects_List.begin() + i) ;
 			return ;
 		}
 	}
@@ -42,27 +44,25 @@ void CDynamicObjects_List::RemoveObjects(CDynamicObjects *pObjects)
 
 void CDynamicObjects_List::Update()
 {
-	CDynamicObjects *pDynamicObjects ;
-	std::vector<CDynamicObjects*>::iterator iter ;
-	std::vector<CDynamicObjects*>::iterator end = m_DynamicObjects_List.end() ;
+	CDynamicObjects *pDynamicObject ;
+	const int size = m_DynamicObjects_List.size() ;
 
-	for(iter=m_DynamicObjects_List.begin(); iter!=end; iter++)
+	for(int i=0; i<size; i++)
 	{
-		pDynamicObjects = (*iter) ;
-		pDynamicObjects->Update() ;
+		pDynamicObject = m_DynamicObjects_List[i] ;
+		pDynamicObject->Update() ;
 	}
 }
 
 void CDynamicObjects_List::Gravity()
 {
-	CDynamicObjects *pDynamicObjects ;
-	std::vector<CDynamicObjects*>::iterator iter ;
-	std::vector<CDynamicObjects*>::iterator end = m_DynamicObjects_List.end() ;
+	CDynamicObjects *pDynamicObject ;
+	const int size = m_DynamicObjects_List.size() ;
 
-	for(iter=m_DynamicObjects_List.begin(); iter!=end; iter++)
+	for(int i=0; i<size; i++)
 	{
-		pDynamicObjects = (*iter) ;
-		pDynamicObjects->Gravity() ;
+		pDynamicObject = m_DynamicObjects_List[i] ;
+		pDynamicObject->Gravity() ;
 	}
 }
 

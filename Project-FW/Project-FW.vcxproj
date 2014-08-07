@@ -108,7 +108,7 @@
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="LoadManager.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="MapTiles.cpp" />
+    <ClCompile Include="MapTiles_List.cpp" />
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="MusicManager.cpp" />
     <ClCompile Include="Objects.cpp" />
@@ -164,7 +164,7 @@
     <ClInclude Include="Joystick.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="LoadManager.h" />
-    <ClInclude Include="MapTiles.h" />
+    <ClInclude Include="MapTiles_List.h" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="MusicManager.h" />
     <ClInclude Include="Objects.h" />

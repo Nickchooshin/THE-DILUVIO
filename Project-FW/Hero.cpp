@@ -10,9 +10,7 @@
 #include "Friends_List.h"
 #include "Friends.h"
 
-#include "MapTiles.h"
-
-#include <stdio.h>
+#include "MapTiles_List.h"
 
 CHero::CHero() : m_ImgSize(0, 0),
 				 m_nNowFrame(0),
@@ -24,8 +22,7 @@ CHero::CHero() : m_ImgSize(0, 0),
 				 m_Release_LeftIndex(0, 0), m_Release_RightIndex(0, 0),
 				 m_fAnimationTime(0.0f),
 				 m_State(RIGHT), m_prevState(RIGHT),
-				 m_pFC_UI(NULL),
-				 m_pMapTiles(NULL)
+				 m_pFC_UI(NULL)
 {
 	m_fVecSpeed = 2.5f ;
 	m_fVecJump = 7.5f ;
@@ -149,11 +146,6 @@ void CHero::Init()
 	m_pFC_UI->Init() ;
 }
 
-void CHero::SetMapTiles(CMapTiles *pMapTiles)
-{
-	m_pMapTiles = pMapTiles ;
-}
-
 void CHero::Update()
 {
 	Move() ;
@@ -220,7 +212,7 @@ void CHero::Move()
 			// 해당 좌표에 친구가 없을경우, 현재 선택된 친구를 방출
 			// 해당 좌표에 친구/타일 이 없을경우, 현재 선택된 친구를 방출
 			if( g_Friends_List->GetFriend(tileX, tileY)==NULL &&
-				m_pMapTiles->GetTile(tileX, tileY)==NULL )
+				g_MapTiles_List->GetTile(tileX, tileY)==NULL )
 			{
 				fX = (float)(tileX * 64) ;
 				pFriend->SetPosition(fX, m_fY) ;
@@ -250,7 +242,7 @@ void CHero::Move()
 
 		// 해당 좌표에 있는 친구를 흡수한다
 		CFriends *pFriends = g_Friends_List->GetFriend(tileX, tileY) ;
-		if(pFriends!=NULL && m_pMapTiles->GetTile(tileX, tileY)==NULL)
+		if(pFriends!=NULL && g_MapTiles_List->GetTile(tileX, tileY)==NULL)
 		{
 			pFriends->Absorb() ;
 		}
@@ -264,7 +256,7 @@ void CHero::Move()
 		if(g_Keyboard->IsButtonDown(DIK_RIGHT))
 			m_vForce.x += fSpeed ;
 
-		if(!m_bJump && g_Keyboard->IsButtonDown(DIK_UP))
+		if((!m_bGravity || m_bMultipleJump) && !m_bJump && g_Keyboard->IsButtonDown(DIK_UP))
 		{
 			m_fVecAcc = m_fVecJump * fTime ;
 

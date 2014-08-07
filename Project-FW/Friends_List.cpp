@@ -1,11 +1,6 @@
 #include "Friends_List.h"
 #include "Friends.h"
 
-#include <algorithm>
-#include "Collision.h"
-
-#include "Hero.h"
-
 #include "DynamicObjects_List.h"
 
 CFriends_List::CFriends_List() : m_nMaxFriends(0)
@@ -37,37 +32,36 @@ CFriends* CFriends_List::GetFriend(int index)
 
 CFriends* CFriends_List::GetFriend(int tileX, int tileY)
 {
-	CFriends *pFriends ;
-	std::vector<CFriends*>::iterator iter ;
-	std::vector<CFriends*>::iterator end=m_Friends_List.end() ;
+	CFriends *pFriend ;
+	const int size = m_Friends_List.size() ;
 
-	for(iter=m_Friends_List.begin(); iter!=end; iter++)
+	for(int i=0; i<size; i++)
 	{
-		pFriends = *iter ;
+		pFriend = m_Friends_List[i] ;
 
-		if(pFriends->GetRelease())
+		if(pFriend->GetRelease())
 		{
-			int x = (int)((pFriends->GetPositionX() + 32.0f) / 64.0f) ;
-			int y = (int)((pFriends->GetPositionY() + 32.0f) / 64.0f) ;
+			int x = (int)((pFriend->GetPositionX() + 32.0f) / 64.0f) ;
+			int y = (int)((pFriend->GetPositionY() + 32.0f) / 64.0f) ;
 
 			if(tileX==x && tileY==y)
-				return pFriends ;
+				return pFriend ;
 		}
 	}
 
 	return NULL ;
 }
 
-bool CFriends_List::AddFriend(CFriends *pFriends)
+bool CFriends_List::AddFriend(CFriends *pFriend)
 {
 	if(m_Friends_List.size()>=m_nMaxFriends)
 	{
-		delete pFriends ;
+		delete pFriend ;
 
 		return false ;
 	}
 
-	m_Friends_List.push_back(pFriends) ;
+	m_Friends_List.push_back(pFriend) ;
 	m_Friends_BeRelease.push_back(false) ;
 
 	return true ;
@@ -99,12 +93,11 @@ void CFriends_List::SetMaxFriends(int nMaxFriends)
 void CFriends_List::Clear()
 {
 	CFriends *temp ;
-	std::vector<CFriends*>::iterator iter ;
-	std::vector<CFriends*>::iterator end=m_Friends_List.end() ;
+	const int size = m_Friends_List.size() ;
 
-	for(iter=m_Friends_List.begin(); iter!=end; iter++)
+	for(int i=0; i<size; i++)
 	{
-		temp = *iter ;
+		temp = m_Friends_List[i] ;
 		delete temp ;
 	}
 
@@ -115,56 +108,49 @@ void CFriends_List::Clear()
 
 void CFriends_List::Gravity()
 {
-	CFriends *pFriends ;
-	std::vector<CFriends*>::iterator iter ;
-	std::vector<CFriends*>::iterator end=m_Friends_List.end() ;
+	CFriends *pFriend ;
+	const int size = m_Friends_List.size() ;
 
-	for(iter=m_Friends_List.begin(); iter!=end; iter++)
+	for(int i=0; i<size; i++)
 	{
-		pFriends = *iter ;
-		if(pFriends->GetRelease())
-		{
-			pFriends->Gravity() ;
-			//m_CollisionList.push_back(pFriends) ;
-		}
+		pFriend = m_Friends_List[i] ;
+		if(pFriend->GetRelease())
+			pFriend->Gravity() ;
 	}
 }
 
 void CFriends_List::ReleaseCheck()
 {
-	int count=0 ;
+	CFriends *pFriend ;
 	bool bRelease ;
-	CFriends *pFriends ;
-	std::vector<CFriends*>::iterator iter ;
-	std::vector<CFriends*>::iterator end=m_Friends_List.end() ;
+	const int size = m_Friends_List.size() ;
 
-	for(iter=m_Friends_List.begin(); iter!=end; iter++, count++)
+	for(int i=0; i<size; i++)
 	{
-		pFriends = *iter ;
-		bRelease = pFriends->GetRelease() ;
+		pFriend = m_Friends_List[i] ;
+		bRelease = pFriend->GetRelease() ;
 
-		if(m_Friends_BeRelease[count]!=bRelease)
+		if(m_Friends_BeRelease[i]!=bRelease)
 		{
-			m_Friends_BeRelease[count] = bRelease ;
+			m_Friends_BeRelease[i] = bRelease ;
 			if(bRelease)
-				g_DynamicObjects_List->AddObjects(pFriends) ;
+				g_DynamicObjects_List->AddObjects(pFriend) ;
 			else
-				g_DynamicObjects_List->RemoveObjects(pFriends) ;
+				g_DynamicObjects_List->RemoveObjects(pFriend) ;
 		}
 	}
 }
 
 void CFriends_List::Render()
 {
-	CFriends *pFriends ;
-	std::vector<CFriends*>::iterator iter ;
-	std::vector<CFriends*>::iterator end=m_Friends_List.end() ;
+	CFriends *pFriend ;
+	const int size = m_Friends_List.size() ;
 
-	for(iter=m_Friends_List.begin(); iter!=end; iter++)
+	for(int i=0; i<size; i++)
 	{
-		pFriends = *iter ;
-		if(pFriends->GetRelease())
-			pFriends->Render() ;
+		pFriend = m_Friends_List[i] ;
+		if(pFriend->GetRelease())
+			pFriend->Render() ;
 	}
 }
 
@@ -172,48 +158,3 @@ bool Compare(CFriends* pF1, CFriends* pF2)
 {
 	return pF1->GetPositionY() < pF2->GetPositionY() ;
 }
-
-//void CFriends_List::Collision(char coord)
-//{
-//	std::sort(m_CollisionList.begin(), m_CollisionList.end(), Compare) ;
-//	
-//	CCollision col ;
-//	int size = m_CollisionList.size() ;
-//
-//	for(int i=0; i<size; i++)
-//	{
-//		for(int j=0; j<size; j++)
-//		{
-//			if(i==j)
-//				continue ;
-//
-//			if(coord=='x' || coord=='X')
-//				col.XCollision(m_CollisionList[j], m_CollisionList[i]) ;
-//			else if(coord=='y' || coord=='Y')
-//				col.YCollision(m_CollisionList[j], m_CollisionList[i]) ;
-//		}
-//	}
-//
-//	m_CollisionList.clear() ;
-//}
-//
-//void CFriends_List::Collision(CHero *pHero, char coord)
-//{
-//	CFriends *pFriends ;
-//	std::vector<CFriends*>::iterator iter ;
-//	std::vector<CFriends*>::iterator end=m_Friends_List.end() ;
-//
-//	CCollision col ;
-//
-//	for(iter=m_Friends_List.begin(); iter!=end; iter++)
-//	{
-//		pFriends = *iter ;
-//		if(!pFriends->GetRelease())
-//			continue ;
-//
-//		if(coord=='x' || coord=='X')
-//			col.XCollision(pHero, pFriends) ;
-//		else if(coord=='y' || coord=='Y')
-//			col.YCollision(pHero, pFriends) ;
-//	}
-//}
