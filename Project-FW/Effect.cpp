@@ -12,11 +12,22 @@ CEffect::CEffect() : m_ImgSize(0, 0), m_ColSize(0, 0),
 					 m_nEffectFrame(0),
 					 m_Effect_Index(0, 0),
 					 m_fAnimationTime(0.0f),
-					 m_State(EFFECT), m_prevState(EFFECT)
+					 m_State(EFFECT), m_prevState(EFFECT),
+					 m_bVisible(false)
 {
 }
 CEffect::~CEffect()
 {
+}
+
+const bool CEffect::BeVisible()
+{
+	return m_bVisible ;
+}
+
+void CEffect::SetVisible(bool bFlag)
+{
+	m_bVisible = bFlag ;
 }
 
 void CEffect::Update()
@@ -26,6 +37,15 @@ void CEffect::Update()
 
 void CEffect::Effect(CObjects* pObject)
 {
+}
+
+void CEffect::Render()
+{
+	if(m_bVisible)
+	{
+		m_pSprite->SetPosition(m_fX, m_fY) ;
+		m_pSprite->Render() ;
+	}
 }
 
 void CEffect::LoadDat(char *filepath)

@@ -19,6 +19,8 @@ protected :
 	enum State { EFFECT=0 } ;
 	State m_State, m_prevState ;
 
+	bool m_bVisible ;
+
 public :
 	CEffect() ;
 	virtual ~CEffect() ;
@@ -26,9 +28,15 @@ public :
 	virtual void Init() = 0 ;
 
 	const Circle GetBoundingCircle() ;
+
+	const bool BeVisible() ;
+
+	void SetVisible(bool bFlag) ;
 	
 	virtual void Update() ;
 	virtual void Effect(CObjects* pObject) ;
+
+	virtual void Render() ;
 protected :
 	void LoadDat(char *filepath) ;
 	void SetBoundingBox() ;

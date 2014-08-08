@@ -9,6 +9,8 @@ public :
 	~CTiles_GroundCreeper() ;
 
 	void Init() ;
+	
+	void Effect1(CDynamicObjects* pDynamicObject) ;
 
 	void SendEventMessage(char *EventMessage) ;
 	void EventClear() ;

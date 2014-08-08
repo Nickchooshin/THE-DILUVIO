@@ -73,6 +73,9 @@ void CEffect_List::Collision()
 		{
 			pEffect = m_Effect_List[Index_e] ;
 
+			if(!pEffect->BeVisible())
+				continue ;
+
 			if(pDynamicObject!=NULL)
 			{
 				bool bCollision=false ;

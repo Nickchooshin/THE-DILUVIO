@@ -27,12 +27,14 @@ void CTiles_Spark::Update()
 {
 	Animation() ;
 	
+	m_pESparkArea->SetVisible(true) ;
 	m_pESparkArea->SetPosition(m_fX, m_fY) ;
 	m_pESparkArea->Update() ;
 }
 
 void CTiles_Spark::Effect2()
 {
+	m_pESparkArea->SetVisible(false) ;
 }
 
 void CTiles_Spark::Render()

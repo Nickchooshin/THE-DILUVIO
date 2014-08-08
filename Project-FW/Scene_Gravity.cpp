@@ -32,7 +32,7 @@ Scene* SceneGravity::scene()
 
 void SceneGravity::Init()
 {
-	g_MapTiles_List->LoadMap(4) ;
+	g_MapTiles_List->LoadMap(6) ;
 
 	Size MapSize = g_MapTiles_List->GetMapSize() ;
 	CCamera *pCamera = new CCamera() ;

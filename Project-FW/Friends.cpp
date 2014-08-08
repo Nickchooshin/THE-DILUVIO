@@ -62,6 +62,7 @@ void CFriends::Update()
 	{
 		Animation() ;
 		//
+		m_pESparkImpact->SetVisible(m_bStun) ;
 		m_pESparkImpact->Update() ;
 	}
 }
@@ -88,8 +89,7 @@ void CFriends::Render()
 	m_pESparkImpact->SetPosition(m_fX, m_fY) ;
 
 	m_pSprite->Render() ;
-	if(m_bStun)
-		m_pESparkImpact->Render() ;
+	m_pESparkImpact->Render() ;
 }
 //
 

@@ -28,11 +28,20 @@ void CFriends_Vento::Update()
 {
 	if(m_bRelease)
 	{
+		////
+		bool b = !m_bStun & (m_State==STAND) ;
+		m_pEAbillty->SetVisible(b) ;
+		////
+
 		Animation() ;
 		//
-		m_pEAbillty->Update() ;
-		m_pEAbillty->SetPosition(m_fX, m_fY) ;
+		if(!m_bStun)
+		{
+			m_pEAbillty->Update() ;
+			m_pEAbillty->SetPosition(m_fX, m_fY) ;
+		}
 
+		m_pESparkImpact->SetVisible(m_bStun) ;
 		m_pESparkImpact->Update() ;
 		m_bStun = false ;
 	}
@@ -41,16 +50,10 @@ void CFriends_Vento::Update()
 void CFriends_Vento::Render()
 {
 	m_pSprite->SetPosition(m_fX, m_fY) ;
+	m_pESparkImpact->SetPosition(m_fX, m_fY) ;
+	m_pEAbillty->SetPosition(m_fX, m_fY) ;
 
 	m_pSprite->Render() ;
-	if(m_bStun)
-	{
-		m_pESparkImpact->SetPosition(m_fX, m_fY) ;
-		m_pESparkImpact->Render() ;
-	}
-	else
-	{
-		m_pEAbillty->SetPosition(m_fX, m_fY) ;
-		m_pEAbillty->Render() ;
-	}
+	m_pESparkImpact->Render() ;
+	m_pEAbillty->Render() ;
 }

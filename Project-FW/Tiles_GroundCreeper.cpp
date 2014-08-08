@@ -1,6 +1,8 @@
 #include "Tiles_GroundCreeper.h"
 #include "Sprite.h"
 
+#include "DynamicObjects.h"
+
 CTiles_GroundCreeper::CTiles_GroundCreeper()
 {
 }
@@ -11,6 +13,12 @@ CTiles_GroundCreeper::~CTiles_GroundCreeper()
 void CTiles_GroundCreeper::Init()
 {
 	LoadDat("Resource/Data/Tiles/Ground_creeper.dat") ;
+}
+
+void CTiles_GroundCreeper::Effect1(CDynamicObjects* pDynamicObject)
+{
+	//pDynamicObject->SendEventMessage("
+	//dont release absorb
 }
 
 void CTiles_GroundCreeper::SendEventMessage(char *EventMessage)
