@@ -151,6 +151,8 @@ void CHero::Update()
 	Move() ;
 	Animation() ;
 
+	m_bReleaseAbsorb = true ;
+
 	m_pFC_UI->Update() ;
 }
 
@@ -163,6 +165,14 @@ void CHero::Render()
 	m_pSprite->Render() ;
 
 	m_pFC_UI->Render_Front() ;
+}
+
+void CHero::SendEventMessage(char *EventMessage)
+{
+	int len = strlen(EventMessage) ;
+
+	if(len==20 && strcmp(EventMessage, "RELEASE_ABSORB_FALSE")==0)
+		m_bReleaseAbsorb = false ;
 }
 
 void CHero::SetBoundingBox()
@@ -185,7 +195,7 @@ void CHero::Move()
 	m_vForce.x = 0.0f ;
 	m_vForce.y = 0.0f ;
 
-	if(!m_bGravity && g_Keyboard->IsButtonDown(DIK_Z))
+	if(m_bReleaseAbsorb && !m_bGravity && g_Keyboard->IsButtonDown(DIK_Z))
 	{
 		m_State = (State)((m_State / RIGHT) * RIGHT + LEFT_RELEASE) ;
 
@@ -221,7 +231,7 @@ void CHero::Move()
 			}
 		}
 	}
-	else if(!m_bGravity && g_Keyboard->IsButtonDown(DIK_X))
+	else if(m_bReleaseAbsorb && !m_bGravity && g_Keyboard->IsButtonDown(DIK_X))
 	{
 		m_State = (State)((m_State / RIGHT) * RIGHT + LEFT_ABSORB) ;
 

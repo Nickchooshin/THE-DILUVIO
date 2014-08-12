@@ -18,8 +18,7 @@ void CTiles_GroundCreeper::Init()
 
 void CTiles_GroundCreeper::Effect1(CDynamicObjects* pDynamicObject)
 {
-	//pDynamicObject->SendEventMessage("
-	//dont release absorb
+	pDynamicObject->SendEventMessage("RELEASE_ABSORB_FALSE") ;
 }
 
 void CTiles_GroundCreeper::SendEventMessage(char *EventMessage)

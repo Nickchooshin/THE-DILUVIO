@@ -201,7 +201,8 @@ CTiles* CMapTiles_List::GetTile(int x, int y)
 		fTileX = pTile->GetPositionX() ;
 		fTileY = pTile->GetPositionY() ;
 
-		if(pTile->BeCollision() && (fTileX==fX && fTileY==fY))
+		//if(pTile->BeCollision() && (fTileX==fX && fTileY==fY))
+		if((pTile->BeCollision() || !pTile->BeNonCollision(NULL)) && (fTileX==fX && fTileY==fY))
 			return pTile ;
 	}
 
