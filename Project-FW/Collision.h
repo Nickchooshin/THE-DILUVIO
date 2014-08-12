@@ -26,7 +26,7 @@ public :
 
 	Rect GetIntersect() ;
 
-	bool DotCirleCollision(Position dot, Circle circle) ;	// Dot & Circle Collision
+	bool CircleCollision(Circle A, Circle B) ;
 
-	bool DotCirleCollision(CObjects *pObject, CEffect *pEffect) ;
+	bool RectCircleCollision(CObjects *pObject, CEffect *pEffect) ;
 } ;

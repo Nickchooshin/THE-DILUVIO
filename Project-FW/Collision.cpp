@@ -4,6 +4,8 @@
 #include "Tiles.h"
 #include "Effect.h"
 
+#include <stdio.h>
+
 CCollision::CCollision()
 {
 	rtIntersect.left = 0 ;
@@ -321,47 +323,52 @@ Rect CCollision::GetIntersect()
 	return rtIntersect ;
 }
 
-bool CCollision::DotCirleCollision(Position dot, Circle circle)
+bool CCollision::CircleCollision(Circle A, Circle B)
 {
 	float distance ;
-	float x = (float)(circle.pos.x - dot.x) ;
-	float y = (float)(circle.pos.y - dot.y) ;
+	float x = (float)(B.pos.x - A.pos.x) ;
+	float y = (float)(B.pos.y - A.pos.y) ;
 
 	distance = sqrt((x*x) + (y*y)) ;
 
-	if(distance<=circle.radius)
+	if(distance<=(A.radius + B.radius))
 		return true ;
 
 	return false ;
 }
 
-bool CCollision::DotCirleCollision(CObjects *pObject, CEffect *pEffect)
+bool CCollision::RectCircleCollision(CObjects *pObject, CEffect *pEffect)
 {
-	float X, Y ;
-	Rect ObjectRect ;
-	Circle EffectCircle ;
-	Position NearbyDot ;
+	Rect ObjectRect = pObject->GetBoundingBox() ;
+	Circle EffectCircle = pEffect->GetBoundingCircle() ;
 
-	X = pObject->GetPositionX() ;
-	Y = pObject->GetPositionY() ;
+	float x = pObject->GetPositionX() ;
+	float y = pObject->GetPositionY() ;
 
-	ObjectRect = pObject->GetBoundingBox() ;
-	EffectCircle = pEffect->GetBoundingCircle() ;
+	// ObjectRect의 영역을 감싸는 넓이의 원을 구해야 하므로
+	// ObjectRect의 원점에서 꼭지점 까지의 거리를 원의 반지름으로 정한다
+	float xx = (ObjectRect.right - x) ;
+	float yy = (ObjectRect.top - y) ;
+	float distance = sqrt((xx*xx) + (yy*yy)) ;
 
-	if(X>EffectCircle.pos.x)
-		NearbyDot.x = ObjectRect.left ;
-	//else if(X<EffectCircle.pos.x)
-	else
-		NearbyDot.x = ObjectRect.right ;
+	Circle ObjectCircle ;
+	ObjectCircle.pos.x = x ;
+	ObjectCircle.pos.y = y ;
+	ObjectCircle.radius = distance ;
 
-	if(Y>EffectCircle.pos.y)
-		NearbyDot.y = ObjectRect.bottom ;
-	//else if(Y<EffectCircle.pos.y)
-	else
-		NearbyDot.y = ObjectRect.top ;
+	if(CircleCollision(ObjectCircle, EffectCircle))
+	{
+		// EffectRect는 EffectCircle의 넓이에 딱 맞는
+		// 사각형을 구하면 된다
+		Rect EffectRect ;
+		EffectRect.left = EffectCircle.pos.x - EffectCircle.radius ;
+		EffectRect.right = EffectCircle.pos.x + EffectCircle.radius ;
+		EffectRect.top = EffectCircle.pos.y + EffectCircle.radius ;
+		EffectRect.bottom = EffectCircle.pos.y - EffectCircle.radius ;
 
-	if(DotCirleCollision(NearbyDot, EffectCircle))
-		return true ;
+		if(AABB(EffectRect, ObjectRect))
+			return true ;
+	}
 
 	return false ;
 }

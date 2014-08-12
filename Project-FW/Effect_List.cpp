@@ -80,7 +80,7 @@ void CEffect_List::Collision()
 			{
 				bool bCollision=false ;
 
-				bCollision = col.DotCirleCollision(pDynamicObject, pEffect) ;
+				bCollision = col.RectCircleCollision(pDynamicObject, pEffect) ;
 				if(bCollision)
 					pEffect->Effect(pDynamicObject) ;
 			}
@@ -88,7 +88,7 @@ void CEffect_List::Collision()
 			{
 				bool bCollision=false ;
 
-				bCollision = col.DotCirleCollision(pTile, pEffect) ;
+				bCollision = col.RectCircleCollision(pTile, pEffect) ;
 				if(bCollision)
 					pEffect->Effect(pTile) ;
 			}
