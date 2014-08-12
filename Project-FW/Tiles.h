@@ -14,7 +14,7 @@ protected :
 	Position m_Effect1_Index, m_Effect2_Index ;
 	CTiles *m_pLinkedTile ;
 
-	bool m_bCollision ;
+	bool m_bCollision, m_bMainCharNonCollision ;
 	bool m_bGravityMultiples ;
 
 	float m_fAnimationTime ;
@@ -39,6 +39,7 @@ public :
 	void SetLinkedTile(CTiles *pLinkedTile) ;
 	void SetCollision(bool bFlag) ;
 	const bool BeCollision() ;
+	const bool BeNonCollision(CDynamicObjects *pDynamicObject) ;
 	const bool BeGravityMultiples() ;
 
 	void CollisionDirection(int direction) ;

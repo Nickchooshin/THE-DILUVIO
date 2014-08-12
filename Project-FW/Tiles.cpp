@@ -3,6 +3,7 @@
 #include "LoadManager.h"
 
 #include "DynamicObjects.h"
+#include "DynamicObjects_List.h"
 
 #include "D3dDevice.h"
 
@@ -12,7 +13,7 @@ CTiles::CTiles() : m_ImgSize(0, 0), m_ColSize(0, 0),
 				   m_Tile_Index(0, 0),
 				   m_Effect1_Index(0, 0), m_Effect2_Index(0, 0),
 				   m_pLinkedTile(NULL),
-				   m_bCollision(true),
+				   m_bCollision(true), m_bMainCharNonCollision(false),
 				   m_bGravityMultiples(false),
 				   m_fAnimationTime(0.0f),
 				   m_State(NORMAL), m_prevState(NORMAL),
@@ -51,6 +52,21 @@ void CTiles::SetCollision(bool bFlag)
 const bool CTiles::BeCollision()
 {
 	return m_bCollision ;
+}
+
+const bool CTiles::BeNonCollision(CDynamicObjects *pDynamicObject)
+{
+	if(m_bMainCharNonCollision)
+	{
+		const CDynamicObjects *pMainChar = g_DynamicObjects_List->GetMainChar() ;
+
+		if(pDynamicObject==pMainChar)
+			return true ;
+
+		return false ;
+	}
+
+	return true ;
 }
 
 const bool CTiles::BeGravityMultiples()

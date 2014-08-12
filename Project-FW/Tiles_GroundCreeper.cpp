@@ -5,6 +5,7 @@
 
 CTiles_GroundCreeper::CTiles_GroundCreeper()
 {
+	m_bMainCharNonCollision = true ;
 }
 CTiles_GroundCreeper::~CTiles_GroundCreeper()
 {

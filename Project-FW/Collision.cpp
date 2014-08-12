@@ -163,7 +163,7 @@ bool CCollision::YCollision(CDynamicObjects *pDynamicObject, CObjects *pObject)
 bool CCollision::XCollision(CDynamicObjects *pDynamicObject, CTiles *pTile)
 {
 	//
-	if(!pTile->BeCollision())
+	if(!pTile->BeCollision() && pTile->BeNonCollision(pDynamicObject))
 	{
 		Rect rtDynamic = pDynamicObject->GetBoundingBox() ;
 		Rect rtTile = pTile->GetBoundingBox() ;
@@ -239,7 +239,7 @@ bool CCollision::XCollision(CDynamicObjects *pDynamicObject, CTiles *pTile)
 bool CCollision::YCollision(CDynamicObjects *pDynamicObject, CTiles *pTile)
 {
 	//
-	if(!pTile->BeCollision())
+	if(!pTile->BeCollision() && pTile->BeNonCollision(pDynamicObject))
 	{
 		Rect rtDynamic = pDynamicObject->GetBoundingBox() ;
 		Rect rtTile = pTile->GetBoundingBox() ;
