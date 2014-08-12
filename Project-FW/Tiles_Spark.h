@@ -18,7 +18,9 @@ public :
 	void Init() ;
 
 	void Update() ;
-	void Effect2() ;
+	void Effect2(CDynamicObjects* pDynamicObject) ;
 
 	void Render() ;
+private :
+	void Animation() ;
 } ;
