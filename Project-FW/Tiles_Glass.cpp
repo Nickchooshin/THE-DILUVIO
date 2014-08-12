@@ -3,7 +3,7 @@
 
 #include "D3dDevice.h"
 
-CTiles_Glass::CTiles_Glass()
+CTiles_Glass::CTiles_Glass() : m_bVisible(false)
 {
 }
 CTiles_Glass::~CTiles_Glass()
@@ -20,6 +20,7 @@ void CTiles_Glass::Update()
 	if(m_CollisionDirection & COLLISION_UP)
 	{
 		m_State = EFFECT1 ;
+		m_bVisible = true ;
 	}
 
 	Animation() ;
@@ -29,11 +30,25 @@ void CTiles_Glass::Update()
 
 void CTiles_Glass::Render()
 {
-	if(m_bCollision)
+	if(m_bCollision && m_bVisible)
 	{
 		m_pSprite->SetPosition(m_fX, m_fY) ;
 		m_pSprite->Render() ;
 	}
+}
+
+void CTiles_Glass::SendEventMessage(char *EventMessage)
+{
+	int len = strlen(EventMessage) ;
+
+	if(len==5 && strcmp(EventMessage, "GLASS")==0)
+		m_bVisible = true ;
+}
+
+void CTiles_Glass::EventClear()
+{
+	if(m_State!=EFFECT1)
+		m_bVisible = false ;
 }
 
 void CTiles_Glass::Animation()

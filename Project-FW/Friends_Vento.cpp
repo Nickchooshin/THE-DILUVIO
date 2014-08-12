@@ -26,25 +26,25 @@ void CFriends_Vento::Init()
 
 void CFriends_Vento::Update()
 {
-	if(m_bRelease)
+	if(!m_bRelease)
+		return ;
+
+	////
+	bool b = !m_bStun & (m_State==STAND) ;
+	m_pEAbillty->SetVisible(b) ;
+	////
+
+	Animation() ;
+	//
+	if(!m_bStun)
 	{
-		////
-		bool b = !m_bStun & (m_State==STAND) ;
-		m_pEAbillty->SetVisible(b) ;
-		////
-
-		Animation() ;
-		//
-		if(!m_bStun)
-		{
-			m_pEAbillty->Update() ;
-			m_pEAbillty->SetPosition(m_fX, m_fY) ;
-		}
-
-		m_pESparkImpact->SetVisible(m_bStun) ;
-		m_pESparkImpact->Update() ;
-		m_bStun = false ;
+		m_pEAbillty->Update() ;
+		m_pEAbillty->SetPosition(m_fX, m_fY) ;
 	}
+
+	m_pESparkImpact->SetVisible(m_bStun) ;
+	m_pESparkImpact->Update() ;
+	m_bStun = false ;
 }
 
 void CFriends_Vento::Render()

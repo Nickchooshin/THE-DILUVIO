@@ -1,0 +1,21 @@
+### Okulo_ability ###
+# Image
+
+<image>
+Resource/Image/Effect/Okulo_ability.png
+
+<size>
+704, 704
+
+# Collision Circle
+
+<collision_circle>
+352
+
+# Effect Image
+
+<effect_index>
+0, 0
+
+<effect_frame>
+1
