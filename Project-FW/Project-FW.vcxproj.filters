@@ -160,6 +160,9 @@
     <ClCompile Include="Effect_OkuloAbility.cpp">
       <Filter>Objects\Effect</Filter>
     </ClCompile>
+    <ClCompile Include="Effect_MakzeloAbility.cpp">
+      <Filter>Objects\Effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h" />
@@ -325,6 +328,9 @@
       <Filter>Data</Filter>
     </ClInclude>
     <ClInclude Include="Effect_OkuloAbility.h">
+      <Filter>Objects\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect_MakzeloAbility.h">
       <Filter>Objects\Effect</Filter>
     </ClInclude>
   </ItemGroup>

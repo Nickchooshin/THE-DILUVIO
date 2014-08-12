@@ -23,7 +23,7 @@ private :
 				 RIGHT, RIGHT_MOVE, RIGHT_JUMP, RIGHT_ABSORB, RIGHT_RELEASE } ;
 	State m_State, m_prevState ;
 
-	bool m_bReleaseAbsorb ;
+	bool m_bDeath, m_bReleaseAbsorb ;
 
 	CFriendChange_UI *m_pFC_UI ;
 

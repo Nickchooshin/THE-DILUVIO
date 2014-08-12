@@ -40,3 +40,11 @@ Resource/Image/Friends/Makzelo.png
 
 <release_frame>
 4
+
+# Stun
+
+<stun_index>
+0, 3
+
+<stun_frame>
+2

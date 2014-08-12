@@ -22,6 +22,7 @@ CHero::CHero() : m_ImgSize(0, 0),
 				 m_Release_LeftIndex(0, 0), m_Release_RightIndex(0, 0),
 				 m_fAnimationTime(0.0f),
 				 m_State(RIGHT), m_prevState(RIGHT),
+				 m_bDeath(false), m_bReleaseAbsorb(true),
 				 m_pFC_UI(NULL)
 {
 	m_fVecSpeed = 2.5f ;
@@ -172,7 +173,17 @@ void CHero::SendEventMessage(char *EventMessage)
 	int len = strlen(EventMessage) ;
 
 	if(len==20 && strcmp(EventMessage, "RELEASE_ABSORB_FALSE")==0)
+	{
 		m_bReleaseAbsorb = false ;
+	}
+	else if(len==5 && strcmp(EventMessage, "WATER")==0)
+	{
+		m_bDeath = true ;
+	}
+	else if(len==11 && strcmp(EventMessage, "RESPIRATION")==0)
+	{
+		m_bDeath = false ;
+	}
 }
 
 void CHero::SetBoundingBox()
@@ -186,8 +197,8 @@ void CHero::SetBoundingBox()
 
 void CHero::Move()
 {
-	//if(m_bDeath)
-	//	return ;
+	if(m_bDeath)
+		return ;
 
 	float fTime = g_D3dDevice->GetMoveTime() ;
 	float fSpeed = m_fVecSpeed * fTime ;

@@ -88,6 +88,7 @@
     <ClCompile Include="DynamicObjects_List.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="Effect_List.cpp" />
+    <ClCompile Include="Effect_MakzeloAbility.cpp" />
     <ClCompile Include="Effect_OkuloAbility.cpp" />
     <ClCompile Include="Effect_SparkArea.cpp" />
     <ClCompile Include="Effect_SprakImpact.cpp" />
@@ -146,6 +147,7 @@
     <ClInclude Include="DynamicObjects_List.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="Effect_List.h" />
+    <ClInclude Include="Effect_MakzeloAbility.h" />
     <ClInclude Include="Effect_OkuloAbility.h" />
     <ClInclude Include="Effect_SparkArea.h" />
     <ClInclude Include="Effect_SparkImpact.h" />

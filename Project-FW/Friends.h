@@ -14,18 +14,19 @@ protected :
 	//
 	Size m_ImgSize, m_ColSize ;
 	int m_nNowFrame ;
-	int m_nStandFrame, m_nAbsorbFrame, m_nReleaseFrame ;
+	int m_nStandFrame, m_nAbsorbFrame, m_nReleaseFrame, m_nStunFrame ;
 	Position m_Stand_Index ;
 	Position m_Absorb_Index ;
 	Position m_Release_Index ;
+	Position m_Stun_Index ;
 	Position m_Icon_Index ;
 
 	bool m_bRelease ;
-	bool m_bStun ;
+	bool m_bStun, m_bShock ;
 	
 	float m_fAnimationTime ;
 
-	enum State { STAND=0, ABSORB, RELEASE } ;
+	enum State { STAND=0, ABSORB, RELEASE, STUN } ;
 	State m_State, m_prevState ;
 
 public :

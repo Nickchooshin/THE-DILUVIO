@@ -30,21 +30,21 @@ void CFriends_Okulo::Update()
 		return ;
 
 	////
-	bool b = !m_bStun & (m_State==STAND) ;
+	bool b = !m_bShock & (m_State==STAND) ;
 	m_pEAbillty->SetVisible(b) ;
 	////
 
 	Animation() ;
 	//
-	if(!m_bStun)
+	if(!m_bShock)
 	{
 		m_pEAbillty->Update() ;
 		m_pEAbillty->SetPosition(m_fX, m_fY) ;
 	}
 
-	m_pESparkImpact->SetVisible(m_bStun) ;
+	m_pESparkImpact->SetVisible(m_bShock) ;
 	m_pESparkImpact->Update() ;
-	m_bStun = false ;
+	m_bShock = false ;
 }
 
 void CFriends_Okulo::Render()

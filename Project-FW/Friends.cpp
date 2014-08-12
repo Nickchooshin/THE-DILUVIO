@@ -9,11 +9,11 @@
 
 CFriends::CFriends() : m_ImgSize(0, 0), m_ColSize(0, 0),
 					   m_nNowFrame(0),
-					   m_nStandFrame(0), m_nAbsorbFrame(0), m_nReleaseFrame(0),
-					   m_Stand_Index(0, 0), m_Absorb_Index(0, 0), m_Release_Index(0, 0),
+					   m_nStandFrame(0), m_nAbsorbFrame(0), m_nReleaseFrame(0), m_nStunFrame(0),
+					   m_Stand_Index(0, 0), m_Absorb_Index(0, 0), m_Release_Index(0, 0), m_Stun_Index(0, 0),
 					   m_Icon_Index(0, 0),
 					   m_bRelease(false),
-					   m_bStun(false),
+					   m_bStun(false), m_bShock(false),
 					   m_fAnimationTime(0.0f),
 					   m_State(STAND), m_prevState(STAND),
 					   //
@@ -33,6 +33,9 @@ CFriends::~CFriends()
 
 void CFriends::Absorb()
 {
+	if(m_State==STUN)
+		return ;
+
 	if(m_State!=RELEASE)
 		m_State = ABSORB ;
 }
@@ -58,13 +61,13 @@ const Position CFriends::GetIconIndex()
 
 void CFriends::Update()
 {
-	if(m_bRelease)
-	{
-		Animation() ;
-		//
-		m_pESparkImpact->SetVisible(m_bStun) ;
-		m_pESparkImpact->Update() ;
-	}
+	if(!m_bRelease)
+		return ;
+
+	Animation() ;
+	//
+	m_pESparkImpact->SetVisible(m_bShock) ;
+	m_pESparkImpact->Update() ;
 }
 
 //
@@ -74,13 +77,25 @@ void CFriends::SendEventMessage(char *EventMessage)
 
 	if(len==5 && strcmp(EventMessage, "SPARK")==0)
 	{
+		m_bShock = true ;
+	}
+	else if(len==5 && strcmp(EventMessage, "WATER")==0)
+	{
 		m_bStun = true ;
+		if(m_State==STAND)
+			m_State = STUN ;
+	}
+	else if(len==11 && strcmp(EventMessage, "RESPIRATION")==0)
+	{
+		m_bStun = false ;
+		if(m_State==STUN)
+			m_State = STAND ;
 	}
 }
 
 void CFriends::EventClear()
 {
-	m_bStun = false ;
+	m_bShock = false ;
 }
 
 void CFriends::Render()
@@ -147,6 +162,15 @@ void CFriends::LoadDat(char *filepath)
 			g_LoadManager->GetValue(m_Release_Index.x) ;
 			g_LoadManager->GetValue(m_Release_Index.y) ;
 		}
+		else if(len==10 && strcmp(item, "STUN_FRAME")==0)
+		{
+			g_LoadManager->GetValue(m_nStunFrame) ;
+		}
+		else if(len==10 && strcmp(item, "STUN_INDEX")==0)
+		{
+			g_LoadManager->GetValue(m_Stun_Index.x) ;
+			g_LoadManager->GetValue(m_Stun_Index.y) ;
+		}
 		else if(len==10 && strcmp(item, "ICON_INDEX")==0)
 		{
 			g_LoadManager->GetValue(m_Icon_Index.x) ;
@@ -194,6 +218,11 @@ void CFriends::Animation()
 		MaxFrame = m_nReleaseFrame ;
 		Index = m_Release_Index ;
 		break ;
+
+	case STUN :
+		MaxFrame = m_nStunFrame ;
+		Index = m_Stun_Index ;
+		break ;
 	}
 
 	// Animation
@@ -221,15 +250,20 @@ void CFriends::Animation()
 		m_nNowFrame += Frame ;
 		if(m_nNowFrame>=MaxFrame)
 		{
-			// 흡수였을 경우, 캐릭터를 집어넣는다
-			if(m_State==ABSORB)
+			if(m_State!=STUN)
 			{
-				m_bRelease = false ;
-				GravityAccReset() ;
-			}
+				// 흡수였을 경우, 캐릭터를 집어넣는다
+				if(m_State==ABSORB)
+				{
+					m_bRelease = false ;
+					GravityAccReset() ;
+				}
 
-			m_nNowFrame = 0 ;
-			m_State = STAND ;
+				m_nNowFrame = 0 ;
+				m_State = STAND ;
+			}
+			else
+				m_nNowFrame = MaxFrame-1 ;
 		}
 		m_nNowFrame %= MaxFrame ;
 	}

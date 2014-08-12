@@ -69,19 +69,19 @@ void CFriendChange_UI::Init()
 
 	///
 	CFriends *pFriends ;
-	g_Friends_List->SetMaxFriends(8) ;
+	g_Friends_List->SetMaxFriends(4) ;
 
 	pFriends = new CFriends_Okulo ;
 	pFriends->Init() ;
 	g_Friends_List->AddFriend(pFriends) ;
 
-	pFriends = new CFriends_Montrilo ;
+	/*pFriends = new CFriends_Montrilo ;
 	pFriends->Init() ;
-	g_Friends_List->AddFriend(pFriends) ;
+	g_Friends_List->AddFriend(pFriends) ;*/
 
-	pFriends = new CFriends_Pilo ;
+	/*pFriends = new CFriends_Pilo ;
 	pFriends->Init() ;
-	g_Friends_List->AddFriend(pFriends) ;
+	g_Friends_List->AddFriend(pFriends) ;*/
 
 	pFriends = new CFriends_Makzelo ;
 	pFriends->Init() ;
@@ -95,13 +95,13 @@ void CFriendChange_UI::Init()
 	pFriends->Init() ;
 	g_Friends_List->AddFriend(pFriends) ;
 
-	pFriends = new CFriends_Saltado ;
+	/*pFriends = new CFriends_Saltado ;
 	pFriends->Init() ;
-	g_Friends_List->AddFriend(pFriends) ;
+	g_Friends_List->AddFriend(pFriends) ;*/
 
-	pFriends = new CFriends_Elitro ;
+	/*pFriends = new CFriends_Elitro ;
 	pFriends->Init() ;
-	g_Friends_List->AddFriend(pFriends) ;
+	g_Friends_List->AddFriend(pFriends) ;*/
 }
 
 void CFriendChange_UI::SetPosition(float fX, float fY)
