@@ -64,6 +64,9 @@ void CFriends::Update()
 	if(!m_bRelease)
 		return ;
 
+	if(m_bStun)
+		m_State = STUN ;
+
 	Animation() ;
 	//
 	m_pESparkImpact->SetVisible(m_bShock) ;
@@ -81,15 +84,16 @@ void CFriends::SendEventMessage(char *EventMessage)
 	}
 	else if(len==5 && strcmp(EventMessage, "WATER")==0)
 	{
-		m_bStun = true ;
 		if(m_State==STAND)
-			m_State = STUN ;
+			m_bStun = true ;
+		//if(m_State==STAND)
+		//	m_State = STUN ;
 	}
 	else if(len==11 && strcmp(EventMessage, "RESPIRATION")==0)
 	{
 		m_bStun = false ;
-		if(m_State==STUN)
-			m_State = STAND ;
+		//if(m_State==STUN)
+		//	m_State = STAND ;
 	}
 }
 

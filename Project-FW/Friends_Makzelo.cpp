@@ -29,10 +29,8 @@ void CFriends_Makzelo::Update()
 	if(!m_bRelease)
 		return ;
 
-	////
-	/*bool b = !m_bShock & (m_State==STAND) ;
-	m_pEAbillty->SetVisible(b) ;*/
-	////
+	if(m_bStun)
+		m_State = STUN ;
 
 	Animation() ;
 	//

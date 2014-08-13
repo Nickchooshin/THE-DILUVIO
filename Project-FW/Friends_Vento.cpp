@@ -29,6 +29,9 @@ void CFriends_Vento::Update()
 	if(!m_bRelease)
 		return ;
 
+	if(m_bStun)
+		m_State = STUN ;
+
 	////
 	bool b = !m_bShock & (m_State==STAND) ;
 	m_pEAbillty->SetVisible(b) ;
