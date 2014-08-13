@@ -15,5 +15,4 @@ void CEffect_MakzeloAbility::Init()
 void CEffect_MakzeloAbility::Effect(CObjects *pObject)
 {
 	pObject->SendEventMessage("RESPIRATION") ;
-	//respiration
 }

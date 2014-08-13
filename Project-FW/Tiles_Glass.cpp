@@ -3,7 +3,8 @@
 
 #include "D3dDevice.h"
 
-CTiles_Glass::CTiles_Glass() : m_bVisible(false)
+CTiles_Glass::CTiles_Glass() : m_bOkuloEffect(false),
+							   m_bVisible(false)
 {
 }
 CTiles_Glass::~CTiles_Glass()
@@ -42,13 +43,22 @@ void CTiles_Glass::SendEventMessage(char *EventMessage)
 	int len = strlen(EventMessage) ;
 
 	if(len==5 && strcmp(EventMessage, "GLASS")==0)
+	{
 		m_bVisible = true ;
+
+		m_bOkuloEffect = true ;
+		if(!m_bRecover)
+			m_bCollision = true ;
+	}
 }
 
 void CTiles_Glass::EventClear()
 {
 	if(m_State!=EFFECT1)
 		m_bVisible = false ;
+	
+	m_bRecover = m_bOkuloEffect ;
+	m_bOkuloEffect = false ;
 }
 
 void CTiles_Glass::Animation()

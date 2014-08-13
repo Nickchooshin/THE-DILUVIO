@@ -5,6 +5,8 @@
 class CTiles_Glass : public CTiles
 {
 private :
+	bool m_bOkuloEffect ;
+	bool m_bRecover ;
 	bool m_bVisible ;
 
 public :
