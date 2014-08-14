@@ -163,6 +163,9 @@
     <ClCompile Include="Effect_MakzeloAbility.cpp">
       <Filter>Objects\Effect</Filter>
     </ClCompile>
+    <ClCompile Include="Effect_BusxoAbility.cpp">
+      <Filter>Objects\Effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h" />
@@ -331,6 +334,9 @@
       <Filter>Objects\Effect</Filter>
     </ClInclude>
     <ClInclude Include="Effect_MakzeloAbility.h">
+      <Filter>Objects\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect_BusxoAbility.h">
       <Filter>Objects\Effect</Filter>
     </ClInclude>
   </ItemGroup>

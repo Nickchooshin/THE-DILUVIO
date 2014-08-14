@@ -7,7 +7,7 @@ class CEffect_VentoAbility ;
 class CFriends_Vento : public CFriends
 {
 private :
-	CEffect_VentoAbility *m_pEAbillty ;
+	CEffect_VentoAbility *m_pEAbility ;
 
 public :
 	CFriends_Vento() ;

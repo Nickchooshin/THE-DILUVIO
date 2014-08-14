@@ -35,7 +35,7 @@ public :
 
 	virtual void Init() = 0 ;
 
-	void Absorb() ;
+	virtual void Absorb() ;
 	void Release() ;
 
 	const bool GetRelease() ;

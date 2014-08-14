@@ -26,6 +26,9 @@ public :
 	const Position GetHeroPosition() ;
 	const Size GetMapSize() ;
 	CTiles* GetTile(int x, int y) ;
+	//
+	void DeleteTile(CTiles *pTile) ;
+	//
 
 	void Collision(CDynamicObjects *pObject, char coord) ;
 	void Collision(char coord) ;

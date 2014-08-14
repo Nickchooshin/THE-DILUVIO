@@ -60,7 +60,7 @@ const Position CFriends::GetIconIndex()
 }
 
 void CFriends::Update()
-{
+{ 
 	if(!m_bRelease)
 		return ;
 
@@ -76,6 +76,9 @@ void CFriends::Update()
 //
 void CFriends::SendEventMessage(char *EventMessage)
 {
+	if(!m_bRelease)
+		return ;
+
 	int len = strlen(EventMessage) ;
 
 	if(len==5 && strcmp(EventMessage, "SPARK")==0)

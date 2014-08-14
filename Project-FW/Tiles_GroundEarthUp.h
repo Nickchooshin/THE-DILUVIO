@@ -9,4 +9,6 @@ public :
 	~CTiles_GroundEarthUp() ;
 
 	void Init() ;
+
+	void SendEventMessage(char *EventMessage) ;
 } ;

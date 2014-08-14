@@ -9,7 +9,6 @@ class CTiles_Spark : public CTiles
 private :
 	CEffect_SparkArea *m_pESparkArea ;
 	Size m_AreaImgSize ;
-	int m_nTileFrame ;
 
 public :
 	CTiles_Spark() ;

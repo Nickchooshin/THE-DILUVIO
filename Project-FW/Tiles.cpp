@@ -14,6 +14,7 @@ CTiles::CTiles() : m_ImgSize(0, 0), m_ColSize(0, 0),
 				   m_Effect1_Index(0, 0), m_Effect2_Index(0, 0),
 				   m_pLinkedTile(NULL),
 				   m_bCollision(true), m_bMainCharNonCollision(false),
+				   m_bEdible(false),
 				   m_bGravityMultiples(false),
 				   m_fAnimationTime(0.0f),
 				   m_State(NORMAL), m_prevState(NORMAL),
@@ -67,6 +68,11 @@ const bool CTiles::BeNonCollision(CDynamicObjects *pDynamicObject)
 	}
 
 	return true ;
+}
+
+const bool CTiles::BeEdible()
+{
+	return m_bEdible ;
 }
 
 const bool CTiles::BeGravityMultiples()

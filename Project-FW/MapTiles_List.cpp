@@ -209,6 +209,26 @@ CTiles* CMapTiles_List::GetTile(int x, int y)
 	return NULL ;
 }
 
+//
+void CMapTiles_List::DeleteTile(CTiles *pTile)
+{
+	CTiles *pTemp ;
+	const int size = m_MapTiles_List.size() ;
+
+	for(int i=0; i<size; i++)
+	{
+		pTemp = m_MapTiles_List[i] ;
+
+		if(pTemp==pTile)
+		{
+			delete pTemp ;
+			m_MapTiles_List.erase( m_MapTiles_List.begin() + i ) ;
+			break ;
+		}
+	}
+}
+//
+
 void CMapTiles_List::Collision(CDynamicObjects *pDynamicObject, char coord)
 {
 	CCollision col ;

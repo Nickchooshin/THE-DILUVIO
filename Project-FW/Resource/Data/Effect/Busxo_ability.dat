@@ -1,0 +1,21 @@
+### Busxo_ability ###
+# Image
+
+<image>
+Resource/Image/Friends/Busxo.png
+
+<size>
+0, 0
+
+# Collision Circle
+
+<collision_circle>
+0.0f
+
+# Effect Image
+
+<effect_index>
+0, 0
+
+<effect_frame>
+1

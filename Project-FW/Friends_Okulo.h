@@ -7,7 +7,7 @@ class CEffect_OkuloAbility ;
 class CFriends_Okulo : public CFriends
 {
 private :
-	CEffect_OkuloAbility *m_pEAbillty ;
+	CEffect_OkuloAbility *m_pEAbility ;
 
 public :
 	CFriends_Okulo() ;

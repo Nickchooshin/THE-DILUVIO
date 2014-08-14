@@ -1,8 +1,8 @@
-### Busxo ###
+### Rompo ###
 # Image
 
 <image>
-Resource/Image/Friends/Busxo.png
+Resource/Image/Friends/Rompo.png
 
 <size>
 64, 64
@@ -15,7 +15,7 @@ Resource/Image/Friends/Busxo.png
 # Icon
 
 <icon_index>
-1, 2
+4, 1
 
 # Stand
 
@@ -41,34 +41,10 @@ Resource/Image/Friends/Busxo.png
 <release_frame>
 4
 
-# Stun
+# Faint
 
-<stun_index>
+<faint_index>
 0, 3
 
-<stun_frame>
+<faint_frame>
 2
-
-# Start Eat
-
-<start_eat_index>
-0, 4
-
-<start_eat_frame>
-3
-
-# Eating
-
-<eating_index>
-3, 4
-
-<eating_frame>
-3
-
-# End Eat
-
-<end_eat_index>
-6, 4
-
-<end_eat_frame>
-6

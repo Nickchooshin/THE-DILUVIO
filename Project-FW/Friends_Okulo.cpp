@@ -5,23 +5,23 @@
 
 #include "Effect_List.h"
 
-CFriends_Okulo::CFriends_Okulo() : m_pEAbillty(0)
+CFriends_Okulo::CFriends_Okulo() : m_pEAbility(0)
 {
 }
 CFriends_Okulo::~CFriends_Okulo()
 {
-	if(m_pEAbillty!=0)
-		delete m_pEAbillty ;
+	if(m_pEAbility!=0)
+		delete m_pEAbility ;
 }
 
 void CFriends_Okulo::Init()
 {
 	LoadDat("Resource/Data/Friends/Okulo.dat") ;
 
-	m_pEAbillty = new CEffect_OkuloAbility ;
-	m_pEAbillty->Init() ;
+	m_pEAbility = new CEffect_OkuloAbility ;
+	m_pEAbility->Init() ;
 
-	g_Effect_List->AddEffect(m_pEAbillty) ;
+	g_Effect_List->AddEffect(m_pEAbility) ;
 }
 
 void CFriends_Okulo::Update()
@@ -34,29 +34,28 @@ void CFriends_Okulo::Update()
 
 	////
 	bool b = !m_bShock & (m_State==STAND) ;
-	m_pEAbillty->SetVisible(b) ;
+	m_pEAbility->SetVisible(b) ;
 	////
 
 	Animation() ;
 	//
 	if(!m_bShock)
 	{
-		m_pEAbillty->Update() ;
-		m_pEAbillty->SetPosition(m_fX, m_fY) ;
+		m_pEAbility->Update() ;
+		m_pEAbility->SetPosition(m_fX, m_fY) ;
 	}
 
 	m_pESparkImpact->SetVisible(m_bShock) ;
 	m_pESparkImpact->Update() ;
-	m_bShock = false ;
 }
 
 void CFriends_Okulo::Render()
 {
 	m_pSprite->SetPosition(m_fX, m_fY) ;
 	m_pESparkImpact->SetPosition(m_fX, m_fY) ;
-	m_pEAbillty->SetPosition(m_fX, m_fY) ;
+	m_pEAbility->SetPosition(m_fX, m_fY) ;
 
 	m_pSprite->Render() ;
 	m_pESparkImpact->Render() ;
-	m_pEAbillty->Render() ;
+	m_pEAbility->Render() ;
 }
