@@ -44,7 +44,7 @@ public :
 	virtual void Update() ;
 
 	//
-	virtual void SendEventMessage(char *EventMessage) ;
+	virtual void SendEventMessage(char *EventMessage, void *pData) ;
 	virtual void EventClear() ;
 
 	virtual void Render() ;

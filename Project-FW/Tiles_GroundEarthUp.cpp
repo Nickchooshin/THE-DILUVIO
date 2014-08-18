@@ -16,7 +16,7 @@ void CTiles_GroundEarthUp::Init()
 	LoadDat("Resource/Data/Tiles/Ground_earth_up.dat") ;
 }
 
-void CTiles_GroundEarthUp::SendEventMessage(char *EventMessage)
+void CTiles_GroundEarthUp::SendEventMessage(char *EventMessage, void *pData)
 {
 	int len = strlen(EventMessage) ;
 

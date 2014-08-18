@@ -111,7 +111,7 @@ public :
 	virtual void Render() ;
 
 	//
-	virtual void SendEventMessage(char *EventMessage) ;
+	virtual void SendEventMessage(char *EventMessage, void *pData=0) ;
 	virtual void EventClear() ;
 protected :
 	virtual void SetBoundingBox() = 0 ;

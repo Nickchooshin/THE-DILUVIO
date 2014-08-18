@@ -38,7 +38,7 @@ void CTiles_Glass::Render()
 	}
 }
 
-void CTiles_Glass::SendEventMessage(char *EventMessage)
+void CTiles_Glass::SendEventMessage(char *EventMessage, void *pData)
 {
 	int len = strlen(EventMessage) ;
 

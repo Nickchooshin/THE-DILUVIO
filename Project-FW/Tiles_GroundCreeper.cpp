@@ -21,7 +21,7 @@ void CTiles_GroundCreeper::Effect1(CDynamicObjects* pDynamicObject)
 	pDynamicObject->SendEventMessage("RELEASE_ABSORB_FALSE") ;
 }
 
-void CTiles_GroundCreeper::SendEventMessage(char *EventMessage)
+void CTiles_GroundCreeper::SendEventMessage(char *EventMessage, void *pData)
 {
 	int len = strlen(EventMessage) ;
 

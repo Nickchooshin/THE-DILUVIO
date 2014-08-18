@@ -16,7 +16,7 @@ void CTiles_GroundEarth::Init()
 	LoadDat("Resource/Data/Tiles/Ground_earth.dat") ;
 }
 
-void CTiles_GroundEarth::SendEventMessage(char *EventMessage)
+void CTiles_GroundEarth::SendEventMessage(char *EventMessage, void *pData)
 {
 	int len = strlen(EventMessage) ;
 

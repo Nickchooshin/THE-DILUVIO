@@ -45,7 +45,7 @@ void CObjects::Render()
 }
 
 //
-void CObjects::SendEventMessage(char *EventMessage)
+void CObjects::SendEventMessage(char *EventMessage, void *pData)
 {
 }
 

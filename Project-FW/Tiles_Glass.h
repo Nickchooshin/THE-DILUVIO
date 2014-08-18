@@ -19,7 +19,7 @@ public :
 
 	void Render() ;
 
-	void SendEventMessage(char *EventMessage) ;
+	void SendEventMessage(char *EventMessage, void *pData) ;
 	void EventClear() ;
 private :
 	void Animation() ;

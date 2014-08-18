@@ -168,7 +168,7 @@ void CHero::Render()
 	m_pFC_UI->Render_Front() ;
 }
 
-void CHero::SendEventMessage(char *EventMessage)
+void CHero::SendEventMessage(char *EventMessage, void *pData)
 {
 	int len = strlen(EventMessage) ;
 

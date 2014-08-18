@@ -12,6 +12,6 @@ public :
 	
 	void Effect1(CDynamicObjects* pDynamicObject) ;
 
-	void SendEventMessage(char *EventMessage) ;
+	void SendEventMessage(char *EventMessage, void *pData) ;
 	void EventClear() ;
 } ;

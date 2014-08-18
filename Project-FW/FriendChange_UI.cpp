@@ -11,12 +11,13 @@
 #include "Friends_Okulo.h"
 #include "Friends_Montrilo.h"
 //#include "Friends_Mano.h"
-#include "Friends_Pilo.h"
+//#include "Friends_Pilo.h"
 #include "Friends_Makzelo.h"
 #include "Friends_Vento.h"
 #include "Friends_Busxo.h"
-#include "Friends_Saltado.h"
-#include "Friends_Elitro.h"
+//#include "Friends_Saltado.h"
+//#include "Friends_Elitro.h"
+#include "Friends_Rompo.h"
 ///
 
 CFriendChange_UI::CFriendChange_UI() : m_fX(0.0f), m_fY(0.0f),
@@ -69,7 +70,7 @@ void CFriendChange_UI::Init()
 
 	///
 	CFriends *pFriends ;
-	g_Friends_List->SetMaxFriends(4) ;
+	g_Friends_List->SetMaxFriends(5) ;
 
 	pFriends = new CFriends_Okulo ;
 	pFriends->Init() ;
@@ -102,6 +103,10 @@ void CFriendChange_UI::Init()
 	/*pFriends = new CFriends_Elitro ;
 	pFriends->Init() ;
 	g_Friends_List->AddFriend(pFriends) ;*/
+
+	pFriends = new CFriends_Rompo ;
+	pFriends->Init() ;
+	g_Friends_List->AddFriend(pFriends) ;
 }
 
 void CFriendChange_UI::SetPosition(float fX, float fY)

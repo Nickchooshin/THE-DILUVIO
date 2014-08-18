@@ -37,7 +37,7 @@ public :
 
 	void Render() ;
 
-	void SendEventMessage(char *EventMessage) ;
+	void SendEventMessage(char *EventMessage, void *pData) ;
 private :
 	void SetBoundingBox() ;
 

@@ -74,7 +74,7 @@ void CFriends::Update()
 }
 
 //
-void CFriends::SendEventMessage(char *EventMessage)
+void CFriends::SendEventMessage(char *EventMessage, void *pData)
 {
 	if(!m_bRelease)
 		return ;
@@ -97,6 +97,12 @@ void CFriends::SendEventMessage(char *EventMessage)
 		m_bStun = false ;
 		//if(m_State==STUN)
 		//	m_State = STAND ;
+	}
+	else if(len==5 && strcmp(EventMessage, "ROMPO")==0)
+	{
+		CEffect *pEffect = (CEffect*)pData ;
+		m_fX = pEffect->GetPositionX() ;
+		m_fY = pEffect->GetPositionY() ;
 	}
 }
 
