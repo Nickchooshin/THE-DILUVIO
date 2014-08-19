@@ -159,7 +159,6 @@ void CTiles_JailTrap::Animation()
 					m_bDestory = true ;
 			}
 		}
-		m_nNowFrame %= MaxFrame ;
 	}
 
 	m_prevState = m_State ;

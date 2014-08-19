@@ -10,8 +10,7 @@ protected :
 	Size m_ImgSize, m_ColSize ;
 	int m_nNowFrame ;
 	int m_nTileFrame, m_nEffect1Frame, m_nEffect2Frame ;
-	Position m_Tile_Index ;
-	Position m_Effect1_Index, m_Effect2_Index ;
+	Position m_Tile_Index, m_Effect1_Index, m_Effect2_Index ;
 	CTiles *m_pLinkedTile ;
 
 	bool m_bCollision, m_bMainCharNonCollision ;

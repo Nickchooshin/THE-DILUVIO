@@ -60,9 +60,18 @@ const Position CFriends::GetIconIndex()
 }
 
 void CFriends::Update()
-{ 
+{
 	if(!m_bRelease)
 		return ;
+
+	// 흡수였을 경우, 캐릭터를 집어넣는다
+	if(m_bUnVisible)
+	{
+		m_bUnVisible = false ;
+		m_bRelease = false ;
+		GravityAccReset() ;
+		return ;
+	}
 
 	if(m_bStun)
 		m_State = STUN ;
@@ -87,7 +96,7 @@ void CFriends::SendEventMessage(char *EventMessage, void *pData)
 	}
 	else if(len==5 && strcmp(EventMessage, "WATER")==0)
 	{
-		if(m_State==STAND)
+		if(!m_bUnVisible && m_State==STAND)
 			m_bStun = true ;
 		//if(m_State==STAND)
 		//	m_State = STUN ;
@@ -101,8 +110,35 @@ void CFriends::SendEventMessage(char *EventMessage, void *pData)
 	else if(len==5 && strcmp(EventMessage, "ROMPO")==0)
 	{
 		CEffect *pEffect = (CEffect*)pData ;
-		m_fX = pEffect->GetPositionX() ;
-		m_fY = pEffect->GetPositionY() ;
+
+		float fX = pEffect->GetPositionX() ;
+		float fY = pEffect->GetPositionY() ;
+
+		m_vForce.x = fX - m_fX ;
+		m_vForce.y = fY - m_fY ;
+		m_fX = fX ;
+		m_fY = fY ;
+
+		GravityAccReset() ;
+
+		m_bStun = true ;
+	}
+	else if(len==9 && strcmp(EventMessage, "ROMPO_END")==0)
+	{
+		CEffect *pEffect = (CEffect*)pData ;
+
+		float fX = pEffect->GetPositionX() ;
+		float fY = pEffect->GetPositionY() ;
+
+		m_vForce.x = fX - m_fX ;
+		m_vForce.y = fY - m_fY ;
+		m_fX = fX ;
+		m_fY = fY ;
+
+		GravityAccReset() ;
+
+		m_bStun = false ;
+		m_State = STAND ;
 	}
 }
 
@@ -267,18 +303,13 @@ void CFriends::Animation()
 			{
 				// 흡수였을 경우, 캐릭터를 집어넣는다
 				if(m_State==ABSORB)
-				{
-					m_bRelease = false ;
-					GravityAccReset() ;
-				}
-
+					m_bUnVisible = true ;
 				m_nNowFrame = 0 ;
 				m_State = STAND ;
 			}
 			else
 				m_nNowFrame = MaxFrame-1 ;
 		}
-		m_nNowFrame %= MaxFrame ;
 	}
 
 	m_prevState = m_State ;

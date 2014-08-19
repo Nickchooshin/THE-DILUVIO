@@ -18,6 +18,13 @@ void CTiles_Glass::Init()
 
 void CTiles_Glass::Update()
 {
+	if(m_bUnVisible)
+	{
+		m_bUnVisible = false ;
+		m_bCollision = false ;
+		return ;
+	}
+
 	if(m_CollisionDirection & COLLISION_UP)
 	{
 		m_State = EFFECT1 ;
@@ -110,11 +117,10 @@ void CTiles_Glass::Animation()
 		if(m_nNowFrame>=MaxFrame)
 		{
 			if(m_State==EFFECT1)
-				m_bCollision = false ;
+				m_bUnVisible = true ;
 			m_nNowFrame = 0 ;
 			m_State = NORMAL ;
 		}
-		m_nNowFrame %= MaxFrame ;
 	}
 
 	m_prevState = m_State ;

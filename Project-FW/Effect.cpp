@@ -9,10 +9,10 @@
 
 CEffect::CEffect() : m_ImgSize(0, 0), m_ColSize(0, 0),
 					 m_nNowFrame(0),
-					 m_nEffectFrame(0),
-					 m_Effect_Index(0, 0),
+					 m_nNormalFrame(0), m_nEffect1Frame(0), m_nEffect2Frame(0),
+					 m_Normal_Index(0, 0), m_Effect1_Index(0, 0), m_Effect2_Index(0, 0),
 					 m_fAnimationTime(0.0f),
-					 m_State(EFFECT), m_prevState(EFFECT),
+					 m_State(NORMAL), m_prevState(NORMAL),
 					 m_bVisible(false)
 {
 }
@@ -74,14 +74,32 @@ void CEffect::LoadDat(char *filepath)
 			g_LoadManager->GetString(radius) ;
 			m_BoundingCircle.radius = (float)strtod(radius, NULL) ;
 		}
-		else if(len==12 && strcmp(item, "EFFECT_FRAME")==0)
+		else if(len==12 && strcmp(item, "NORMAL_FRAME")==0)
 		{
-			g_LoadManager->GetValue(m_nEffectFrame) ;
+			g_LoadManager->GetValue(m_nNormalFrame) ;
 		}
-		else if(len==12 && strcmp(item, "EFFECT_INDEX")==0)
+		else if(len==12 && strcmp(item, "NORMAL_INDEX")==0)
 		{
-			g_LoadManager->GetValue(m_Effect_Index.x) ;
-			g_LoadManager->GetValue(m_Effect_Index.y) ;
+			g_LoadManager->GetValue(m_Normal_Index.x) ;
+			g_LoadManager->GetValue(m_Normal_Index.y) ;
+		}
+		else if(len==13 && strcmp(item, "EFFECT1_FRAME")==0)
+		{
+			g_LoadManager->GetValue(m_nEffect1Frame) ;
+		}
+		else if(len==13 && strcmp(item, "EFFECT1_INDEX")==0)
+		{
+			g_LoadManager->GetValue(m_Effect1_Index.x) ;
+			g_LoadManager->GetValue(m_Effect1_Index.y) ;
+		}
+		else if(len==13 && strcmp(item, "EFFECT2_FRAME")==0)
+		{
+			g_LoadManager->GetValue(m_nEffect2Frame) ;
+		}
+		else if(len==13 && strcmp(item, "EFFECT2_INDEX")==0)
+		{
+			g_LoadManager->GetValue(m_Effect2_Index.x) ;
+			g_LoadManager->GetValue(m_Effect2_Index.y) ;
 		}
 	}
 
@@ -89,8 +107,8 @@ void CEffect::LoadDat(char *filepath)
 
 	m_pSprite = new CSprite ;
 	m_pSprite->Init((float)m_ImgSize.x, (float)m_ImgSize.y, image_path) ;
-	m_pSprite->SetTextureUV((float)(m_Effect_Index.x * m_ImgSize.x), (float)(m_Effect_Index.y * m_ImgSize.y),
-							(float)((m_Effect_Index.x+1) * m_ImgSize.x), (float)((m_Effect_Index.y+1) * m_ImgSize.y)) ;
+	m_pSprite->SetTextureUV((float)(m_Normal_Index.x * m_ImgSize.x), (float)(m_Normal_Index.y * m_ImgSize.y),
+							(float)((m_Normal_Index.x+1) * m_ImgSize.x), (float)((m_Normal_Index.y+1) * m_ImgSize.y)) ;
 
 	SetBoundingBox() ;
 }
@@ -121,9 +139,19 @@ void CEffect::Animation()
 
 	switch(m_State)
 	{
-	case EFFECT :
-		MaxFrame = m_nEffectFrame ;
-		Index = m_Effect_Index ;
+	case NORMAL :
+		MaxFrame = m_nNormalFrame ;
+		Index = m_Normal_Index ;
+		break ;
+
+	case EFFECT1 :
+		MaxFrame = m_nEffect1Frame ;
+		Index = m_Effect1_Index ;
+		break ;
+
+	case EFFECT2 :
+		MaxFrame = m_nEffect2Frame ;
+		Index = m_Effect2_Index ;
 		break ;
 	}
 
@@ -138,12 +166,6 @@ void CEffect::Animation()
 			m_fAnimationTime = 0.0f ;
 		}
 
-		int Frame = (int)(m_fAnimationTime / 0.2f) ;
-		m_fAnimationTime -= Frame * 0.2f ;
-		Frame %= MaxFrame ;
-		m_nNowFrame += Frame ;
-		m_nNowFrame %= MaxFrame ;
-
 		float left, top, right, bottom ;
 		left = (float)((Index.x + m_nNowFrame) * m_ImgSize.x) ;
 		top = (float)((Index.y) * m_ImgSize.y) ;
@@ -151,6 +173,16 @@ void CEffect::Animation()
 		bottom = (float)((Index.y+1) * m_ImgSize.y) ;
 
 		m_pSprite->SetTextureUV(left, top, right, bottom) ;
+
+		int Frame = (int)(m_fAnimationTime / 0.2f) ;
+		m_fAnimationTime -= Frame * 0.2f ;
+		Frame %= MaxFrame ;
+		m_nNowFrame += Frame ;
+		if(m_nNowFrame>=MaxFrame)
+		{
+			m_nNowFrame = 0 ;
+			m_State = NORMAL ;
+		}
 	}
 
 	m_prevState = m_State ;

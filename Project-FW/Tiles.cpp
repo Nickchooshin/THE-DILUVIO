@@ -10,8 +10,7 @@
 CTiles::CTiles() : m_ImgSize(0, 0), m_ColSize(0, 0),
 				   m_nNowFrame(0),
 				   m_nTileFrame(0), m_nEffect1Frame(0), m_nEffect2Frame(0),
-				   m_Tile_Index(0, 0),
-				   m_Effect1_Index(0, 0), m_Effect2_Index(0, 0),
+				   m_Tile_Index(0, 0), m_Effect1_Index(0, 0), m_Effect2_Index(0, 0),
 				   m_pLinkedTile(NULL),
 				   m_bCollision(true), m_bMainCharNonCollision(false),
 				   m_bEdible(false),
@@ -220,7 +219,6 @@ void CTiles::Animation()
 			m_nNowFrame = 0 ;
 			m_State = NORMAL ;
 		}
-		m_nNowFrame %= MaxFrame ;
 	}
 
 	m_prevState = m_State ;

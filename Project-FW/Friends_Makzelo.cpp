@@ -29,12 +29,21 @@ void CFriends_Makzelo::Update()
 	if(!m_bRelease)
 		return ;
 
+	// 흡수였을 경우, 캐릭터를 집어넣는다
+	if(m_bUnVisible)
+	{
+		m_bUnVisible = false ;
+		m_bRelease = false ;
+		GravityAccReset() ;
+		return ;
+	}
+
 	if(m_bStun)
 		m_State = STUN ;
 
-	Animation() ;
+ 	Animation() ;
 	//
-	bool b = m_bRelease && !m_bShock & (m_State==STAND) ;
+	bool b = !m_bUnVisible & !m_bShock & (m_State==STAND) ;
 	m_pEAbility->SetVisible(b) ;
 
 	if(!m_bShock)

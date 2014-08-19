@@ -3,6 +3,8 @@
 
 #include "MapTiles_List.h"
 
+#include "Effect.h"
+
 CTiles_GroundEarth::CTiles_GroundEarth()
 {
 	m_bEdible = true ;

@@ -2,7 +2,8 @@
 #include "Sprite.h"
 
 CObjects::CObjects() : m_pSprite(NULL),
-					   m_fX(0.0f), m_fY(0.0f)
+					   m_fX(0.0f), m_fY(0.0f),
+					   m_bUnVisible(false)
 {
 }
 CObjects::~CObjects()

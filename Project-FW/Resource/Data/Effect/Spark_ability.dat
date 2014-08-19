@@ -12,10 +12,10 @@ Resource/Image/Effect/Spark_ability.png
 <collision_circle>
 96.0f
 
-# Effect Image
+# Normal Image
 
-<effect_index>
+<normal_index>
 0, 0
 
-<effect_frame>
+<normal_frame>
 4

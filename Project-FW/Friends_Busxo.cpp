@@ -47,6 +47,15 @@ void CFriends_Busxo::Update()
 	if(!m_bRelease)
 		return ;
 
+	// 흡수였을 경우, 캐릭터를 집어넣는다
+	if(m_bUnVisible)
+	{
+		m_bUnVisible = false ;
+		m_bRelease = false ;
+		GravityAccReset() ;
+		return ;
+	}
+
 	if(m_bStun)
 		m_State = STUN ;
 
@@ -307,10 +316,7 @@ void CFriends_Busxo::Animation()
 			{
 				// 흡수였을 경우, 캐릭터를 집어넣는다
 				if(m_State==ABSORB)
-				{
-					m_bRelease = false ;
-					GravityAccReset() ;
-				}
+					m_bUnVisible = true ;
 
 				m_nNowFrame = 0 ;
 				m_State = STAND ;
@@ -324,7 +330,6 @@ void CFriends_Busxo::Animation()
 			else
 				m_nNowFrame = MaxFrame-1 ;
 		}
-		m_nNowFrame %= MaxFrame ;
 	}
 
 	m_prevState = m_State ;

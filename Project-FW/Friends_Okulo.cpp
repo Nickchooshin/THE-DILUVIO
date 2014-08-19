@@ -29,6 +29,15 @@ void CFriends_Okulo::Update()
 	if(!m_bRelease)
 		return ;
 
+	// 흡수였을 경우, 캐릭터를 집어넣는다
+	if(m_bUnVisible)
+	{
+		m_bUnVisible = false ;
+		m_bRelease = false ;
+		GravityAccReset() ;
+		return ;
+	}
+
 	if(m_bStun)
 		m_State = STUN ;
 

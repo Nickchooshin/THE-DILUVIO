@@ -31,6 +31,13 @@ void CTiles_Spark::Update()
 	if(m_bCollision==false)
 		return ;
 
+	if(m_bUnVisible)
+	{
+		m_bUnVisible = false ;
+		m_bCollision = false ;
+		return ;
+	}
+
 	Animation() ;
 	
 	//m_pESparkArea->SetVisible(true) ;
@@ -105,11 +112,10 @@ void CTiles_Spark::Animation()
 		if(m_nNowFrame>=MaxFrame)
 		{
 			if(m_State==EFFECT2)
-				m_bCollision = false ;
+				m_bUnVisible = true ;
 			m_nNowFrame = 0 ;
 			m_State = NORMAL ;
 		}
-		m_nNowFrame %= MaxFrame ;
 	}
 
 	m_prevState = m_State ;

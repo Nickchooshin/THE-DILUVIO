@@ -1,0 +1,37 @@
+### Rompo_dash_effect ###
+# Image
+
+<image>
+Resource/Image/Effect/Rompo_dash_effect.png
+
+<size>
+128, 64
+
+# Collision Circle
+
+<collision_circle>
+2.0f
+
+# Normal Image
+
+<normal_index>
+3, 0
+
+<normal_frame>
+1
+
+# Effect1 Image
+
+<effect1_index>
+0, 0
+
+<effect1_frame>
+3
+
+# Effect2 Image
+
+<effect2_index>
+4, 0
+
+<effect2_frame>
+2

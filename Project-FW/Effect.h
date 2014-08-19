@@ -11,12 +11,12 @@ protected :
 
 	Size m_ImgSize, m_ColSize ;
 	int m_nNowFrame ;
-	int m_nEffectFrame ;
-	Position m_Effect_Index ;
+	int m_nNormalFrame, m_nEffect1Frame, m_nEffect2Frame ;
+	Position m_Normal_Index, m_Effect1_Index, m_Effect2_Index ;
 
 	float m_fAnimationTime ;
 
-	enum State { EFFECT=0 } ;
+	enum State { NORMAL=0, EFFECT1, EFFECT2 } ;
 	State m_State, m_prevState ;
 
 	bool m_bVisible ;

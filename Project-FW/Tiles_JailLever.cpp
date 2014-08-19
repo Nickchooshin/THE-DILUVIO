@@ -82,7 +82,6 @@ void CTiles_JailLever::Animation()
 			else
 				m_nNowFrame = MaxFrame-1 ;
 		}
-		m_nNowFrame %= MaxFrame ;
 	}
 
 	m_prevState = m_State ;

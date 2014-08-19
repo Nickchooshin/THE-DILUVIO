@@ -41,7 +41,7 @@ CFriends* CFriends_List::GetFriend(int tileX, int tileY)
 
 		if(pFriend->GetRelease())
 		{
-			int x = (int)((pFriend->GetPositionX() + 32.0f) / 64.0f) ;
+			int x = (int)(pFriend->GetPositionX() / 64.0f) ;
 			int y = (int)((pFriend->GetPositionY() + 32.0f) / 64.0f) ;
 
 			if(tileX==x && tileY==y)

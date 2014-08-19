@@ -7,7 +7,7 @@ class CEffect_RompoDash ;
 class CFriends_Rompo : public CFriends
 {
 private :
-	CEffect_RompoDash *m_pEAbility ;
+	CEffect_RompoDash *m_pEAbilityL, *m_pEAbilityR ;
 
 public :
 	CFriends_Rompo() ;
@@ -18,4 +18,6 @@ public :
 	void Update() ;
 
 	void Render() ;
+private :
+	void Dash(int x, int y, char cDirection) ;
 } ;

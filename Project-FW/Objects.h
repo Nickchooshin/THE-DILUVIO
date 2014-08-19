@@ -95,6 +95,8 @@ protected :
 	float m_fX, m_fY ;
 	Rect m_BoundingBox ;
 
+	bool m_bUnVisible ;
+
 public :
 	CObjects() ;
 	virtual ~CObjects() ;

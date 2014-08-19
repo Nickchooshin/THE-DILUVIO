@@ -64,10 +64,24 @@ bool CCollision::XCollision(CDynamicObjects *pDynamicObject, CObjects *pObject)
 		return false ;
 	Rect rtSize = GetIntersect() ;
 
-	if(vec.x<=0)
+	/*if(vec.x<=0)
 		way = 0 ;
 	else
+		way = 1 ;*/
+	if(vec.x<0)
+		way = 0 ;
+	else if(vec.x>0)
 		way = 1 ;
+	else
+	{
+		float DynamicObjectX = pDynamicObject->GetPositionX() ;
+		float ObjectX = pObject->GetPositionX() ;
+
+		if(DynamicObjectX>ObjectX)
+			way = 0 ;
+		else if(DynamicObjectX<ObjectX)
+			way = 1 ;
+	}
 
 	Rect rtTemp = rtObject ;
 	if(way==0)
