@@ -18,6 +18,7 @@
 //#include "Friends_Saltado.h"
 //#include "Friends_Elitro.h"
 #include "Friends_Rompo.h"
+#include "Friends_Rancho.h"
 ///
 
 CFriendChange_UI::CFriendChange_UI() : m_fX(0.0f), m_fY(0.0f),
@@ -70,7 +71,7 @@ void CFriendChange_UI::Init()
 
 	///
 	CFriends *pFriends ;
-	g_Friends_List->SetMaxFriends(5) ;
+	g_Friends_List->SetMaxFriends(6) ;
 
 	pFriends = new CFriends_Okulo ;
 	pFriends->Init() ;
@@ -105,6 +106,10 @@ void CFriendChange_UI::Init()
 	g_Friends_List->AddFriend(pFriends) ;*/
 
 	pFriends = new CFriends_Rompo ;
+	pFriends->Init() ;
+	g_Friends_List->AddFriend(pFriends) ;
+
+	pFriends = new CFriends_Rancho ;
 	pFriends->Init() ;
 	g_Friends_List->AddFriend(pFriends) ;
 }

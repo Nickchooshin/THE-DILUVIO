@@ -6,18 +6,20 @@
 
 //
 #include "Effect_SparkImpact.h"
+#include "Effect_RanchoEat.h"
 
-CFriends::CFriends() : m_ImgSize(0, 0), m_ColSize(0, 0),
+CFriends::CFriends() : m_pESparkImpact(NULL),
+					   m_ImgSize(0, 0), m_ColSize(0, 0),
 					   m_nNowFrame(0),
 					   m_nStandFrame(0), m_nAbsorbFrame(0), m_nReleaseFrame(0), m_nStunFrame(0),
 					   m_Stand_Index(0, 0), m_Absorb_Index(0, 0), m_Release_Index(0, 0), m_Stun_Index(0, 0),
 					   m_Icon_Index(0, 0),
+					   m_bEaten(false),
 					   m_bRelease(false),
 					   m_bStun(false), m_bShock(false),
 					   m_fAnimationTime(0.0f),
-					   m_State(STAND), m_prevState(STAND),
-					   //
-					   m_pESparkImpact(NULL)
+					   m_nRanchoAlpha(306),
+					   m_State(STAND), m_prevState(STAND)
 {
 	m_fVecGravity = -0.3f ;
 
@@ -26,7 +28,6 @@ CFriends::CFriends() : m_ImgSize(0, 0), m_ColSize(0, 0),
 }
 CFriends::~CFriends()
 {
-	//
 	if(m_pESparkImpact!=NULL)
 		delete m_pESparkImpact ;
 }
@@ -42,6 +43,9 @@ void CFriends::Absorb()
 
 void CFriends::Release()
 {
+	if(m_bEaten)
+		return ;
+
 	m_State = RELEASE ;
 	m_bRelease = true ;
 }
@@ -53,10 +57,15 @@ const bool CFriends::GetRelease()
 
 const Position CFriends::GetIconIndex()
 {
-	if(m_bRelease)
+	if(m_bRelease || m_bEaten)
 		return Position(0, 0) ;
 
 	return m_Icon_Index ;
+}
+
+const bool CFriends::BeStand()
+{
+	return (m_State==STAND) ;
 }
 
 void CFriends::Update()
@@ -77,12 +86,11 @@ void CFriends::Update()
 		m_State = STUN ;
 
 	Animation() ;
-	//
+
 	m_pESparkImpact->SetVisible(m_bShock) ;
 	m_pESparkImpact->Update() ;
 }
 
-//
 void CFriends::SendEventMessage(char *EventMessage, void *pData)
 {
 	if(!m_bRelease)
@@ -98,14 +106,10 @@ void CFriends::SendEventMessage(char *EventMessage, void *pData)
 	{
 		if(!m_bUnVisible && m_State==STAND)
 			m_bStun = true ;
-		//if(m_State==STAND)
-		//	m_State = STUN ;
 	}
 	else if(len==11 && strcmp(EventMessage, "RESPIRATION")==0)
 	{
 		m_bStun = false ;
-		//if(m_State==STUN)
-		//	m_State = STAND ;
 	}
 	else if(len==5 && strcmp(EventMessage, "ROMPO")==0)
 	{
@@ -140,6 +144,23 @@ void CFriends::SendEventMessage(char *EventMessage, void *pData)
 		m_bStun = false ;
 		m_State = STAND ;
 	}
+	else if(len==6 && strcmp(EventMessage, "RANCHO")==0)
+	{
+		if(m_nRanchoAlpha!=0)
+		{
+			CEffect_RanchoEat *pEffect = (CEffect_RanchoEat*)pData ;
+
+			m_nRanchoAlpha = 255 - (51 * pEffect->GetAniFrame()) ;
+			m_pSprite->SetAlpha(m_nRanchoAlpha) ;
+
+			m_bStun = true ;
+		}
+		else
+		{
+			m_bRelease = false ;
+			m_bEaten = true ;
+		}
+	}
 }
 
 void CFriends::EventClear()
@@ -155,7 +176,6 @@ void CFriends::Render()
 	m_pSprite->Render() ;
 	m_pESparkImpact->Render() ;
 }
-//
 
 void CFriends::LoadDat(char *filepath)
 {

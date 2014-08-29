@@ -1,0 +1,20 @@
+### Rancho_eat_effect ###
+# Image
+
+<image>
+Resource/Image/Effect/Rancho_eat_effect.png
+<size>
+64, 64
+
+# Collision Box
+
+<collision_circle>
+2.0f
+
+# Normal Image
+
+<normal_index>
+0, 0
+
+<normal_frame>
+6

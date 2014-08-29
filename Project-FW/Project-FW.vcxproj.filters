@@ -172,6 +172,12 @@
     <ClCompile Include="Effect_RompoDash.cpp">
       <Filter>Objects\Effect</Filter>
     </ClCompile>
+    <ClCompile Include="Friends_Rancho.cpp">
+      <Filter>Objects\Friends</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect_RanchoEat.cpp">
+      <Filter>Objects\Effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h" />
@@ -349,6 +355,12 @@
       <Filter>Objects\Friends</Filter>
     </ClInclude>
     <ClInclude Include="Effect_RompoDash.h">
+      <Filter>Objects\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Friends_Rancho.h">
+      <Filter>Objects\Friends</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect_RanchoEat.h">
       <Filter>Objects\Effect</Filter>
     </ClInclude>
   </ItemGroup>
