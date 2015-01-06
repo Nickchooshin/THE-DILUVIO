@@ -16,6 +16,7 @@ protected :
 	bool m_bEaten ;
 	bool m_bRelease ;
 	bool m_bStun, m_bShock ;
+	bool m_bRespiration ;
 	
 	float m_fAnimationTime ;
 	int m_nRanchoAlpha ;

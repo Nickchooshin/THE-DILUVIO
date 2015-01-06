@@ -1,6 +1,7 @@
 #include "Friends_Makzelo.h"
 #include "Effect_MakzeloAbility.h"
 #include "Effect_SparkImpact.h"
+#include "Effect_RanchoEat.h"
 #include "Sprite.h"
 
 #include "Effect_List.h"
@@ -54,6 +55,73 @@ void CFriends_Makzelo::Update()
 
 	m_pESparkImpact->SetVisible(m_bShock) ;
 	m_pESparkImpact->Update() ;
+}
+
+void CFriends_Makzelo::SendEventMessage(char *EventMessage, void *pData)
+{
+	if(!m_bRelease)
+		return ;
+
+	int len = strlen(EventMessage) ;
+
+	if(len==5 && strcmp(EventMessage, "SPARK")==0)
+	{
+		m_bShock = true ;
+	}
+	else if(len==11 && strcmp(EventMessage, "RESPIRATION")==0)
+	{
+		m_bRespiration = true ;
+	}
+	else if(len==5 && strcmp(EventMessage, "ROMPO")==0)
+	{
+		CEffect *pEffect = (CEffect*)pData ;
+
+		float fX = pEffect->GetPositionX() ;
+		float fY = pEffect->GetPositionY() ;
+
+		m_vForce.x = fX - m_fX ;
+		m_vForce.y = fY - m_fY ;
+		m_fX = fX ;
+		m_fY = fY ;
+
+		GravityAccReset() ;
+
+		m_bStun = true ;
+	}
+	else if(len==9 && strcmp(EventMessage, "ROMPO_END")==0)
+	{
+		CEffect *pEffect = (CEffect*)pData ;
+
+		float fX = pEffect->GetPositionX() ;
+		float fY = pEffect->GetPositionY() ;
+
+		m_vForce.x = fX - m_fX ;
+		m_vForce.y = fY - m_fY ;
+		m_fX = fX ;
+		m_fY = fY ;
+
+		GravityAccReset() ;
+
+		m_bStun = false ;
+		m_State = STAND ;
+	}
+	else if(len==6 && strcmp(EventMessage, "RANCHO")==0)
+	{
+		if(m_nRanchoAlpha!=0)
+		{
+			CEffect_RanchoEat *pEffect = (CEffect_RanchoEat*)pData ;
+
+			m_nRanchoAlpha = 255 - (51 * pEffect->GetAniFrame()) ;
+			m_pSprite->SetAlpha(m_nRanchoAlpha) ;
+
+			m_bStun = true ;
+		}
+		else
+		{
+			m_bRelease = false ;
+			m_bEaten = true ;
+		}
+	}
 }
 
 void CFriends_Makzelo::Render()

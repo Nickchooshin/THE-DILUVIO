@@ -23,7 +23,7 @@ private :
 				 RIGHT, RIGHT_MOVE, RIGHT_JUMP, RIGHT_ABSORB, RIGHT_RELEASE } ;
 	State m_State, m_prevState ;
 
-	bool m_bDeath, m_bReleaseAbsorb ;
+	bool m_bDeath, m_bReleaseAbsorb, m_bRespiration ;
 
 	CFriendChange_UI *m_pFC_UI ;
 
@@ -38,6 +38,7 @@ public :
 	void Render() ;
 
 	void SendEventMessage(char *EventMessage, void *pData) ;
+	void EventClear() ;
 private :
 	void SetBoundingBox() ;
 

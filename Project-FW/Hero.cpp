@@ -23,6 +23,7 @@ CHero::CHero() : m_ImgSize(0, 0),
 				 m_fAnimationTime(0.0f),
 				 m_State(RIGHT), m_prevState(RIGHT),
 				 m_bDeath(false), m_bReleaseAbsorb(true),
+				 m_bRespiration(false),
 				 m_pFC_UI(NULL)
 {
 	m_fVecSpeed = 2.5f ;
@@ -178,12 +179,18 @@ void CHero::SendEventMessage(char *EventMessage, void *pData)
 	}
 	else if(len==5 && strcmp(EventMessage, "WATER")==0)
 	{
-		m_bDeath = true ;
+		if(!m_bRespiration)
+			m_bDeath = true ;
 	}
 	else if(len==11 && strcmp(EventMessage, "RESPIRATION")==0)
 	{
-		m_bDeath = false ;
+		m_bRespiration = true ;
 	}
+}
+
+void CHero::EventClear()
+{
+	m_bRespiration = false ;
 }
 
 void CHero::SetBoundingBox()

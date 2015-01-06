@@ -83,12 +83,12 @@ void CFriends_Rancho::SendEventMessage(char *EventMessage, void *pData)
 	}
 	else if(len==5 && strcmp(EventMessage, "WATER")==0)
 	{
-		if(!m_bUnVisible && m_State==STAND)
+		if(!m_bUnVisible && m_State==STAND && !m_bRespiration)
 			m_bStun = true ;
 	}
 	else if(len==11 && strcmp(EventMessage, "RESPIRATION")==0)
 	{
-		m_bStun = false ;
+		m_bRespiration = true ;
 	}
 }
 

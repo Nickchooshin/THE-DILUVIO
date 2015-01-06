@@ -17,6 +17,7 @@ CFriends::CFriends() : m_pESparkImpact(NULL),
 					   m_bEaten(false),
 					   m_bRelease(false),
 					   m_bStun(false), m_bShock(false),
+					   m_bRespiration(false),
 					   m_fAnimationTime(0.0f),
 					   m_nRanchoAlpha(306),
 					   m_State(STAND), m_prevState(STAND)
@@ -104,12 +105,12 @@ void CFriends::SendEventMessage(char *EventMessage, void *pData)
 	}
 	else if(len==5 && strcmp(EventMessage, "WATER")==0)
 	{
-		if(!m_bUnVisible && m_State==STAND)
+		if(!m_bUnVisible && m_State==STAND && !m_bRespiration)
 			m_bStun = true ;
 	}
 	else if(len==11 && strcmp(EventMessage, "RESPIRATION")==0)
 	{
-		m_bStun = false ;
+		m_bRespiration = true ;
 	}
 	else if(len==5 && strcmp(EventMessage, "ROMPO")==0)
 	{
@@ -166,6 +167,7 @@ void CFriends::SendEventMessage(char *EventMessage, void *pData)
 void CFriends::EventClear()
 {
 	m_bShock = false ;
+	m_bRespiration = false ;
 }
 
 void CFriends::Render()
