@@ -102,7 +102,7 @@ void CEffect_RompoDash::Update()
 	else if(m_cDirection=='R')
 	{
 		pObject = (CObjects*)g_DynamicObjects_List->GetMainChar() ;
-		int px = (int)(pObject->GetPositionX() / 64.0f) ;
+		int px = (int)((pObject->GetPositionX() + 18.0f) / 64.0f) ;
 		int py = (int)(pObject->GetPositionY() / 64.0f) ;
 
 		if(x+1==px && y==py)
