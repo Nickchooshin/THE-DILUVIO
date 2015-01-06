@@ -48,3 +48,11 @@ Resource/Image/Friends/Rancho.png
 
 <stun_frame>
 2
+
+# Eat
+
+<eat_index>
+0, 4
+
+<eat_frame>
+4
