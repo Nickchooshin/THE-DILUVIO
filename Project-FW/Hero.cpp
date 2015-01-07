@@ -148,6 +148,11 @@ void CHero::Init()
 	m_pFC_UI->Init() ;
 }
 
+int CHero::GetDirection() const
+{
+	return (int)(m_State / RIGHT) ;
+}
+
 void CHero::Update()
 {
 	Move() ;

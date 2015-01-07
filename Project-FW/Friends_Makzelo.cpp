@@ -122,6 +122,10 @@ void CFriends_Makzelo::SendEventMessage(char *EventMessage, void *pData)
 			m_bEaten = true ;
 		}
 	}
+	else if(len==4 && strcmp(EventMessage, "MANO")==0)
+	{
+		m_bStun = true ;
+	}
 }
 
 void CFriends_Makzelo::Render()

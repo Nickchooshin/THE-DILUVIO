@@ -162,6 +162,10 @@ void CFriends::SendEventMessage(char *EventMessage, void *pData)
 			m_bEaten = true ;
 		}
 	}
+	else if(len==4 && strcmp(EventMessage, "MANO")==0)
+	{
+		m_bStun = true ;
+	}
 }
 
 void CFriends::EventClear()
@@ -253,8 +257,8 @@ void CFriends::LoadDat(char *filepath)
 
 	m_pSprite = new CSprite ;
 	m_pSprite->Init((float)m_ImgSize.x, (float)m_ImgSize.y, image_path) ;
-	m_pSprite->SetTextureUV((float)(m_Stand_Index.x * m_ImgSize.x), (float)(m_Stand_Index.y * m_ImgSize.y),
-							(float)((m_Stand_Index.x+1) * m_ImgSize.x), (float)((m_Stand_Index.y+1) * m_ImgSize.y)) ;
+	m_pSprite->SetTextureUV((float)(m_Release_Index.x * m_ImgSize.x), (float)(m_Release_Index.y * m_ImgSize.y),
+							(float)((m_Release_Index.x+1) * m_ImgSize.x), (float)((m_Release_Index.y+1) * m_ImgSize.y)) ;
 
 	SetBoundingBox() ;
 }

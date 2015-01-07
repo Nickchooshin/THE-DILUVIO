@@ -31,7 +31,7 @@ public :
 	virtual void Init() = 0 ;
 
 	virtual void Absorb() ;
-	void Release() ;
+	virtual void Release() ;
 
 	const bool GetRelease() ;
 	const Position GetIconIndex() ;

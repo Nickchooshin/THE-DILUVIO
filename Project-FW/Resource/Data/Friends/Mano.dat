@@ -1,0 +1,71 @@
+### Mano ###
+# Image
+
+<image>
+Resource/Image/Friends/Mano.png
+
+<size>
+128, 64
+
+<collision_box>
+32, 0, 96, 64
+
+# Icon
+
+<icon_index>
+2, 1
+
+# Stand
+
+<stand_left_index>
+0, 0
+
+<stand_right_index>
+1, 0
+
+<stand_frame>
+1
+
+# Absorb
+
+<absorb_left_index>
+0, 2
+
+<absorb_right_index>
+0, 4
+
+<absorb_frame>
+4
+
+# Release
+
+<release_left_index>
+0, 1
+
+<release_right_index>
+0, 3
+
+<release_frame>
+4
+
+# Stun
+
+<stun_left_index>
+0, 5
+
+<stun_right_index>
+0, 6
+
+<stun_frame>
+2
+
+# Make Faint
+
+<faint_left_index>
+0, 7
+
+<faint_right_index>
+0, 8
+
+<faint_frame>
+7
