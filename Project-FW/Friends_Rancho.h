@@ -23,7 +23,7 @@ public :
 
 	void Update() ;
 
-	virtual void SendEventMessage(char *EventMessage, void *pData) ;
+	void SendEventMessage(char *EventMessage, void *pData) ;
 
 	void Render() ;
 private :

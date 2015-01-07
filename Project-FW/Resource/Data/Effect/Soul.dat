@@ -1,0 +1,29 @@
+### Soul ###
+# Image
+
+<image>
+Resource/Image/Effect/Soul.png
+
+<size>
+64, 128
+
+# Collision Box
+
+<collision_box>
+0, 0, 0, 0
+
+# Left Image
+
+<effect1_index>
+0, 0
+
+<effect1_frame>
+7
+
+# Right Image
+
+<effect2_index>
+0, 1
+
+<effect2_frame>
+7

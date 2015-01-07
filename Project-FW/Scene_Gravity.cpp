@@ -16,11 +16,13 @@
 #include "DynamicObjects_List.h"
 #include "Effect_List.h"
 
-SceneGravity::SceneGravity()
+SceneGravity::SceneGravity() : m_pHero(NULL)
 {
 }
 SceneGravity::~SceneGravity()
 {
+	if(m_pHero!=NULL)
+		delete m_pHero ;
 }
 
 Scene* SceneGravity::scene()
@@ -51,7 +53,6 @@ void SceneGravity::Init()
 
 void SceneGravity::Destroy()
 {
-	delete m_pHero ;
 }
 
 void SceneGravity::Update(float dt)

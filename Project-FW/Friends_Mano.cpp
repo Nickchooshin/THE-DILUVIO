@@ -1,5 +1,6 @@
 #include "Friends_Mano.h"
 #include "Effect_SparkImpact.h"
+#include "Effect_RanchoEat.h"
 #include "Sprite.h"
 #include "LoadManager.h"
 
@@ -42,7 +43,7 @@ void CFriends_Mano::Release()
 	m_State = RELEASE ;
 	m_bRelease = true ;
 
-	m_Direction = (Direction)((CHero*)g_DynamicObjects_List->GetMainChar())->GetDirection() ;
+	m_Direction = ((CHero*)g_DynamicObjects_List->GetMainChar())->GetDirection() ;
 }
 
 void CFriends_Mano::Update()
@@ -79,6 +80,45 @@ void CFriends_Mano::Update()
 	m_pESparkImpact->Update() ;
 }
 
+void CFriends_Mano::SendEventMessage(char *EventMessage, void *pData)
+{
+	if(!m_bRelease)
+		return ;
+
+	int len = strlen(EventMessage) ;
+
+	if(len==5 && strcmp(EventMessage, "SPARK")==0)
+	{
+		m_bShock = true ;
+	}
+	else if(len==5 && strcmp(EventMessage, "WATER")==0)
+	{
+		if(!m_bUnVisible && m_State==STAND && !m_bRespiration)
+			m_bStun = true ;
+	}
+	else if(len==11 && strcmp(EventMessage, "RESPIRATION")==0)
+	{
+		m_bRespiration = true ;
+	}
+	else if(len==6 && strcmp(EventMessage, "RANCHO")==0)
+	{
+		if(m_nRanchoAlpha!=0)
+		{
+			CEffect_RanchoEat *pEffect = (CEffect_RanchoEat*)pData ;
+
+			m_nRanchoAlpha = 255 - (51 * pEffect->GetAniFrame()) ;
+			m_pSprite->SetAlpha(m_nRanchoAlpha) ;
+
+			m_bStun = true ;
+		}
+		else
+		{
+			m_bRelease = false ;
+			m_bEaten = true ;
+		}
+	}
+}
+
 void CFriends_Mano::Faint(int x, int y, char cDirection)
 {
 	int direction[2] = {-1, 1} ;
@@ -95,16 +135,12 @@ void CFriends_Mano::Faint(int x, int y, char cDirection)
 		pFriend = g_Friends_List->GetFriend(x+direction[index], y) ;
 		if(pFriend!=NULL && pFriend->BeStand())
 		{
-			pObject = g_Friends_List->GetFriend(x+(2*direction[index]), y) ;
-			if(pObject==NULL)
-			{
-				pFriend->SendEventMessage("MANO", NULL) ;
+			pFriend->SendEventMessage("MANO", NULL) ;
 
-				m_Direction = (Direction)index ;
-				m_AState = FAINT ;
+			m_Direction = (Direction)index ;
+			m_AState = FAINT ;
 
-				return ;
-			}
+			return ;
 		}
 	}
 }

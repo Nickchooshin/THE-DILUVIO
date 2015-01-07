@@ -134,15 +134,11 @@ void CFriends_Rancho::Eat(int x, int y, char cDirection)
 	pFriend = g_Friends_List->GetFriend(x+direction, y) ;
 	if(pFriend!=NULL && pFriend->BeStand())
 	{
-		pObject = g_Friends_List->GetFriend(x+(2*direction), y) ;
-		if(pObject==NULL)
-		{
-			pEffect_RanchoEat->SetVisible(true) ;
-			pEffect_RanchoEat->SetPosition((x+direction) * 64.0f, y * 64.0f) ;
-			pFriend->SendEventMessage("RANCHO", pEffect_RanchoEat) ;
+		pEffect_RanchoEat->SetVisible(true) ;
+		pEffect_RanchoEat->SetPosition((x+direction) * 64.0f, y * 64.0f) ;
+		pFriend->SendEventMessage("RANCHO", pEffect_RanchoEat) ;
 
-			m_AState = EAT ;
-		}
+		m_AState = EAT ;
 	}
 }
 

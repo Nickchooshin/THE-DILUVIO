@@ -1,6 +1,7 @@
 #include "Hero.h"
 #include "Sprite.h"
 #include "FriendChange_UI.h"
+#include "Effect_Bubble.h"
 
 #include "Keyboard.h"
 #include "D3dDevice.h"
@@ -24,7 +25,8 @@ CHero::CHero() : m_ImgSize(0, 0),
 				 m_State(RIGHT), m_prevState(RIGHT),
 				 m_bDeath(false), m_bReleaseAbsorb(true),
 				 m_bRespiration(false),
-				 m_pFC_UI(NULL)
+				 m_pFC_UI(NULL),
+				 m_pEffect_Bubble(NULL)
 {
 	m_fVecSpeed = 2.5f ;
 	m_fVecJump = 7.5f ;
@@ -36,6 +38,9 @@ CHero::~CHero()
 {
 	if(m_pFC_UI!=NULL)
 		delete m_pFC_UI ;
+
+	if(m_pEffect_Bubble!=NULL)
+		delete m_pEffect_Bubble ;
 }
 
 void CHero::Init()
@@ -146,17 +151,25 @@ void CHero::Init()
 
 	m_pFC_UI = new CFriendChange_UI ;
 	m_pFC_UI->Init() ;
+
+	m_pEffect_Bubble = new CEffect_Bubble ;
+	m_pEffect_Bubble->Init() ;
 }
 
-int CHero::GetDirection() const
+CObjects::Direction CHero::GetDirection()
 {
-	return (int)(m_State / RIGHT) ;
+	return (Direction)(m_State / RIGHT) ;
 }
 
 void CHero::Update()
 {
 	Move() ;
 	Animation() ;
+	if(m_bDeath)
+	{
+		m_pEffect_Bubble->Update() ;
+		m_pEffect_Bubble->SetPosition(m_fX, m_fY) ;
+	}
 
 	m_bReleaseAbsorb = true ;
 
@@ -172,6 +185,9 @@ void CHero::Render()
 	m_pSprite->Render() ;
 
 	m_pFC_UI->Render_Front() ;
+
+	if(m_bDeath)
+		m_pEffect_Bubble->Render() ;
 }
 
 void CHero::SendEventMessage(char *EventMessage, void *pData)
@@ -185,7 +201,11 @@ void CHero::SendEventMessage(char *EventMessage, void *pData)
 	else if(len==5 && strcmp(EventMessage, "WATER")==0)
 	{
 		if(!m_bRespiration)
+		{
+			m_pEffect_Bubble->SetDirection() ;
+			m_pSprite->SetAlpha(155) ;
 			m_bDeath = true ;
+		}
 	}
 	else if(len==11 && strcmp(EventMessage, "RESPIRATION")==0)
 	{

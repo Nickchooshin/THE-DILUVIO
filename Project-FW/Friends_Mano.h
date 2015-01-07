@@ -12,7 +12,6 @@ private :
 	Position m_Stun_RightIndex ;
 	Position m_Faint_LeftIndex, m_Faint_RightIndex ;
 
-	enum Direction { LEFT=0, RIGHT } ;
 	Direction m_Direction ;
 	
 	enum Ability_State { NONE=0, FAINT } ;
@@ -25,6 +24,8 @@ public :
 	void Init() ;
 
 	void Release() ;
+
+	void SendEventMessage(char *EventMessage, void *pData) ;
 
 	void Update() ;
 private :

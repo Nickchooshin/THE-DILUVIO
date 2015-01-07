@@ -96,6 +96,8 @@ protected :
 	Rect m_BoundingBox ;
 
 	bool m_bUnVisible ;
+public :
+	enum Direction { LEFT=0, RIGHT } ;
 
 public :
 	CObjects() ;

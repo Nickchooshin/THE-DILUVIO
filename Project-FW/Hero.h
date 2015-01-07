@@ -3,6 +3,7 @@
 #include "DynamicObjects.h"
 
 class CFriendChange_UI ;
+class CEffect_Bubble ;
 
 class CHero : public CDynamicObjects
 {
@@ -26,6 +27,7 @@ private :
 	bool m_bDeath, m_bReleaseAbsorb, m_bRespiration ;
 
 	CFriendChange_UI *m_pFC_UI ;
+	CEffect_Bubble *m_pEffect_Bubble ;
 
 public :
 	CHero() ;
@@ -33,7 +35,7 @@ public :
 
 	void Init() ;
 
-	int GetDirection() const ;
+	Direction GetDirection() ;
 
 	void Update() ;
 

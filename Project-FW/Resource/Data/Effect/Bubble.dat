@@ -1,0 +1,29 @@
+### Bubble ###
+# Image
+
+<image>
+Resource/Image/Effect/Bubble.png
+
+<size>
+64, 64
+
+# Collision Box
+
+<collision_box>
+0, 0, 0, 0
+
+# Left Image
+
+<effect1_index>
+0, 0
+
+<effect1_frame>
+4
+
+# Right Image
+
+<effect2_index>
+0, 1
+
+<effect2_frame>
+4
