@@ -2,6 +2,7 @@
 #include "Sprite.h"
 #include "FriendChange_UI.h"
 #include "Effect_Bubble.h"
+#include "Effect_Soul.h"
 
 #include "Keyboard.h"
 #include "D3dDevice.h"
@@ -21,12 +22,12 @@ CHero::CHero() : m_ImgSize(0, 0),
 				 m_Jump_LeftIndex(0, 0), m_Jump_RightIndex(0, 0),
 				 m_Absorb_LeftIndex(0, 0), m_Absorb_RightIndex(0, 0),
 				 m_Release_LeftIndex(0, 0), m_Release_RightIndex(0, 0),
-				 m_fAnimationTime(0.0f),
+				 m_fTime(0.0f), m_fAnimationTime(0.0f),
 				 m_State(RIGHT), m_prevState(RIGHT),
-				 m_bDeath(false), m_bReleaseAbsorb(true),
-				 m_bRespiration(false),
+				 m_bDeath(false), m_bReleaseAbsorb(true), m_bRespiration(false),
+				 m_Dying(SINK),
 				 m_pFC_UI(NULL),
-				 m_pEffect_Bubble(NULL)
+				 m_pEffect_Bubble(NULL), m_pEffect_Soul(NULL)
 {
 	m_fVecSpeed = 2.5f ;
 	m_fVecJump = 7.5f ;
@@ -41,6 +42,9 @@ CHero::~CHero()
 
 	if(m_pEffect_Bubble!=NULL)
 		delete m_pEffect_Bubble ;
+
+	if(m_pEffect_Soul!=NULL)
+		delete m_pEffect_Soul ;
 }
 
 void CHero::Init()
@@ -154,6 +158,9 @@ void CHero::Init()
 
 	m_pEffect_Bubble = new CEffect_Bubble ;
 	m_pEffect_Bubble->Init() ;
+
+	m_pEffect_Soul = new CEffect_Soul ;
+	m_pEffect_Soul->Init() ;
 }
 
 CObjects::Direction CHero::GetDirection()
@@ -163,13 +170,14 @@ CObjects::Direction CHero::GetDirection()
 
 void CHero::Update()
 {
-	Move() ;
-	Animation() ;
 	if(m_bDeath)
 	{
-		m_pEffect_Bubble->Update() ;
-		m_pEffect_Bubble->SetPosition(m_fX, m_fY) ;
+		Death() ;
+		return ;
 	}
+
+	Move() ;
+	Animation() ;
 
 	m_bReleaseAbsorb = true ;
 
@@ -178,16 +186,28 @@ void CHero::Update()
 
 void CHero::Render()
 {
-	m_pFC_UI->SetPosition(m_fX, m_fY) ;
-	m_pFC_UI->Render_Behind() ;
+	if(!m_bDeath)
+	{
+		m_pFC_UI->SetPosition(m_fX, m_fY) ;
+		m_pFC_UI->Render_Behind() ;
+	}
 
-	m_pSprite->SetPosition(m_fX, m_fY) ;
-	m_pSprite->Render() ;
+	if(m_Dying<SOUL_OUT)
+	{
+		m_pSprite->SetPosition(m_fX, m_fY) ;
+		m_pSprite->Render() ;
+	}
+	else
+		m_pEffect_Soul->Render() ;
 
-	m_pFC_UI->Render_Front() ;
-
-	if(m_bDeath)
+	if(m_Dying==BUBBLE)
+	{
+		m_pEffect_Bubble->SetPosition(m_fX, m_fY) ;
 		m_pEffect_Bubble->Render() ;
+	}
+
+	if(!m_bDeath)
+		m_pFC_UI->Render_Front() ;
 }
 
 void CHero::SendEventMessage(char *EventMessage, void *pData)
@@ -201,11 +221,7 @@ void CHero::SendEventMessage(char *EventMessage, void *pData)
 	else if(len==5 && strcmp(EventMessage, "WATER")==0)
 	{
 		if(!m_bRespiration)
-		{
-			m_pEffect_Bubble->SetDirection() ;
-			m_pSprite->SetAlpha(155) ;
 			m_bDeath = true ;
-		}
 	}
 	else if(len==11 && strcmp(EventMessage, "RESPIRATION")==0)
 	{
@@ -318,6 +334,68 @@ void CHero::Move()
 	}
 
 	m_fX += m_vForce.x ;
+}
+
+void CHero::Death()
+{
+	if(m_Dying==SINK)
+	{
+		if(m_fTime>=1.0f)
+		{
+			m_fTime = 0.0f ;
+			m_Dying = BUBBLE ;
+			
+			m_pEffect_Bubble->SetDirection() ;
+			m_pSprite->SetAlpha(150) ;
+			return ;
+		}
+	}
+	else if(m_Dying==BUBBLE)
+	{
+		m_pEffect_Bubble->Update() ;
+
+		if(m_fTime>=0.8f)
+		{
+			m_fTime = 0.0f ;
+			m_Dying = FADE_AWAY ;
+			return ;
+		}
+	}
+	else if(m_Dying==FADE_AWAY)
+	{
+		int Alpha = 150 - ((int)(m_fTime / 0.1f) * 25) ;
+		m_pSprite->SetAlpha(Alpha) ;
+
+		if(m_fTime>=0.4f)
+		{
+			m_fTime = 0.0f ;
+			m_Dying = SOUL_OUT ;
+			
+			m_pEffect_Soul->SetDirection() ;
+			m_pEffect_Soul->SetPosition(m_fX, m_fY) ;
+			SetGravity(false) ;
+			return ;
+		}
+	}
+	else if(m_Dying==SOUL_OUT)
+	{
+		int Alpha = 100 + ((int)(m_fTime / 0.1f) * 25) ;
+		m_pEffect_Soul->SetAlpha(Alpha) ;
+
+		if(m_fTime>=0.4f)
+		{
+			m_fTime = 0.0f ;
+			m_Dying = SOUL ;
+		}
+	}
+	else if(m_Dying==SOUL)
+	{
+		m_pEffect_Soul->Update() ;
+
+		return ;
+	}
+
+	m_fTime += g_D3dDevice->GetTime() ;
 }
 
 void CHero::Animation()

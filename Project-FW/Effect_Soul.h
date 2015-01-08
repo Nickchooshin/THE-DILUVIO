@@ -11,6 +11,7 @@ public :
 	void Init() ;
 
 	void SetDirection() ;
+	void SetAlpha(int nAlpha) ;
 
 	void Update() ;
 
