@@ -167,8 +167,6 @@ void SceneGravity::Update(float dt)
 	g_MapTiles_List->Update() ;
 
 	// Collision X
-	//g_MapTiles_List->Collision('x') ;
-	//g_DynamicObjects_List->Collision('x') ;
 	g_CollisionManager->CollisionX() ;
 
 	// Gravity
@@ -178,9 +176,6 @@ void SceneGravity::Update(float dt)
 	g_Effect_List->Collision() ;
 
 	// Collision Y
-	//g_DynamicObjects_List->Collision('y') ; // 임시 방편(물에 잠긴 친구 바로 위의 친구 관련 충돌)
-	//g_MapTiles_List->Collision('y') ;
-	//g_DynamicObjects_List->Collision('y') ;
 	g_CollisionManager->CollisionY() ;
 
 	if(g_StageProgress->NowStageState()!=g_StageProgress->NONE)

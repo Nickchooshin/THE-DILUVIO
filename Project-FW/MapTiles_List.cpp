@@ -230,61 +230,6 @@ void CMapTiles_List::DeleteTile(CTiles *pTile)
 }
 //
 
-/*void CMapTiles_List::Collision(CDynamicObjects *pDynamicObject, char coord)
-{
-	CCollision col ;
-
-	CTiles *pTile ;
-	const int size = m_MapTiles_List.size() ;
-
-	for(int i=0; i<size; i++)
-	{
-		pTile = m_MapTiles_List[i] ;
-
-		if(coord=='x' || coord=='X')
-			col.XCollision(pDynamicObject, pTile) ;
-		else if(coord=='y' || coord=='Y')
-			col.YCollision(pDynamicObject, pTile) ;
-	}
-}
-
-void CMapTiles_List::Collision(char coord)
-{
-	CCollision col ;
-
-	CDynamicObjects *pDynamicObject ;
-	CTiles *pTile ;
-	std::vector<CDynamicObjects*> DynamicObjects_List = g_DynamicObjects_List->GetDynamicObjectsList() ;
-	const int ObjectSize = DynamicObjects_List.size() ;
-	const int TileSize = m_MapTiles_List.size() ;
-
-	for(int Index_o=0; Index_o<ObjectSize; Index_o++)
-	{
-		pDynamicObject = DynamicObjects_List[Index_o] ;
-		//BeGravityMultiples = false ;
-		//
-		pDynamicObject->SetGravityMultiples(1.0f) ;
-		pDynamicObject->SetMultipleJump(false) ;
-
-		for(int Index_t=0; Index_t<TileSize; Index_t++)
-		{
-			pTile = m_MapTiles_List[Index_t] ;
-			bool bCollision=false ;
-
-			if(coord=='x' || coord=='X')
-				bCollision = col.XCollision(pDynamicObject, pTile) ;
-			else if(coord=='y' || coord=='Y')
-				bCollision = col.YCollision(pDynamicObject, pTile) ;
-
-			//if(bCollision && pTile->BeGravityMultiples())
-			//	BeGravityMultiples = true ;
-		}
-
-		//if(!BeGravityMultiples)
-		//	pDynamicObject->SetGravityMultiples(1.0f) ;
-	}
-}*/
-
 const std::vector<CTiles*> CMapTiles_List::GetMapTilesList()
 {
 	return m_MapTiles_List ;
