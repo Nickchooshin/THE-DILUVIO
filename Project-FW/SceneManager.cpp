@@ -33,6 +33,7 @@ void SceneManager::RenderScene()
 void SceneManager::DestroyScene()
 {
 	m_pScene->Destroy() ;
+	delete m_pScene ;
 }
 
 void SceneManager::ChangeScene(Scene *pScene)

@@ -126,6 +126,7 @@
     <ClCompile Include="SampleScene.cpp" />
     <ClCompile Include="Scene_Gravity.cpp" />
     <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="StageProgress.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="Tiles.cpp" />
     <ClCompile Include="TilesWater.cpp" />
@@ -193,6 +194,7 @@
     <ClInclude Include="Scene_Gravity.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="Sprite.h" />
+    <ClInclude Include="StageProgress.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="Tiles.h" />
     <ClInclude Include="TilesWater.h" />

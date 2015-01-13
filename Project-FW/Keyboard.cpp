@@ -4,6 +4,7 @@
 Keyboard::Keyboard() : m_pDIDKeyboard(NULL)
 {
 	ZeroMemory(KeyBuffer, sizeof(KeyBuffer)) ;
+	ZeroMemory(prevKeyBuffer, sizeof(prevKeyBuffer)) ;
 }
 Keyboard::~Keyboard()
 {
@@ -49,6 +50,7 @@ bool Keyboard::Init()
 HRESULT Keyboard::Update()
 {
 	HRESULT hr ;
+	memcpy(prevKeyBuffer, KeyBuffer, sizeof(KeyBuffer)) ;
 	ZeroMemory(KeyBuffer, sizeof(KeyBuffer)) ;
 
 	// 키보드 디바이스로부터 키보드의 상태를 가져올 수 없으면
@@ -83,4 +85,19 @@ bool Keyboard::IsButtonUp(BYTE Button)
 		return false ;
 
 	return true ;
+}
+
+bool Keyboard::IsPressDown(BYTE Button)
+{
+	if((KeyBuffer[Button] & 0x80) && !(prevKeyBuffer[Button] & 0x80))
+		return true ;
+
+	return false ;
+}
+bool Keyboard::IsPressUp(BYTE Button)
+{
+	if(!(KeyBuffer[Button] & 0x80) && (prevKeyBuffer[Button] & 0x80))
+		return true ;
+
+	return false ;
 }

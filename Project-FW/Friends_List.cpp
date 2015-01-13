@@ -101,9 +101,11 @@ void CFriends_List::Clear()
 		delete temp ;
 	}
 
-	m_Friends_List.clear() ;
+	if(!m_Friends_List.empty())
+		m_Friends_List.clear() ;
 
-	m_Friends_BeRelease.clear() ;
+	if(!m_Friends_BeRelease.empty())
+		m_Friends_BeRelease.clear() ;
 }
 
 void CFriends_List::Gravity()

@@ -7,6 +7,10 @@ Resource/Image/Terrain/Tiles.png
 <size>
 64, 64
 
+# Effect
+<effect_enable>
+true
+
 # Collision Box
 
 <collision_box>

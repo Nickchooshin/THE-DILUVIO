@@ -18,6 +18,8 @@ public :
 	void SetWolrdSize(float width, float height) ;
 	void SetWorldSize(float w1, float h1, float w2, float h2) ;
 
+	const D3DXVECTOR3 GetPosition() const ;
+
 	void Run() ;
 private :
 	void CorrectionPosition() ;

@@ -8,6 +8,9 @@
 #include "UISprite.h"
 #include "CameraManager.h"
 #include "MusicManager.h"
+#include "SceneManager.h"
+
+#include "D3dDevice.h"
 
 #include "Hero.h"
 
@@ -16,13 +19,49 @@
 #include "DynamicObjects_List.h"
 #include "Effect_List.h"
 
-SceneGravity::SceneGravity() : m_pHero(NULL)
+#include "StageProgress.h"
+
+SceneGravity::SceneGravity() : m_pHero(NULL),
+							   m_pEndMenu(NULL),
+							   m_fTime(0.0f),
+							   m_bMenu(false),
+							   m_nSelectMenuNum(0),
+							   m_GameEndMenuState(NONE)
 {
+	int i ;
+
+	for(i=0; i<3; i++)
+		m_pMenuButton[i] = NULL ;
+	for(i=0; i<2; i++)
+		m_pEndMenuButton[i] = NULL ;
 }
 SceneGravity::~SceneGravity()
 {
+	int i ;
+
 	if(m_pHero!=NULL)
 		delete m_pHero ;
+
+	g_DynamicObjects_List->Clear() ;
+	g_Friends_List->Clear() ;
+	g_MapTiles_List->Clear() ;
+	g_Effect_List->Clear() ;
+
+	if(m_pMenu!=NULL)
+		delete m_pMenu ;
+	if(m_pEndMenu!=NULL)
+		delete m_pEndMenu ;
+
+	for(i=0; i<3; i++)
+	{
+		if(m_pMenuButton[i]!=NULL)
+			delete m_pMenuButton[i] ;
+	}
+	for(i=0; i<2; i++)
+	{
+		if(m_pEndMenuButton[i]!=NULL)
+			delete m_pEndMenuButton[i] ;
+	}
 }
 
 Scene* SceneGravity::scene()
@@ -34,6 +73,10 @@ Scene* SceneGravity::scene()
 
 void SceneGravity::Init()
 {
+	float fWinHeight = (float)g_D3dDevice->GetWinHeight() ;
+
+	g_StageProgress->Init() ;
+
 	g_MapTiles_List->LoadMap(4) ;
 
 	Size MapSize = g_MapTiles_List->GetMapSize() ;
@@ -46,6 +89,34 @@ void SceneGravity::Init()
 	m_pHero = new CHero ;
 	m_pHero->Init() ;
 	m_pHero->SetPosition(HeroPos.x * 64.0f + 32.0f, HeroPos.y * 64.0f + 32.0f) ;
+
+	m_pMenu = new CSprite ;
+	m_pMenu->Init("Resource/Image/Menu/Pause.png") ;
+
+	m_pEndMenu = new CSprite ;
+	m_pEndMenu->SetAlpha(0) ;
+
+	m_pMenuButton[0] = new CSprite ;
+	m_pMenuButton[0]->Init(291.0f, 83.0f, "Resource/Image/Menu/Button_PContinue.png") ;
+	m_pMenuButton[0]->SetTextureUV(291.0f, 0.0f, 582.0f, 83.0f) ;
+	
+	m_pMenuButton[1] = new CSprite ;
+	m_pMenuButton[1]->Init(291.0f, 83.0f, "Resource/Image/Menu/Button_PReplay.png") ;
+	m_pMenuButton[1]->SetTextureUV(0.0f, 0.0f, 291.0f, 83.0f) ;
+
+	m_pMenuButton[2] = new CSprite ;
+	m_pMenuButton[2]->Init(291.0f, 83.0f, "Resource/Image/Menu/Button_PSelect.png") ;
+	m_pMenuButton[2]->SetTextureUV(0.0f, 0.0f, 291.0f, 83.0f) ;
+
+	m_pEndMenuButton[0] = new CSprite ;
+	m_pEndMenuButton[0]->Init(296.0f, 78.0f, "Resource/Image/Menu/Button_Replay.png") ;
+	m_pEndMenuButton[0]->SetTextureUV(296.0f, 0.0f, 592.0f, 78.0f) ;
+	m_pEndMenuButton[0]->SetAlpha(0) ;
+
+	m_pEndMenuButton[1] = new CSprite ;
+	m_pEndMenuButton[1]->Init(296.0f, 78.0f, "Resource/Image/Menu/Button_Select.png") ;
+	m_pEndMenuButton[1]->SetTextureUV(0.0f, 0.0f, 296.0f, 78.0f) ;
+	m_pEndMenuButton[1]->SetAlpha(0) ;
 
 	//
 	g_DynamicObjects_List->AddMainCharObjects(m_pHero) ;
@@ -61,6 +132,31 @@ void SceneGravity::Update(float dt)
 	g_Mouse->Update() ;
 	g_Joystick->Update() ;
 	g_MusicManager->Loop() ;
+
+	if(m_GameEndMenuState!=NONE)
+	{
+		GameEndMenu() ;
+		return ;
+	}
+
+	if(!m_bMenu && g_Keyboard->IsPressDown(DIK_ESCAPE))
+	{
+		D3DXVECTOR3 CameraPos = g_CameraManager->GetPosition() ;
+		float fWinHeight = (float)g_D3dDevice->GetWinHeight() ;
+
+		m_pMenu->SetPosition(CameraPos.x, CameraPos.y) ;
+		m_pMenuButton[0]->SetPosition(CameraPos.x, CameraPos.y + ((fWinHeight/2) - 200.0f)) ;
+		m_pMenuButton[1]->SetPosition(CameraPos.x, CameraPos.y + ((fWinHeight/2) - 300.0f)) ;
+		m_pMenuButton[2]->SetPosition(CameraPos.x, CameraPos.y + ((fWinHeight/2) - 400.0f)) ;
+
+		m_bMenu = true ;
+	}
+
+	if(m_bMenu)
+	{
+		GameMenu() ;
+		return ;
+	}
 
 	//m_pHero->Update() ;
 	g_Friends_List->ReleaseCheck() ;
@@ -81,6 +177,24 @@ void SceneGravity::Update(float dt)
 	g_DynamicObjects_List->Collision('y') ; // 임시 방편(물에 잠긴 친구 바로 위의 친구 관련 충돌)
 	g_MapTiles_List->Collision('y') ;
 	g_DynamicObjects_List->Collision('y') ;
+
+	if(g_StageProgress->NowStageState()!=g_StageProgress->NONE)
+	{
+		m_GameEndMenuState = MENU_IN ;
+		m_nSelectMenuNum = 0 ;
+
+		if(g_StageProgress->NowStageState()==g_StageProgress->CLEAR)
+			m_pEndMenu->Init("Resource/Image/Menu/GameClear.png") ;
+		else
+			m_pEndMenu->Init("Resource/Image/Menu/GameOver.png") ;
+
+		D3DXVECTOR3 CameraPos = g_CameraManager->GetPosition() ;
+		float fWinHeight = (float)g_D3dDevice->GetWinHeight() ;
+
+		m_pEndMenu->SetPosition(CameraPos.x, CameraPos.y) ;
+		m_pEndMenuButton[0]->SetPosition(CameraPos.x, CameraPos.y + ((fWinHeight/2) - 450.0f)) ;
+		m_pEndMenuButton[1]->SetPosition(CameraPos.x, CameraPos.y + ((fWinHeight/2) - 550.0f)) ;
+	}
 }
 
 void SceneGravity::Render()
@@ -92,8 +206,116 @@ void SceneGravity::Render()
 	g_Friends_List->Render() ;
 	m_pHero->Render() ;
 
-	/*CSprite sprite ;
-	sprite.Init("Resource/Image/collision.png") ;
-	//sprite.SetCenterPosition(0.0f, 0.0f) ;
-	sprite.Render() ;*/
+	if(m_bMenu)
+	{
+		m_pMenu->Render() ;
+		for(int i=0; i<3; i++)
+			m_pMenuButton[i]->Render() ;
+	}
+
+	if(m_GameEndMenuState!=NONE)
+	{
+		m_pEndMenu->Render() ;
+		for(int i=0; i<2; i++)
+			m_pEndMenuButton[i]->Render() ;
+	}
+}
+
+void SceneGravity::GameMenu()
+{
+	MenuButtonMove(m_pMenuButton, 291.0f, 83.0f, 3) ;
+		
+	if(g_Keyboard->IsPressDown(DIK_RETURN))
+	{
+		if(m_nSelectMenuNum==0)
+		{
+			m_bMenu = false ;
+		}
+		else if(m_nSelectMenuNum==1)
+		{
+			g_SceneManager->ChangeScene(SceneGravity::scene()) ;
+			return ;
+		}
+		else
+		{
+			return ;
+		}
+	}
+}
+
+void SceneGravity::GameEndMenu()
+{
+	if(m_GameEndMenuState==MENU_IN)
+	{
+		int nAlpha = (int)((m_fTime / 1.0f) * 255.0f) ;
+		m_pEndMenu->SetAlpha(nAlpha) ;
+
+		if(m_fTime>=1.0f)
+		{
+			m_fTime = 0.0f ;
+			m_GameEndMenuState = BUTTON_IN ;
+			m_pEndMenu->SetAlpha(255) ;
+
+			return ;
+		}
+
+		m_fTime += g_D3dDevice->GetTime() ;
+	}
+	else if(m_GameEndMenuState==BUTTON_IN)
+	{
+		int i ;
+		int nAlpha = (int)((m_fTime / 1.0f) * 255.0f) ;
+		for(i=0; i<2; i++)
+			m_pEndMenuButton[i]->SetAlpha(nAlpha) ;
+
+		if(m_fTime>=1.0f)
+		{
+			m_fTime = 0.0f ;
+			m_GameEndMenuState = SHOW ;
+			for(i=0; i<2; i++)
+				m_pEndMenuButton[i]->SetAlpha(255) ;
+
+			return ;
+		}
+
+		m_fTime += g_D3dDevice->GetTime() ;
+	}
+	else
+	{
+		MenuButtonMove(m_pEndMenuButton, 296.0f, 78.0f, 2) ;
+		
+		if(g_Keyboard->IsPressDown(DIK_RETURN))
+		{
+			if(m_nSelectMenuNum==0)
+			{
+				g_SceneManager->ChangeScene(SceneGravity::scene()) ;
+				return ;
+			}
+			else
+			{
+				return ;
+			}
+		}
+	}
+}
+
+void SceneGravity::MenuButtonMove(CSprite **pMenuButton, const float fWidth, const float fHeight, const int nMaxMenu)
+{
+	int prevSelectNum = m_nSelectMenuNum ;
+
+	if(g_Keyboard->IsPressDown(DIK_UP))
+		--m_nSelectMenuNum ;
+	else if(g_Keyboard->IsPressDown(DIK_DOWN))
+		++m_nSelectMenuNum ;
+
+	if(m_nSelectMenuNum>=nMaxMenu)
+		m_nSelectMenuNum -= nMaxMenu ;
+	else if(m_nSelectMenuNum<0)
+		m_nSelectMenuNum += nMaxMenu ;
+
+	if(prevSelectNum!=m_nSelectMenuNum)
+	{
+		pMenuButton[prevSelectNum]->SetTextureUV(0.0f, 0.0f, fWidth, fHeight) ;
+		pMenuButton[m_nSelectMenuNum]->SetTextureUV(fWidth, 0.0f, fWidth*2.0f, fHeight) ;
+	}
 }

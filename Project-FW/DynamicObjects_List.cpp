@@ -10,8 +10,7 @@ CDynamicObjects_List::CDynamicObjects_List() : m_pMainChar(NULL)
 }
 CDynamicObjects_List::~CDynamicObjects_List()
 {
-	m_pMainChar = NULL ;
-	m_DynamicObjects_List.clear() ;
+	Clear() ;
 }
 
 void CDynamicObjects_List::AddMainCharObjects(CDynamicObjects *pDynamicObject)
@@ -40,6 +39,12 @@ void CDynamicObjects_List::RemoveObjects(CDynamicObjects *pDynamicObject)
 			return ;
 		}
 	}
+}
+void CDynamicObjects_List::Clear()
+{
+	m_pMainChar = NULL ;
+	if(!m_DynamicObjects_List.empty())
+		m_DynamicObjects_List.clear() ;
 }
 
 void CDynamicObjects_List::Update()

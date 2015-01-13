@@ -171,7 +171,8 @@ void CMapTiles_List::Clear()
 		delete temp ;
 	}
 
-	m_MapTiles_List.clear() ;
+	if(!m_MapTiles_List.empty())
+		m_MapTiles_List.clear() ;
 }
 
 const Position CMapTiles_List::GetHeroPosition()

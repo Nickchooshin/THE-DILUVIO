@@ -22,7 +22,8 @@ void CEffect_List::AddEffect(CEffect *pEffect)
 
 void CEffect_List::Clear()
 {
-	m_Effect_List.clear() ;
+	if(!m_Effect_List.empty())
+		m_Effect_List.clear() ;
 }
 
 void CEffect_List::Collision()

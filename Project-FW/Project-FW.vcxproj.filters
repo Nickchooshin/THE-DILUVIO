@@ -184,6 +184,9 @@
     <ClCompile Include="Effect_Soul.cpp">
       <Filter>Objects\Effect</Filter>
     </ClCompile>
+    <ClCompile Include="StageProgress.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h" />
@@ -374,6 +377,9 @@
     </ClInclude>
     <ClInclude Include="Effect_Soul.h">
       <Filter>Objects\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="StageProgress.h">
+      <Filter>Data</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

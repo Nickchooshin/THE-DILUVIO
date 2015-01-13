@@ -40,6 +40,11 @@ void CCamera::SetWorldSize(float w1, float h1, float w2, float h2)
 	SetWorldPosition_MinMax(w1, h1, w2, h2) ;
 }
 
+const D3DXVECTOR3 CCamera::GetPosition() const
+{
+	return m_Position ;
+}
+
 void CCamera::Run()
 {
 	CorrectionPosition() ;

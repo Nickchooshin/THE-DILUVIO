@@ -14,6 +14,8 @@
 
 #include "MapTiles_List.h"
 
+#include "StageProgress.h"
+
 CHero::CHero() : m_ImgSize(0, 0),
 				 m_nNowFrame(0),
 				 m_nStandFrame(0), m_nMoveFrame(0), m_nJumpFrame(0), m_nAbsorbFrame(0), m_nReleaseFrame(0),
@@ -196,15 +198,15 @@ void CHero::Render()
 	{
 		m_pSprite->SetPosition(m_fX, m_fY) ;
 		m_pSprite->Render() ;
+
+		if(m_Dying==BUBBLE)
+		{
+			m_pEffect_Bubble->SetPosition(m_fX, m_fY) ;
+			m_pEffect_Bubble->Render() ;
+		}
 	}
 	else
 		m_pEffect_Soul->Render() ;
-
-	if(m_Dying==BUBBLE)
-	{
-		m_pEffect_Bubble->SetPosition(m_fX, m_fY) ;
-		m_pEffect_Bubble->Render() ;
-	}
 
 	if(!m_bDeath)
 		m_pFC_UI->Render_Front() ;
@@ -226,6 +228,10 @@ void CHero::SendEventMessage(char *EventMessage, void *pData)
 	else if(len==11 && strcmp(EventMessage, "RESPIRATION")==0)
 	{
 		m_bRespiration = true ;
+	}
+	else if(len==7 && strcmp(EventMessage, "ARRIVAL")==0)
+	{
+		g_StageProgress->StageClear() ;
 	}
 }
 
@@ -392,7 +398,11 @@ void CHero::Death()
 	{
 		m_pEffect_Soul->Update() ;
 
-		return ;
+		if(m_fTime>=3.0f)
+		{
+			g_StageProgress->StageOver() ;
+			return ;
+		}
 	}
 
 	m_fTime += g_D3dDevice->GetTime() ;

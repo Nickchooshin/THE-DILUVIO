@@ -19,6 +19,8 @@ public :
 	void AddObjects(CDynamicObjects *pDynamicObject) ;
 	void RemoveObjects(CDynamicObjects *pDynamicObject) ;
 
+	void Clear() ;
+
 	void Update() ;
 
 	void Gravity() ;
