@@ -30,8 +30,8 @@ public :
 	void DeleteTile(CTiles *pTile) ;
 	//
 
-	void Collision(CDynamicObjects *pObject, char coord) ;
-	void Collision(char coord) ;
+	//void Collision(CDynamicObjects *pObject, char coord) ;
+	//void Collision(char coord) ;
 
 	const std::vector<CTiles*> GetMapTilesList() ;
 

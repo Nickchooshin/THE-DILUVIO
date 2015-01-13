@@ -18,6 +18,7 @@ public :
 	const bool GetItem(char *item) ;
 	void GetString(char *str) ;
 	void GetValue(int &value) ;
+	void GetValue(float &value) ;
 } ;
 
 #define g_LoadManager LoadManager::GetInstance()

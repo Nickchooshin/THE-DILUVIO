@@ -128,7 +128,6 @@ void CFriends_Mano::Faint(int x, int y, char cDirection)
 		index = 1 ;
 
 	CFriends *pFriend ;
-	CObjects *pObject ;
 
 	for(int i=0; i<2; i++, index=(index+1)%2)
 	{

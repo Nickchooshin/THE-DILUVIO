@@ -77,7 +77,7 @@ typedef struct _SIZE
 
 typedef struct _Rect
 {
-	int left, top, right, bottom ;
+	float left, top, right, bottom ;
 } Rect ;
 
 typedef struct _Circle
@@ -102,6 +102,8 @@ public :
 public :
 	CObjects() ;
 	virtual ~CObjects() ;
+
+	static bool collision_priority(const CObjects *pObject1, const CObjects *pObject2) ;
 
 	virtual void Init() = 0 ;
 

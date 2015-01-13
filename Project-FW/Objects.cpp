@@ -12,6 +12,11 @@ CObjects::~CObjects()
 		delete m_pSprite ;
 }
 
+bool CObjects::collision_priority(const CObjects *pObject1, const CObjects *pObject2)
+{
+	return (pObject1->m_fY < pObject2->m_fY) ;
+}
+
 const float CObjects::GetPositionX()
 {
 	return m_fX ;
@@ -31,10 +36,10 @@ void CObjects::SetPosition(float fX, float fY)
 const Rect CObjects::GetBoundingBox()
 {
 	Rect rt ;
-	rt.left = m_BoundingBox.left + (int)m_fX ;
-	rt.top = m_BoundingBox.top + (int)m_fY ;
-	rt.right = m_BoundingBox.right + (int)m_fX ;
-	rt.bottom = m_BoundingBox.bottom + (int)m_fY ;
+	rt.left = m_BoundingBox.left + m_fX ;
+	rt.top = m_BoundingBox.top + m_fY ;
+	rt.right = m_BoundingBox.right + m_fX ;
+	rt.bottom = m_BoundingBox.bottom + m_fY ;
 
 	return rt ;
 }

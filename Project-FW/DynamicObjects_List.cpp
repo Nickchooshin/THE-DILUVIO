@@ -76,7 +76,7 @@ bool Compare(CDynamicObjects* pDynamicObject1, CDynamicObjects* pDynamicObject2)
 	return pDynamicObject1->GetPositionY() < pDynamicObject2->GetPositionY() ;
 }
 
-void CDynamicObjects_List::Collision(char coord)
+/*void CDynamicObjects_List::Collision(char coord)
 {
 	std::sort(m_DynamicObjects_List.begin(), m_DynamicObjects_List.end(), Compare) ;
 
@@ -99,7 +99,7 @@ void CDynamicObjects_List::Collision(char coord)
 				col.YCollision(m_DynamicObjects_List[j], m_DynamicObjects_List[i]) ;
 		}
 	}
-}
+}*/
 
 const std::vector<CDynamicObjects*> CDynamicObjects_List::GetDynamicObjectsList()
 {

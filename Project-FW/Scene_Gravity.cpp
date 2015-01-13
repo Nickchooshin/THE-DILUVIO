@@ -21,6 +21,9 @@
 
 #include "StageProgress.h"
 
+//
+#include "CollisionManager.h"
+
 SceneGravity::SceneGravity() : m_pHero(NULL),
 							   m_pEndMenu(NULL),
 							   m_fTime(0.0f),
@@ -164,8 +167,9 @@ void SceneGravity::Update(float dt)
 	g_MapTiles_List->Update() ;
 
 	// Collision X
-	g_MapTiles_List->Collision('x') ;
-	g_DynamicObjects_List->Collision('x') ;
+	//g_MapTiles_List->Collision('x') ;
+	//g_DynamicObjects_List->Collision('x') ;
+	g_CollisionManager->CollisionX() ;
 
 	// Gravity
 	g_DynamicObjects_List->Gravity() ;
@@ -174,9 +178,10 @@ void SceneGravity::Update(float dt)
 	g_Effect_List->Collision() ;
 
 	// Collision Y
-	g_DynamicObjects_List->Collision('y') ; // 임시 방편(물에 잠긴 친구 바로 위의 친구 관련 충돌)
-	g_MapTiles_List->Collision('y') ;
-	g_DynamicObjects_List->Collision('y') ;
+	//g_DynamicObjects_List->Collision('y') ; // 임시 방편(물에 잠긴 친구 바로 위의 친구 관련 충돌)
+	//g_MapTiles_List->Collision('y') ;
+	//g_DynamicObjects_List->Collision('y') ;
+	g_CollisionManager->CollisionY() ;
 
 	if(g_StageProgress->NowStageState()!=g_StageProgress->NONE)
 	{

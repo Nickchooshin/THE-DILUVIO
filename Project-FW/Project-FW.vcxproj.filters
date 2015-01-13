@@ -187,6 +187,9 @@
     <ClCompile Include="StageProgress.cpp">
       <Filter>Data</Filter>
     </ClCompile>
+    <ClCompile Include="CollisionManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h" />
@@ -380,6 +383,9 @@
     </ClInclude>
     <ClInclude Include="StageProgress.h">
       <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionManager.h">
+      <Filter>Manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

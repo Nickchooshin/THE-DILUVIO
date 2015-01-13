@@ -58,7 +58,7 @@ bool CCollision::XCollision(CDynamicObjects *pDynamicObject, CObjects *pObject)
 	Vector vec = pDynamicObject->GetForce() ;
 	Rect rtDynamic = pDynamicObject->GetBoundingBox() ;
 	Rect rtObject = pObject->GetBoundingBox() ;
-	int xSize = rtObject.right - rtObject.left  ;
+	float xSize = rtObject.right - rtObject.left  ;
 
 	if(!AABB(rtDynamic, rtObject))
 		return false ;
@@ -109,7 +109,7 @@ bool CCollision::XCollision(CDynamicObjects *pDynamicObject, CObjects *pObject)
 	{
 		x -= (float)(rtSize.right - rtSize.left) ;
 	}
-	x = (int)x ;
+	x = x ;
 
 	pDynamicObject->SetPosition(x, y) ;
 
@@ -122,7 +122,7 @@ bool CCollision::YCollision(CDynamicObjects *pDynamicObject, CObjects *pObject)
 	Vector vec = pDynamicObject->GetForce() ;
 	Rect rtDynamic = pDynamicObject->GetBoundingBox() ;
 	Rect rtObject = pObject->GetBoundingBox() ;
-	int ySize = rtObject.top - rtObject.bottom  ;
+	float ySize = rtObject.top - rtObject.bottom  ;
 
 	if(!AABB(rtDynamic, rtObject))
 		return false ;
@@ -165,7 +165,7 @@ bool CCollision::YCollision(CDynamicObjects *pDynamicObject, CObjects *pObject)
 		pDynamicObject->SetJump(true) ;
 		pDynamicObject->GravityAccReset() ;
 	}
-	y = (int)y ;
+	y = y ;
 
 	pDynamicObject->SetPosition(x, y) ;
 
@@ -204,7 +204,7 @@ bool CCollision::XCollision(CDynamicObjects *pDynamicObject, CTiles *pTile)
 	Vector vec = pDynamicObject->GetForce() ;
 	Rect rtDynamic = pDynamicObject->GetBoundingBox() ;
 	Rect rtTile = pTile->GetBoundingBox() ;
-	int xSize = rtTile.right - rtTile.left  ;
+	float xSize = rtTile.right - rtTile.left  ;
 
 	if(!AABB(rtDynamic, rtTile))
 		return false ;
@@ -243,7 +243,7 @@ bool CCollision::XCollision(CDynamicObjects *pDynamicObject, CTiles *pTile)
 		x -= (rtSize.right - rtSize.left) ;
 		pTile->CollisionDirection(CTiles::COLLISION_LEFT) ;
 	}
-	x = (int)x ;
+	x = x ;
 
 	pDynamicObject->SetPosition(x, y) ;
 
@@ -280,7 +280,7 @@ bool CCollision::YCollision(CDynamicObjects *pDynamicObject, CTiles *pTile)
 	Vector vec = pDynamicObject->GetForce() ;
 	Rect rtDynamic = pDynamicObject->GetBoundingBox() ;
 	Rect rtTile = pTile->GetBoundingBox() ;
-	int ySize = rtTile.top - rtTile.bottom  ;
+	float ySize = rtTile.top - rtTile.bottom  ;
 
 	if(!AABB(rtDynamic, rtTile))
 		return false ;
@@ -325,7 +325,7 @@ bool CCollision::YCollision(CDynamicObjects *pDynamicObject, CTiles *pTile)
 		pDynamicObject->GravityAccReset() ;
 		pTile->CollisionDirection(CTiles::COLLISION_DOWN) ;
 	}
-	y = (int)y ;
+	y = y ;
 
 	pDynamicObject->SetPosition(x, y) ;
 

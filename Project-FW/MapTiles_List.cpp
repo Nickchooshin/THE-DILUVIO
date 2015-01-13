@@ -230,7 +230,7 @@ void CMapTiles_List::DeleteTile(CTiles *pTile)
 }
 //
 
-void CMapTiles_List::Collision(CDynamicObjects *pDynamicObject, char coord)
+/*void CMapTiles_List::Collision(CDynamicObjects *pDynamicObject, char coord)
 {
 	CCollision col ;
 
@@ -258,8 +258,6 @@ void CMapTiles_List::Collision(char coord)
 	const int ObjectSize = DynamicObjects_List.size() ;
 	const int TileSize = m_MapTiles_List.size() ;
 
-	bool BeGravityMultiples ;
-
 	for(int Index_o=0; Index_o<ObjectSize; Index_o++)
 	{
 		pDynamicObject = DynamicObjects_List[Index_o] ;
@@ -285,7 +283,7 @@ void CMapTiles_List::Collision(char coord)
 		//if(!BeGravityMultiples)
 		//	pDynamicObject->SetGravityMultiples(1.0f) ;
 	}
-}
+}*/
 
 const std::vector<CTiles*> CMapTiles_List::GetMapTilesList()
 {

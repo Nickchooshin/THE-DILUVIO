@@ -94,12 +94,13 @@ void LoadManager::GetString(char *str)
 	while(key!=EOF)
 	{
 		key = fgetc(m_File) ;
+		if(key==EOF)
+			break ;
 
-		if(blank && (key!=10 || key!=' '))
-		{
+		if(blank && (key!=10 && key!=' ' && key!=','))
 			blank = false ;
-		}
-		else if(!blank)
+
+		if(!blank)
 		{
 			if(key==10 || key==' ')
 				break ;
@@ -121,12 +122,13 @@ void LoadManager::GetValue(int &value)
 	while(key!=EOF)
 	{
 		key = fgetc(m_File) ;
+		if(key==EOF)
+			break ;
 
-		if(blank && (key!=10 || key!=' ' || key==','))
-		{
+		if(blank && (key!=10 && key!=' ' && key!=','))
 			blank = false ;
-		}
-		else if(!blank)
+
+		if(!blank)
 		{
 			if(key==10 || key==' ' || key==',')
 				break ;
@@ -140,4 +142,35 @@ void LoadManager::GetValue(int &value)
 	}
 
 	value = atoi(data.c_str()) ;
+}
+
+void LoadManager::GetValue(float &value)
+{
+	std::string data="" ;
+	char key=NULL ;
+	bool blank=true ;
+
+	while(1)
+	{
+		key = fgetc(m_File) ;
+		if(key==EOF)
+			break ;
+		
+		if(blank && (key!=10 && key!=' ' && key!=','))
+			blank = false ;
+		
+		if(!blank)
+		{
+			if(key==10 || key==' ' || key==',')
+				break ;
+
+			if(!blank)
+			{
+				char temp[] = { key, NULL } ;
+				data.append(temp) ;
+			}
+		}
+	}
+
+	value = (float)strtod(data.c_str(), NULL) ;
 }

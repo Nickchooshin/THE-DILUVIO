@@ -54,7 +54,7 @@ CFriends* CFriends_List::GetFriend(int tileX, int tileY)
 
 bool CFriends_List::AddFriend(CFriends *pFriend)
 {
-	if(m_Friends_List.size()>=m_nMaxFriends)
+	if(m_Friends_List.size()>=(unsigned)m_nMaxFriends)
 	{
 		delete pFriend ;
 

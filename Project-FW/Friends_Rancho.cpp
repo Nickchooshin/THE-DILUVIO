@@ -129,7 +129,6 @@ void CFriends_Rancho::Eat(int x, int y, char cDirection)
 	}
 
 	CFriends *pFriend ;
-	CObjects *pObject ;
 
 	pFriend = g_Friends_List->GetFriend(x+direction, y) ;
 	if(pFriend!=NULL && pFriend->BeStand())

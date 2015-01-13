@@ -25,7 +25,7 @@ public :
 
 	void Gravity() ;
 
-	void Collision(char coord) ;
+	//void Collision(char coord) ;
 
 	const std::vector<CDynamicObjects*> GetDynamicObjectsList() ;
 	const CDynamicObjects* GetMainChar() ;
