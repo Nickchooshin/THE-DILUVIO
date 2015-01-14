@@ -3,6 +3,8 @@
 #include "SceneManager.h"
 #include "D3dDevice.h"
 
+#include "Mouse.h"
+
 #ifdef _DEBUG
 #pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
 #include <stdio.h>
@@ -153,11 +155,16 @@ LRESULT WINAPI MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		SetWindowLong(hWnd, GWL_STYLE, wndStyle) ;
 		SendMessage(hWnd, WM_NCPAINT, wParam, lParam) ;
 		return 0 ;*/
-	//case WM_MOUSEMOVE:
-	//	mouse.x = LOWORD(lParam) ;
-	//	mouse.y = HIWORD(lParam) ;
-	//	g_InputManager->SetMousePoint(mouse) ;
-	//	break;
+	case WM_MOUSEMOVE:
+		//mouse.x = LOWORD(lParam) ;
+		//mouse.y = HIWORD(lParam) ;
+		//g_InputManager->SetMousePoint(mouse) ;
+		g_Mouse->SetMousePoint(LOWORD(lParam), HIWORD(lParam)) ;
+		return 0 ;
+	/*case WM_SETCURSOR :
+		SetCursor(NULL) ;
+		g_D3dDevice->GetDevice()->ShowCursor(true) ;
+		return 0 ;*/
 	case WM_DESTROY :
 		//	Cleanup();
 		PostQuitMessage( 0 ) ;

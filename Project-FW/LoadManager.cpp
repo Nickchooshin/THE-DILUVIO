@@ -85,7 +85,7 @@ const bool LoadManager::GetItem(char *item)
 	return true ;
 }
 
-void LoadManager::GetString(char *str)
+const bool LoadManager::GetString(char *str)
 {
 	std::string data="" ;
 	char key=NULL ;
@@ -111,9 +111,14 @@ void LoadManager::GetString(char *str)
 	}
 
 	strcpy(str, data.c_str()) ;
+
+	if(key==EOF)
+		return false ;
+
+	return true ;
 }
 
-void LoadManager::GetValue(int &value)
+const bool LoadManager::GetValue(int &value)
 {
 	std::string data="" ;
 	char key=NULL ;
@@ -142,9 +147,14 @@ void LoadManager::GetValue(int &value)
 	}
 
 	value = atoi(data.c_str()) ;
+
+	if(key==EOF)
+		return false ;
+
+	return true ;
 }
 
-void LoadManager::GetValue(float &value)
+const bool LoadManager::GetValue(float &value)
 {
 	std::string data="" ;
 	char key=NULL ;
@@ -173,4 +183,9 @@ void LoadManager::GetValue(float &value)
 	}
 
 	value = (float)strtod(data.c_str(), NULL) ;
+
+	if(key==EOF)
+		return false ;
+
+	return true ;
 }

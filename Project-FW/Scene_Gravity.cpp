@@ -1,4 +1,5 @@
 #include "Scene_Gravity.h"
+#include "Scene_StageSelect.h"
 
 #include "Keyboard.h"
 #include "Mouse.h"
@@ -80,12 +81,11 @@ void SceneGravity::Init()
 
 	g_StageProgress->Init() ;
 
-	g_MapTiles_List->LoadMap(4) ;
+	g_MapTiles_List->LoadMap() ;
 
 	Size MapSize = g_MapTiles_List->GetMapSize() ;
 	CCamera *pCamera = new CCamera() ;
 	pCamera->SetWorldSize(-32.0f, -32.0f, (MapSize.x*64.0f)-32.0f, (MapSize.y*64.0f)-32.0f) ;
-	g_CameraManager->AllCameraClear() ;
 	g_CameraManager->AddCamera(pCamera, 0) ;
 
 	Position HeroPos = g_MapTiles_List->GetHeroPosition() ;
@@ -127,6 +127,7 @@ void SceneGravity::Init()
 
 void SceneGravity::Destroy()
 {
+	g_CameraManager->AllCameraClear() ;
 }
 
 void SceneGravity::Update(float dt)
@@ -148,9 +149,9 @@ void SceneGravity::Update(float dt)
 		float fWinHeight = (float)g_D3dDevice->GetWinHeight() ;
 
 		m_pMenu->SetPosition(CameraPos.x, CameraPos.y) ;
-		m_pMenuButton[0]->SetPosition(CameraPos.x, CameraPos.y + ((fWinHeight/2) - 200.0f)) ;
-		m_pMenuButton[1]->SetPosition(CameraPos.x, CameraPos.y + ((fWinHeight/2) - 300.0f)) ;
-		m_pMenuButton[2]->SetPosition(CameraPos.x, CameraPos.y + ((fWinHeight/2) - 400.0f)) ;
+		m_pMenuButton[0]->SetPosition(CameraPos.x, CameraPos.y + ((fWinHeight/2) - 324.0f)) ;
+		m_pMenuButton[1]->SetPosition(CameraPos.x, CameraPos.y + ((fWinHeight/2) - 424.0f)) ;
+		m_pMenuButton[2]->SetPosition(CameraPos.x, CameraPos.y + ((fWinHeight/2) - 524.0f)) ;
 
 		m_bMenu = true ;
 	}
@@ -238,6 +239,7 @@ void SceneGravity::GameMenu()
 		}
 		else
 		{
+			g_SceneManager->ChangeScene(SceneStageSelect::scene()) ;
 			return ;
 		}
 	}
@@ -293,6 +295,7 @@ void SceneGravity::GameEndMenu()
 			}
 			else
 			{
+				g_SceneManager->ChangeScene(SceneStageSelect::scene()) ;
 				return ;
 			}
 		}

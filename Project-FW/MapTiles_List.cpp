@@ -18,6 +18,8 @@
 #include "Tiles_MontriloDoor.h"
 #include "Tiles_Spark.h"
 
+#include "StageProgress.h"
+
 #include <string>
 #include <map>
 
@@ -29,7 +31,7 @@ CMapTiles_List::~CMapTiles_List()
 	Clear() ;
 }
 
-void CMapTiles_List::LoadMap(int num)
+void CMapTiles_List::LoadMap()
 {
 	FILE *map ;
 	char filepath[100] ;
@@ -40,7 +42,7 @@ void CMapTiles_List::LoadMap(int num)
 	std::map<std::string, CTiles*> TileList ;
 	//
 
-	sprintf_s(filepath, "Resource/Data/Maps/%d.dat", num) ;
+	sprintf_s(filepath, "Resource/Data/Maps/%s.dat", g_StageProgress->GetSelectMapName()) ;
 
 	map = fopen(filepath, "r") ;
 
@@ -127,7 +129,7 @@ void CMapTiles_List::LoadMap(int num)
 	fclose(map) ;
 
 	//
-	sprintf_s(filepath, "Resource/Data/Maps/%d.link", num) ;
+	sprintf_s(filepath, "Resource/Data/Maps/%s.link", g_StageProgress->GetSelectMapName()) ;
 
 	map = fopen(filepath, "r") ;
 	if(map!=NULL)

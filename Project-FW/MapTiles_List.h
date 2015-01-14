@@ -19,7 +19,7 @@ public :
 	CMapTiles_List() ;
 	~CMapTiles_List() ;
 
-	void LoadMap(int num) ;
+	void LoadMap() ;
 
 	void Clear() ;
 

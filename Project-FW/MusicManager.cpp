@@ -36,9 +36,9 @@ bool MusicManager::Initialize()
 
 void MusicManager::Terminate()
 {
-	unsigned int i;
-	for (i=0; i < Sounds.size(); i++)
-		Sounds[i]->release();
+	std::map<std::string, FMOD::Sound *>::iterator iter ;
+	for(iter=Sounds.begin(); iter!=Sounds.end(); iter++)
+		iter->second->release() ;
 	Sounds.clear();
 	for (int i=0; i < 32; i++)
 		Channels[i] = NULL;
@@ -50,12 +50,22 @@ FMOD::Sound* MusicManager::LoadMusic(char *Filename, bool isStream, bool isLoop)
 {
 	FMOD::Sound * temp;
 
-	if (isStream)
-		System->createStream(Filename, FMOD_SOFTWARE | (isLoop?FMOD_LOOP_NORMAL:0x00) | FMOD_2D, 0, &temp);
-	else
-		System->createSound(Filename, FMOD_SOFTWARE | (isLoop?FMOD_LOOP_NORMAL:0x00) | FMOD_2D, 0, &temp);
+	std::map<std::string, FMOD::Sound *>::iterator iter ;
 
-	Sounds.push_back(temp);
+	iter = Sounds.find(Filename) ;
+	if(iter==Sounds.end())
+	{
+		if (isStream)
+			System->createStream(Filename, FMOD_SOFTWARE | (isLoop?FMOD_LOOP_NORMAL:0x00) | FMOD_2D, 0, &temp);
+		else
+			System->createSound(Filename, FMOD_SOFTWARE | (isLoop?FMOD_LOOP_NORMAL:0x00) | FMOD_2D, 0, &temp);
+
+		Sounds[Filename] = temp ;
+	}
+	else
+	{
+		temp = Sounds[Filename] ;
+	}
 
 	return temp;
 }

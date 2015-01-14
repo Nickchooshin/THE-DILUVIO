@@ -39,6 +39,9 @@ void CameraManager::CameraClear(int Number)
 
 void CameraManager::AllCameraClear()
 {
+	if(m_Camera.empty())
+		return ;
+
 	map<int, CCamera*>::iterator iter ;
 	map<int, CCamera*>::iterator iter_end = m_Camera.end() ;
 

@@ -18,6 +18,7 @@ public :
 	~TextureManager() ;
 
 	LPDIRECT3DTEXTURE9 GetTexture(string texfile, D3DXIMAGE_INFO **pTexInfo) ;
+	D3DXIMAGE_INFO GetTexInfo(string texfile) ;
 } ;
 
 #define g_TextureManager TextureManager::GetInstance()

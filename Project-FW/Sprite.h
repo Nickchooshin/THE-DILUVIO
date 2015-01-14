@@ -3,7 +3,7 @@
 
 class CSprite
 {
-private :
+protected :
 	LPDIRECT3DVERTEXBUFFER9	m_pVB ;
 	LPDIRECT3DINDEXBUFFER9	m_pIB ;
 	LPDIRECT3DTEXTURE9		m_pTexture ;
@@ -33,6 +33,7 @@ public :
 	void SetRGB(int R, int G, int B) ;							// RGB값 설정
 	void SetAlpha(int Alpha) ;									// 알파값 설정 0~255
 	
+	bool SetTexture(char *texfile) ;
 	void SetTextureUV(float u1, float v1, float u2, float v2) ;	// 텍스쳐 UV 설정
 	void TexReverse() ;											// 텍스쳐 뒤집기
 
@@ -42,7 +43,7 @@ public :
 private :
 	HRESULT InitVB() ;
 
-	bool SetTexture(char *texfile) ;
+	//bool SetTexture(char *texfile) ;
 	void SetupMatrices() ;
 } ;
 

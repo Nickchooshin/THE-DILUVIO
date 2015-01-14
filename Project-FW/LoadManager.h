@@ -16,9 +16,9 @@ public :
 	const bool CloseDat() ;
 	
 	const bool GetItem(char *item) ;
-	void GetString(char *str) ;
-	void GetValue(int &value) ;
-	void GetValue(float &value) ;
+	const bool GetString(char *str) ;
+	const bool GetValue(int &value) ;
+	const bool GetValue(float &value) ;
 } ;
 
 #define g_LoadManager LoadManager::GetInstance()

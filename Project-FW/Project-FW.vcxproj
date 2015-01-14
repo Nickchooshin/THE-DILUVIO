@@ -80,6 +80,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Button.cpp" />
+    <ClCompile Include="ButtonManager.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraManager.cpp" />
     <ClCompile Include="Collision.cpp" />
@@ -126,6 +128,8 @@
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SampleScene.cpp" />
     <ClCompile Include="Scene_Gravity.cpp" />
+    <ClCompile Include="Scene_StageSelect.cpp" />
+    <ClCompile Include="ScrollBackground.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="StageProgress.cpp" />
     <ClCompile Include="TextureManager.cpp" />
@@ -147,6 +151,8 @@
     <ClCompile Include="WinSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Button.h" />
+    <ClInclude Include="ButtonManager.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraManager.h" />
     <ClInclude Include="CollisionManager.h" />
@@ -194,6 +200,8 @@
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SampleScene.h" />
     <ClInclude Include="Scene_Gravity.h" />
+    <ClInclude Include="Scene_StageSelect.h" />
+    <ClInclude Include="ScrollBackground.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="StageProgress.h" />

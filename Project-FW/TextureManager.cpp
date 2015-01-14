@@ -45,6 +45,11 @@ LPDIRECT3DTEXTURE9 TextureManager::GetTexture(string texfile, D3DXIMAGE_INFO **p
 	return m_Texture[texfile] ;
 }
 
+D3DXIMAGE_INFO TextureManager::GetTexInfo(string texfile)
+{
+	return m_TexInfo[texfile] ;
+}
+
 /*
 map<string, class*> testmap;
 
