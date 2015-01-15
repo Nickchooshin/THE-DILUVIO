@@ -197,6 +197,7 @@
     <ClInclude Include="MusicManager.h" />
     <ClInclude Include="Objects.h" />
     <ClInclude Include="Friends_Okulo.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SampleScene.h" />
@@ -224,6 +225,12 @@
     <ClInclude Include="Tiles_Spark.h" />
     <ClInclude Include="UISprite.h" />
     <ClInclude Include="WinSystem.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Project-FW.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resource\Icon.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
