@@ -1,0 +1,177 @@
+#include "Scene_Title.h"
+#include "Scene_StageSelect.h"
+
+#include "Keyboard.h"
+#include "Mouse.h"
+#include "Joystick.h"
+
+#include "Sprite.h"
+#include "UISprite.h"
+#include "CameraManager.h"
+#include "MusicManager.h"
+#include "SceneManager.h"
+
+#include "D3dDevice.h"
+
+SceneTitle::SceneTitle() : m_pBackground(NULL),
+						   m_pBlank(NULL),
+						   m_nMenuNum(0),
+						   m_bFadeOut(false),
+						   m_fTime(0.0f)
+{
+	for(int i=0; i<4; i++)
+		m_pButton[i] = NULL ;
+}
+SceneTitle::~SceneTitle()
+{
+	if(m_pBackground!=NULL)
+		delete m_pBackground ;
+
+	if(m_pBlank!=NULL)
+		delete m_pBlank ;
+
+	for(int i=0; i<4; i++)
+		delete m_pButton[i] ;
+}
+
+Scene* SceneTitle::scene()
+{
+	Scene *scene = new SceneTitle ;
+
+	return scene ;
+}
+
+void SceneTitle::Init()
+{
+	float fWinWidth = (float)g_D3dDevice->GetWinWidth() ;
+	float fWinHeight = (float)g_D3dDevice->GetWinHeight() ;
+	
+	g_CameraManager->AllCameraClear() ;
+	g_CameraManager->AddCamera(new CCamera()) ;
+
+	m_pBackground = new CSprite ;
+	m_pBackground->Init("Resource/Image/Title/Background.png") ;
+	m_pBackground->SetPosition(fWinWidth / 2.0f, fWinHeight / 2.0f) ;
+
+	m_pButton[0] = new CSprite ;
+	m_pButton[0]->Init(211.0f, 121.0f, "Resource/Image/Title/Button_Start.png") ;
+	m_pButton[0]->SetTextureUV(211.0f, 0.0f, 422.0f, 121.0f) ;
+	m_pButton[0]->SetPosition(921.0f, fWinHeight - 331.0f) ;
+
+	m_pButton[1] = new CSprite ;
+	m_pButton[1]->Init(211.0f, 121.0f, "Resource/Image/Title/Button_Extra.png") ;
+	m_pButton[1]->SetTextureUV(0.0f, 0.0f, 211.0f, 121.0f) ;
+	m_pButton[1]->SetPosition(921.0f, fWinHeight - 452.0f) ;
+
+	m_pButton[2] = new CSprite ;
+	m_pButton[2]->Init(211.0f, 121.0f, "Resource/Image/Title/Button_Help.png") ;
+	m_pButton[2]->SetTextureUV(0.0f, 0.0f, 211.0f, 121.0f) ;
+	m_pButton[2]->SetPosition(921.0f, fWinHeight - 572.0f) ;
+
+	m_pButton[3] = new CSprite ;
+	m_pButton[3]->Init(211.0f, 121.0f, "Resource/Image/Title/Button_Exit.png") ;
+	m_pButton[3]->SetTextureUV(0.0f, 0.0f, 211.0f, 121.0f) ;
+	m_pButton[3]->SetPosition(921.0f, fWinHeight - 693.0f) ;
+
+	m_pBlank = new CSprite ;
+	m_pBlank->Init(fWinWidth, fWinHeight, "Resource/Image/blank.png") ;
+	m_pBlank->SetPosition(fWinWidth / 2.0f, fWinHeight / 2.0f) ;
+	m_pBlank->SetRGB(0.0f, 0.0f, 0.0f) ;
+	m_pBlank->SetAlpha(0) ;
+}
+
+void SceneTitle::Destroy()
+{
+}
+
+void SceneTitle::Update(float dt)
+{
+	g_Keyboard->Update() ;
+	g_Mouse->Update() ;
+	g_Joystick->Update() ;
+	g_MusicManager->Loop() ;
+
+	if(m_bFadeOut)
+	{
+		FadeOut() ;
+		return ;
+	}
+
+	MenuSelect() ;
+
+	if(g_Keyboard->IsPressDown(DIK_RETURN) || g_Keyboard->IsPressDown(DIK_Z))
+	{
+		switch(m_nMenuNum)
+		{
+		case 0 :
+		case 3 :
+			m_bFadeOut = true ;
+			return ;
+
+		case 1 :
+			return ;
+
+		case 2 :
+			return ;
+		}
+	}
+}
+
+void SceneTitle::Render()
+{
+	g_CameraManager->CameraRun() ;
+
+	m_pBackground->Render() ;
+
+	for(int i=0; i<4; i++)
+		m_pButton[i]->Render() ;
+
+	if(m_bFadeOut)
+		m_pBlank->Render() ;
+}
+
+void SceneTitle::MenuSelect()
+{
+	const int prevMenuNum = m_nMenuNum ;
+
+	if(g_Keyboard->IsPressDown(DIK_UP))
+	{
+		if(m_nMenuNum>0)
+			--m_nMenuNum ;
+	}
+	if(g_Keyboard->IsPressDown(DIK_DOWN))
+	{
+		if(m_nMenuNum<3)
+			++m_nMenuNum ;
+	}
+
+	if(m_nMenuNum!=prevMenuNum)
+	{
+		m_pButton[prevMenuNum]->SetTextureUV(0.0f, 0.0f, 211.0f, 121.0f) ;
+		m_pButton[m_nMenuNum]->SetTextureUV(211.0f, 0.0f, 422.0f, 121.0f) ;
+	}
+}
+
+void SceneTitle::FadeOut()
+{
+	int nAlpha = (int)((m_fTime / 3.0f) * 255.0f) ;
+	m_pBlank->SetAlpha(nAlpha) ;
+
+	if(m_fTime>=3.0f)
+	{
+		m_pBlank->SetAlpha(255) ;
+
+		switch(m_nMenuNum)
+		{
+		case 0 :
+			g_SceneManager->ChangeScene(SceneStageSelect::scene()) ;
+			return ;
+
+		case 3 :
+			PostQuitMessage(0) ;
+			return ;
+		}
+	}
+
+	m_fTime += g_D3dDevice->GetTime() ;
+}

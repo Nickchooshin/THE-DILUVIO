@@ -202,6 +202,9 @@
     <ClCompile Include="ScrollBackground.cpp">
       <Filter>ScrollBackground</Filter>
     </ClCompile>
+    <ClCompile Include="Scene_Title.cpp">
+      <Filter>Scene\Title</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h" />
@@ -411,6 +414,9 @@
     <ClInclude Include="ScrollBackground.h">
       <Filter>ScrollBackground</Filter>
     </ClInclude>
+    <ClInclude Include="Scene_Title.h">
+      <Filter>Scene\Title</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Input">
@@ -475,6 +481,9 @@
     </Filter>
     <Filter Include="ScrollBackground">
       <UniqueIdentifier>{9895b0ea-0959-4f9f-83da-11acc5d20990}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\Title">
+      <UniqueIdentifier>{b319d010-1945-49a7-9287-d9f64b4b0f7a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

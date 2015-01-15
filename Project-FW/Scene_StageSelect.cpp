@@ -1,5 +1,6 @@
 #include "Scene_StageSelect.h"
 #include "Scene_Gravity.h"
+#include "Scene_Title.h"
 
 #include "Keyboard.h"
 #include "Mouse.h"
@@ -175,7 +176,7 @@ void SceneStageSelect::Update(float dt)
 	else if(g_Keyboard->IsPressDown(DIK_ESCAPE) || g_Keyboard->IsPressDown(DIK_X))
 	{
 		m_pBack->SetTextureUV(96.0f, 0.0f, 192.0f, 96.0f) ;
-		//g_SceneManager->ChangeScene(SceneTitle::scene()) ;
+		g_SceneManager->ChangeScene(SceneTitle::scene()) ;
 		return ;
 	}
 }

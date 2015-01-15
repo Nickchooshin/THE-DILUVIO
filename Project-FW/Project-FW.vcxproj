@@ -129,6 +129,7 @@
     <ClCompile Include="SampleScene.cpp" />
     <ClCompile Include="Scene_Gravity.cpp" />
     <ClCompile Include="Scene_StageSelect.cpp" />
+    <ClCompile Include="Scene_Title.cpp" />
     <ClCompile Include="ScrollBackground.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="StageProgress.cpp" />
@@ -201,6 +202,7 @@
     <ClInclude Include="SampleScene.h" />
     <ClInclude Include="Scene_Gravity.h" />
     <ClInclude Include="Scene_StageSelect.h" />
+    <ClInclude Include="Scene_Title.h" />
     <ClInclude Include="ScrollBackground.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="Sprite.h" />
