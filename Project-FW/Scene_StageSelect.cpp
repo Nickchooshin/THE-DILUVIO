@@ -24,7 +24,8 @@ SceneStageSelect::SceneStageSelect() : m_pBackground(NULL),
 									   m_pPrev(NULL), m_pNext(NULL), m_pBack(NULL),
 									   m_pChapterNumber(NULL), m_pStageNumber(NULL), m_pStageName(NULL),
 									   m_bPressPrev(false), m_bPressNext(false),
-									   m_fBackgroundX(0.0f)
+									   m_fBackgroundX(0.0f),
+									   m_pBGM(NULL)
 {
 	for(int i=0; i<5; i++)
 		m_pProgress[i] = NULL ;
@@ -152,10 +153,14 @@ void SceneStageSelect::Init()
 	m_pStageName->SetPosition(395.0f, fWinHeight - 242.0f) ;
 
 	AllocateStageName() ;
+
+	m_pBGM = g_MusicManager->LoadMusic("Resource/Sound/BGM_StageSelect.mp3", true, true) ;
+	g_MusicManager->PlayMusic(m_pBGM) ;
 }
 
 void SceneStageSelect::Destroy()
 {
+	g_MusicManager->StopMusic() ;
 }
 
 void SceneStageSelect::Update(float dt)

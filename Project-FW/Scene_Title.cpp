@@ -17,7 +17,8 @@ SceneTitle::SceneTitle() : m_pBackground(NULL),
 						   m_pBlank(NULL),
 						   m_nMenuNum(0),
 						   m_bFadeOut(false),
-						   m_fTime(0.0f)
+						   m_fTime(0.0f),
+						   m_pBGM(NULL)
 {
 	for(int i=0; i<4; i++)
 		m_pButton[i] = NULL ;
@@ -78,10 +79,14 @@ void SceneTitle::Init()
 	m_pBlank->SetPosition(fWinWidth / 2.0f, fWinHeight / 2.0f) ;
 	m_pBlank->SetRGB(0.0f, 0.0f, 0.0f) ;
 	m_pBlank->SetAlpha(0) ;
+	
+	m_pBGM = g_MusicManager->LoadMusic("Resource/Sound/BGM_Title.mp3", true, true) ;
+	g_MusicManager->PlayMusic(m_pBGM) ;
 }
 
 void SceneTitle::Destroy()
 {
+	g_MusicManager->StopMusic() ;
 }
 
 void SceneTitle::Update(float dt)

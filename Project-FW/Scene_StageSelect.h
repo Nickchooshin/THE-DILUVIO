@@ -2,6 +2,7 @@
 
 #include "Scene.h"
 #include <vector>
+#include <fmod.hpp>
 
 class CSprite ;
 class CScrollBackground ;
@@ -20,6 +21,8 @@ private :
 	bool m_bPressPrev, m_bPressNext ;
 
 	float m_fBackgroundX ;
+
+	FMOD::Sound *m_pBGM ;
 
 public :
 	static Scene* scene() ;
