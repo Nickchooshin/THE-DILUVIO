@@ -68,7 +68,7 @@ void CMapBackground::Render()
 
 void CMapBackground::Clear()
 {
-	if(!m_MapBackground_List.empty())
+	if(m_MapBackground_List.empty())
 		return ;
 
 	for(int i=0; i<m_nSize; i++)
