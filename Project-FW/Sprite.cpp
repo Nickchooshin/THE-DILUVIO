@@ -66,6 +66,16 @@ void CSprite::SetPosition(float X, float Y)
 	m_Position.y = (float)((int) (Y + 0.5f) ) ;
 }
 
+void CSprite::SetPositionX(float X)
+{
+	m_Position.x = (float)((int) (X + 0.5f) ) ;
+}
+
+void CSprite::SetPositionY(float Y)
+{
+	m_Position.y = (float)((int) (Y + 0.5f) ) ;
+}
+
 void CSprite::SetPositionZ(float Z)
 {
 	m_Position.z = Z ;

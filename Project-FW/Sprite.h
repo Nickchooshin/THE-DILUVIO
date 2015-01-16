@@ -26,6 +26,8 @@ public :
 	bool Init(float Width, float Height, char *texfile) ;
 
 	void SetPosition(float X, float Y) ;						// 좌표설정 (중앙 기준)
+	void SetPositionX(float X) ;
+	void SetPositionY(float Y) ;
 	void SetPositionZ(float Z) ;								// Z축 좌표설정
 	void SetCenterPosition(float CenterX, float CenterY) ;		// 중심점 설정
 	void SetScale(float ScaleX, float ScaleY) ;					// 확대, 축소

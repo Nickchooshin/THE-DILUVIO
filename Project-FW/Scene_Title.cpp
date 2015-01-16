@@ -77,7 +77,7 @@ void SceneTitle::Init()
 	m_pBlank = new CSprite ;
 	m_pBlank->Init(fWinWidth, fWinHeight, "Resource/Image/blank.png") ;
 	m_pBlank->SetPosition(fWinWidth / 2.0f, fWinHeight / 2.0f) ;
-	m_pBlank->SetRGB(0.0f, 0.0f, 0.0f) ;
+	m_pBlank->SetRGB(0, 0, 0) ;
 	m_pBlank->SetAlpha(0) ;
 	
 	m_pBGM = g_MusicManager->LoadMusic("Resource/Sound/BGM_Title.mp3", true, true) ;

@@ -2,13 +2,17 @@
 
 #include <vector>
 
-class CScrollBackground ;
+class CSprite ;
 
 class CMapBackground
 {
 private :
-	std::vector<CScrollBackground*> m_MapBackground_List ;
+	std::vector<CSprite*> m_MapBackground_List ;
+	std::vector<float> m_MapBackgroundX_List ;
 	int m_nSize ;
+	bool m_bBrick ;
+
+	float m_fMapWidth ;
 
 public :
 	CMapBackground() ;

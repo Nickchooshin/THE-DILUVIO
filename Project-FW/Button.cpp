@@ -29,8 +29,8 @@ void CButton::Init(char *texfile)
 	m_pSprite->Init(texfile) ;
 
 	D3DXIMAGE_INFO TexInfo = g_TextureManager->GetTexInfo(texfile) ;
-	m_fWidth = TexInfo.Width ;
-	m_fHeight = TexInfo.Height ;
+	m_fWidth = (float)TexInfo.Width ;
+	m_fHeight = (float)TexInfo.Height ;
 }
 
 void CButton::Init(float Width, float Height, char *texfile)

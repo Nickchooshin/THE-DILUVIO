@@ -187,7 +187,7 @@ void SceneGravity::Update(float dt)
 	g_CollisionManager->CollisionY() ;
 
 	// Background Scroll
-	//m_pMapBackground->Scroll() ;
+	m_pMapBackground->Scroll() ;
 
 	// Game_Over or Game_Clear
 	if(g_StageProgress->NowStageState()!=g_StageProgress->NONE)
@@ -214,7 +214,7 @@ void SceneGravity::Render()
 	g_CameraManager->SetPosition(m_pHero->GetPositionX(), m_pHero->GetPositionY()) ;
 	g_CameraManager->CameraRun() ;
 
-	//m_pMapBackground->Render() ;
+	m_pMapBackground->Render() ;
 
 	g_MapTiles_List->Render() ;
 	g_Friends_List->Render() ;
