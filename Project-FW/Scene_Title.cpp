@@ -55,23 +55,23 @@ void SceneTitle::Init()
 	m_pBackground->SetPosition(fWinWidth / 2.0f, fWinHeight / 2.0f) ;
 
 	m_pButton[0] = new CSprite ;
-	m_pButton[0]->Init(211.0f, 121.0f, "Resource/Image/Title/Button_Start.png") ;
-	m_pButton[0]->SetTextureUV(211.0f, 0.0f, 422.0f, 121.0f) ;
+	m_pButton[0]->Init(212.0f, 122.0f, "Resource/Image/Title/Button_Start.png") ;
+	m_pButton[0]->SetTextureUV(212.0f, 0.0f, 424.0f, 122.0f) ;
 	m_pButton[0]->SetPosition(921.0f, fWinHeight - 331.0f) ;
 
 	m_pButton[1] = new CSprite ;
-	m_pButton[1]->Init(211.0f, 121.0f, "Resource/Image/Title/Button_Extra.png") ;
-	m_pButton[1]->SetTextureUV(0.0f, 0.0f, 211.0f, 121.0f) ;
+	m_pButton[1]->Init(212.0f, 122.0f, "Resource/Image/Title/Button_Extra.png") ;
+	m_pButton[1]->SetTextureUV(0.0f, 0.0f, 212.0f, 122.0f) ;
 	m_pButton[1]->SetPosition(921.0f, fWinHeight - 452.0f) ;
 
 	m_pButton[2] = new CSprite ;
-	m_pButton[2]->Init(211.0f, 121.0f, "Resource/Image/Title/Button_Help.png") ;
-	m_pButton[2]->SetTextureUV(0.0f, 0.0f, 211.0f, 121.0f) ;
+	m_pButton[2]->Init(212.0f, 122.0f, "Resource/Image/Title/Button_Help.png") ;
+	m_pButton[2]->SetTextureUV(0.0f, 0.0f, 212.0f, 122.0f) ;
 	m_pButton[2]->SetPosition(921.0f, fWinHeight - 572.0f) ;
 
 	m_pButton[3] = new CSprite ;
-	m_pButton[3]->Init(211.0f, 121.0f, "Resource/Image/Title/Button_Exit.png") ;
-	m_pButton[3]->SetTextureUV(0.0f, 0.0f, 211.0f, 121.0f) ;
+	m_pButton[3]->Init(212.0f, 122.0f, "Resource/Image/Title/Button_Exit.png") ;
+	m_pButton[3]->SetTextureUV(0.0f, 0.0f, 212.0f, 122.0f) ;
 	m_pButton[3]->SetPosition(921.0f, fWinHeight - 693.0f) ;
 
 	m_pBlank = new CSprite ;
@@ -104,7 +104,7 @@ void SceneTitle::Update(float dt)
 
 	MenuSelect() ;
 
-	if(g_Keyboard->IsPressDown(DIK_RETURN) || g_Keyboard->IsPressDown(DIK_Z))
+	if(g_Keyboard->IsPressDown(DIK_RETURN) || g_Keyboard->IsPressDown(DIK_SPACE) || g_Keyboard->IsPressDown(DIK_Z))
 	{
 		switch(m_nMenuNum)
 		{
@@ -152,8 +152,8 @@ void SceneTitle::MenuSelect()
 
 	if(m_nMenuNum!=prevMenuNum)
 	{
-		m_pButton[prevMenuNum]->SetTextureUV(0.0f, 0.0f, 211.0f, 121.0f) ;
-		m_pButton[m_nMenuNum]->SetTextureUV(211.0f, 0.0f, 422.0f, 121.0f) ;
+		m_pButton[prevMenuNum]->SetTextureUV(0.0f, 0.0f, 212.0f, 122.0f) ;
+		m_pButton[m_nMenuNum]->SetTextureUV(212.0f, 0.0f, 424.0f, 122.0f) ;
 	}
 }
 

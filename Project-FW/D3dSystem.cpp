@@ -48,6 +48,7 @@ HRESULT CD3dSystem::InitD3d(const HINSTANCE hInst, const HWND hWnd, const int nW
 
 	if( FAILED( m_pD3d->CreateDevice( D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd, D3DCREATE_MIXED_VERTEXPROCESSING, &d3dpp, &m_pd3dDevice ) ) )
 	{
+		printf("D3DCREATE_MIXED_VERTEXPROCESSING FAIL\n") ;
 		//if( FAILED( m_pD3d->CreateDevice( D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd, D3DCREATE_HARDWARE_VERTEXPROCESSING, &d3dpp, &m_pd3dDevice ) ) )
 		{
 			if( FAILED( m_pD3d->CreateDevice( D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd, D3DCREATE_SOFTWARE_VERTEXPROCESSING, &d3dpp, &m_pd3dDevice ) ) )

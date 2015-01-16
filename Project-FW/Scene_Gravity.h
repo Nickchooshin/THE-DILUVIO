@@ -4,11 +4,13 @@
 
 class CHero ;
 class CSprite ;
+class CMapBackground ;
 
 class SceneGravity : public Scene
 {
 private :
 	CHero *m_pHero ;
+	CMapBackground *m_pMapBackground ;
 
 	CSprite *m_pMenu, *m_pEndMenu ;
 	CSprite *m_pMenuButton[3], *m_pEndMenuButton[2] ;

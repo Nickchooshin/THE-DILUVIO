@@ -20,7 +20,7 @@ protected :
 
 public :
 	CSprite() ;
-	~CSprite() ;
+	virtual ~CSprite() ;
 
 	bool Init(char *texfile) ;
 	bool Init(float Width, float Height, char *texfile) ;

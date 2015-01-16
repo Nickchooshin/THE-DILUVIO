@@ -19,6 +19,7 @@
 #include "Friends_List.h"
 #include "DynamicObjects_List.h"
 #include "Effect_List.h"
+#include "MapBackground.h"
 
 #include "StageProgress.h"
 
@@ -26,6 +27,7 @@
 #include "CollisionManager.h"
 
 SceneGravity::SceneGravity() : m_pHero(NULL),
+							   m_pMapBackground(NULL),
 							   m_pEndMenu(NULL),
 							   m_fTime(0.0f),
 							   m_bMenu(false),
@@ -45,6 +47,8 @@ SceneGravity::~SceneGravity()
 
 	if(m_pHero!=NULL)
 		delete m_pHero ;
+	if(m_pMapBackground!=NULL)
+		delete m_pMapBackground ;
 
 	g_DynamicObjects_List->Clear() ;
 	g_Friends_List->Clear() ;
@@ -88,6 +92,9 @@ void SceneGravity::Init()
 	pCamera->SetWorldSize(-32.0f, -32.0f, (MapSize.x*64.0f)-32.0f, (MapSize.y*64.0f)-32.0f) ;
 	g_CameraManager->AddCamera(pCamera, 0) ;
 
+	m_pMapBackground = new CMapBackground ;
+	m_pMapBackground->Init() ;
+
 	Position HeroPos = g_MapTiles_List->GetHeroPosition() ;
 	m_pHero = new CHero ;
 	m_pHero->Init() ;
@@ -100,16 +107,16 @@ void SceneGravity::Init()
 	m_pEndMenu->SetAlpha(0) ;
 
 	m_pMenuButton[0] = new CSprite ;
-	m_pMenuButton[0]->Init(291.0f, 83.0f, "Resource/Image/Menu/Button_PContinue.png") ;
-	m_pMenuButton[0]->SetTextureUV(291.0f, 0.0f, 582.0f, 83.0f) ;
+	m_pMenuButton[0]->Init(292.0f, 84.0f, "Resource/Image/Menu/Button_PContinue.png") ;
+	m_pMenuButton[0]->SetTextureUV(292.0f, 0.0f, 584.0f, 84.0f) ;
 	
 	m_pMenuButton[1] = new CSprite ;
-	m_pMenuButton[1]->Init(291.0f, 83.0f, "Resource/Image/Menu/Button_PReplay.png") ;
-	m_pMenuButton[1]->SetTextureUV(0.0f, 0.0f, 291.0f, 83.0f) ;
+	m_pMenuButton[1]->Init(292.0f, 84.0f, "Resource/Image/Menu/Button_PReplay.png") ;
+	m_pMenuButton[1]->SetTextureUV(0.0f, 0.0f, 292.0f, 84.0f) ;
 
 	m_pMenuButton[2] = new CSprite ;
-	m_pMenuButton[2]->Init(291.0f, 83.0f, "Resource/Image/Menu/Button_PSelect.png") ;
-	m_pMenuButton[2]->SetTextureUV(0.0f, 0.0f, 291.0f, 83.0f) ;
+	m_pMenuButton[2]->Init(292.0f, 84.0f, "Resource/Image/Menu/Button_PSelect.png") ;
+	m_pMenuButton[2]->SetTextureUV(0.0f, 0.0f, 292.0f, 84.0f) ;
 
 	m_pEndMenuButton[0] = new CSprite ;
 	m_pEndMenuButton[0]->Init(296.0f, 78.0f, "Resource/Image/Menu/Button_Replay.png") ;
@@ -179,6 +186,10 @@ void SceneGravity::Update(float dt)
 	// Collision Y
 	g_CollisionManager->CollisionY() ;
 
+	// Background Scroll
+	//m_pMapBackground->Scroll() ;
+
+	// Game_Over or Game_Clear
 	if(g_StageProgress->NowStageState()!=g_StageProgress->NONE)
 	{
 		m_GameEndMenuState = MENU_IN ;
@@ -203,6 +214,8 @@ void SceneGravity::Render()
 	g_CameraManager->SetPosition(m_pHero->GetPositionX(), m_pHero->GetPositionY()) ;
 	g_CameraManager->CameraRun() ;
 
+	//m_pMapBackground->Render() ;
+
 	g_MapTiles_List->Render() ;
 	g_Friends_List->Render() ;
 	m_pHero->Render() ;
@@ -224,9 +237,9 @@ void SceneGravity::Render()
 
 void SceneGravity::GameMenu()
 {
-	MenuButtonMove(m_pMenuButton, 291.0f, 83.0f, 3) ;
+	MenuButtonMove(m_pMenuButton, 292.0f, 84.0f, 3) ;
 		
-	if(g_Keyboard->IsPressDown(DIK_RETURN))
+	if(g_Keyboard->IsPressDown(DIK_RETURN) || g_Keyboard->IsPressDown(DIK_SPACE) || g_Keyboard->IsPressDown(DIK_Z))
 	{
 		if(m_nSelectMenuNum==0)
 		{
@@ -286,7 +299,7 @@ void SceneGravity::GameEndMenu()
 	{
 		MenuButtonMove(m_pEndMenuButton, 296.0f, 78.0f, 2) ;
 		
-		if(g_Keyboard->IsPressDown(DIK_RETURN))
+		if(g_Keyboard->IsPressDown(DIK_RETURN) || g_Keyboard->IsPressDown(DIK_SPACE) || g_Keyboard->IsPressDown(DIK_Z))
 		{
 			if(m_nSelectMenuNum==0)
 			{

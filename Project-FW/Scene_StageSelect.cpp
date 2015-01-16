@@ -173,7 +173,7 @@ void SceneStageSelect::Update(float dt)
 	m_pBackground->Scroll() ;
 	StageSelect() ;
 
-	if(g_Keyboard->IsPressDown(DIK_SPACE) || g_Keyboard->IsPressDown(DIK_Z))
+	if(g_Keyboard->IsPressDown(DIK_RETURN) || g_Keyboard->IsPressDown(DIK_SPACE) || g_Keyboard->IsPressDown(DIK_Z))
 	{
 		g_SceneManager->ChangeScene(SceneGravity::scene()) ;
 		return ;

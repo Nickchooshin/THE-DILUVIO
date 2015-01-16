@@ -205,6 +205,12 @@
     <ClCompile Include="Scene_Title.cpp">
       <Filter>Scene\Title</Filter>
     </ClCompile>
+    <ClCompile Include="Scene_Logo.cpp">
+      <Filter>Scene\Logo</Filter>
+    </ClCompile>
+    <ClCompile Include="MapBackground.cpp">
+      <Filter>ScrollBackground</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h" />
@@ -418,6 +424,12 @@
       <Filter>Scene\Title</Filter>
     </ClInclude>
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Scene_Logo.h">
+      <Filter>Scene\Logo</Filter>
+    </ClInclude>
+    <ClInclude Include="MapBackground.h">
+      <Filter>ScrollBackground</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Input">
@@ -485,6 +497,9 @@
     </Filter>
     <Filter Include="Scene\Title">
       <UniqueIdentifier>{b319d010-1945-49a7-9287-d9f64b4b0f7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\Logo">
+      <UniqueIdentifier>{ae07fb2e-bb32-4e17-a4c3-1bbfd92afed2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
