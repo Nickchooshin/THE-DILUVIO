@@ -159,10 +159,10 @@ void SceneTitle::MenuSelect()
 
 void SceneTitle::FadeOut()
 {
-	int nAlpha = (int)((m_fTime / 3.0f) * 255.0f) ;
+	int nAlpha = (int)((m_fTime / 1.0f) * 255.0f) ;
 	m_pBlank->SetAlpha(nAlpha) ;
 
-	if(m_fTime>=3.0f)
+	if(m_fTime>=1.0f)
 	{
 		m_pBlank->SetAlpha(255) ;
 

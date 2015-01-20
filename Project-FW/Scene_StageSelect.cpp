@@ -149,10 +149,9 @@ void SceneStageSelect::Init()
 
 	m_pStageName = new CSprite ;
 	m_pStageName->Init(256.0f, 30.0f, "Resource/Image/StageSelect/Chapter1_StageName.png") ;
-	m_pStageName->SetTextureUV(0.0f, ((nStage-1) * 30.0f), 256.0f, (nStage * 30.0f)) ;
 	m_pStageName->SetPosition(395.0f, fWinHeight - 242.0f) ;
-
 	AllocateStageName() ;
+	m_pStageName->SetTextureUV(0.0f, ((nStage-1) * 30.0f), 256.0f, (nStage * 30.0f)) ;
 
 	m_pBGM = g_MusicManager->LoadMusic("Resource/Sound/BGM_StageSelect.mp3", true, true) ;
 	g_MusicManager->PlayMusic(m_pBGM) ;
