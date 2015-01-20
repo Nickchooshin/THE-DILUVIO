@@ -84,7 +84,8 @@ void CMapBackground::Init()
 
 	m_nSize = m_MapBackground_List.size() ;
 
-	m_fMapWidth = MapSize.x ;
+	//m_fMapWidth = MapSize.x ;
+	m_fMapWidth = BackgroundSize.x * WinWidth ;
 }
 
 void CMapBackground::Scroll()
@@ -99,7 +100,7 @@ void CMapBackground::Scroll()
 	for(int i=0; i<m_nSize; i++)
 	{
 		fX = m_MapBackgroundX_List[i] + fScrollSpeed ;
-		if(fX<-fWinWidthHalf)
+		if(fX<(-fWinWidthHalf - 32.0f))
 			fX += m_fMapWidth ;
 
 		m_MapBackground_List[i]->SetPositionX(fX) ;
@@ -121,7 +122,7 @@ void CMapBackground::Render()
 		pSprite->Render() ;
 
 		fX = m_MapBackgroundX_List[i] ;
-		if(fX<fWinWidthHalf)
+		if(fX<(fWinWidthHalf - 32.0f))
 		{
 			pSprite->SetPositionX(fX + m_fMapWidth) ;
 			pSprite->Render() ;

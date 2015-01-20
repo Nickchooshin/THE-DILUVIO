@@ -123,7 +123,33 @@ void CMapTiles_List::LoadMap()
 				TileList[index] = pTile ;
 				//
 			}
+
+			/*// 맵 밖으로 나가지 못하게 하기 위한, 경계선 블럭 X축
+			//CTiles *pTile ;
+
+			pTile = new CTiles_GroundStone ;
+			pTile->Init() ;
+			pTile->SetPosition((float)(x * 64), -64.0f) ;
+			m_MapTiles_List.push_back(pTile) ;
+		
+			pTile = new CTiles_GroundStone ;
+			pTile->Init() ;
+			pTile->SetPosition((float)(x * 64), (float)(mapSizeY * 64)) ;
+			m_MapTiles_List.push_back(pTile) ;*/
 		}
+
+		/*// 맵 밖으로 나가지 못하게 하기 위한, 경계선 블럭 Y축
+		CTiles *pTile ;
+
+		pTile = new CTiles_GroundStone ;
+		pTile->Init() ;
+		pTile->SetPosition(-64.0f, (float)(y * 64)) ;
+		m_MapTiles_List.push_back(pTile) ;
+		
+		pTile = new CTiles_GroundStone ;
+		pTile->Init() ;
+		pTile->SetPosition((float)(mapSizeX * 64), (float)(y * 64)) ;
+		m_MapTiles_List.push_back(pTile) ;*/
 	}
 
 	fclose(map) ;

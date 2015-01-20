@@ -3,7 +3,7 @@
 
 const int CStageProgress::nChapterMaxStage[5] = {8, 9, 8, 7, 5 } ;
 
-CStageProgress::CStageProgress() : m_nChapterProgress(5), m_nStageProgress(4),
+CStageProgress::CStageProgress() : m_nChapterProgress(5), m_nStageProgress(5),
 								   m_nSelectChapter(1), m_nSelectStage(1),
 								   m_NowStageState(NONE)
 {
