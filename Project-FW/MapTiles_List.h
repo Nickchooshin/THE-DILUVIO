@@ -10,7 +10,7 @@ class CDynamicObjects ;
 class CMapTiles_List : public Singleton<CMapTiles_List>
 {
 private :
-	std::vector<CTiles*> m_MapTiles_List ;
+	CTiles ***m_pMapTiles_List ;
 
 	Position m_HeroPos ;
 	Size m_MapSize ;
@@ -26,11 +26,9 @@ public :
 	const Position GetHeroPosition() ;
 	const Size GetMapSize() ;
 	CTiles* GetTile(int x, int y) ;
-	//
 	void DeleteTile(CTiles *pTile) ;
-	//
 
-	const std::vector<CTiles*> GetMapTilesList() ;
+	std::vector<CTiles*> GetAdjacentMapTilesList(int x, int y, int radius=1) ;
 
 	void Update() ;
 

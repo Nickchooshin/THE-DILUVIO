@@ -21,9 +21,9 @@ void CCollisionManager::CollisionX()
 	CDynamicObjects *pDynamicObject ;
 	CTiles *pTile ;
 	std::vector<CDynamicObjects*> DynamicObjects_List = g_DynamicObjects_List->GetDynamicObjectsList() ;
-	std::vector<CTiles*> MapTiles_List = g_MapTiles_List->GetMapTilesList() ;
+	std::vector<CTiles*> MapTiles_List ;
 	const int ObjectSize = DynamicObjects_List.size() ;
-	const int TileSize = MapTiles_List.size() ;
+	int TileSize ;
 
 	for(int Index_o=0; Index_o<ObjectSize; Index_o++)
 	{
@@ -32,6 +32,12 @@ void CCollisionManager::CollisionX()
 		pDynamicObject->SetMultipleJump(false) ;
 
 		//********** MapTiles_List Collision **********//
+		const int x = (int)(pDynamicObject->GetPositionX() / 64.0f) ;
+		const int y = (int)(pDynamicObject->GetPositionY() / 64.0f) ;
+
+		MapTiles_List = g_MapTiles_List->GetAdjacentMapTilesList(x, y) ;
+		TileSize = MapTiles_List.size() ;
+
 		for(int Index_t=0; Index_t<TileSize; Index_t++)
 		{
 			pTile = MapTiles_List[Index_t] ;
@@ -61,9 +67,9 @@ void CCollisionManager::CollisionY()
 	CDynamicObjects *pDynamicObject ;
 	CTiles *pTile ;
 	std::vector<CDynamicObjects*> DynamicObjects_List = g_DynamicObjects_List->GetDynamicObjectsList() ;
-	std::vector<CTiles*> MapTiles_List = g_MapTiles_List->GetMapTilesList() ;
+	std::vector<CTiles*> MapTiles_List ;
 	const int ObjectSize = DynamicObjects_List.size() ;
-	const int TileSize = MapTiles_List.size() ;
+	int TileSize ;
 
 	std::sort(DynamicObjects_List.begin(), DynamicObjects_List.end(), CObjects::collision_priority) ;
 
@@ -76,6 +82,12 @@ void CCollisionManager::CollisionY()
 		pDynamicObject->SetMultipleJump(false) ;
 
 		//********** MapTiles_List Collision **********//
+		const int x = (int)(pDynamicObject->GetPositionX() / 64.0f) ;
+		const int y = (int)(pDynamicObject->GetPositionY() / 64.0f) ;
+
+		MapTiles_List = g_MapTiles_List->GetAdjacentMapTilesList(x, y) ;
+		TileSize = MapTiles_List.size() ;
+
 		for(int Index_t=0; Index_t<TileSize; Index_t++)
 		{
 			pTile = MapTiles_List[Index_t] ;

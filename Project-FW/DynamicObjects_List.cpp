@@ -56,6 +56,7 @@ void CDynamicObjects_List::Update()
 	{
 		pDynamicObject = m_DynamicObjects_List[i] ;
 		pDynamicObject->Update() ;
+		pDynamicObject->EventClear() ;
 	}
 }
 

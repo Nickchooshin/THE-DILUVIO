@@ -34,68 +34,48 @@ void CEffect_List::Collision()
 	CTiles *pTile ;
 	CEffect *pEffect ;
 	std::vector<CDynamicObjects*> DynamicObjects_List = g_DynamicObjects_List->GetDynamicObjectsList() ;
-	std::vector<CTiles*> MapTiles_List = g_MapTiles_List->GetMapTilesList() ;
-	/*const int ObjectSize = DynamicObjects_List.size() ;
+	std::vector<CTiles*> MapTiles_List ;
+	
 	const int EffectSize = m_Effect_List.size() ;
+	const int ObjectSize = DynamicObjects_List.size() ;
+	int TileSize ;
 
-	for(int Index_o=0; Index_o<ObjectSize; Index_o++)
+	for(int Index_e=0; Index_e<EffectSize; Index_e++)
 	{
-		pDynamicObject = DynamicObjects_List[Index_o] ;
+		pEffect = m_Effect_List[Index_e] ;
 
-		for(int Index_e=0; Index_e<EffectSize; Index_e++)
+		if(!pEffect->BeVisible())
+			continue ;
+
+		//********** DynamicObjects_List Collision **********//
+		for(int Index_o=0; Index_o<ObjectSize; Index_o++)
 		{
-			pEffect = m_Effect_List[Index_e] ;
+			pDynamicObject = DynamicObjects_List[Index_o] ;
+
 			bool bCollision=false ;
 
-			bCollision = col.DotCirleCollision(pDynamicObject, pEffect) ;
+			bCollision = col.RectCircleCollision(pDynamicObject, pEffect) ;
 			if(bCollision)
 				pEffect->Effect(pDynamicObject) ;
 		}
-	}*/
 
-	const int ObjectSize = DynamicObjects_List.size() ;
-	const int TileSize = MapTiles_List.size() ;
-	const int EffectSize = m_Effect_List.size() ;
+		//********** MapTiles_List Collision **********//
+		const int x = (int)(pEffect->GetPositionX() / 64.0f) ;
+		const int y = (int)(pEffect->GetPositionY() / 64.0f) ;
+		const int radius = pEffect->GetBoundingCircle().radius ;
 
-	for(int Index=0; Index<ObjectSize || Index<TileSize; Index++)
-	{
-		if(Index<ObjectSize)
+		MapTiles_List = g_MapTiles_List->GetAdjacentMapTilesList(x, y, radius) ;
+		TileSize = MapTiles_List.size() ;
+
+		for(int Index_t=0; Index_t<TileSize; Index_t++)
 		{
-			pDynamicObject = DynamicObjects_List[Index] ;
-			pDynamicObject->EventClear() ;
+			pTile = MapTiles_List[Index_t] ;
+
+			bool bCollision=false ;
+
+			bCollision = col.RectCircleCollision(pTile, pEffect) ;
+			if(bCollision)
+				pEffect->Effect(pTile) ;
 		}
-		if(Index<TileSize)
-		{
-			pTile = MapTiles_List[Index] ;
-			pTile->EventClear() ;
-		}
-
-		for(int Index_e=0; Index_e<EffectSize; Index_e++)
-		{
-			pEffect = m_Effect_List[Index_e] ;
-
-			if(!pEffect->BeVisible())
-				continue ;
-
-			if(pDynamicObject!=NULL)
-			{
-				bool bCollision=false ;
-
-				bCollision = col.RectCircleCollision(pDynamicObject, pEffect) ;
-				if(bCollision)
-					pEffect->Effect(pDynamicObject) ;
-			}
-			if(pTile!=NULL)
-			{
-				bool bCollision=false ;
-
-				bCollision = col.RectCircleCollision(pTile, pEffect) ;
-				if(bCollision)
-					pEffect->Effect(pTile) ;
-			}
-		}
-
-		pDynamicObject = NULL ;
-		pTile = NULL ;
 	}
 }
