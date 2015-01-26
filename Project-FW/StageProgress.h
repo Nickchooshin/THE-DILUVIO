@@ -35,6 +35,10 @@ public :
 
 	void StageClear() ;
 	void StageOver() ;
+
+private :
+	void StageProgressSave() ;
+	bool StageProgressLoad() ;
 } ;
 
 #define g_StageProgress CStageProgress::GetInstance()

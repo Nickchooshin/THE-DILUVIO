@@ -3,7 +3,7 @@
 
 const int CStageProgress::nChapterMaxStage[5] = {8, 9, 8, 7, 5 } ;
 
-CStageProgress::CStageProgress() : m_nChapterProgress(5), m_nStageProgress(5),
+CStageProgress::CStageProgress() : m_nChapterProgress(1), m_nStageProgress(1),
 								   m_nSelectChapter(1), m_nSelectStage(1),
 								   m_NowStageState(NONE)
 {
@@ -23,6 +23,8 @@ CStageProgress::CStageProgress() : m_nChapterProgress(5), m_nStageProgress(5),
 
 		fclose(pFile) ;
 	}
+
+	StageProgressLoad() ;
 }
 CStageProgress::~CStageProgress()
 {
@@ -122,10 +124,39 @@ void CStageProgress::StageClear()
 			++m_nChapterProgress ;
 			m_nStageProgress = 1 ;
 		}
+
+		StageProgressSave() ;
 	}
 }
 
 void CStageProgress::StageOver()
 {
 	m_NowStageState = OVER ;
+}
+
+void CStageProgress::StageProgressSave()
+{
+	FILE *pFile = fopen("Resource/Data/.sav", "wb") ;
+
+	fprintf(pFile, "%d%d", m_nChapterProgress, m_nStageProgress) ;
+
+	fclose(pFile) ;
+}
+
+bool CStageProgress::StageProgressLoad()
+{
+	FILE *pFile = fopen("Resource/Data/.sav", "rb") ;
+
+	if(pFile==NULL)
+		return false ;
+
+	char value[3] ;
+
+	fscanf(pFile, "%s", &value) ;
+	m_nChapterProgress = value[0] - '0' ;
+	m_nStageProgress = value[1] - '0' ;
+
+	fclose(pFile) ;
+
+	return true ;
 }
