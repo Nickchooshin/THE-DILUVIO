@@ -17,6 +17,7 @@ SceneLogo::SceneLogo() : m_pBlank(NULL),
 						 m_pTeamLogo(NULL), m_pTeamLogoMono(NULL),
 						 m_pGameLogo(NULL),
 						 m_pWarningLogo(NULL),
+						 m_pSETeamLogo(NULL), m_pSETitleLogo(NULL), m_pSEWarningLogo(NULL),
 						 m_fTime(0.0f),
 						 m_LogoState(TEAMLOGOMONO_IN)
 {
@@ -67,17 +68,23 @@ void SceneLogo::Init()
 	m_pGameLogo = new CSprite ;
 	m_pGameLogo->Init("Resource/Image/Logo/Game_Logo.png") ;
 	m_pGameLogo->SetPosition(fWinWidth / 2.0f, fWinHeight / 2.0f) ;
+	m_pGameLogo->SetAlpha(0) ;
 
 	m_pWarningLogo = new CSprite ;
 	m_pWarningLogo->Init("Resource/Image/Logo/Warning_Logo.png") ;
 	m_pWarningLogo->SetPosition(fWinWidth / 2.0f, fWinHeight / 2.0f) ;
+	m_pWarningLogo->SetAlpha(0) ;
 
-	m_pBGM = g_MusicManager->LoadMusic("Resource/Sound/SE_Team_Logo.mp3", false, false) ;
-	g_MusicManager->PlayMusic(m_pBGM) ;
+	m_pSETeamLogo = g_MusicManager->LoadMusic("Resource/Sound/SE_Team_Logo.mp3", false, false) ;
+	m_pSETitleLogo = g_MusicManager->LoadMusic("Resource/Sound/SE_GameTitle.mp3", false, false) ;
+	m_pSEWarningLogo = g_MusicManager->LoadMusic("Resource/Sound/SE_Warning_Logo.mp3", false, false) ;
+
+	g_MusicManager->PlayMusic(m_pSETeamLogo) ;
 }
 
 void SceneLogo::Destroy()
 {
+	g_MusicManager->StopMusic() ;
 }
 
 void SceneLogo::Update(float dt)
@@ -87,6 +94,20 @@ void SceneLogo::Update(float dt)
 	g_Joystick->Update() ;
 	g_MusicManager->Loop() ;
 
+	if(g_Keyboard->IsPressDown(DIK_RETURN))
+	{
+		m_fTime = 0.0f ;
+
+		if(m_LogoState<=TEAMLOGOMONO_OUT)
+			TeamLogoSkip() ;
+		else if(m_LogoState<=GAMELOGO_OUT)
+			GameLogoSkip() ;
+		else if(m_LogoState<=WARNINGLOGO_OUT)
+			WarningLogoSkip() ;
+
+		return ;
+	}
+
 	if(m_LogoState==TEAMLOGOMONO_IN)
 	{
 		m_pTeamLogoMono->SetAlpha((int)(m_fTime / 0.5f * 255.0f)) ;
@@ -95,7 +116,7 @@ void SceneLogo::Update(float dt)
 		{
 			m_pTeamLogoMono->SetAlpha(255) ;
 
-			m_fTime -= 0.5f ;
+			m_fTime = 0.0f ;
 			m_LogoState = TEAMLOGO_IN ;
 			return ;
 		}
@@ -109,8 +130,8 @@ void SceneLogo::Update(float dt)
 		{
 			m_pTeamLogoMono->SetAlpha(0) ;
 			m_pTeamLogo->SetAlpha(255) ;
-
-			m_fTime -= 0.5f ;
+			
+			m_fTime = 0.0f ;
 			m_LogoState = TEAMLOGO ;
 			return ;
 		}
@@ -119,7 +140,7 @@ void SceneLogo::Update(float dt)
 	{
 		if(m_fTime>=1.0f)
 		{
-			m_fTime -= 1.0f ;
+			m_fTime = 0.0f ;
 			m_LogoState = TEAMLOGO_OUT ;
 			return ;
 		}
@@ -133,8 +154,8 @@ void SceneLogo::Update(float dt)
 		{
 			m_pTeamLogoMono->SetAlpha(255) ;
 			m_pTeamLogo->SetAlpha(0) ;
-
-			m_fTime -= 0.5f ;
+			
+			m_fTime = 0.0f ;
 			m_LogoState = TEAMLOGOMONO_OUT ;
 			return ;
 		}
@@ -146,9 +167,79 @@ void SceneLogo::Update(float dt)
 		if(m_fTime>=0.5f)
 		{
 			m_pTeamLogoMono->SetAlpha(0) ;
+			
+			m_fTime = 0.0f ;
+			TeamLogoSkip() ;
+			return ;
+		}
+	}
+	else if(m_LogoState==GAMELOGO_IN)
+	{
+		m_pGameLogo->SetAlpha((int)(m_fTime / 1.0f * 255.0f)) ;
 
-			m_fTime -= 0.5f ;
-			g_SceneManager->ChangeScene(SceneTitle::scene()) ;
+		if(m_fTime>=1.0f)
+		{
+			m_pGameLogo->SetAlpha(255) ;
+			
+			m_fTime = 0.0f ;
+			m_LogoState = GAMELOGO ;
+			return ;
+		}
+	}
+	else if(m_LogoState==GAMELOGO)
+	{
+		if(m_fTime>=1.0f)
+		{
+			m_fTime = 0.0f ;
+			m_LogoState = GAMELOGO_OUT ;
+			return ;
+		}
+	}
+	else if(m_LogoState==GAMELOGO_OUT)
+	{
+		m_pGameLogo->SetAlpha(255 - (int)(m_fTime / 1.0f * 255.0f)) ;
+
+		if(m_fTime>=1.0f)
+		{
+			m_pGameLogo->SetAlpha(0) ;
+			
+			m_fTime = 0.0f ;
+			GameLogoSkip() ;
+			return ;
+		}
+	}
+	else if(m_LogoState==WARNINGLOGO_IN)
+	{
+		m_pWarningLogo->SetAlpha((int)(m_fTime / 1.0f * 255.0f)) ;
+
+		if(m_fTime>=1.0f)
+		{
+			m_pWarningLogo->SetAlpha(255) ;
+			
+			m_fTime = 0.0f ;
+			m_LogoState = WARNINGLOGO ;
+			return ;
+		}
+	}
+	else if(m_LogoState==WARNINGLOGO)
+	{
+		if(m_fTime>=1.0f)
+		{
+			m_fTime = 0.0f ;
+			m_LogoState = WARNINGLOGO_OUT ;
+			return ;
+		}
+	}
+	else if(m_LogoState==WARNINGLOGO_OUT)
+	{
+		m_pWarningLogo->SetAlpha(255 - (int)(m_fTime / 1.0f * 255.0f)) ;
+
+		if(m_fTime>=1.0f)
+		{
+			m_pWarningLogo->SetAlpha(0) ;
+			
+			m_fTime = 0.0f ;
+			WarningLogoSkip() ;
 			return ;
 		}
 	}
@@ -162,6 +253,36 @@ void SceneLogo::Render()
 
 	m_pBlank->Render() ;
 
-	m_pTeamLogoMono->Render() ;
-	m_pTeamLogo->Render() ;
+	if(m_LogoState<=TEAMLOGOMONO_OUT)
+	{
+		m_pTeamLogoMono->Render() ;
+		m_pTeamLogo->Render() ;
+	}
+	else if(m_LogoState<=GAMELOGO_OUT)
+	{
+		m_pGameLogo->Render() ;
+	}
+	else if(m_LogoState<=WARNINGLOGO_OUT)
+	{
+		m_pWarningLogo->Render() ;
+	}
+}
+
+void SceneLogo::TeamLogoSkip()
+{
+	m_LogoState = GAMELOGO_IN ;
+		g_MusicManager->StopMusic() ;
+	g_MusicManager->PlayMusic(m_pSETitleLogo) ;
+}
+
+void SceneLogo::GameLogoSkip()
+{
+	m_LogoState = WARNINGLOGO_IN ;
+		g_MusicManager->StopMusic() ;
+	g_MusicManager->PlayMusic(m_pSEWarningLogo) ;
+}
+
+void SceneLogo::WarningLogoSkip()
+{
+	g_SceneManager->ChangeScene(SceneTitle::scene()) ;
 }

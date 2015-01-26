@@ -13,7 +13,7 @@ private :
 	CSprite *m_pGameLogo ;
 	CSprite *m_pWarningLogo ;
 	
-	FMOD::Sound *m_pBGM ;
+	FMOD::Sound *m_pSETeamLogo, *m_pSETitleLogo, *m_pSEWarningLogo ;
 
 	float m_fTime ;
 
@@ -34,4 +34,8 @@ public :
 
 	void Update(float dt) ;
 	void Render() ;
+private :
+	void TeamLogoSkip() ;
+	void GameLogoSkip() ;
+	void WarningLogoSkip() ;
 } ;
