@@ -27,6 +27,8 @@ SceneStageSelect::SceneStageSelect() : m_fWinWidth(g_D3dDevice->GetWinWidth()), 
 									   m_pStagePreview_List(NULL),
 									   m_bPressPrev(false), m_bPressNext(false),
 									   m_fBackgroundX(0.0f),
+									   m_fFlagAnimationTime(0.0f), m_fPlayerAnimationTime(0.0f),
+									   m_nFlagFrame(0), m_nPlayerFrame(0),
 									   m_pBGM(NULL)
 {
 	for(int i=0; i<5; i++)
@@ -121,8 +123,8 @@ void SceneStageSelect::Init()
 
 	m_pPlayer = new CSprite ;
 	m_pPlayer->Init(64.0f, 64.0f, "Resource/Image/Char/Main_character.png") ;
-	m_pPlayer->SetPosition(32.0f + ((nChapterProgress-1) * 240.0f), m_fWinHeight - 672.0f) ;
-	m_pPlayer->SetTextureUV(0.0f, 64.0f, 64.0f, 128.0f) ;
+	m_pPlayer->SetPosition(32.0f + ((g_StageProgress->GetSelectChapter()-1) * 240.0f), m_fWinHeight - 672.0f) ;
+	m_pPlayer->SetTextureUV(64.0f, 64.0f, 128.0f, 128.0f) ;
 	
 	m_pGoal = new CSprite ;
 	m_pGoal->Init("Resource/Image/StageSelect/Castle.png") ;
@@ -180,7 +182,12 @@ void SceneStageSelect::Update(float dt)
 	g_MusicManager->Loop() ;
 
 	m_pBackground->Scroll() ;
+
 	StageSelect() ;
+	
+	FlagAnimation() ;
+	PlayerAnimation() ;
+	m_pPlayer->SetPositionX(32.0f + ((g_StageProgress->GetSelectChapter()-1) * 240.0f)) ;
 
 	if(g_Keyboard->IsPressDown(DIK_RETURN) || g_Keyboard->IsPressDown(DIK_SPACE) || g_Keyboard->IsPressDown(DIK_Z))
 	{
@@ -308,4 +315,47 @@ void SceneStageSelect::FreeStagePreview()
 			m_pStagePreview_List[i] = NULL ;
 		}
 	}
+}
+
+void SceneStageSelect::FlagAnimation()
+{
+	if(m_fFlagAnimationTime>=0.2f)
+	{
+		int Frame = (int)(m_fFlagAnimationTime / 0.2f) ;
+		m_fFlagAnimationTime -= Frame * 0.2f ;
+		Frame %= 6 ;
+		m_nFlagFrame += Frame ;
+		m_nFlagFrame %= 6 ;
+		
+		float left, right ;
+		left = (float)(m_nFlagFrame * 64) ;
+		right = (float)((m_nFlagFrame+1) * 64) ;
+
+		for(int i=0; i<5; i++)
+			m_pProgress[i]->SetTextureU(left, right) ;
+	}
+	
+	m_fFlagAnimationTime += g_D3dDevice->GetTime() ;
+}
+
+void SceneStageSelect::PlayerAnimation()
+{
+	if(m_fPlayerAnimationTime>=0.2f)
+	{
+		int Frame = (int)(m_fPlayerAnimationTime / 0.2f) ;
+		m_fPlayerAnimationTime -= Frame * 0.2f ;
+		Frame %= 3 ;
+		m_nPlayerFrame += Frame ;
+		m_nPlayerFrame %= 3 ;
+		
+		float left, top, right, bottom ;
+		left = (float)((m_nPlayerFrame+1) * 64) ;
+		top = 64.0f ;
+		right = (float)((m_nPlayerFrame+2) * 64) ;
+		bottom = 128.0f ;
+
+		m_pPlayer->SetTextureUV(left, top, right, bottom) ;
+	}
+
+	m_fPlayerAnimationTime += g_D3dDevice->GetTime() ;
 }

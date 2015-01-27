@@ -162,6 +162,44 @@ void CSprite::SetTextureUV(float u1, float v1, float u2, float v2)
 	m_pVB->Unlock() ;
 }
 
+void CSprite::SetTextureU(float u1, float u2)
+{
+	float Width = (float)m_pTexInfo->Width ;
+
+	m_tu[0] = u1/Width ;
+	m_tu[1] = u2/Width ;
+	m_tu[2] = u1/Width ;
+	m_tu[3] = u2/Width ;
+
+	SPRITE_VERTEX* pVertices ;
+	if( FAILED( m_pVB->Lock( 0, sizeof(SPRITE_VERTEX), (void**)&pVertices, 0 ) ) )
+		return ;
+
+	for(int i=0; i<4; i++)
+		pVertices[i].tu = m_tu[i] ;
+
+	m_pVB->Unlock() ;
+}
+
+void CSprite::SetTextureV(float v1, float v2)
+{
+	float Height = (float)m_pTexInfo->Height ;
+
+	m_tv[0] = v1/Height ;
+	m_tv[1] = v1/Height ;
+	m_tv[2] = v2/Height ;
+	m_tv[3] = v2/Height ;
+
+	SPRITE_VERTEX* pVertices ;
+	if( FAILED( m_pVB->Lock( 0, sizeof(SPRITE_VERTEX), (void**)&pVertices, 0 ) ) )
+		return ;
+
+	for(int i=0; i<4; i++)
+		pVertices[i].tv = m_tv[i] ;
+
+	m_pVB->Unlock() ;
+}
+
 void CSprite::TexReverse()
 {
 	int i ;

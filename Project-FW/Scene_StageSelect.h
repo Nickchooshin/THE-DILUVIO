@@ -22,6 +22,8 @@ private :
 	bool m_bPressPrev, m_bPressNext ;
 
 	float m_fBackgroundX ;
+	float m_fFlagAnimationTime, m_fPlayerAnimationTime ;
+	int m_nFlagFrame, m_nPlayerFrame ;
 
 	FMOD::Sound *m_pBGM ;
 
@@ -40,4 +42,7 @@ private :
 	void StageSelect() ;
 	void AllocateStageName() ;
 	void FreeStagePreview() ;
+
+	void FlagAnimation() ;
+	void PlayerAnimation() ;
 } ;

@@ -37,6 +37,8 @@ public :
 	
 	bool SetTexture(char *texfile) ;
 	void SetTextureUV(float u1, float v1, float u2, float v2) ;	// 텍스쳐 UV 설정
+	void SetTextureU(float u1, float u2) ;
+	void SetTextureV(float v1, float v2) ;
 	void TexReverse() ;											// 텍스쳐 뒤집기
 
 	D3DXVECTOR3 GetPosition() ;									// 좌표 받아오기
