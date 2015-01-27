@@ -173,15 +173,15 @@ void SceneGravity::Update(float dt)
 	g_Friends_List->ReleaseCheck() ;
 	g_DynamicObjects_List->Update() ;
 	g_MapTiles_List->Update() ;
+	
+	// Effect Collision
+	g_Effect_List->Collision() ;
 
 	// Collision X
 	g_CollisionManager->CollisionX() ;
 
 	// Gravity
 	g_DynamicObjects_List->Gravity() ;
-	
-	// Effect Collision
-	g_Effect_List->Collision() ;
 
 	// Collision Y
 	g_CollisionManager->CollisionY() ;
