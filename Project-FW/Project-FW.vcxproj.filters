@@ -211,6 +211,9 @@
     <ClCompile Include="MapBackground.cpp">
       <Filter>ScrollBackground</Filter>
     </ClCompile>
+    <ClCompile Include="Scene_Credit.cpp">
+      <Filter>Scene\Credit</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h" />
@@ -430,6 +433,9 @@
     <ClInclude Include="MapBackground.h">
       <Filter>ScrollBackground</Filter>
     </ClInclude>
+    <ClInclude Include="Scene_Credit.h">
+      <Filter>Scene\Credit</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Input">
@@ -500,6 +506,9 @@
     </Filter>
     <Filter Include="Scene\Logo">
       <UniqueIdentifier>{ae07fb2e-bb32-4e17-a4c3-1bbfd92afed2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\Credit">
+      <UniqueIdentifier>{79b01b05-593c-4428-bb92-9d8777e95be9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
