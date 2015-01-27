@@ -10,13 +10,14 @@ class CScrollBackground ;
 class SceneStageSelect : public Scene
 {
 private :
-	CScrollBackground *m_pBackground ;
-	CSprite *m_pBackground_Brick, *m_pMenuFrame ;
-	CSprite *m_pProgress[5], *m_pPlayer, *m_pGoal ;
-	CSprite *m_pPrev, *m_pNext, *m_pBack ;
-	CSprite *m_pChapterNumber, *m_pStageNumber, *m_pStageName ;
+	const float m_fWinWidth, m_fWinHeight ;
 
-	std::vector<CSprite*> m_StagePreview_List ;
+	CScrollBackground *m_pBackground ;
+	CSprite *m_pBackground_Brick, *m_pStageFrame, *m_pStageNameFrame ;
+	CSprite *m_pProgress[5], *m_pPlayer, *m_pGoal, *m_pTile ;
+	CSprite *m_pPrev, *m_pNext ;
+	CSprite *m_pChapterNumber, *m_pStageNumber, *m_pStageName ;
+	CSprite **m_pStagePreview_List ;
 
 	bool m_bPressPrev, m_bPressNext ;
 
@@ -38,5 +39,5 @@ public :
 private :
 	void StageSelect() ;
 	void AllocateStageName() ;
-	void FreeStageName() ;
+	void FreeStagePreview() ;
 } ;

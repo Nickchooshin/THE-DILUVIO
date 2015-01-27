@@ -18,17 +18,23 @@
 #include "StageProgress.h"
 #include "ScrollBackground.h"
 
-SceneStageSelect::SceneStageSelect() : m_pBackground(NULL),
-									   m_pBackground_Brick(NULL), m_pMenuFrame(NULL),
-									   m_pPlayer(NULL), m_pGoal(NULL),
-									   m_pPrev(NULL), m_pNext(NULL), m_pBack(NULL),
+SceneStageSelect::SceneStageSelect() : m_fWinWidth(g_D3dDevice->GetWinWidth()), m_fWinHeight(g_D3dDevice->GetWinHeight()),
+									   m_pBackground(NULL),
+									   m_pBackground_Brick(NULL), m_pStageFrame(NULL), m_pStageNameFrame(NULL),
+									   m_pPlayer(NULL), m_pGoal(NULL), m_pTile(NULL),
+									   m_pPrev(NULL), m_pNext(NULL),
 									   m_pChapterNumber(NULL), m_pStageNumber(NULL), m_pStageName(NULL),
+									   m_pStagePreview_List(NULL),
 									   m_bPressPrev(false), m_bPressNext(false),
 									   m_fBackgroundX(0.0f),
 									   m_pBGM(NULL)
 {
 	for(int i=0; i<5; i++)
 		m_pProgress[i] = NULL ;
+
+	m_pStagePreview_List = new CSprite*[9] ;
+	for(int i=0; i<9; i++)
+		m_pStagePreview_List[i] = NULL ;
 }
 SceneStageSelect::~SceneStageSelect()
 {
@@ -37,8 +43,10 @@ SceneStageSelect::~SceneStageSelect()
 
 	if(m_pBackground_Brick!=NULL)
 		delete m_pBackground_Brick ;
-	if(m_pMenuFrame!=NULL)
-		delete m_pMenuFrame ;
+	if(m_pStageFrame!=NULL)
+		delete m_pStageFrame ;
+	if(m_pStageNameFrame!=NULL)
+		delete m_pStageNameFrame ;
 
 	for(int i=0; i<5; i++)
 	{
@@ -49,13 +57,13 @@ SceneStageSelect::~SceneStageSelect()
 		delete m_pPlayer ;
 	if(m_pGoal!=NULL)
 		delete m_pGoal ;
+	if(m_pTile!=NULL)
+		delete m_pTile ;
 
 	if(m_pPrev!=NULL)
 		delete m_pPrev ;
 	if(m_pNext!=NULL)
 		delete m_pNext ;
-	if(m_pBack!=NULL)
-		delete m_pBack ;
 
 	if(m_pChapterNumber!=NULL)
 		delete m_pChapterNumber ;
@@ -64,7 +72,8 @@ SceneStageSelect::~SceneStageSelect()
 	if(m_pStageName!=NULL)
 		delete m_pStageName ;
 
-	FreeStageName() ;
+	FreeStagePreview() ;
+	delete[] m_pStagePreview_List ;
 }
 
 Scene* SceneStageSelect::scene()
@@ -76,61 +85,63 @@ Scene* SceneStageSelect::scene()
 
 void SceneStageSelect::Init()
 {
-	float fWinWidth = (float)g_D3dDevice->GetWinWidth() ;
-	float fWinHeight = (float)g_D3dDevice->GetWinHeight() ;
-	
 	g_CameraManager->AllCameraClear() ;
 	g_CameraManager->AddCamera(new CCamera()) ;
 
 	m_pBackground = new CScrollBackground ;
 	m_pBackground->Init(1024.0f, 768.0f, "Resource/Image/StageSelect/Background.png") ;
 	m_pBackground->SetTextureUV(0.0f, 0.0f, 1024.0f, 768.0f) ;
-	m_pBackground->SetPosition(fWinWidth / 2.0f, fWinHeight / 2.0f) ;
+	m_pBackground->SetPosition(m_fWinWidth / 2.0f, m_fWinHeight / 2.0f) ;
 	m_pBackground->SetScrollSpeed(1.0f, 0.0f) ;
 
 	m_pBackground_Brick = new CSprite ;
 	m_pBackground_Brick->Init("Resource/Image/StageSelect/Background_Brick.png") ;
-	m_pBackground_Brick->SetPosition(fWinWidth / 2.0f, fWinHeight / 2.0f) ;
+	m_pBackground_Brick->SetPosition(m_fWinWidth / 2.0f, m_fWinHeight / 2.0f) ;
 
-	m_pMenuFrame = new CSprite ;
-	m_pMenuFrame->Init("Resource/Image/StageSelect/MenuFrame.png") ;
-	m_pMenuFrame->SetPosition(fWinWidth / 2.0f, fWinHeight / 2.0f) ;
+	m_pStageFrame = new CSprite ;
+	m_pStageFrame->Init("Resource/Image/StageSelect/StageFrame.png") ;
+	m_pStageFrame->SetPosition(m_fWinWidth / 2.0f, m_fWinHeight - 300.0f) ;
+
+	m_pStageNameFrame = new CSprite ;
+	m_pStageNameFrame->Init("Resource/Image/StageSelect/StageNameFrame.png") ;
+	m_pStageNameFrame->SetPosition(425.0f, m_fWinHeight - 50.0f) ;
 
 	const int nChapterProgress = g_StageProgress->GetChapterProgress() ;
 
 	for(int i=0; i<5; i++)
 	{
 		m_pProgress[i] = new CSprite ;
-		m_pProgress[i]->Init(28.0f, 28.0f, "Resource/Image/StageSelect/Progress.png") ;
-		m_pProgress[i]->SetPosition(570.0f + (i * 103.0f), fWinHeight - 92.0f) ;
+		m_pProgress[i]->Init(64.0f, 64.0f, "Resource/Image/StageSelect/Flag.png") ;
+		m_pProgress[i]->SetPosition(32.0f + (i * 240.0f), m_fWinHeight - 672.0f + ((i/4) * 43.0f)) ;
+		m_pProgress[i]->SetTextureUV(0.0f, 0.0f, 64.0f, 64.0f) ;
 		if(i<nChapterProgress)
-			m_pProgress[i]->SetTextureUV(0.0f, 0.0f, 28.0f, 28.0f) ;
+			m_pProgress[i]->SetRGB(32, 255, 32) ;
 		else
-			m_pProgress[i]->SetTextureUV(28.0f, 0.0f, 56.0f, 28.0f) ;
+			m_pProgress[i]->SetRGB(255, 255, 255) ;
 	}
 
 	m_pPlayer = new CSprite ;
-	m_pPlayer->Init("Resource/Image/StageSelect/Player.png") ;
-	m_pPlayer->SetPosition(570.0f + ((nChapterProgress-1) * 103.0f), fWinHeight - 52.0f) ;
+	m_pPlayer->Init(64.0f, 64.0f, "Resource/Image/Char/Main_character.png") ;
+	m_pPlayer->SetPosition(32.0f + ((nChapterProgress-1) * 240.0f), m_fWinHeight - 672.0f) ;
+	m_pPlayer->SetTextureUV(0.0f, 64.0f, 64.0f, 128.0f) ;
 	
 	m_pGoal = new CSprite ;
-	m_pGoal->Init("Resource/Image/StageSelect/Goal.png") ;
-	m_pGoal->SetPosition(978.0f, fWinHeight - 48.0f) ;
+	m_pGoal->Init("Resource/Image/StageSelect/Castle.png") ;
+	m_pGoal->SetPosition(992.0f, m_fWinHeight - 672.0f) ;
+
+	m_pTile = new CSprite ;
+	m_pTile->Init(64.0f, 64.0f, "Resource/Image/Terrain/Tiles.png") ;
+	m_pTile->SetTextureUV(128.0f, 0.0f, 192.0f, 64.0f) ;
 
 	m_pPrev = new CSprite ;
 	m_pPrev->Init(70.0f, 80.0f, "Resource/Image/StageSelect/Prev.png") ;
 	m_pPrev->SetTextureUV(0.0f, 0.0f, 70.0f, 80.0f) ;
-	m_pPrev->SetPosition(280.0f, fWinHeight - 723.0f) ;
+	m_pPrev->SetPosition(262.0f, m_fWinHeight - 580.0f) ;
 
 	m_pNext = new CSprite ;
 	m_pNext->Init(70.0f, 80.0f, "Resource/Image/StageSelect/Next.png") ;
 	m_pNext->SetTextureUV(0.0f, 0.0f, 70.0f, 80.0f) ;
-	m_pNext->SetPosition(744.0f, fWinHeight - 723.0f) ;
-
-	m_pBack = new CSprite ;
-	m_pBack->Init(96.0f, 96.0f, "Resource/Image/StageSelect/Back.png") ;
-	m_pBack->SetTextureUV(0.0f, 0.0f, 96.0f, 96.0f) ;
-	m_pBack->SetPosition(60.0f, fWinHeight - 60.0f) ;
+	m_pNext->SetPosition(762.0f, m_fWinHeight - 580.0f) ;
 
 	const int nChapter = g_StageProgress->GetSelectChapter() ;
 	const int nStage = g_StageProgress->GetSelectStage() ;
@@ -139,17 +150,17 @@ void SceneStageSelect::Init()
 	m_pChapterNumber->Init(195.0f, 40.0f, "Resource/Image/StageSelect/ChapterNumber.png") ;
 	m_pChapterNumber->SetTextureUV(0.0f, 0.0f, 195.0f, 40.0f) ;
 	m_pChapterNumber->SetTextureUV(0.0f, ((nChapter-1) * 40.0f), 195.0f, (nChapter * 40.0f)) ;
-	m_pChapterNumber->SetPosition(307.0f, fWinHeight - 60.0f) ;
+	m_pChapterNumber->SetPosition(450.0f, m_fWinHeight - 560.0f) ;
 
 	m_pStageNumber = new CSprite ;
 	m_pStageNumber->Init(225.0f, 40.0f, "Resource/Image/StageSelect/StageNumber.png") ;
 	m_pStageNumber->SetTextureUV(0.0f, 0.0f, 225.0f, 40.0f) ;
 	m_pStageNumber->SetTextureUV(0.0f, ((nStage-1) * 40.0f), 225.0f, (nStage * 40.0f)) ;
-	m_pStageNumber->SetPosition(fWinWidth / 2.0f, fWinHeight - 723.0f) ;
+	m_pStageNumber->SetPosition(580.0f, m_fWinHeight - 600.0f) ;
 
 	m_pStageName = new CSprite ;
 	m_pStageName->Init(256.0f, 30.0f, "Resource/Image/StageSelect/Chapter1_StageName.png") ;
-	m_pStageName->SetPosition(395.0f, fWinHeight - 242.0f) ;
+	m_pStageName->SetPosition(395.0f, m_fWinHeight - 50.0f) ;
 	AllocateStageName() ;
 	m_pStageName->SetTextureUV(0.0f, ((nStage-1) * 30.0f), 256.0f, (nStage * 30.0f)) ;
 
@@ -179,7 +190,6 @@ void SceneStageSelect::Update(float dt)
 	}
 	else if(g_Keyboard->IsPressDown(DIK_ESCAPE) || g_Keyboard->IsPressDown(DIK_X))
 	{
-		m_pBack->SetTextureUV(96.0f, 0.0f, 192.0f, 96.0f) ;
 		g_SceneManager->ChangeScene(SceneTitle::scene()) ;
 		return ;
 	}
@@ -193,8 +203,13 @@ void SceneStageSelect::Render()
 		m_pBackground->Render() ;
 	else
 		m_pBackground_Brick->Render() ;
-	m_pMenuFrame->Render() ;
-
+	m_pStageNameFrame->Render() ;
+	
+	for(int i=0; i<16; i++)
+	{
+		m_pTile->SetPosition(32.0f + (i * 64.0f), m_fWinHeight - 736.0f) ;
+		m_pTile->Render() ;
+	}
 	for(int i=0; i<5; i++)
 		m_pProgress[i]->Render() ;
 	m_pGoal->Render() ;
@@ -202,11 +217,13 @@ void SceneStageSelect::Render()
 
 	m_pPrev->Render() ;
 	m_pNext->Render() ;
-	m_pBack->Render() ;
 
 	m_pChapterNumber->Render() ;
 	m_pStageNumber->Render() ;
 	m_pStageName->Render() ;
+	const int nStage = g_StageProgress->GetSelectStage() - 1 ;
+	m_pStagePreview_List[nStage]->Render() ;
+	m_pStageFrame->Render() ;
 }
 
 void SceneStageSelect::StageSelect()
@@ -264,24 +281,32 @@ void SceneStageSelect::StageSelect()
 
 void SceneStageSelect::AllocateStageName()
 {
-	FreeStageName() ;
+	FreeStagePreview() ;
 
 	const int nChapter = g_StageProgress->GetSelectChapter() ;
+	const int nMaxStage = g_StageProgress->nChapterMaxStage[nChapter-1] ;
 	char filepath[1024] ;
-	sprintf_s(filepath, "Resource/Image/StageSelect/Chapter%d_StageName.png", nChapter) ;
 
+	sprintf_s(filepath, "Resource/Image/StageSelect/Chapter%d_StageName.png", nChapter) ;
 	m_pStageName->SetTexture(filepath) ;
+
+	for(int i=0; i<nMaxStage; i++)
+	{
+		sprintf_s(filepath, "Resource/Image/StageSelect/Preview/Chapter%d_%d.png", nChapter, i+1) ;
+		m_pStagePreview_List[i] = new CSprite ;
+		m_pStagePreview_List[i]->Init(filepath) ;
+		m_pStagePreview_List[i]->SetPosition(m_fWinWidth / 2.0f, m_fWinHeight - 300.0f) ;
+	}
 }
 
-void SceneStageSelect::FreeStageName()
+void SceneStageSelect::FreeStagePreview()
 {
-	if(m_StagePreview_List.empty())
-		return ;
-
-	const int num = m_StagePreview_List.size() ;
-
-	for(int i=0; i<num; i++)
-		delete m_StagePreview_List[i] ;
-
-	m_StagePreview_List.clear() ;
+	for(int i=0; i<9; i++)
+	{
+		if(m_pStagePreview_List[i]!=NULL)
+		{
+			delete m_pStagePreview_List[i] ;
+			m_pStagePreview_List[i] = NULL ;
+		}
+	}
 }
