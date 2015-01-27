@@ -36,6 +36,7 @@ public :
 
 	void StageClear() ;
 	void StageOver() ;
+	bool LastStageClear() ;
 
 private :
 	void StageProgressSave() ;

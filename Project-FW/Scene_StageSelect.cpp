@@ -113,11 +113,10 @@ void SceneStageSelect::Init()
 		m_pProgress[i] = new CSprite ;
 		m_pProgress[i]->Init(64.0f, 64.0f, "Resource/Image/StageSelect/Flag.png") ;
 		m_pProgress[i]->SetPosition(32.0f + (i * 240.0f), m_fWinHeight - 672.0f + ((i/4) * 43.0f)) ;
-		m_pProgress[i]->SetTextureUV(0.0f, 0.0f, 64.0f, 64.0f) ;
 		if(i<nChapterProgress)
-			m_pProgress[i]->SetRGB(32, 255, 32) ;
+			m_pProgress[i]->SetTextureUV(0.0f, 64.0f, 64.0f, 128.0f) ;
 		else
-			m_pProgress[i]->SetRGB(255, 255, 255) ;
+			m_pProgress[i]->SetTextureUV(0.0f, 0.0f, 64.0f, 64.0f) ;
 	}
 
 	m_pPlayer = new CSprite ;

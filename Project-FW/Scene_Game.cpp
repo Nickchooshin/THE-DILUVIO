@@ -1,5 +1,6 @@
 #include "Scene_Game.h"
 #include "Scene_StageSelect.h"
+#include "Scene_Credit.h"
 
 #include "Keyboard.h"
 #include "Mouse.h"
@@ -304,6 +305,10 @@ void SceneGame::GameEndMenu()
 			m_fTime = 0.0f ;
 			m_GameEndMenuState = BUTTON_IN ;
 			m_pEndMenu->SetAlpha(255) ;
+
+			// 임시 엔딩으로 넘어가기
+			if(g_StageProgress->LastStageClear())
+				g_SceneManager->ChangeScene(SceneCredit::scene()) ;
 
 			return ;
 		}

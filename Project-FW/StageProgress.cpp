@@ -174,6 +174,17 @@ void CStageProgress::StageOver()
 	m_NowStageState = OVER ;
 }
 
+bool CStageProgress::LastStageClear()
+{
+	if(m_NowStageState==CLEAR)
+	{
+		if(m_nSelectChapter==5 && m_nSelectStage==nChapterMaxStage[m_nSelectChapter-1])
+			return true ;
+	}
+
+	return false ;
+}
+
 void CStageProgress::StageProgressSave()
 {
 	FILE *pFile = fopen("Resource/Data/.sav", "wb") ;
