@@ -4,8 +4,8 @@
 #include "Keyboard.h"
 #include "D3dDevice.h"
 
+#include "StageProgress.h"
 
-///
 #include "Friends_List.h"
 
 #include "Friends_Okulo.h"
@@ -20,7 +20,6 @@
 #include "Friends_Rompo.h"
 #include "Friends_Rancho.h"
 #include "Friends_Mano.h"
-///
 
 CFriendChange_UI::CFriendChange_UI() : m_fX(0.0f), m_fY(0.0f),
 									   m_fRX(0.0f), m_fRY(0.0f),
@@ -55,6 +54,17 @@ CFriendChange_UI::~CFriendChange_UI()
 
 void CFriendChange_UI::Init()
 {
+	const char Okulo = 1 ;
+	const char Makzelo = 2 ;
+	const char Vento = 4 ;
+	const char Busxo = 8 ;
+	const char Rompo = 16 ;
+	const char Rancho = 32 ;
+	const char Mano = 64 ;
+
+	int nFriendCode, nFriendNum=0 ;
+	char filepath[1024] ;
+
 	m_fRX = 40.0f ;
 	m_fRY = 18.0f ;
 
@@ -70,53 +80,56 @@ void CFriendChange_UI::Init()
 		m_pSIcon[i]->SetTextureUV((float)(i * 24), 24.0f, (float)((i+1) * 24), 48.0f) ;
 	}
 
-	///
-	CFriends *pFriends ;
-	g_Friends_List->SetMaxFriends(7) ;
+	sprintf_s(filepath, "Resource/Data/Maps/%s.frnd", g_StageProgress->GetSelectMapName()) ;
 
-	pFriends = new CFriends_Okulo ;
-	pFriends->Init() ;
-	g_Friends_List->AddFriend(pFriends) ;
+	FILE *pFile = fopen(filepath, "rb") ;
+	fscanf(pFile, "%d", &nFriendCode) ;
+	fclose(pFile) ;
 
-	/*pFriends = new CFriends_Montrilo ;
-	pFriends->Init() ;
-	g_Friends_List->AddFriend(pFriends) ;*/
+	while(nFriendCode)
+	{
+		CFriends *pFriends ;
 
-	/*pFriends = new CFriends_Pilo ;
-	pFriends->Init() ;
-	g_Friends_List->AddFriend(pFriends) ;*/
+		if((nFriendCode & Okulo)==Okulo)
+		{
+			nFriendCode &= ~Okulo ;
+			pFriends = new CFriends_Okulo ;
+		}
+		else if((nFriendCode & Makzelo)==Makzelo)
+		{
+			nFriendCode &= ~Makzelo ;
+			pFriends = new CFriends_Makzelo ;
+		}
+		else if((nFriendCode & Vento)==Vento)
+		{
+			nFriendCode &= ~Vento ;
+			pFriends = new CFriends_Vento ;
+		}
+		else if((nFriendCode & Busxo)==Busxo)
+		{
+			nFriendCode &= ~Busxo ;
+			pFriends = new CFriends_Busxo ;
+		}
+		else if((nFriendCode & Rompo)==Rompo)
+		{
+			nFriendCode &= ~Rompo ;
+			pFriends = new CFriends_Rompo ;
+		}
+		else if((nFriendCode & Rancho)==Rancho)
+		{
+			nFriendCode &= ~Rancho ;
+			pFriends = new CFriends_Rancho ;
+		}
+		else if((nFriendCode & Mano)==Mano)
+		{
+			nFriendCode &= ~Mano ;
+			pFriends = new CFriends_Mano ;
+		}
 
-	pFriends = new CFriends_Makzelo ;
-	pFriends->Init() ;
-	g_Friends_List->AddFriend(pFriends) ;
-
-	pFriends = new CFriends_Vento ;
-	pFriends->Init() ;
-	g_Friends_List->AddFriend(pFriends) ;
-
-	pFriends = new CFriends_Busxo ;
-	pFriends->Init() ;
-	g_Friends_List->AddFriend(pFriends) ;
-
-	/*pFriends = new CFriends_Saltado ;
-	pFriends->Init() ;
-	g_Friends_List->AddFriend(pFriends) ;*/
-
-	/*pFriends = new CFriends_Elitro ;
-	pFriends->Init() ;
-	g_Friends_List->AddFriend(pFriends) ;*/
-
-	pFriends = new CFriends_Rompo ;
-	pFriends->Init() ;
-	g_Friends_List->AddFriend(pFriends) ;
-
-	pFriends = new CFriends_Rancho ;
-	pFriends->Init() ;
-	g_Friends_List->AddFriend(pFriends) ;
-
-	pFriends = new CFriends_Mano ;
-	pFriends->Init() ;
-	g_Friends_List->AddFriend(pFriends) ;
+		pFriends->Init() ;
+		g_Friends_List->SetMaxFriends(++nFriendNum) ;
+		g_Friends_List->AddFriend(pFriends) ;
+	}
 }
 
 void CFriendChange_UI::SetPosition(float fX, float fY)

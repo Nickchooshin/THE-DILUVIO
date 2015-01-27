@@ -23,7 +23,7 @@ CFriends* CFriends_List::GetFriend(int index)
 	if(size==0)
 		return NULL ;
 	else if(index<0)
-		index = size + (index % size) ;
+		index = (size + index) % size ;
 	else if(index>=size)
 		index %= size ;
 
