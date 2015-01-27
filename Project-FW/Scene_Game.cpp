@@ -27,8 +27,10 @@
 
 SceneGame::SceneGame() : m_pHero(NULL),
 						 m_pMapBackground(NULL),
+						 m_pTutorial(NULL),
 						 m_pEndMenu(NULL),
 						 m_fTime(0.0f),
+						 m_bTutorial(false),
 						 m_bMenu(false),
 						 m_nSelectMenuNum(0),
 						 m_GameEndMenuState(NONE)
@@ -54,6 +56,8 @@ SceneGame::~SceneGame()
 	g_MapTiles_List->Clear() ;
 	g_Effect_List->Clear() ;
 
+	if(m_pTutorial!=NULL)
+		delete m_pTutorial ;
 	if(m_pMenu!=NULL)
 		delete m_pMenu ;
 	if(m_pEndMenu!=NULL)
@@ -80,7 +84,7 @@ Scene* SceneGame::scene()
 
 void SceneGame::Init()
 {
-	float fWinHeight = (float)g_D3dDevice->GetWinHeight() ;
+	const float fWinHeight = (float)g_D3dDevice->GetWinHeight() ;
 
 	g_StageProgress->Init() ;
 
@@ -98,6 +102,22 @@ void SceneGame::Init()
 	m_pHero = new CHero ;
 	m_pHero->Init() ;
 	m_pHero->SetPosition(HeroPos.x * 64.0f + 32.0f, HeroPos.y * 64.0f + 32.0f) ;
+
+	const int nTutorial = g_StageProgress->GetTutorialProgress() ;
+	if(nTutorial!=0)
+	{
+		char filepath[1024] ;
+		sprintf_s(filepath, "Resource/Image/Tutorial/Tutorial_%d.png", nTutorial) ;
+
+		pCamera->SetPosition(m_pHero->GetPositionX(), m_pHero->GetPositionY()) ;
+		pCamera->CorrectionPosition() ;
+
+		m_pTutorial = new CSprite ;
+		m_pTutorial->Init(filepath) ;
+		m_pTutorial->SetPosition(pCamera->GetPosition().x, pCamera->GetPosition().y) ;
+		
+		m_bTutorial = true ;
+	}
 
 	m_pMenu = new CSprite ;
 	m_pMenu->Init("Resource/Image/Menu/Pause.png") ;
@@ -142,6 +162,12 @@ void SceneGame::Update(float dt)
 	g_Mouse->Update() ;
 	g_Joystick->Update() ;
 	g_MusicManager->Loop() ;
+
+	if(m_bTutorial)
+	{
+		Tutorial() ;
+		return ;
+	}
 
 	if(m_GameEndMenuState!=NONE)
 	{
@@ -232,6 +258,15 @@ void SceneGame::Render()
 		for(int i=0; i<2; i++)
 			m_pEndMenuButton[i]->Render() ;
 	}
+
+	if(m_bTutorial)
+		m_pTutorial->Render() ;
+}
+
+void SceneGame::Tutorial()
+{
+	if(g_Keyboard->IsPressDown(DIK_RETURN) || g_Keyboard->IsPressDown(DIK_SPACE) || g_Keyboard->IsPressDown(DIK_Z))
+		m_bTutorial = false ;
 }
 
 void SceneGame::GameMenu()

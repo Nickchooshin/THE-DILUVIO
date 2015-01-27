@@ -3,7 +3,15 @@
 
 const int CStageProgress::nChapterMaxStage[5] = {8, 9, 8, 7, 5 } ;
 
-CStageProgress::CStageProgress() : m_nChapterProgress(1), m_nStageProgress(1),
+const char TUTORIAL_1 = 1 ;
+const char TUTORIAL_2 = 2 ;
+const char TUTORIAL_3 = 4 ;
+const char TUTORIAL_4 = 8 ;
+const char TUTORIAL_5 = 16 ;
+const char TUTORIAL_6 = 32 ;
+const char TUTORIAL_7 = 64 ;
+
+CStageProgress::CStageProgress() : m_nChapterProgress(1), m_nStageProgress(1), m_nTutorialProgress(0),
 								   m_nSelectChapter(1), m_nSelectStage(1),
 								   m_NowStageState(NONE)
 {
@@ -43,6 +51,38 @@ const int CStageProgress::GetChapterProgress() const
 const int CStageProgress::GetStageProgress() const
 {
 	return m_nStageProgress ;
+}
+
+const int CStageProgress::GetTutorialProgress()
+{
+	if(m_nSelectChapter==1)
+	{
+		if(m_nSelectStage==1 && !TutorialProgressCheck(TUTORIAL_1))
+			return 1 ;
+		else if(m_nSelectStage==2 && !TutorialProgressCheck(TUTORIAL_2))
+			return 2 ;
+	}
+	else if(m_nSelectChapter==2)
+	{
+		if(m_nSelectStage==1 && !TutorialProgressCheck(TUTORIAL_3))
+			return 3 ;
+		else if(m_nSelectStage==5 && !TutorialProgressCheck(TUTORIAL_4))
+			return 4 ;
+	}
+	else if(m_nSelectChapter==3)
+	{
+		if(m_nSelectStage==1 && !TutorialProgressCheck(TUTORIAL_5))
+			return 5 ;
+		else if(m_nSelectStage==6 && !TutorialProgressCheck(TUTORIAL_6))
+			return 6 ;
+	}
+	else if(m_nSelectChapter==4)
+	{
+		if(m_nSelectStage==1 && !TutorialProgressCheck(TUTORIAL_7))
+			return 7 ;
+	}
+
+	return 0 ;
 }
 
 const int CStageProgress::GetSelectChapter() const
@@ -138,7 +178,7 @@ void CStageProgress::StageProgressSave()
 {
 	FILE *pFile = fopen("Resource/Data/.sav", "wb") ;
 
-	fprintf(pFile, "%d%d", m_nChapterProgress, m_nStageProgress) ;
+	fprintf(pFile, "%d%d%d", m_nChapterProgress, m_nStageProgress, m_nTutorialProgress) ;
 
 	fclose(pFile) ;
 }
@@ -150,13 +190,25 @@ bool CStageProgress::StageProgressLoad()
 	if(pFile==NULL)
 		return false ;
 
-	char value[3] ;
+	char value[4] ;
 
 	fscanf(pFile, "%s", &value) ;
 	m_nChapterProgress = value[0] - '0' ;
 	m_nStageProgress = value[1] - '0' ;
+	m_nTutorialProgress = value[2] - '0' ;
 
 	fclose(pFile) ;
 
 	return true ;
+}
+
+bool CStageProgress::TutorialProgressCheck(const char progress)
+{
+	if((m_nTutorialProgress & progress) == progress)
+		return true ;
+
+	m_nTutorialProgress |= progress ;
+	StageProgressSave() ;
+
+	return false ;
 }

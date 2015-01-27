@@ -9,7 +9,7 @@ public :
 	enum StageState { NONE=0, CLEAR, OVER } ;
 	static const int nChapterMaxStage[5] ;
 private :
-	int m_nChapterProgress, m_nStageProgress ;
+	int m_nChapterProgress, m_nStageProgress, m_nTutorialProgress ;
 	int m_nSelectChapter, m_nSelectStage ;
 
 	StageState m_NowStageState ;
@@ -24,6 +24,7 @@ public :
 
 	const int GetChapterProgress() const ;
 	const int GetStageProgress() const ;
+	const int GetTutorialProgress() ;
 	const int GetSelectChapter() const ;
 	const int GetSelectStage() const ;
 	const StageState NowStageState() const ;
@@ -39,6 +40,7 @@ public :
 private :
 	void StageProgressSave() ;
 	bool StageProgressLoad() ;
+	bool TutorialProgressCheck(const char progress) ;
 } ;
 
 #define g_StageProgress CStageProgress::GetInstance()

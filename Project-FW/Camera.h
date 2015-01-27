@@ -19,9 +19,9 @@ public :
 	void SetWorldSize(float w1, float h1, float w2, float h2) ;
 
 	const D3DXVECTOR3 GetPosition() const ;
-
+	
+	void CorrectionPosition() ;
 	void Run() ;
 private :
-	void CorrectionPosition() ;
 	void SetWorldPosition_MinMax(float w1, float h1, float w2, float h2) ;
 } ;

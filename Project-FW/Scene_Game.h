@@ -12,11 +12,13 @@ private :
 	CHero *m_pHero ;
 	CMapBackground *m_pMapBackground ;
 
+	CSprite *m_pTutorial ;
 	CSprite *m_pMenu, *m_pEndMenu ;
 	CSprite *m_pMenuButton[3], *m_pEndMenuButton[2] ;
 
 	float m_fTime ;
 
+	bool m_bTutorial ;
 	bool m_bMenu ;
 	int m_nSelectMenuNum ;
 
@@ -35,6 +37,7 @@ public :
 	void Update(float dt) ;
 	void Render() ;
 private :
+	void Tutorial() ;
 	void GameMenu() ;
 	void GameEndMenu() ;
 	void MenuButtonMove(CSprite **pMenuButton, const float fWidth, const float fHeight, const int nMaxMenu) ;
