@@ -129,7 +129,7 @@
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SampleScene.cpp" />
     <ClCompile Include="Scene_Credit.cpp" />
-    <ClCompile Include="Scene_Gravity.cpp" />
+    <ClCompile Include="Scene_Game.cpp" />
     <ClCompile Include="Scene_Logo.cpp" />
     <ClCompile Include="Scene_StageSelect.cpp" />
     <ClCompile Include="Scene_Title.cpp" />
@@ -206,7 +206,7 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SampleScene.h" />
-    <ClInclude Include="Scene_Gravity.h" />
+    <ClInclude Include="Scene_Game.h" />
     <ClInclude Include="Scene_Logo.h" />
     <ClInclude Include="Scene_StageSelect.h" />
     <ClInclude Include="Scene_Title.h" />

@@ -42,9 +42,6 @@
       <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="SampleScene.cpp" />
-    <ClCompile Include="Scene_Gravity.cpp">
-      <Filter>Scene\Gravity</Filter>
-    </ClCompile>
     <ClCompile Include="Hero.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
@@ -214,6 +211,9 @@
     <ClCompile Include="Scene_Credit.cpp">
       <Filter>Scene\Credit</Filter>
     </ClCompile>
+    <ClCompile Include="Scene_Game.cpp">
+      <Filter>Scene\Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h" />
@@ -263,9 +263,6 @@
       <Filter>Scene</Filter>
     </ClInclude>
     <ClInclude Include="SampleScene.h" />
-    <ClInclude Include="Scene_Gravity.h">
-      <Filter>Scene\Gravity</Filter>
-    </ClInclude>
     <ClInclude Include="Hero.h">
       <Filter>Objects</Filter>
     </ClInclude>
@@ -436,6 +433,9 @@
     <ClInclude Include="Scene_Credit.h">
       <Filter>Scene\Credit</Filter>
     </ClInclude>
+    <ClInclude Include="Scene_Game.h">
+      <Filter>Scene\Game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Input">
@@ -464,9 +464,6 @@
     </Filter>
     <Filter Include="Scene">
       <UniqueIdentifier>{09e25e2d-2eaa-43b0-b1ef-6b3f56621ca4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scene\Gravity">
-      <UniqueIdentifier>{6e91e47f-8961-413e-821a-8ca705c2ee18}</UniqueIdentifier>
     </Filter>
     <Filter Include="Objects">
       <UniqueIdentifier>{593ef434-2a81-4a7c-a2bf-ffc7e79d110a}</UniqueIdentifier>
@@ -509,6 +506,9 @@
     </Filter>
     <Filter Include="Scene\Credit">
       <UniqueIdentifier>{79b01b05-593c-4428-bb92-9d8777e95be9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\Game">
+      <UniqueIdentifier>{6e91e47f-8961-413e-821a-8ca705c2ee18}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

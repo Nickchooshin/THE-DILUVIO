@@ -1,4 +1,4 @@
-#include "Scene_Gravity.h"
+#include "Scene_Game.h"
 #include "Scene_StageSelect.h"
 
 #include "Keyboard.h"
@@ -23,16 +23,15 @@
 
 #include "StageProgress.h"
 
-//
 #include "CollisionManager.h"
 
-SceneGravity::SceneGravity() : m_pHero(NULL),
-							   m_pMapBackground(NULL),
-							   m_pEndMenu(NULL),
-							   m_fTime(0.0f),
-							   m_bMenu(false),
-							   m_nSelectMenuNum(0),
-							   m_GameEndMenuState(NONE)
+SceneGame::SceneGame() : m_pHero(NULL),
+						 m_pMapBackground(NULL),
+						 m_pEndMenu(NULL),
+						 m_fTime(0.0f),
+						 m_bMenu(false),
+						 m_nSelectMenuNum(0),
+						 m_GameEndMenuState(NONE)
 {
 	int i ;
 
@@ -41,7 +40,7 @@ SceneGravity::SceneGravity() : m_pHero(NULL),
 	for(i=0; i<2; i++)
 		m_pEndMenuButton[i] = NULL ;
 }
-SceneGravity::~SceneGravity()
+SceneGame::~SceneGame()
 {
 	int i ;
 
@@ -72,14 +71,14 @@ SceneGravity::~SceneGravity()
 	}
 }
 
-Scene* SceneGravity::scene()
+Scene* SceneGame::scene()
 {
-	Scene *scene = new SceneGravity ;
+	Scene *scene = new SceneGame ;
 
 	return scene ;
 }
 
-void SceneGravity::Init()
+void SceneGame::Init()
 {
 	float fWinHeight = (float)g_D3dDevice->GetWinHeight() ;
 
@@ -132,12 +131,12 @@ void SceneGravity::Init()
 	g_DynamicObjects_List->AddMainCharObjects(m_pHero) ;
 }
 
-void SceneGravity::Destroy()
+void SceneGame::Destroy()
 {
 	g_CameraManager->AllCameraClear() ;
 }
 
-void SceneGravity::Update(float dt)
+void SceneGame::Update(float dt)
 {
 	g_Keyboard->Update() ;
 	g_Mouse->Update() ;
@@ -209,7 +208,7 @@ void SceneGravity::Update(float dt)
 	}
 }
 
-void SceneGravity::Render()
+void SceneGame::Render()
 {
 	g_CameraManager->SetPosition(m_pHero->GetPositionX(), m_pHero->GetPositionY()) ;
 	g_CameraManager->CameraRun() ;
@@ -235,7 +234,7 @@ void SceneGravity::Render()
 	}
 }
 
-void SceneGravity::GameMenu()
+void SceneGame::GameMenu()
 {
 	MenuButtonMove(m_pMenuButton, 292.0f, 84.0f, 3) ;
 		
@@ -247,7 +246,7 @@ void SceneGravity::GameMenu()
 		}
 		else if(m_nSelectMenuNum==1)
 		{
-			g_SceneManager->ChangeScene(SceneGravity::scene()) ;
+			g_SceneManager->ChangeScene(SceneGame::scene()) ;
 			return ;
 		}
 		else
@@ -258,7 +257,7 @@ void SceneGravity::GameMenu()
 	}
 }
 
-void SceneGravity::GameEndMenu()
+void SceneGame::GameEndMenu()
 {
 	if(m_GameEndMenuState==MENU_IN)
 	{
@@ -303,7 +302,7 @@ void SceneGravity::GameEndMenu()
 		{
 			if(m_nSelectMenuNum==0)
 			{
-				g_SceneManager->ChangeScene(SceneGravity::scene()) ;
+				g_SceneManager->ChangeScene(SceneGame::scene()) ;
 				return ;
 			}
 			else
@@ -315,7 +314,7 @@ void SceneGravity::GameEndMenu()
 	}
 }
 
-void SceneGravity::MenuButtonMove(CSprite **pMenuButton, const float fWidth, const float fHeight, const int nMaxMenu)
+void SceneGame::MenuButtonMove(CSprite **pMenuButton, const float fWidth, const float fHeight, const int nMaxMenu)
 {
 	int prevSelectNum = m_nSelectMenuNum ;
 

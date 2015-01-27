@@ -1,5 +1,5 @@
 #include "Scene_StageSelect.h"
-#include "Scene_Gravity.h"
+#include "Scene_Game.h"
 #include "Scene_Title.h"
 
 #include "Keyboard.h"
@@ -185,7 +185,7 @@ void SceneStageSelect::Update(float dt)
 
 	if(g_Keyboard->IsPressDown(DIK_RETURN) || g_Keyboard->IsPressDown(DIK_SPACE) || g_Keyboard->IsPressDown(DIK_Z))
 	{
-		g_SceneManager->ChangeScene(SceneGravity::scene()) ;
+		g_SceneManager->ChangeScene(SceneGame::scene()) ;
 		return ;
 	}
 	else if(g_Keyboard->IsPressDown(DIK_ESCAPE) || g_Keyboard->IsPressDown(DIK_X))

@@ -6,7 +6,7 @@ class CHero ;
 class CSprite ;
 class CMapBackground ;
 
-class SceneGravity : public Scene
+class SceneGame : public Scene
 {
 private :
 	CHero *m_pHero ;
@@ -26,8 +26,8 @@ private :
 public :
 	static Scene* scene() ;
 
-	SceneGravity() ;
-	virtual ~SceneGravity() ;
+	SceneGame() ;
+	virtual ~SceneGame() ;
 
 	void Init() ;
 	void Destroy() ;
