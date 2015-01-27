@@ -10,8 +10,8 @@ class CDynamicObjects ;
 class CMapTiles_List : public Singleton<CMapTiles_List>
 {
 private :
-	CTiles ***m_pMapTiles_List ;
-
+	CTiles ***m_pMapTiles_List ;	// 경계선 블럭으로 인하여, 실질적인 타일의 위치는 Index+1 의 값을 지닌다.
+									// ex) 3, 8 위치의 타일 -> m_pMapTiles_List[4][9]
 	Position m_HeroPos ;
 	Size m_MapSize ;
 

@@ -37,19 +37,21 @@ void CMapTiles_List::LoadMap()
 	char filepath[100] ;
 	int mapSizeX, mapSizeY ;
 	int tileNumber ;
+	bool bBoaderLineX=false ;
 
+	// Map dat 파일 불러오기
 	sprintf_s(filepath, "Resource/Data/Maps/%s.dat", g_StageProgress->GetSelectMapName()) ;
 
 	map = fopen(filepath, "r") ;
 
 	fscanf(map, "%d %d\n", &mapSizeX, &mapSizeY) ;
 
-	m_pMapTiles_List = new CTiles**[mapSizeX] ;
-	for(int i=0; i<mapSizeX; i++)
+	m_pMapTiles_List = new CTiles**[mapSizeX+2] ;
+	for(int i=0; i<mapSizeX+2; i++)
 	{
-		m_pMapTiles_List[i] = new CTiles*[mapSizeY] ;
+		m_pMapTiles_List[i] = new CTiles*[mapSizeY+2] ;
 
-		for(int j=0; j<mapSizeY; j++)
+		for(int j=0; j<mapSizeY+2; j++)
 			m_pMapTiles_List[i][j] = NULL ;
 	}
 
@@ -120,40 +122,45 @@ void CMapTiles_List::LoadMap()
 			{
 				pTile->Init() ;
 				pTile->SetPosition((float)(x * 64), (float)(y * 64)) ;
-				m_pMapTiles_List[x][y] = &(*pTile) ;
+				m_pMapTiles_List[x+1][y+1] = &(*pTile) ;
 			}
 
-			/*// 맵 밖으로 나가지 못하게 하기 위한, 경계선 블럭 X축
-			//CTiles *pTile ;
-
-			pTile = new CTiles_GroundStone ;
-			pTile->Init() ;
-			pTile->SetPosition((float)(x * 64), -64.0f) ;
-			m_MapTiles_List.push_back(pTile) ;
+			// 맵 밖으로 나가지 못하게 하기 위한, 경계선 블럭 X축
+			if(!bBoaderLineX)
+			{
+				CTiles *pTile ;
+				
+				pTile = new CTiles_GroundStone ;
+				pTile->Init() ;
+				pTile->SetPosition((float)(x * 64), -64.0f) ;
+				m_pMapTiles_List[x+1][0] = &(*pTile) ;
 		
-			pTile = new CTiles_GroundStone ;
-			pTile->Init() ;
-			pTile->SetPosition((float)(x * 64), (float)(mapSizeY * 64)) ;
-			m_MapTiles_List.push_back(pTile) ;*/
+				pTile = new CTiles_GroundStone ;
+				pTile->Init() ;
+				pTile->SetPosition((float)(x * 64), (float)(mapSizeY * 64)) ;
+				m_pMapTiles_List[x+1][mapSizeY+1] = &(*pTile) ;
+			}
 		}
 
-		/*// 맵 밖으로 나가지 못하게 하기 위한, 경계선 블럭 Y축
+		// 맵 밖으로 나가지 못하게 하기 위한, 경계선 블럭 Y축
 		CTiles *pTile ;
 
 		pTile = new CTiles_GroundStone ;
 		pTile->Init() ;
 		pTile->SetPosition(-64.0f, (float)(y * 64)) ;
-		m_MapTiles_List.push_back(pTile) ;
+		m_pMapTiles_List[0][y+1] = &(*pTile) ;
 		
 		pTile = new CTiles_GroundStone ;
 		pTile->Init() ;
 		pTile->SetPosition((float)(mapSizeX * 64), (float)(y * 64)) ;
-		m_MapTiles_List.push_back(pTile) ;*/
+		m_pMapTiles_List[mapSizeX+1][y+1] = &(*pTile) ;
+
+		bBoaderLineX = true ;
 	}
 
 	fclose(map) ;
 
-	//
+	// Map Link 파일 불러오기
 	sprintf_s(filepath, "Resource/Data/Maps/%s.link", g_StageProgress->GetSelectMapName()) ;
 
 	map = fopen(filepath, "r") ;
@@ -173,13 +180,12 @@ void CMapTiles_List::LoadMap()
 			LinkY = (mapSizeY-1) - LinkY ;
 			LinkedY = (mapSizeY-1) - LinkedY ;
 
-			CTiles *pLinkTile = m_pMapTiles_List[LinkX][LinkY] ;
-			CTiles *pLinkedTile = m_pMapTiles_List[LinkedX][LinkedY] ;
+			CTiles *pLinkTile = m_pMapTiles_List[LinkX+1][LinkY+1] ;
+			CTiles *pLinkedTile = m_pMapTiles_List[LinkedX+1][LinkedY+1] ;
 		}
 
 		fclose(map) ;
 	}
-	//
 
 	m_MapSize.x = mapSizeX ;
 	m_MapSize.y = mapSizeY ;
@@ -190,9 +196,9 @@ void CMapTiles_List::Clear()
 	if(m_pMapTiles_List==NULL)
 		return ;
 
-	for(int x=0; x<m_MapSize.x; x++)
+	for(int x=0; x<m_MapSize.x+2; x++)
 	{
-		for(int y=0; y<m_MapSize.y; y++)
+		for(int y=0; y<m_MapSize.y+2; y++)
 		{
 			if(m_pMapTiles_List[x][y]!=NULL)
 			{
@@ -221,7 +227,7 @@ const Size CMapTiles_List::GetMapSize()
 
 CTiles* CMapTiles_List::GetTile(int x, int y)
 {
-	CTiles *pTile = m_pMapTiles_List[x][y] ;
+	CTiles *pTile = m_pMapTiles_List[x+1][y+1] ;
 	
 	if(pTile!=NULL && (pTile->BeCollision() || !pTile->BeNonCollision(NULL)))
 		return pTile ;
@@ -234,8 +240,8 @@ void CMapTiles_List::DeleteTile(CTiles *pTile)
 	const int x = (int)(pTile->GetPositionX() / 64.0f) ;
 	const int y = (int)(pTile->GetPositionY() / 64.0f) ;
 
-	delete m_pMapTiles_List[x][y] ;
-	m_pMapTiles_List[x][y] = NULL ;
+	delete m_pMapTiles_List[x+1][y+1] ;
+	m_pMapTiles_List[x+1][y+1] = NULL ;
 }
 
 std::vector<CTiles*> CMapTiles_List::GetAdjacentMapTilesList(int x, int y, int radius)
@@ -246,10 +252,10 @@ std::vector<CTiles*> CMapTiles_List::GetAdjacentMapTilesList(int x, int y, int r
 	{
 		for(int j=y-radius; j<=y+radius; j++)
 		{
-			if((i>=0 && i<m_MapSize.x) && (j>=0 && j<m_MapSize.y))
+			if((i>=-1 && i<=m_MapSize.x) && (j>=-1 && j<=m_MapSize.y))
 			{
-				if(m_pMapTiles_List[i][j]!=NULL)
-					MapTiles.push_back(m_pMapTiles_List[i][j]) ;
+				if(m_pMapTiles_List[i+1][j+1]!=NULL)
+					MapTiles.push_back(m_pMapTiles_List[i+1][j+1]) ;
 			}
 		}
 	}
@@ -261,9 +267,9 @@ void CMapTiles_List::Update()
 {
 	CTiles *pTile ;
 
-	for(int x=0; x<m_MapSize.x; x++)
+	for(int x=0; x<m_MapSize.x+2; x++)
 	{
-		for(int y=0; y<m_MapSize.y; y++)
+		for(int y=0; y<m_MapSize.y+2; y++)
 		{
 			pTile = m_pMapTiles_List[x][y] ;
 			if(pTile!=NULL)
@@ -283,7 +289,7 @@ void CMapTiles_List::Render()
 	{
 		for(int y=0; y<m_MapSize.y; y++)
 		{
-			pTile = m_pMapTiles_List[x][y] ;
+			pTile = m_pMapTiles_List[x+1][y+1] ;
 			if(pTile!=NULL)
 				pTile->Render() ;
 		}
