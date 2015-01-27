@@ -10,9 +10,11 @@ class SceneTitle : public Scene
 private :
 	CSprite *m_pBackground ;
 	CSprite *m_pButton[4] ;
+	CSprite *m_pHelp[4] ;
 	CSprite *m_pBlank ;
 
 	int m_nMenuNum ;
+	int m_nHelpNum ;
 
 	bool m_bFadeOut ;
 	float m_fTime ;
@@ -32,5 +34,6 @@ public :
 	void Render() ;
 private :
 	void MenuSelect() ;
+	void HelpMenu() ;
 	void FadeOut() ;
 } ;

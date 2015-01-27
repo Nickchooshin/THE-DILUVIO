@@ -16,12 +16,16 @@
 SceneTitle::SceneTitle() : m_pBackground(NULL),
 						   m_pBlank(NULL),
 						   m_nMenuNum(0),
+						   m_nHelpNum(0),
 						   m_bFadeOut(false),
 						   m_fTime(0.0f),
 						   m_pBGM(NULL)
 {
 	for(int i=0; i<4; i++)
+	{
 		m_pButton[i] = NULL ;
+		m_pHelp[i] = NULL ;
+	}
 }
 SceneTitle::~SceneTitle()
 {
@@ -32,7 +36,10 @@ SceneTitle::~SceneTitle()
 		delete m_pBlank ;
 
 	for(int i=0; i<4; i++)
+	{
 		delete m_pButton[i] ;
+		delete m_pHelp[i] ;
+	}
 }
 
 Scene* SceneTitle::scene()
@@ -74,6 +81,15 @@ void SceneTitle::Init()
 	m_pButton[3]->SetTextureUV(0.0f, 0.0f, 212.0f, 122.0f) ;
 	m_pButton[3]->SetPosition(921.0f, fWinHeight - 693.0f) ;
 
+	char filepath[1024] ;
+	for(int i=0; i<4; i++)
+	{
+		sprintf_s(filepath, "Resource/Image/Help/Help%d.png", i+1) ;
+		m_pHelp[i] = new CSprite ;
+		m_pHelp[i]->Init(filepath) ;
+		m_pHelp[i]->SetPosition(fWinWidth / 2.0f, fWinHeight / 2.0f) ;
+	}
+
 	m_pBlank = new CSprite ;
 	m_pBlank->Init(fWinWidth, fWinHeight, "Resource/Image/blank.png") ;
 	m_pBlank->SetPosition(fWinWidth / 2.0f, fWinHeight / 2.0f) ;
@@ -101,6 +117,11 @@ void SceneTitle::Update(float dt)
 		FadeOut() ;
 		return ;
 	}
+	else if(m_nHelpNum!=0)
+	{
+		HelpMenu() ;
+		return ;
+	}
 
 	MenuSelect() ;
 
@@ -117,6 +138,7 @@ void SceneTitle::Update(float dt)
 			return ;
 
 		case 2 :
+			m_nHelpNum = 1 ;
 			return ;
 		}
 	}
@@ -130,6 +152,9 @@ void SceneTitle::Render()
 
 	for(int i=0; i<4; i++)
 		m_pButton[i]->Render() ;
+
+	if(m_nHelpNum!=0)
+		m_pHelp[m_nHelpNum-1]->Render() ;
 
 	if(m_bFadeOut)
 		m_pBlank->Render() ;
@@ -154,6 +179,16 @@ void SceneTitle::MenuSelect()
 	{
 		m_pButton[prevMenuNum]->SetTextureUV(0.0f, 0.0f, 212.0f, 122.0f) ;
 		m_pButton[m_nMenuNum]->SetTextureUV(212.0f, 0.0f, 424.0f, 122.0f) ;
+	}
+}
+
+void SceneTitle::HelpMenu()
+{
+	if(g_Keyboard->IsPressDown(DIK_RETURN) || g_Keyboard->IsPressDown(DIK_SPACE) || g_Keyboard->IsPressDown(DIK_Z))
+	{
+		++m_nHelpNum ;
+		if(m_nHelpNum>4)
+			m_nHelpNum = 0 ;
 	}
 }
 

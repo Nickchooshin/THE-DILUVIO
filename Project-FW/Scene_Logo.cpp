@@ -94,7 +94,7 @@ void SceneLogo::Update(float dt)
 	g_Joystick->Update() ;
 	g_MusicManager->Loop() ;
 
-	if(g_Keyboard->IsPressDown(DIK_RETURN))
+	if(g_Keyboard->IsPressDown(DIK_RETURN) || g_Keyboard->IsPressDown(DIK_SPACE) || g_Keyboard->IsPressDown(DIK_Z))
 	{
 		m_fTime = 0.0f ;
 
