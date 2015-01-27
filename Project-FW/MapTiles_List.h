@@ -27,8 +27,10 @@ public :
 	const Size GetMapSize() ;
 	CTiles* GetTile(int x, int y) ;
 	void DeleteTile(CTiles *pTile) ;
-
+	
+	std::vector<CTiles*> GetAdjacentAllMapTilesList(int x, int y, int radius=1) ;
 	std::vector<CTiles*> GetAdjacentMapTilesList(int x, int y, int radius=1) ;
+	std::vector<CTiles*> GetAdjacentEffectMapTilesList(int x, int y, int radius=1) ;
 
 	void Update() ;
 

@@ -244,7 +244,7 @@ void CMapTiles_List::DeleteTile(CTiles *pTile)
 	m_pMapTiles_List[x+1][y+1] = NULL ;
 }
 
-std::vector<CTiles*> CMapTiles_List::GetAdjacentMapTilesList(int x, int y, int radius)
+std::vector<CTiles*> CMapTiles_List::GetAdjacentAllMapTilesList(int x, int y, int radius)
 {
 	std::vector<CTiles*> MapTiles ;
 
@@ -255,6 +255,44 @@ std::vector<CTiles*> CMapTiles_List::GetAdjacentMapTilesList(int x, int y, int r
 			if((i>=-1 && i<=m_MapSize.x) && (j>=-1 && j<=m_MapSize.y))
 			{
 				if(m_pMapTiles_List[i+1][j+1]!=NULL)
+					MapTiles.push_back(m_pMapTiles_List[i+1][j+1]) ;
+			}
+		}
+	}
+
+	return MapTiles ;
+}
+
+std::vector<CTiles*> CMapTiles_List::GetAdjacentMapTilesList(int x, int y, int radius)
+{
+	std::vector<CTiles*> MapTiles ;
+
+	for(int i=x-radius; i<=x+radius; i++)
+	{
+		for(int j=y-radius; j<=y+radius; j++)
+		{
+			if((i>=-1 && i<=m_MapSize.x) && (j>=-1 && j<=m_MapSize.y))
+			{
+				if(m_pMapTiles_List[i+1][j+1]!=NULL && !m_pMapTiles_List[i+1][j+1]->BeEffect())
+					MapTiles.push_back(m_pMapTiles_List[i+1][j+1]) ;
+			}
+		}
+	}
+
+	return MapTiles ;
+}
+
+std::vector<CTiles*> CMapTiles_List::GetAdjacentEffectMapTilesList(int x, int y, int radius)
+{
+	std::vector<CTiles*> MapTiles ;
+
+	for(int i=x-radius; i<=x+radius; i++)
+	{
+		for(int j=y-radius; j<=y+radius; j++)
+		{
+			if((i>=-1 && i<=m_MapSize.x) && (j>=-1 && j<=m_MapSize.y))
+			{
+				if(m_pMapTiles_List[i+1][j+1]!=NULL && m_pMapTiles_List[i+1][j+1]->BeEffect())
 					MapTiles.push_back(m_pMapTiles_List[i+1][j+1]) ;
 			}
 		}

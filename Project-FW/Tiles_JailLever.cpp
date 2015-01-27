@@ -5,6 +5,7 @@
 
 CTiles_JailLever::CTiles_JailLever() : m_LinkIndex(-1, -1)
 {
+	m_bEffect = true ;
 }
 CTiles_JailLever::~CTiles_JailLever()
 {

@@ -31,7 +31,7 @@ void CCollisionManager::CollisionX()
 		pDynamicObject->SetGravityMultiples(1.0f) ;
 		pDynamicObject->SetMultipleJump(false) ;
 
-		//********** MapTiles_List Collision **********//
+		//********** MapTiles_List Collision (NonEffect) **********//
 		const int x = (int)(pDynamicObject->GetPositionX() / 64.0f) ;
 		const int y = (int)(pDynamicObject->GetPositionY() / 64.0f) ;
 
@@ -56,6 +56,26 @@ void CCollisionManager::CollisionX()
 				continue ;
 
 			col.XCollision(DynamicObjects_List[Index_o2], DynamicObjects_List[Index_o]) ;
+		}
+	}
+
+	for(int Index_o=0; Index_o<ObjectSize; Index_o++)
+	{
+		pDynamicObject = DynamicObjects_List[Index_o] ;
+
+		//********** MapTiles_List Collision (NonEffect) **********//
+		const int x = (int)(pDynamicObject->GetPositionX() / 64.0f) ;
+		const int y = (int)(pDynamicObject->GetPositionY() / 64.0f) ;
+
+		MapTiles_List = g_MapTiles_List->GetAdjacentEffectMapTilesList(x, y) ;
+		TileSize = MapTiles_List.size() ;
+
+		for(int Index_t=0; Index_t<TileSize; Index_t++)
+		{
+			pTile = MapTiles_List[Index_t] ;
+			bool bCollision=false ;
+
+			bCollision = col.XCollision(pDynamicObject, pTile) ;
 		}
 	}
 }
@@ -85,7 +105,7 @@ void CCollisionManager::CollisionY()
 		const int x = (int)(pDynamicObject->GetPositionX() / 64.0f) ;
 		const int y = (int)(pDynamicObject->GetPositionY() / 64.0f) ;
 
-		MapTiles_List = g_MapTiles_List->GetAdjacentMapTilesList(x, y) ;
+		MapTiles_List = g_MapTiles_List->GetAdjacentAllMapTilesList(x, y) ;
 		TileSize = MapTiles_List.size() ;
 
 		for(int Index_t=0; Index_t<TileSize; Index_t++)

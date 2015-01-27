@@ -3,6 +3,7 @@
 
 CTiles_Arrival::CTiles_Arrival()
 {
+	m_bEffect = true ;
 }
 CTiles_Arrival::~CTiles_Arrival()
 {

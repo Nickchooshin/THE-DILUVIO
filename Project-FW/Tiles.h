@@ -14,6 +14,7 @@ protected :
 	CTiles *m_pLinkedTile ;
 
 	bool m_bCollision, m_bMainCharNonCollision ;
+	bool m_bEffect ;
 	bool m_bEdible ;
 	bool m_bGravityMultiples ;
 
@@ -40,6 +41,7 @@ public :
 	void SetCollision(bool bFlag) ;
 	const bool BeCollision() ;
 	const bool BeNonCollision(CDynamicObjects *pDynamicObject) ;
+	const bool BeEffect() ;
 	const bool BeEdible() ;
 	const bool BeGravityMultiples() ;
 

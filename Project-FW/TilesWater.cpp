@@ -11,6 +11,7 @@ bool CTilesWater::m_bMultipleJump = false ;
 CTilesWater::CTilesWater()
 {
 	m_bGravityMultiples = true ;
+	m_bEffect = true ;
 }
 CTilesWater::~CTilesWater()
 {
