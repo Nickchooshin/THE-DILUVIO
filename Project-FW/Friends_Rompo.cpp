@@ -55,8 +55,6 @@ void CFriends_Rompo::Update()
 	if(m_bStun)
 		m_State = STUN ;
 
-	//Animation() ;
-
 	bool bAbility = !m_bUnVisible && !m_bShock && (m_State==STAND) ;
 	if(bAbility && !m_pEAbilityL->BeVisible() && !m_pEAbilityR->BeVisible())
 	{
@@ -84,10 +82,10 @@ void CFriends_Rompo::Update()
 	if(m_pEAbilityR->BeVisible())
 		m_pEAbilityR->Update() ;
 
+	Animation() ;
+
 	m_pESparkImpact->SetVisible(m_bShock) ;
 	m_pESparkImpact->Update() ;
-
-	Animation() ;
 }
 
 void CFriends_Rompo::Render()

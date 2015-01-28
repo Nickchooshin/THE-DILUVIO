@@ -166,6 +166,9 @@ void CFriends::SendEventMessage(char *EventMessage, void *pData)
 	}
 	else if(len==4 && strcmp(EventMessage, "MANO")==0)
 	{
+		bool *bHit = (bool*)pData ;
+		*bHit = true ;
+
 		m_bStun = true ;
 	}
 }

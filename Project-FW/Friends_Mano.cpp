@@ -68,8 +68,6 @@ void CFriends_Mano::Update()
 
 	Animation() ;
 
-	//bool b = !m_bUnVisible & !m_bShock & (m_State==STAND) ;
-	//if(b && !m_pEAbilityL->BeVisible() && !m_pEAbilityR->BeVisible())
 	if(!m_bUnVisible & !m_bShock & (m_State==STAND && m_AState==NONE))
 	{
 		int x = (int)(m_fX / 64.0f) ;
@@ -136,12 +134,16 @@ void CFriends_Mano::Faint(int x, int y)
 		pFriend = g_Friends_List->GetFriend(x+direction[index], y) ;
 		if(pFriend!=NULL && pFriend->BeStand())
 		{
-			pFriend->SendEventMessage("MANO", NULL) ;
+			bool bHit=false ;
+			pFriend->SendEventMessage("MANO", &bHit) ;
 
-			m_Direction = (Direction)index ;
-			m_AState = FAINT ;
+			if(bHit)
+			{
+				m_Direction = (Direction)index ;
+				m_AState = FAINT ;
 
-			g_MusicManager->PlayMusic(m_pSEAbility, 2) ;
+				g_MusicManager->PlayMusic(m_pSEAbility, 2) ;
+			}
 
 			return ;
 		}

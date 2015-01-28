@@ -124,31 +124,6 @@ void CFriends_Busxo::Update()
 
 	m_pESparkImpact->SetVisible(m_bShock) ;
 	m_pESparkImpact->Update() ;
-
-	/*if(!m_bShock && m_State==STAND)
-	{
-		int x = (int)(m_fX / 64.0f) ;
-		int y = (int)((m_fY + m_BoundingBox.top) / 64.0f) - 1 ;
-		CTiles *pTile = g_MapTiles_List->GetTile(x, y) ;
-		if(pTile!=NULL)
-		{
-			bool bEdible = pTile->BeEdible() ;
-
-			if(bEdible && m_AState==NONE)
-				m_AState = START_EAT ;
-			else if(!bEdible && m_AState==EATING)
-				m_AState = END_EAT ;
-		}
-		else
-		{
-			if(m_AState==EATING)
-			{
-				CFriends *pFriend = g_Friends_List->GetFriend(x, y) ;
-				if(pFriend!=NULL)
-					m_AState = END_EAT ;
-			}
-		}
-	}*/
 }
 
 void CFriends_Busxo::LoadBusxoDat()
