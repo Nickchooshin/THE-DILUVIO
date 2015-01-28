@@ -20,6 +20,8 @@ CFriends::CFriends() : m_pESparkImpact(NULL),
 					   m_bRespiration(false),
 					   m_fAnimationTime(0.0f),
 					   m_nRanchoAlpha(306),
+					   m_bSEAbility(false),
+					   m_pSEAbility(NULL),
 					   m_State(STAND), m_prevState(STAND)
 {
 	m_fVecGravity = -0.3f ;

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "DynamicObjects.h"
+#include <fmod.hpp>
 
 class CEffect_SparkImpact ;
 
@@ -20,6 +21,9 @@ protected :
 	
 	float m_fAnimationTime ;
 	int m_nRanchoAlpha ;
+
+	bool m_bSEAbility ;
+	FMOD::Sound *m_pSEAbility ;
 
 	enum State { STAND=0, ABSORB, RELEASE, STUN } ;
 	State m_State, m_prevState ;

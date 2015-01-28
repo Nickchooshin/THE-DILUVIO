@@ -6,12 +6,14 @@
 
 #include "Effect_List.h"
 
-CFriends_Makzelo::CFriends_Makzelo() : m_pEAbility(0)
+#include "MusicManager.h"
+
+CFriends_Makzelo::CFriends_Makzelo() : m_pEAbility(NULL)
 {
 }
 CFriends_Makzelo::~CFriends_Makzelo()
 {
-	if(m_pEAbility!=0)
+	if(m_pEAbility!=NULL)
 		delete m_pEAbility ;
 }
 
@@ -23,6 +25,8 @@ void CFriends_Makzelo::Init()
 	m_pEAbility->Init() ;
 
 	g_Effect_List->AddEffect(m_pEAbility) ;
+
+	m_pSEAbility = g_MusicManager->LoadMusic("Resource/Sound/SE_FriendAbility.mp3", false, false) ;
 }
 
 void CFriends_Makzelo::Update()
@@ -43,14 +47,23 @@ void CFriends_Makzelo::Update()
 		m_State = STUN ;
 
  	Animation() ;
-	//
-	bool b = !m_bUnVisible & !m_bShock & (m_State==STAND) ;
-	m_pEAbility->SetVisible(b) ;
 
-	if(!m_bShock)
+	if(!m_bUnVisible && !m_bShock && (m_State==STAND))
 	{
-		m_pEAbility->Update() ;
+		m_pEAbility->SetVisible(true) ;
 		m_pEAbility->SetPosition(m_fX, m_fY) ;
+		m_pEAbility->Update() ;
+
+		if(!m_bSEAbility)
+		{
+			m_bSEAbility = true ;
+			g_MusicManager->PlayMusic(m_pSEAbility, 2) ;
+		}
+	}
+	else
+	{
+		m_pEAbility->SetVisible(false) ;
+		m_bSEAbility = false ;
 	}
 
 	m_pESparkImpact->SetVisible(m_bShock) ;

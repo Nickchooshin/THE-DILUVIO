@@ -10,6 +10,7 @@
 #include "Hero.h"
 
 #include "D3dDevice.h"
+#include "MusicManager.h"
 
 #define m_Stand_LeftIndex	m_Stand_Index
 #define m_Absorb_LeftIndex	m_Absorb_Index
@@ -33,6 +34,8 @@ CFriends_Mano::~CFriends_Mano()
 void CFriends_Mano::Init()
 {
 	LoadManoDat() ;
+	
+	m_pSEAbility = g_MusicManager->LoadMusic("Resource/Sound/SE_Mano.mp3", false, false) ;
 }
 
 void CFriends_Mano::Release()
@@ -72,8 +75,7 @@ void CFriends_Mano::Update()
 		int x = (int)(m_fX / 64.0f) ;
 		int y = (int)(m_fY / 64.0f) ;
 		 
-		Faint(x, y, 'R') ;
-		Faint(x, y, 'L') ;
+		Faint(x, y) ;
 	}
 
 	m_pESparkImpact->SetVisible(m_bShock) ;
@@ -119,7 +121,7 @@ void CFriends_Mano::SendEventMessage(char *EventMessage, void *pData)
 	}
 }
 
-void CFriends_Mano::Faint(int x, int y, char cDirection)
+void CFriends_Mano::Faint(int x, int y)
 {
 	int direction[2] = {-1, 1} ;
 	int index = 0 ;
@@ -138,6 +140,8 @@ void CFriends_Mano::Faint(int x, int y, char cDirection)
 
 			m_Direction = (Direction)index ;
 			m_AState = FAINT ;
+
+			g_MusicManager->PlayMusic(m_pSEAbility, 2) ;
 
 			return ;
 		}

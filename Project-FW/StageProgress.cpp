@@ -189,7 +189,7 @@ void CStageProgress::StageProgressSave()
 {
 	FILE *pFile = fopen("Resource/Data/.sav", "wb") ;
 
-	fprintf(pFile, "%d%d%d", m_nChapterProgress, m_nStageProgress, m_nTutorialProgress) ;
+	fprintf(pFile, "%d%d%02d", m_nChapterProgress, m_nStageProgress, m_nTutorialProgress) ;
 
 	fclose(pFile) ;
 }
@@ -201,12 +201,12 @@ bool CStageProgress::StageProgressLoad()
 	if(pFile==NULL)
 		return false ;
 
-	char value[4] ;
+	char value[5] ;
 
 	fscanf(pFile, "%s", &value) ;
-	m_nChapterProgress = value[0] - '0' ;
-	m_nStageProgress = value[1] - '0' ;
-	m_nTutorialProgress = value[2] - '0' ;
+	m_nChapterProgress = (value[0] - '0') ;
+	m_nStageProgress = (value[1] - '0') ;
+	m_nTutorialProgress = ((value[2] - '0') * 10) + (value[3] - '0') ;
 
 	fclose(pFile) ;
 

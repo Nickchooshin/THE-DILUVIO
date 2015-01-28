@@ -10,13 +10,9 @@
 
 #include "Friends_Okulo.h"
 #include "Friends_Montrilo.h"
-//#include "Friends_Mano.h"
-//#include "Friends_Pilo.h"
 #include "Friends_Makzelo.h"
 #include "Friends_Vento.h"
 #include "Friends_Busxo.h"
-//#include "Friends_Saltado.h"
-//#include "Friends_Elitro.h"
 #include "Friends_Rompo.h"
 #include "Friends_Rancho.h"
 #include "Friends_Mano.h"

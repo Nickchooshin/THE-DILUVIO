@@ -266,11 +266,6 @@ void CHero::Move()
 
 	if(m_bReleaseAbsorb && !m_bGravity && g_Keyboard->IsButtonDown(DIK_Z))
 	{
-		/*if(g_Keyboard->IsPressDown(DIK_Z))
-		{
-			g_MusicManager->StopMusic(1) ;
-			g_MusicManager->PlayMusic(m_pSESkill, 1) ;
-		}*/
 		const State SkilState = (State)(m_State % RIGHT) ;
 		if(SkilState!=LEFT_ABSORB && SkilState!=LEFT_RELEASE)
 			g_MusicManager->PlayMusic(m_pSESkill, 1) ;
@@ -311,11 +306,6 @@ void CHero::Move()
 	}
 	else if(m_bReleaseAbsorb && !m_bGravity && g_Keyboard->IsButtonDown(DIK_X))
 	{
-		/*if(g_Keyboard->IsPressDown(DIK_X))
-		{
-			g_MusicManager->StopMusic(1) ;
-			g_MusicManager->PlayMusic(m_pSESkill, 1) ;
-		}*/
 		const State SkilState = (State)(m_State % RIGHT) ;
 		if(SkilState!=LEFT_ABSORB && SkilState!=LEFT_RELEASE)
 			g_MusicManager->PlayMusic(m_pSESkill, 1) ;
@@ -348,7 +338,7 @@ void CHero::Move()
 	{
 		const State SkilState = (State)(m_State % RIGHT) ;
 		if(SkilState==LEFT_ABSORB || SkilState==LEFT_RELEASE)
-				g_MusicManager->StopMusic(1) ;
+			g_MusicManager->StopMusic(1) ;
 
 		m_State = (State)((m_State / RIGHT) * RIGHT + LEFT) ;
 

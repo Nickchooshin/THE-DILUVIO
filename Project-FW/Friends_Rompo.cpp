@@ -7,7 +7,10 @@
 #include "Friends_List.h"
 #include "MapTiles_List.h"
 
-CFriends_Rompo::CFriends_Rompo() : m_pEAbilityL(0), m_pEAbilityR(0)
+#include "MusicManager.h"
+
+CFriends_Rompo::CFriends_Rompo() : m_pEAbilityL(0), m_pEAbilityR(0),
+								   m_pSEDash(NULL)
 {
 }
 CFriends_Rompo::~CFriends_Rompo()
@@ -30,6 +33,9 @@ void CFriends_Rompo::Init()
 
 	g_Effect_List->AddEffect(m_pEAbilityL) ;
 	g_Effect_List->AddEffect(m_pEAbilityR) ;
+	
+	m_pSEAbility = g_MusicManager->LoadMusic("Resource/Sound/SE_Rompo.mp3", false, false) ;
+	m_pSEDash = g_MusicManager->LoadMusic("Resource/Sound/SE_Rompo_2.mp3", false, true) ;
 }
  
 void CFriends_Rompo::Update()
@@ -51,14 +57,26 @@ void CFriends_Rompo::Update()
 
 	//Animation() ;
 
-	bool b = !m_bUnVisible & !m_bShock & (m_State==STAND) ;
-	if(b && !m_pEAbilityL->BeVisible() && !m_pEAbilityR->BeVisible())
+	bool bAbility = !m_bUnVisible && !m_bShock && (m_State==STAND) ;
+	if(bAbility && !m_pEAbilityL->BeVisible() && !m_pEAbilityR->BeVisible())
 	{
-		int x = (int)(m_fX / 64.0f) ;
-		int y = (int)(m_fY / 64.0f) ;
+		const int x = (int)(m_fX / 64.0f) ;
+		const int y = (int)(m_fY / 64.0f) ;
 		 
 		Dash(x, y, 'R') ;
 		Dash(x, y, 'L') ;
+
+		if(m_bSEAbility)
+		{
+			m_bSEAbility = false ;
+			g_MusicManager->StopMusic(4) ;
+		}
+		if(!m_bSEAbility && (m_pEAbilityL->BeVisible() || m_pEAbilityR->BeVisible()))
+		{
+			m_bSEAbility = true ;
+			g_MusicManager->PlayMusic(m_pSEAbility, 2) ;
+			g_MusicManager->PlayMusic(m_pSEDash, 4) ;
+		}
 	}
 	
 	if(m_pEAbilityL->BeVisible())

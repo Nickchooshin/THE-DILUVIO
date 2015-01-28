@@ -10,8 +10,9 @@
 #include "Friends_List.h"
 
 #include "D3dDevice.h"
+#include "MusicManager.h"
 
-CFriends_Busxo::CFriends_Busxo() : m_pEAbility(0),
+CFriends_Busxo::CFriends_Busxo() : m_pEAbility(NULL),
 								   m_nStartEatFrame(0), m_nEatingFrame(0), m_nEndEatFrame(0),
 								   m_Start_Eat_Index(0, 0), m_Eating_Index(0, 0), m_End_Eat_Index(0, 0),
 								   m_AState(NONE), m_prevAState(NONE)
@@ -19,7 +20,7 @@ CFriends_Busxo::CFriends_Busxo() : m_pEAbility(0),
 }
 CFriends_Busxo::~CFriends_Busxo()
 {
-	if(m_pEAbility!=0)
+	if(m_pEAbility!=NULL)
 		delete m_pEAbility ;
 }
 
@@ -31,6 +32,8 @@ void CFriends_Busxo::Init()
 	m_pEAbility->Init() ;
 
 	g_Effect_List->AddEffect(m_pEAbility) ;
+
+	m_pSEAbility = g_MusicManager->LoadMusic("Resource/Sound/SE_Busxo.mp3", false, true) ;
 }
 
 void CFriends_Busxo::Absorb()
@@ -59,18 +62,19 @@ void CFriends_Busxo::Update()
 	if(m_bStun)
 		m_State = STUN ;
 
-	////
-	bool b = !m_bShock & (m_State==STAND && m_AState==EATING) ;
-	m_pEAbility->SetVisible(b) ;
-	////
-
 	Animation() ;
-	//
-	if(!m_bShock)
+
+	if(!m_bShock && (m_State==STAND))
 	{
 		// Busxo Ability
-		m_pEAbility->Update() ;
-		m_pEAbility->SetPosition(m_fX, m_fY + m_BoundingBox.bottom - 1.0f) ;
+		if(m_AState==EATING)
+		{
+			m_pEAbility->SetVisible(true) ;
+			m_pEAbility->SetPosition(m_fX, m_fY + m_BoundingBox.bottom - 1.0f) ;
+			m_pEAbility->Update() ;
+		}
+		else
+			m_pEAbility->SetVisible(false) ;
 
 		if(m_State==STAND)
 		{
@@ -98,13 +102,30 @@ void CFriends_Busxo::Update()
 		}
 	}
 	else
+	{
 		m_AState = NONE ;
+		
+		m_pEAbility->SetVisible(false) ;
+	}
+
+	if(m_pEAbility->BeVisible())
+	{
+		if(!m_bSEAbility)
+		{
+			m_bSEAbility = true ;
+			g_MusicManager->PlayMusic(m_pSEAbility, 3) ;
+		}
+	}
+	else if(m_bSEAbility)
+	{
+		g_MusicManager->StopMusic(3) ;
+		m_bSEAbility = false ;
+	}
 
 	m_pESparkImpact->SetVisible(m_bShock) ;
 	m_pESparkImpact->Update() ;
 
-	////////
-	if(!m_bShock && m_State==STAND)
+	/*if(!m_bShock && m_State==STAND)
 	{
 		int x = (int)(m_fX / 64.0f) ;
 		int y = (int)((m_fY + m_BoundingBox.top) / 64.0f) - 1 ;
@@ -127,7 +148,7 @@ void CFriends_Busxo::Update()
 					m_AState = END_EAT ;
 			}
 		}
-	}
+	}*/
 }
 
 void CFriends_Busxo::LoadBusxoDat()

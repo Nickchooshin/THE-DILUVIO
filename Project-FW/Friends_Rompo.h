@@ -9,6 +9,8 @@ class CFriends_Rompo : public CFriends
 private :
 	CEffect_RompoDash *m_pEAbilityL, *m_pEAbilityR ;
 
+	FMOD::Sound *m_pSEDash ;
+
 public :
 	CFriends_Rompo() ;
 	~CFriends_Rompo() ;

@@ -5,12 +5,15 @@
 
 #include "Effect_List.h"
 
-CFriends_Vento::CFriends_Vento() : m_pEAbility(0)
+#include "MusicManager.h"
+
+CFriends_Vento::CFriends_Vento() : m_pEAbility(NULL),
+								   m_pSEAbility(NULL)
 {
 }
 CFriends_Vento::~CFriends_Vento()
 {
-	if(m_pEAbility!=0)
+	if(m_pEAbility!=NULL)
 		delete m_pEAbility ;
 }
 
@@ -22,6 +25,8 @@ void CFriends_Vento::Init()
 	m_pEAbility->Init() ;
 
 	g_Effect_List->AddEffect(m_pEAbility) ;
+
+	m_pSEAbility = g_MusicManager->LoadMusic("Resource/Sound/SE_FriendAbility.mp3", false, false) ;
 }
 
 void CFriends_Vento::Update()
@@ -41,18 +46,25 @@ void CFriends_Vento::Update()
 	if(m_bStun)
 		m_State = STUN ;
 
-	////
-	bool b = !m_bShock & (m_State==STAND) ;
-	m_pEAbility->SetVisible(b) ;
-	////
+	if(!m_bShock && (m_State==STAND))
+	{
+		m_pEAbility->SetVisible(true) ;
+		m_pEAbility->SetPosition(m_fX, m_fY) ;
+		m_pEAbility->Update() ;
+
+		if(!m_bSEAbility)
+		{
+			m_bSEAbility = true ;
+			g_MusicManager->PlayMusic(m_pSEAbility, 2) ;
+		}
+	}
+	else
+	{
+		m_pEAbility->SetVisible(false) ;
+		m_bSEAbility = false ;
+	}
 
 	Animation() ;
-	//
-	if(!m_bShock)
-	{
-		m_pEAbility->Update() ;
-		m_pEAbility->SetPosition(m_fX, m_fY) ;
-	}
 
 	m_pESparkImpact->SetVisible(m_bShock) ;
 	m_pESparkImpact->Update() ;

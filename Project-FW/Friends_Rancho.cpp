@@ -9,6 +9,7 @@
 #include "MapTiles_List.h"
 
 #include "D3dDevice.h"
+#include "MusicManager.h"
 
 CFriends_Rancho::CFriends_Rancho() : m_pEAbilityL(NULL), m_pEAbilityR(NULL),
 									 m_nEatFrame(0),
@@ -36,6 +37,8 @@ void CFriends_Rancho::Init()
 
 	g_Effect_List->AddEffect(m_pEAbilityL) ;
 	g_Effect_List->AddEffect(m_pEAbilityR) ;
+
+	m_pSEAbility = g_MusicManager->LoadMusic("Resource/Sound/SE_Rancho.mp3", false, false) ;
 }
  
 void CFriends_Rancho::Update()
@@ -57,14 +60,22 @@ void CFriends_Rancho::Update()
 
 	Animation() ;
 
-	bool b = !m_bUnVisible & !m_bShock & (m_State==STAND) ;
-	if(b && !m_pEAbilityL->BeVisible() && !m_pEAbilityR->BeVisible())
+	bool bAbility = !m_bUnVisible && !m_bShock && (m_State==STAND) ;
+	if(bAbility && !m_pEAbilityL->BeVisible() && !m_pEAbilityR->BeVisible())
 	{
 		int x = (int)(m_fX / 64.0f) ;
 		int y = (int)(m_fY / 64.0f) ;
 
 		Eat(x, y, 'R') ;
 		Eat(x, y, 'L') ;
+
+		if(m_bSEAbility)
+			m_bSEAbility = false ;
+		if(!m_bSEAbility && (m_pEAbilityL->BeVisible() || m_pEAbilityR->BeVisible()))
+		{
+			m_bSEAbility = true ;
+			g_MusicManager->PlayMusic(m_pSEAbility, 2) ;
+		}
 	}
 	
 	if(m_pEAbilityL->BeVisible())

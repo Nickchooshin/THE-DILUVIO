@@ -29,7 +29,7 @@ public :
 
 	void Update() ;
 private :
-	void Faint(int x, int y, char cDirection) ;
+	void Faint(int x, int y) ;
 
 	void LoadManoDat() ;
 

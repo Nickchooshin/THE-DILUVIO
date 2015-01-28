@@ -5,12 +5,14 @@
 
 #include "Effect_List.h"
 
-CFriends_Okulo::CFriends_Okulo() : m_pEAbility(0)
+#include "MusicManager.h"
+
+CFriends_Okulo::CFriends_Okulo() : m_pEAbility(NULL)
 {
 }
 CFriends_Okulo::~CFriends_Okulo()
 {
-	if(m_pEAbility!=0)
+	if(m_pEAbility!=NULL)
 		delete m_pEAbility ;
 }
 
@@ -22,6 +24,8 @@ void CFriends_Okulo::Init()
 	m_pEAbility->Init() ;
 
 	g_Effect_List->AddEffect(m_pEAbility) ;
+
+	m_pSEAbility = g_MusicManager->LoadMusic("Resource/Sound/SE_FriendAbility.mp3", false, false) ;
 }
 
 void CFriends_Okulo::Update()
@@ -40,19 +44,26 @@ void CFriends_Okulo::Update()
 
 	if(m_bStun)
 		m_State = STUN ;
+	
+	if(!m_bShock && (m_State==STAND))
+	{
+		m_pEAbility->SetVisible(true) ;
+		m_pEAbility->SetPosition(m_fX, m_fY) ;
+		m_pEAbility->Update() ;
 
-	////
-	bool b = !m_bShock & (m_State==STAND) ;
-	m_pEAbility->SetVisible(b) ;
-	////
+		if(!m_bSEAbility)
+		{
+			m_bSEAbility = true ;
+			g_MusicManager->PlayMusic(m_pSEAbility, 2) ;
+		}
+	}
+	else
+	{
+		m_pEAbility->SetVisible(false) ;
+		m_bSEAbility = false ;
+	}
 
 	Animation() ;
-	//
-	if(!m_bShock)
-	{
-		m_pEAbility->Update() ;
-		m_pEAbility->SetPosition(m_fX, m_fY) ;
-	}
 
 	m_pESparkImpact->SetVisible(m_bShock) ;
 	m_pESparkImpact->Update() ;
