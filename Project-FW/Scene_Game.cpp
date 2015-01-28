@@ -34,7 +34,8 @@ SceneGame::SceneGame() : m_pHero(NULL),
 						 m_bTutorial(false),
 						 m_bMenu(false),
 						 m_nSelectMenuNum(0),
-						 m_GameEndMenuState(NONE)
+						 m_GameEndMenuState(NONE),
+						 m_pBGM(NULL)
 {
 	int i ;
 
@@ -148,13 +149,20 @@ void SceneGame::Init()
 	m_pEndMenuButton[1]->SetTextureUV(0.0f, 0.0f, 296.0f, 78.0f) ;
 	m_pEndMenuButton[1]->SetAlpha(0) ;
 
-	//
 	g_DynamicObjects_List->AddMainCharObjects(m_pHero) ;
+
+	m_pBGM = g_MusicManager->LoadMusic("Resource/Sound/BGM_InGame.mp3", true) ;
+	g_MusicManager->PlayMusic(m_pBGM) ;
 }
 
 void SceneGame::Destroy()
 {
 	g_CameraManager->AllCameraClear() ;
+
+	g_MusicManager->StopMusic() ;
+	g_MusicManager->StopMusic(2) ;
+	g_MusicManager->StopMusic(3) ;
+	g_MusicManager->StopMusic(4) ;
 }
 
 void SceneGame::Update(float dt)

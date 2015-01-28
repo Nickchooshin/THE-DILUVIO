@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Scene.h"
+#include <fmod.hpp>
 
 class CHero ;
 class CSprite ;
@@ -24,6 +25,8 @@ private :
 
 	enum GameEndMenuState { NONE=0, MENU_IN, BUTTON_IN, SHOW } ;
 	GameEndMenuState m_GameEndMenuState ;
+
+	FMOD::Sound *m_pBGM ;
 
 public :
 	static Scene* scene() ;
