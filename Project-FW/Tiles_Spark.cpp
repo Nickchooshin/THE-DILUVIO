@@ -6,12 +6,12 @@
 
 #include "D3dDevice.h"
 
-CTiles_Spark::CTiles_Spark() : m_pESparkArea(0)
+CTiles_Spark::CTiles_Spark() : m_pESparkArea(NULL)
 {
 }
 CTiles_Spark::~CTiles_Spark()
 {
-	if(m_pESparkArea!=0)
+	if(m_pESparkArea!=NULL)
 		delete m_pESparkArea ;
 }
 

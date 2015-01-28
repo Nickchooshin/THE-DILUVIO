@@ -2,9 +2,11 @@
 #include "Sprite.h"
 
 #include "D3dDevice.h"
+#include "MusicManager.h"
 
 CTiles_Glass::CTiles_Glass() : m_bOkuloEffect(false),
-							   m_bVisible(false)
+							   m_bVisible(false),
+							   m_pSEGlass(NULL)
 {
 }
 CTiles_Glass::~CTiles_Glass()
@@ -14,6 +16,8 @@ CTiles_Glass::~CTiles_Glass()
 void CTiles_Glass::Init()
 {
 	LoadDat("Resource/Data/Tiles/Glass.dat") ;
+
+	m_pSEGlass = g_MusicManager->LoadMusic("Resource/Sound/SE_Glass.mp3", false, false) ;
 }
 
 void CTiles_Glass::Update()
@@ -25,10 +29,12 @@ void CTiles_Glass::Update()
 		return ;
 	}
 
-	if(m_CollisionDirection & COLLISION_UP)
+	if((m_CollisionDirection & COLLISION_UP) == COLLISION_UP)
 	{
 		m_State = EFFECT1 ;
 		m_bVisible = true ;
+
+		g_MusicManager->PlayMusic(m_pSEGlass, 2) ;
 	}
 
 	Animation() ;

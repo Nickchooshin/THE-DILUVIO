@@ -2,8 +2,10 @@
 #include "Sprite.h"
 
 #include "D3dDevice.h"
+#include "MusicManager.h"
 
-CTiles_JailLever::CTiles_JailLever() : m_LinkIndex(-1, -1)
+CTiles_JailLever::CTiles_JailLever() : m_LinkIndex(-1, -1),
+									   m_pSELever(NULL)
 {
 	m_bEffect = true ;
 }
@@ -14,6 +16,8 @@ CTiles_JailLever::~CTiles_JailLever()
 void CTiles_JailLever::Init()
 {
 	LoadDat("Resource/Data/Tiles/Jail_lever.dat") ;
+
+	m_pSELever = g_MusicManager->LoadMusic("Resource/Sound/SE_Lever.mp3", false, false) ;
 }
 
 void CTiles_JailLever::Effect1(CDynamicObjects* pDynamicObject)
@@ -24,6 +28,8 @@ void CTiles_JailLever::Effect1(CDynamicObjects* pDynamicObject)
 
 		if(m_pLinkedTile!=NULL)
 			m_pLinkedTile->Effect2(pDynamicObject) ;
+
+		g_MusicManager->PlayMusic(m_pSELever, 2) ;
 	}
 }
 
