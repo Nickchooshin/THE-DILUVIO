@@ -4,17 +4,17 @@
 #include "Effect_Bubble.h"
 #include "Effect_Soul.h"
 
+#include "Friends_List.h"
+#include "Friends.h"
+#include "MapTiles_List.h"
+
+#include "StageProgress.h"
+
 #include "Keyboard.h"
 #include "D3dDevice.h"
 
 #include "LoadManager.h"
-
-#include "Friends_List.h"
-#include "Friends.h"
-
-#include "MapTiles_List.h"
-
-#include "StageProgress.h"
+#include "MusicManager.h"
 
 CHero::CHero() : m_ImgSize(0, 0),
 				 m_nNowFrame(0),
@@ -29,7 +29,8 @@ CHero::CHero() : m_ImgSize(0, 0),
 				 m_bDeath(false), m_bReleaseAbsorb(true), m_bRespiration(false),
 				 m_Dying(SINK),
 				 m_pFC_UI(NULL),
-				 m_pEffect_Bubble(NULL), m_pEffect_Soul(NULL)
+				 m_pEffect_Bubble(NULL), m_pEffect_Soul(NULL),
+				 m_pSEJump(NULL), m_pSESkill(NULL)
 {
 	m_fVecSpeed = 2.5f ;
 	m_fVecJump = 7.5f ;
@@ -163,6 +164,9 @@ void CHero::Init()
 
 	m_pEffect_Soul = new CEffect_Soul ;
 	m_pEffect_Soul->Init() ;
+
+	m_pSEJump = g_MusicManager->LoadMusic("Resource/Sound/SE_Jump.mp3", false, false) ;
+	m_pSESkill = g_MusicManager->LoadMusic("Resource/Sound/SE_Skill.mp3", false, true) ;
 }
 
 CObjects::Direction CHero::GetDirection()
@@ -262,6 +266,15 @@ void CHero::Move()
 
 	if(m_bReleaseAbsorb && !m_bGravity && g_Keyboard->IsButtonDown(DIK_Z))
 	{
+		/*if(g_Keyboard->IsPressDown(DIK_Z))
+		{
+			g_MusicManager->StopMusic(1) ;
+			g_MusicManager->PlayMusic(m_pSESkill, 1) ;
+		}*/
+		const State SkilState = (State)(m_State % RIGHT) ;
+		if(SkilState!=LEFT_ABSORB && SkilState!=LEFT_RELEASE)
+			g_MusicManager->PlayMusic(m_pSESkill, 1) ;
+
 		m_State = (State)((m_State / RIGHT) * RIGHT + LEFT_RELEASE) ;
 
 		// 현재 선택되어있는 친구가 방출되어 있지 않다면
@@ -298,6 +311,15 @@ void CHero::Move()
 	}
 	else if(m_bReleaseAbsorb && !m_bGravity && g_Keyboard->IsButtonDown(DIK_X))
 	{
+		/*if(g_Keyboard->IsPressDown(DIK_X))
+		{
+			g_MusicManager->StopMusic(1) ;
+			g_MusicManager->PlayMusic(m_pSESkill, 1) ;
+		}*/
+		const State SkilState = (State)(m_State % RIGHT) ;
+		if(SkilState!=LEFT_ABSORB && SkilState!=LEFT_RELEASE)
+			g_MusicManager->PlayMusic(m_pSESkill, 1) ;
+
 		m_State = (State)((m_State / RIGHT) * RIGHT + LEFT_ABSORB) ;
 
 		// 캐릭터가 바라보는 방향의 타일 좌표를 구한다
@@ -324,6 +346,10 @@ void CHero::Move()
 	}
 	else
 	{
+		const State SkilState = (State)(m_State % RIGHT) ;
+		if(SkilState==LEFT_ABSORB || SkilState==LEFT_RELEASE)
+				g_MusicManager->StopMusic(1) ;
+
 		m_State = (State)((m_State / RIGHT) * RIGHT + LEFT) ;
 
 		if(g_Keyboard->IsButtonDown(DIK_LEFT))
@@ -336,6 +362,8 @@ void CHero::Move()
 			m_fVecAcc = m_fVecJump * fTime ;
 
 			m_bJump = true ;
+
+			g_MusicManager->PlayMusic(m_pSEJump, 1) ;
 		}
 	}
 

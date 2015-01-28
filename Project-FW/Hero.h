@@ -1,6 +1,7 @@
 #pragma once
 
 #include "DynamicObjects.h"
+#include <fmod.hpp>
 
 class CFriendChange_UI ;
 class CEffect_Bubble ;
@@ -33,6 +34,8 @@ private :
 	CFriendChange_UI *m_pFC_UI ;
 	CEffect_Bubble *m_pEffect_Bubble ;
 	CEffect_Soul *m_pEffect_Soul ;
+
+	FMOD::Sound *m_pSEJump, *m_pSESkill ;
 
 public :
 	CHero() ;
