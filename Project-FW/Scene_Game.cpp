@@ -274,7 +274,7 @@ void SceneGame::Render()
 
 void SceneGame::Tutorial()
 {
-	if(g_Keyboard->IsPressDown(DIK_RETURN) || g_Keyboard->IsPressDown(DIK_SPACE) || g_Keyboard->IsPressDown(DIK_Z))
+	if(g_Keyboard->IsPressDown(DIK_RETURN) || g_Keyboard->IsPressDown(DIK_SPACE))
 		m_bTutorial = false ;
 }
 
@@ -282,7 +282,7 @@ void SceneGame::GameMenu()
 {
 	MenuButtonMove(m_pMenuButton, 292.0f, 84.0f, 3) ;
 		
-	if(g_Keyboard->IsPressDown(DIK_RETURN) || g_Keyboard->IsPressDown(DIK_SPACE) || g_Keyboard->IsPressDown(DIK_Z))
+	if(g_Keyboard->IsPressDown(DIK_RETURN) || g_Keyboard->IsPressDown(DIK_SPACE))
 	{
 		if(m_nSelectMenuNum==0)
 		{
@@ -346,7 +346,7 @@ void SceneGame::GameEndMenu()
 	{
 		MenuButtonMove(m_pEndMenuButton, 296.0f, 78.0f, 2) ;
 		
-		if(g_Keyboard->IsPressDown(DIK_RETURN) || g_Keyboard->IsPressDown(DIK_SPACE) || g_Keyboard->IsPressDown(DIK_Z))
+		if(g_Keyboard->IsPressDown(DIK_RETURN) || g_Keyboard->IsPressDown(DIK_SPACE))
 		{
 			if(m_nSelectMenuNum==0)
 			{

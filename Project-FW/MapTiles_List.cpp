@@ -182,6 +182,7 @@ void CMapTiles_List::LoadMap()
 
 			CTiles *pLinkTile = m_pMapTiles_List[LinkX+1][LinkY+1] ;
 			CTiles *pLinkedTile = m_pMapTiles_List[LinkedX+1][LinkedY+1] ;
+			pLinkTile->SetLinkedTile(pLinkedTile) ;
 		}
 
 		fclose(map) ;

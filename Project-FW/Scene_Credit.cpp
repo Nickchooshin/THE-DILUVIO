@@ -78,7 +78,7 @@ void SceneCredit::Update(float dt)
 	m_pCredit->SetPositionY(-1000.0f + ((m_fTime / 75.0f) * 3000.0f)) ;
 
 	m_fTime += g_D3dDevice->GetTime() ;
-	if(m_fTime>=75.0f || g_Keyboard->IsPressDown(DIK_ESCAPE))
+	if(m_fTime>=75.0f || g_Keyboard->IsPressDown(DIK_RETURN) || g_Keyboard->IsPressDown(DIK_SPACE) || g_Keyboard->IsPressDown(DIK_ESCAPE))
 		m_bFadeOut = true ;
 
 	if(m_bFadeOut)

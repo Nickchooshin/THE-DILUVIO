@@ -189,12 +189,12 @@ void SceneStageSelect::Update(float dt)
 	PlayerAnimation() ;
 	m_pPlayer->SetPositionX(32.0f + ((g_StageProgress->GetSelectChapter()-1) * 240.0f)) ;
 
-	if(g_Keyboard->IsPressDown(DIK_RETURN) || g_Keyboard->IsPressDown(DIK_SPACE) || g_Keyboard->IsPressDown(DIK_Z))
+	if(g_Keyboard->IsPressDown(DIK_RETURN) || g_Keyboard->IsPressDown(DIK_SPACE))
 	{
 		g_SceneManager->ChangeScene(SceneGame::scene()) ;
 		return ;
 	}
-	else if(g_Keyboard->IsPressDown(DIK_ESCAPE) || g_Keyboard->IsPressDown(DIK_X))
+	else if(g_Keyboard->IsPressDown(DIK_ESCAPE))
 	{
 		g_SceneManager->ChangeScene(SceneTitle::scene()) ;
 		return ;

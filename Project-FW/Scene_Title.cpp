@@ -125,7 +125,7 @@ void SceneTitle::Update(float dt)
 
 	MenuSelect() ;
 
-	if(g_Keyboard->IsPressDown(DIK_RETURN) || g_Keyboard->IsPressDown(DIK_SPACE) || g_Keyboard->IsPressDown(DIK_Z))
+	if(g_Keyboard->IsPressDown(DIK_RETURN) || g_Keyboard->IsPressDown(DIK_SPACE))
 	{
 		switch(m_nMenuNum)
 		{
@@ -184,7 +184,7 @@ void SceneTitle::MenuSelect()
 
 void SceneTitle::HelpMenu()
 {
-	if(g_Keyboard->IsPressDown(DIK_RETURN) || g_Keyboard->IsPressDown(DIK_SPACE) || g_Keyboard->IsPressDown(DIK_Z))
+	if(g_Keyboard->IsPressDown(DIK_RETURN) || g_Keyboard->IsPressDown(DIK_SPACE))
 	{
 		++m_nHelpNum ;
 		if(m_nHelpNum>4)
