@@ -24,17 +24,18 @@ void CTiles_Glass::Update()
 {
 	if(m_bUnVisible)
 	{
-		m_bUnVisible = false ;
 		m_bCollision = false ;
-		return ;
 	}
-
-	if((m_CollisionDirection & COLLISION_UP) == COLLISION_UP)
+	else
 	{
-		m_State = EFFECT1 ;
-		m_bVisible = true ;
+		if((m_CollisionDirection & COLLISION_UP) == COLLISION_UP)
+		{
+			if(m_State==NORMAL)
+				g_MusicManager->PlayMusic(m_pSEGlass, 2) ;
 
-		g_MusicManager->PlayMusic(m_pSEGlass, 2) ;
+			m_State = EFFECT1 ;
+			m_bVisible = true ;
+		}
 	}
 
 	Animation() ;
@@ -61,7 +62,10 @@ void CTiles_Glass::SendEventMessage(char *EventMessage, void *pData)
 
 		m_bOkuloEffect = true ;
 		if(!m_bRecover)
+		{
 			m_bCollision = true ;
+			m_bUnVisible = false ;
+		}
 	}
 }
 
