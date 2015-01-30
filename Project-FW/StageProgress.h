@@ -11,6 +11,7 @@ public :
 private :
 	int m_nChapterProgress, m_nStageProgress, m_nTutorialProgress ;
 	int m_nSelectChapter, m_nSelectStage ;
+	int m_nChapterMoveSelectedStageMax ;	// Chapter 가 이동될 때 선택되는 스테이지 최대치
 
 	StageState m_NowStageState ;
 
@@ -33,6 +34,8 @@ public :
 
 	bool NextStage() ;
 	bool PrevStage() ;
+	void NextChapter() ;
+	void PrevChapter() ;
 
 	void StageClear() ;
 	void StageOver() ;

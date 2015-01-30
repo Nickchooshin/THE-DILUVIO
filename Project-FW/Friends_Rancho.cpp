@@ -12,6 +12,7 @@
 #include "MusicManager.h"
 
 CFriends_Rancho::CFriends_Rancho() : m_pEAbilityL(NULL), m_pEAbilityR(NULL),
+									 m_bUsingAbility(false),
 									 m_nEatFrame(0),
 									 m_Eat_Index(0, 0),
 									 m_AState(NONE), m_prevAState(NONE)
@@ -39,6 +40,15 @@ void CFriends_Rancho::Init()
 	g_Effect_List->AddEffect(m_pEAbilityR) ;
 
 	m_pSEAbility = g_MusicManager->LoadMusic("Resource/Sound/SE_Rancho.mp3", false, false) ;
+}
+
+void CFriends_Rancho::Absorb()
+{
+	if(m_State==STUN || m_bUsingAbility)
+		return ;
+
+	if(m_State!=RELEASE)
+		m_State = ABSORB ;
 }
  
 void CFriends_Rancho::Update()
@@ -69,11 +79,11 @@ void CFriends_Rancho::Update()
 		Eat(x, y, 'R') ;
 		Eat(x, y, 'L') ;
 
-		if(m_bSEAbility)
-			m_bSEAbility = false ;
-		if(!m_bSEAbility && (m_pEAbilityL->BeVisible() || m_pEAbilityR->BeVisible()))
+		if(m_bUsingAbility)
+			m_bUsingAbility = false ;
+		if(!m_bUsingAbility && (m_pEAbilityL->BeVisible() || m_pEAbilityR->BeVisible()))
 		{
-			m_bSEAbility = true ;
+			m_bUsingAbility = true ;
 			g_MusicManager->PlayMusic(m_pSEAbility, 2) ;
 		}
 	}
@@ -145,7 +155,7 @@ void CFriends_Rancho::Eat(int x, int y, char cDirection)
 	if(pFriend!=NULL && pFriend->BeStand())
 	{
 		pEffect_RanchoEat->SetVisible(true) ;
-		pEffect_RanchoEat->SetPosition((x+direction) * 64.0f, y * 64.0f) ;
+		pEffect_RanchoEat->SetTarget(pFriend) ;
 		pFriend->SendEventMessage("RANCHO", pEffect_RanchoEat) ;
 
 		m_AState = EAT ;

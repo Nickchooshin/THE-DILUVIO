@@ -223,7 +223,7 @@ void SceneLogo::Update(float dt)
 	}
 	else if(m_LogoState==WARNINGLOGO)
 	{
-		if(m_fTime>=1.0f)
+		if(m_fTime>=2.0f)
 		{
 			m_fTime = 0.0f ;
 			m_LogoState = WARNINGLOGO_OUT ;

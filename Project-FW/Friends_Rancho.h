@@ -8,6 +8,7 @@ class CFriends_Rancho : public CFriends
 {
 private :
 	CEffect_RanchoEat *m_pEAbilityL, *m_pEAbilityR ;
+	bool m_bUsingAbility ;
 
 	int m_nEatFrame ;
 	Position m_Eat_Index ;
@@ -20,6 +21,8 @@ public :
 	~CFriends_Rancho() ;
 
 	void Init() ;
+
+	void Absorb() ;
 
 	void Update() ;
 

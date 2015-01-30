@@ -3,7 +3,7 @@
 
 #include "D3dDevice.h"
 
-CEffect_RanchoEat::CEffect_RanchoEat()
+CEffect_RanchoEat::CEffect_RanchoEat() : m_pTarget(NULL)
 {
 }
 CEffect_RanchoEat::~CEffect_RanchoEat()
@@ -13,6 +13,20 @@ CEffect_RanchoEat::~CEffect_RanchoEat()
 void CEffect_RanchoEat::Init()
 {
 	LoadDat("Resource/Data/Effect/Rancho_eat_effect.dat") ;
+}
+
+void CEffect_RanchoEat::SetTarget(CObjects *pTarget)
+{
+	m_pTarget = pTarget ;
+	SetPosition(m_pTarget->GetPositionX(), m_pTarget->GetPositionY()) ;
+}
+
+void CEffect_RanchoEat::Update()
+{
+	if(m_pTarget!=NULL)
+		SetPosition(m_pTarget->GetPositionX(), m_pTarget->GetPositionY()) ;
+
+	Animation() ;
 }
 
 void CEffect_RanchoEat::Effect(CObjects* pObject)

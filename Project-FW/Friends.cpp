@@ -114,6 +114,11 @@ void CFriends::SendEventMessage(char *EventMessage, void *pData)
 	{
 		m_bRespiration = true ;
 	}
+	else if(len==10 && strcmp(EventMessage, "ROMPO_TEST")==0)
+	{
+		bool *bHit = (bool*)pData ;
+		*bHit = true ;
+	}
 	else if(len==5 && strcmp(EventMessage, "ROMPO")==0)
 	{
 		CEffect *pEffect = (CEffect*)pData ;

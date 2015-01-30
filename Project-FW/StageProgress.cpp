@@ -13,6 +13,7 @@ const char TUTORIAL_7 = 64 ;
 
 CStageProgress::CStageProgress() : m_nChapterProgress(1), m_nStageProgress(1), m_nTutorialProgress(0),
 								   m_nSelectChapter(1), m_nSelectStage(1),
+								   m_nChapterMoveSelectedStageMax(1),
 								   m_NowStageState(NONE)
 {
 	FILE *pFile ;
@@ -33,6 +34,10 @@ CStageProgress::CStageProgress() : m_nChapterProgress(1), m_nStageProgress(1), m
 	}
 
 	StageProgressLoad() ;
+
+	m_nSelectChapter = m_nChapterProgress ;
+	m_nSelectStage = m_nStageProgress ;
+	m_nChapterMoveSelectedStageMax = m_nSelectStage ;
 }
 CStageProgress::~CStageProgress()
 {
@@ -100,6 +105,11 @@ const CStageProgress::StageState CStageProgress::NowStageState() const
 	return m_NowStageState ;
 }
 
+const char* CStageProgress::GetSelectMapName()
+{
+	return m_strMapName[m_nSelectChapter-1][m_nSelectStage-1].c_str() ;
+}
+
 bool CStageProgress::NextStage()
 {
 	if(m_nSelectStage<nChapterMaxStage[m_nSelectChapter-1])
@@ -107,6 +117,7 @@ bool CStageProgress::NextStage()
 		if(m_nSelectChapter<m_nChapterProgress || m_nSelectStage<m_nStageProgress)
 		{
 			++m_nSelectStage ;
+			m_nChapterMoveSelectedStageMax = m_nSelectStage ;
 
 			return true ;
 		}
@@ -117,6 +128,7 @@ bool CStageProgress::NextStage()
 		{
 			++m_nSelectChapter ;
 			m_nSelectStage = 1 ;
+			m_nChapterMoveSelectedStageMax = m_nSelectStage ;
 
 			return true ;
 		}
@@ -125,16 +137,12 @@ bool CStageProgress::NextStage()
 	return false ;
 }
 
-const char* CStageProgress::GetSelectMapName()
-{
-	return m_strMapName[m_nSelectChapter-1][m_nSelectStage-1].c_str() ;
-}
-
 bool CStageProgress::PrevStage()
 {
 	if(m_nSelectStage>1)
 	{
 		--m_nSelectStage ;
+		m_nChapterMoveSelectedStageMax = m_nSelectStage ;
 
 		return true ;
 	}
@@ -142,11 +150,42 @@ bool CStageProgress::PrevStage()
 	{
 		--m_nSelectChapter ;
 		m_nSelectStage = nChapterMaxStage[m_nSelectChapter-1] ;
+		m_nChapterMoveSelectedStageMax = m_nSelectStage ;
 
 		return true ;
 	}
 
 	return false ;
+}
+
+void CStageProgress::NextChapter()
+{
+	if(m_nSelectChapter<m_nChapterProgress)
+	{
+		++m_nSelectChapter ;
+
+		const int MaxStage = nChapterMaxStage[m_nSelectChapter-1] ;
+
+		if(m_nChapterMoveSelectedStageMax>MaxStage)
+			m_nSelectStage = MaxStage ;
+		else
+			m_nSelectStage = m_nChapterMoveSelectedStageMax ;
+	}
+}
+
+void CStageProgress::PrevChapter()
+{
+	if(m_nSelectChapter>1)
+	{
+		--m_nSelectChapter ;
+
+		const int MaxStage = nChapterMaxStage[m_nSelectChapter-1] ;
+
+		if(m_nChapterMoveSelectedStageMax>MaxStage)
+			m_nSelectStage = MaxStage ;
+		else
+			m_nSelectStage = m_nChapterMoveSelectedStageMax ;
+	}
 }
 
 void CStageProgress::StageClear()
@@ -189,7 +228,7 @@ void CStageProgress::StageProgressSave()
 {
 	FILE *pFile = fopen("Resource/Data/.sav", "wb") ;
 
-	fprintf(pFile, "%d%d%02d", m_nChapterProgress, m_nStageProgress, m_nTutorialProgress) ;
+	fprintf(pFile, "%d%d%03d", m_nChapterProgress, m_nStageProgress, m_nTutorialProgress) ;
 
 	fclose(pFile) ;
 }
@@ -201,12 +240,12 @@ bool CStageProgress::StageProgressLoad()
 	if(pFile==NULL)
 		return false ;
 
-	char value[5] ;
+	char value[6] ;
 
 	fscanf(pFile, "%s", &value) ;
 	m_nChapterProgress = (value[0] - '0') ;
 	m_nStageProgress = (value[1] - '0') ;
-	m_nTutorialProgress = ((value[2] - '0') * 10) + (value[3] - '0') ;
+	m_nTutorialProgress = ((value[2] - '0') * 100) + ((value[3] - '0') * 10) + (value[4] - '0') ;
 
 	fclose(pFile) ;
 

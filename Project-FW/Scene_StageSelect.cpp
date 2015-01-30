@@ -242,6 +242,10 @@ void SceneStageSelect::StageSelect()
 		m_bPressPrev = g_StageProgress->PrevStage() ;
 	if(g_Keyboard->IsPressDown(DIK_RIGHT))
 		m_bPressNext = g_StageProgress->NextStage() ;
+	if(g_Keyboard->IsPressDown(DIK_DOWN))
+		g_StageProgress->PrevChapter() ;
+	if(g_Keyboard->IsPressDown(DIK_UP))
+		g_StageProgress->NextChapter() ;
 
 	if(m_bPressPrev)
 	{
@@ -268,19 +272,22 @@ void SceneStageSelect::StageSelect()
 		}
 	}
 
+	//
+	nowChapter = g_StageProgress->GetSelectChapter() ;
 	nowStage = g_StageProgress->GetSelectStage() ;
-	if(nowStage!=prevStage)
+	if(nowChapter!=prevChapter)
+	{
+		m_pChapterNumber->SetTextureUV(0.0f, ((nowChapter-1) * 40.0f), 195.0f, (nowChapter * 40.0f)) ;
+
+		AllocateStageName() ;
+		
+		if(nowStage!=prevStage)
+			m_pStageNumber->SetTextureUV(0.0f, ((nowStage-1) * 40.0f), 225.0f, (nowStage * 40.0f)) ;
+		m_pStageName->SetTextureUV(0.0f, ((nowStage-1) * 30.0f), 256.0f, (nowStage * 30.0f)) ;
+	}
+	else if(nowStage!=prevStage)
 	{
 		m_pStageNumber->SetTextureUV(0.0f, ((nowStage-1) * 40.0f), 225.0f, (nowStage * 40.0f)) ;
-
-		nowChapter = g_StageProgress->GetSelectChapter() ;
-		if(nowChapter!=prevChapter)
-		{
-			m_pChapterNumber->SetTextureUV(0.0f, ((nowChapter-1) * 40.0f), 195.0f, (nowChapter * 40.0f)) ;
-
-			AllocateStageName() ;
-		}
-		
 		m_pStageName->SetTextureUV(0.0f, ((nowStage-1) * 30.0f), 256.0f, (nowStage * 30.0f)) ;
 	}
 }

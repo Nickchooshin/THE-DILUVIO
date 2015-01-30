@@ -5,6 +5,8 @@
 class CFriends_Mano : public CFriends
 {
 private :
+	bool m_bUsingAbility ;
+
 	int m_nFaintFrame ;
 	Position m_Stand_RightIndex ;
 	Position m_Absorb_RightIndex ;
@@ -23,6 +25,7 @@ public :
 
 	void Init() ;
 
+	void Absorb() ;
 	void Release() ;
 
 	void SendEventMessage(char *EventMessage, void *pData) ;

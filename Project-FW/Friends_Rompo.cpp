@@ -10,6 +10,7 @@
 #include "MusicManager.h"
 
 CFriends_Rompo::CFriends_Rompo() : m_pEAbilityL(0), m_pEAbilityR(0),
+								   m_bUsingAbility(false),
 								   m_pSEDash(NULL)
 {
 }
@@ -36,6 +37,15 @@ void CFriends_Rompo::Init()
 	
 	m_pSEAbility = g_MusicManager->LoadMusic("Resource/Sound/SE_Rompo.mp3", false, false) ;
 	m_pSEDash = g_MusicManager->LoadMusic("Resource/Sound/SE_Rompo_2.mp3", false, true) ;
+}
+
+void CFriends_Rompo::Absorb()
+{
+	if(m_State==STUN || m_bUsingAbility)
+		return ;
+
+	if(m_State!=RELEASE)
+		m_State = ABSORB ;
 }
  
 void CFriends_Rompo::Update()
@@ -64,14 +74,14 @@ void CFriends_Rompo::Update()
 		Dash(x, y, 'R') ;
 		Dash(x, y, 'L') ;
 
-		if(m_bSEAbility)
+		if(m_bUsingAbility)
 		{
-			m_bSEAbility = false ;
+			m_bUsingAbility = false ;
 			g_MusicManager->StopMusic(4) ;
 		}
-		if(!m_bSEAbility && (m_pEAbilityL->BeVisible() || m_pEAbilityR->BeVisible()))
+		if(!m_bUsingAbility && (m_pEAbilityL->BeVisible() || m_pEAbilityR->BeVisible()))
 		{
-			m_bSEAbility = true ;
+			m_bUsingAbility = true ;
 			g_MusicManager->PlayMusic(m_pSEAbility, 2) ;
 			g_MusicManager->PlayMusic(m_pSEDash, 4) ;
 		}
@@ -124,6 +134,12 @@ void CFriends_Rompo::Dash(int x, int y, char cDirection)
 	pFriend = g_Friends_List->GetFriend(x+direction, y) ;
 	if(pFriend!=NULL && pFriend->BeStand())
 	{
+		bool bHit=false ;
+		pFriend->SendEventMessage("ROMPO_TEST", &bHit) ;
+
+		if(!bHit)
+			return ;
+
 		pObject = g_Friends_List->GetFriend(x+(2*direction), y) ;
 		if(pObject==NULL)
 		{

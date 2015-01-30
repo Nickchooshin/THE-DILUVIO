@@ -17,7 +17,8 @@
 #define m_Release_LeftIndex	m_Release_Index
 #define m_Stun_LeftIndex	m_Stun_Index
 
-CFriends_Mano::CFriends_Mano() : m_nFaintFrame(0),
+CFriends_Mano::CFriends_Mano() : m_bUsingAbility(false),
+								 m_nFaintFrame(0),
 								 m_Stand_RightIndex(0, 0),
 								 m_Absorb_RightIndex(0, 0),
 								 m_Release_RightIndex(0, 0),
@@ -36,6 +37,15 @@ void CFriends_Mano::Init()
 	LoadManoDat() ;
 	
 	m_pSEAbility = g_MusicManager->LoadMusic("Resource/Sound/SE_Mano.mp3", false, false) ;
+}
+
+void CFriends_Mano::Absorb()
+{
+	if(m_State==STUN || m_bUsingAbility)
+		return ;
+
+	if(m_State!=RELEASE)
+		m_State = ABSORB ;
 }
 
 void CFriends_Mano::Release()
@@ -72,6 +82,8 @@ void CFriends_Mano::Update()
 	{
 		int x = (int)(m_fX / 64.0f) ;
 		int y = (int)(m_fY / 64.0f) ;
+
+		m_bUsingAbility = false ;
 		 
 		Faint(x, y) ;
 	}
@@ -141,6 +153,7 @@ void CFriends_Mano::Faint(int x, int y)
 			{
 				m_Direction = (Direction)index ;
 				m_AState = FAINT ;
+				m_bUsingAbility = true ;
 
 				g_MusicManager->PlayMusic(m_pSEAbility, 2) ;
 			}
