@@ -101,8 +101,8 @@ void CFriends_Makzelo::SendEventMessage(char *EventMessage, void *pData)
 		m_vForce.y = fY - m_fY ;
 		m_fX = fX ;
 		m_fY = fY ;
-
-		GravityAccReset() ;
+		
+		SetGravity(false) ;
 
 		m_bStun = true ;
 	}
@@ -117,7 +117,8 @@ void CFriends_Makzelo::SendEventMessage(char *EventMessage, void *pData)
 		m_vForce.y = fY - m_fY ;
 		m_fX = fX ;
 		m_fY = fY ;
-
+		
+		SetGravity(true) ;
 		GravityAccReset() ;
 
 		m_bStun = false ;

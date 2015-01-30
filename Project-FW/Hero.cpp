@@ -264,7 +264,7 @@ void CHero::Move()
 	m_vForce.x = 0.0f ;
 	m_vForce.y = 0.0f ;
 
-	if(m_bReleaseAbsorb && !m_bGravity && g_Keyboard->IsButtonDown(DIK_Z))
+	if(m_bReleaseAbsorb && !m_bAir && g_Keyboard->IsButtonDown(DIK_Z))
 	{
 		const State SkilState = (State)(m_State % RIGHT) ;
 		if(SkilState!=LEFT_ABSORB && SkilState!=LEFT_RELEASE)
@@ -304,7 +304,7 @@ void CHero::Move()
 			}
 		}
 	}
-	else if(m_bReleaseAbsorb && !m_bGravity && g_Keyboard->IsButtonDown(DIK_X))
+	else if(m_bReleaseAbsorb && !m_bAir && g_Keyboard->IsButtonDown(DIK_X))
 	{
 		const State SkilState = (State)(m_State % RIGHT) ;
 		if(SkilState!=LEFT_ABSORB && SkilState!=LEFT_RELEASE)
@@ -347,7 +347,7 @@ void CHero::Move()
 		if(g_Keyboard->IsButtonDown(DIK_RIGHT))
 			m_vForce.x += fSpeed ;
 
-		if((!m_bGravity || m_bMultipleJump) && !m_bJump && g_Keyboard->IsButtonDown(DIK_UP))
+		if((!m_bAir || m_bMultipleJump) && !m_bJump && g_Keyboard->IsButtonDown(DIK_UP))
 		{
 			m_fVecAcc = m_fVecJump * fTime ;
 
@@ -429,7 +429,7 @@ void CHero::Death()
 void CHero::Animation()
 {
 	// Direction
-	if(m_bGravity)
+	if(m_bAir)
 	{
 		if(m_vForce.x<0)
 			m_State = LEFT_JUMP ;

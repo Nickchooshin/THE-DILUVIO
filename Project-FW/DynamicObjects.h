@@ -11,6 +11,7 @@ protected :
 
 	bool m_bJump ;
 	bool m_bMultipleJump ;
+	bool m_bAir ;
 	bool m_bGravity ;
 	bool m_bDeath ;
 
@@ -26,6 +27,7 @@ public :
 
 	void SetJump(bool bFlag) ;
 	void SetMultipleJump(bool bFlag) ;
+	void SetAir(bool bFlag) ;
 	void SetGravity(bool bFlag) ;
 	void SetDeath(bool bFlag) ;
 
@@ -35,6 +37,7 @@ public :
 	const bool BeJump() ;
 	const bool BeMultipleJump() ;
 	const bool BeJumping() ;
+	const bool BeAir() ;
 	const bool BeGravity() ;
 	const bool BeDeath() ;
 

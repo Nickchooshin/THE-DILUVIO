@@ -6,6 +6,7 @@ CDynamicObjects::CDynamicObjects() : m_fVecSpeed(0.0f), m_fVecJump(0.0f),
 									 m_fGravityMultiples(1.0f),
 									 m_bJump(false),
 									 m_bMultipleJump(false),
+									 m_bAir(true),
 									 m_bGravity(true),
 									 m_bDeath(false),
 									 m_vForce(0.0f, 0.0f)
@@ -23,6 +24,11 @@ void CDynamicObjects::SetJump(bool bFlag)
 void CDynamicObjects::SetMultipleJump(bool bFlag)
 {
 	m_bMultipleJump = bFlag ;
+}
+
+void CDynamicObjects::SetAir(bool bFlag)
+{
+	m_bAir = bFlag ;
 }
 
 void CDynamicObjects::SetGravity(bool bFlag)
@@ -55,6 +61,11 @@ const bool CDynamicObjects::BeMultipleJump()
 	return m_bMultipleJump ;
 }
 
+const bool CDynamicObjects::BeAir()
+{
+	return m_bAir ;
+}
+
 const bool CDynamicObjects::BeGravity()
 {
 	return m_bGravity ;
@@ -82,19 +93,22 @@ void CDynamicObjects::GravityAccReset()
 
 void CDynamicObjects::Gravity()
 {
+	if(!m_bGravity)
+		return ;
+
 	float fTime = g_D3dDevice->GetMoveTime() ;
 	float fVecGravity = m_fVecGravity * fTime ;
 
 	m_fVecAcc += fVecGravity ;
 	m_vForce.y = m_fVecAcc * m_fGravityMultiples ;
 	m_fY += m_vForce.y ;
-	m_bGravity = true ;
+	m_bAir = true ;
 	//m_bJump = true ;
 
 	if(m_fY<0.0f)
 	{
 		m_fY = 0.0f ;
-		m_bGravity = false ;
+		m_bAir = false ;
 		m_bJump = false ;
 		GravityAccReset() ;
 	}

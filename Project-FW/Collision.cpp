@@ -157,7 +157,7 @@ bool CCollision::YCollision(CDynamicObjects *pDynamicObject, CObjects *pObject)
 		y += (rtSize.top - rtSize.bottom) ;
 		pDynamicObject->SetJump(false) ;
 		pDynamicObject->GravityAccReset() ;
-		pDynamicObject->SetGravity(false) ;
+		pDynamicObject->SetAir(false) ;
 	}
 	else
 	{
@@ -315,7 +315,7 @@ bool CCollision::YCollision(CDynamicObjects *pDynamicObject, CTiles *pTile)
 		y += (rtSize.top - rtSize.bottom) ;
 		pDynamicObject->SetJump(false) ;
 		pDynamicObject->GravityAccReset() ;
-		pDynamicObject->SetGravity(false) ;
+		pDynamicObject->SetAir(false) ;
 		pTile->CollisionDirection(CTiles::COLLISION_UP) ;
 	}
 	else
