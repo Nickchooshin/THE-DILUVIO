@@ -62,9 +62,10 @@ void CEffect_List::Collision()
 		//********** MapTiles_List Collision **********//
 		const int x = (int)(pEffect->GetPositionX() / 64.0f) ;
 		const int y = (int)(pEffect->GetPositionY() / 64.0f) ;
-		const int radius = pEffect->GetBoundingCircle().radius ;
+		const int direction = ((int)pEffect->GetPositionX() % 64) < 32 ? 1 : -1 ;
+		const int radius = (int)pEffect->GetBoundingCircle().radius ;
 
-		MapTiles_List = g_MapTiles_List->GetAdjacentAllMapTilesList(x, y, radius) ;
+		MapTiles_List = g_MapTiles_List->GetAdjacentAllMapTilesList(x, y, direction, radius) ;
 		TileSize = MapTiles_List.size() ;
 
 		for(int Index_t=0; Index_t<TileSize; Index_t++)

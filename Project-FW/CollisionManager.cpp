@@ -34,8 +34,9 @@ void CCollisionManager::CollisionX()
 		//********** MapTiles_List Collision (NonEffect) **********//
 		const int x = (int)(pDynamicObject->GetPositionX() / 64.0f) ;
 		const int y = (int)(pDynamicObject->GetPositionY() / 64.0f) ;
+		const int direction = ((int)pDynamicObject->GetPositionX() % 64) < 32 ? 1 : -1 ;
 
-		MapTiles_List = g_MapTiles_List->GetAdjacentMapTilesList(x, y) ;
+		MapTiles_List = g_MapTiles_List->GetAdjacentMapTilesList(x, y, direction) ;
 		TileSize = MapTiles_List.size() ;
 
 		for(int Index_t=0; Index_t<TileSize; Index_t++)
@@ -63,11 +64,12 @@ void CCollisionManager::CollisionX()
 	{
 		pDynamicObject = DynamicObjects_List[Index_o] ;
 
-		//********** MapTiles_List Collision (NonEffect) **********//
+		//********** MapTiles_List Collision (Effect) **********//
 		const int x = (int)(pDynamicObject->GetPositionX() / 64.0f) ;
 		const int y = (int)(pDynamicObject->GetPositionY() / 64.0f) ;
+		const int direction = ((int)pDynamicObject->GetPositionX() % 64) < 32 ? 1 : -1 ;
 
-		MapTiles_List = g_MapTiles_List->GetAdjacentEffectMapTilesList(x, y) ;
+		MapTiles_List = g_MapTiles_List->GetAdjacentEffectMapTilesList(x, y, direction) ;
 		TileSize = MapTiles_List.size() ;
 
 		for(int Index_t=0; Index_t<TileSize; Index_t++)
@@ -101,11 +103,12 @@ void CCollisionManager::CollisionY()
 		pDynamicObject->SetGravityMultiples(1.0f) ;
 		pDynamicObject->SetMultipleJump(false) ;
 
-		//********** MapTiles_List Collision **********//
+		//********** MapTiles_List Collision (NonEffect) **********//
 		const int x = (int)(pDynamicObject->GetPositionX() / 64.0f) ;
 		const int y = (int)(pDynamicObject->GetPositionY() / 64.0f) ;
+		const int direction = ((int)pDynamicObject->GetPositionX() % 64) < 32 ? 1 : -1 ;
 
-		MapTiles_List = g_MapTiles_List->GetAdjacentAllMapTilesList(x, y) ;
+		MapTiles_List = g_MapTiles_List->GetAdjacentMapTilesList(x, y, direction) ;
 		TileSize = MapTiles_List.size() ;
 
 		for(int Index_t=0; Index_t<TileSize; Index_t++)
@@ -132,6 +135,27 @@ void CCollisionManager::CollisionY()
 				continue ;
 
 			col.YCollision(DynamicObjects_List[Index_o2], DynamicObjects_List[Index_o]) ;
+		}
+	}
+
+	for(int Index_o=0; Index_o<ObjectSize; Index_o++)
+	{
+		pDynamicObject = DynamicObjects_List[Index_o] ;
+
+		//********** MapTiles_List Collision (Effect) **********//
+		const int x = (int)(pDynamicObject->GetPositionX() / 64.0f) ;
+		const int y = (int)(pDynamicObject->GetPositionY() / 64.0f) ;
+		const int direction = ((int)pDynamicObject->GetPositionX() % 64) < 32 ? 1 : -1 ;
+
+		MapTiles_List = g_MapTiles_List->GetAdjacentEffectMapTilesList(x, y, direction) ;
+		TileSize = MapTiles_List.size() ;
+
+		for(int Index_t=0; Index_t<TileSize; Index_t++)
+		{
+			pTile = MapTiles_List[Index_t] ;
+			bool bCollision=false ;
+
+			bCollision = col.YCollision(pDynamicObject, pTile) ;
 		}
 	}
 }

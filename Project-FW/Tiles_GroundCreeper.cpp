@@ -26,10 +26,14 @@ void CTiles_GroundCreeper::SendEventMessage(char *EventMessage, void *pData)
 	int len = strlen(EventMessage) ;
 
 	if(len==7 && strcmp(EventMessage, "CREEPER")==0)
+	{
 		m_bCollision = false ;
+		m_bEffect = true ;
+	}
 }
 
 void CTiles_GroundCreeper::EventClear()
 {
 	m_bCollision = true ;
+	m_bEffect = false ;
 }

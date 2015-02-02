@@ -245,11 +245,13 @@ void CMapTiles_List::DeleteTile(CTiles *pTile)
 	m_pMapTiles_List[x+1][y+1] = NULL ;
 }
 
-std::vector<CTiles*> CMapTiles_List::GetAdjacentAllMapTilesList(int x, int y, int radius)
+std::vector<CTiles*> CMapTiles_List::GetAdjacentAllMapTilesList(int x, int y, int direction, int radius)
 {
 	std::vector<CTiles*> MapTiles ;
+	
+	const int IndexRange = (direction * radius) ;
 
-	for(int i=x-radius; i<=x+radius; i++)
+	for(int i=x-IndexRange; i!=x+IndexRange+direction; i+=direction)
 	{
 		for(int j=y-radius; j<=y+radius; j++)
 		{
@@ -264,11 +266,13 @@ std::vector<CTiles*> CMapTiles_List::GetAdjacentAllMapTilesList(int x, int y, in
 	return MapTiles ;
 }
 
-std::vector<CTiles*> CMapTiles_List::GetAdjacentMapTilesList(int x, int y, int radius)
+std::vector<CTiles*> CMapTiles_List::GetAdjacentMapTilesList(int x, int y, int direction, int radius)
 {
 	std::vector<CTiles*> MapTiles ;
-
-	for(int i=x-radius; i<=x+radius; i++)
+	
+	const int IndexRange = (direction * radius) ;
+	
+	for(int i=x-IndexRange; i!=x+IndexRange+direction; i+=direction)
 	{
 		for(int j=y-radius; j<=y+radius; j++)
 		{
@@ -283,11 +287,13 @@ std::vector<CTiles*> CMapTiles_List::GetAdjacentMapTilesList(int x, int y, int r
 	return MapTiles ;
 }
 
-std::vector<CTiles*> CMapTiles_List::GetAdjacentEffectMapTilesList(int x, int y, int radius)
+std::vector<CTiles*> CMapTiles_List::GetAdjacentEffectMapTilesList(int x, int y, int direction, int radius)
 {
 	std::vector<CTiles*> MapTiles ;
-
-	for(int i=x-radius; i<=x+radius; i++)
+	
+	const int IndexRange = (direction * radius) ;
+	
+	for(int i=x-IndexRange; i!=x+IndexRange+direction; i+=direction)
 	{
 		for(int j=y-radius; j<=y+radius; j++)
 		{

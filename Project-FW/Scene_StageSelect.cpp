@@ -18,7 +18,7 @@
 #include "StageProgress.h"
 #include "ScrollBackground.h"
 
-SceneStageSelect::SceneStageSelect() : m_fWinWidth(g_D3dDevice->GetWinWidth()), m_fWinHeight(g_D3dDevice->GetWinHeight()),
+SceneStageSelect::SceneStageSelect() : m_fWinWidth((int)g_D3dDevice->GetWinWidth()), m_fWinHeight((int)g_D3dDevice->GetWinHeight()),
 									   m_pBackground(NULL),
 									   m_pBackground_Brick(NULL), m_pStageFrame(NULL), m_pStageNameFrame(NULL),
 									   m_pPlayer(NULL), m_pGoal(NULL), m_pTile(NULL),

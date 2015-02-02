@@ -85,7 +85,7 @@ void CMapBackground::Init()
 	m_nSize = m_MapBackground_List.size() ;
 
 	//m_fMapWidth = MapSize.x ;
-	m_fMapWidth = BackgroundSize.x * WinWidth ;
+	m_fMapWidth = (float)(BackgroundSize.x * WinWidth) ;
 }
 
 void CMapBackground::Scroll()
