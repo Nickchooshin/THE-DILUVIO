@@ -236,7 +236,7 @@ void CHero::SendEventMessage(char *EventMessage, void *pData)
 		if(!m_bSEWater)
 		{
 			m_bSEWater = true ;
-			g_MusicManager->PlayMusic(m_pSEWater, 1) ;
+			g_MusicManager->PlayMusic(m_pSEWater, 2) ;
 		}
 
 		if(!m_bRespiration)

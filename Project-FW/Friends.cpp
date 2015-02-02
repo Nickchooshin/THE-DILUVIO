@@ -114,7 +114,7 @@ void CFriends::SendEventMessage(char *EventMessage, void *pData)
 		if(!m_bShock)
 		{
 			m_bSESpark = true ;
-			g_MusicManager->PlayMusic(m_pSESpark, 1) ;
+			g_MusicManager->PlayMusic(m_pSESpark, 2) ;
 		}
 
 		m_bShock = true ;
@@ -126,7 +126,7 @@ void CFriends::SendEventMessage(char *EventMessage, void *pData)
 		if(!m_bSEWater)
 		{
 			m_bSEWater = true ;
-			g_MusicManager->PlayMusic(m_pSEWater, 1) ;
+			g_MusicManager->PlayMusic(m_pSEWater, 2) ;
 		}
 
 		if(!m_bUnVisible && m_State==STAND && !m_bRespiration)

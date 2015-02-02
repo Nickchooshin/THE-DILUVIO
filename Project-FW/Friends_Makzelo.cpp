@@ -89,7 +89,7 @@ void CFriends_Makzelo::SendEventMessage(char *EventMessage, void *pData)
 		if(!m_bShock)
 		{
 			m_bSESpark = true ;
-			g_MusicManager->PlayMusic(m_pSESpark, 1) ;
+			g_MusicManager->PlayMusic(m_pSESpark, 2) ;
 		}
 
 		m_bShock = true ;
@@ -100,7 +100,7 @@ void CFriends_Makzelo::SendEventMessage(char *EventMessage, void *pData)
 
 		if(!m_bSEWater)
 		{
-			g_MusicManager->PlayMusic(m_pSEWater, 1) ;
+			g_MusicManager->PlayMusic(m_pSEWater, 2) ;
 			m_bSEWater = true ;
 		}
 	}
