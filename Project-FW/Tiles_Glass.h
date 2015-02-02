@@ -7,7 +7,7 @@ class CTiles_Glass : public CTiles
 {
 private :
 	bool m_bOkuloEffect ;
-	bool m_bRecover ;
+	bool m_bRecover, m_bAbleRecover ;
 	bool m_bVisible ;
 
 	FMOD::Sound *m_pSEGlass ;
@@ -19,6 +19,7 @@ public :
 	void Init() ;
 
 	void Update() ;
+	void Effect1(CDynamicObjects* pDynamicObject) ;
 
 	void Render() ;
 

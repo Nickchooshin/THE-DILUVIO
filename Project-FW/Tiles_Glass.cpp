@@ -5,6 +5,7 @@
 #include "MusicManager.h"
 
 CTiles_Glass::CTiles_Glass() : m_bOkuloEffect(false),
+							   m_bRecover(false), m_bAbleRecover(true),
 							   m_bVisible(false),
 							   m_pSEGlass(NULL)
 {
@@ -25,6 +26,9 @@ void CTiles_Glass::Update()
 	if(m_bUnVisible)
 	{
 		m_bCollision = false ;
+
+		if(m_CollisionDirection==0)
+			m_bAbleRecover = true ;
 	}
 	else
 	{
@@ -41,6 +45,11 @@ void CTiles_Glass::Update()
 	Animation() ;
 
 	m_CollisionDirection = 0 ;
+}
+
+void CTiles_Glass::Effect1(CDynamicObjects* pDynamicObject)
+{
+	m_bAbleRecover = false ;
 }
 
 void CTiles_Glass::Render()
@@ -61,7 +70,7 @@ void CTiles_Glass::SendEventMessage(char *EventMessage, void *pData)
 		m_bVisible = true ;
 
 		m_bOkuloEffect = true ;
-		if(!m_bRecover)
+		if(!m_bRecover && m_bAbleRecover)
 		{
 			m_bCollision = true ;
 			m_bUnVisible = false ;
