@@ -45,6 +45,11 @@ void CFriends_Makzelo::Update()
 
 	if(m_bStun)
 		m_State = STUN ;
+	
+	if((m_cDynamicState & UNDERWATER)!=UNDERWATER)
+		m_bSEWater = false ;
+	if((m_cDynamicState & SPARK)!=SPARK)
+		m_bSESpark = false ;
 
  	Animation() ;
 
@@ -79,7 +84,25 @@ void CFriends_Makzelo::SendEventMessage(char *EventMessage, void *pData)
 
 	if(len==5 && strcmp(EventMessage, "SPARK")==0)
 	{
+		m_cDynamicState |= SPARK ;
+
+		if(!m_bShock)
+		{
+			m_bSESpark = true ;
+			g_MusicManager->PlayMusic(m_pSESpark, 1) ;
+		}
+
 		m_bShock = true ;
+	}
+	else if(len==5 && strcmp(EventMessage, "WATER")==0)
+	{
+		m_cDynamicState |= UNDERWATER ;
+
+		if(!m_bSEWater)
+		{
+			g_MusicManager->PlayMusic(m_pSEWater, 1) ;
+			m_bSEWater = true ;
+		}
 	}
 	else if(len==11 && strcmp(EventMessage, "RESPIRATION")==0)
 	{

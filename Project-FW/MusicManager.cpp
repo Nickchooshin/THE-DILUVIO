@@ -78,6 +78,14 @@ void MusicManager::PlayMusic(FMOD::Sound* Sound, int Channel)
 	System->playSound(FMOD_CHANNEL_FREE, Sound, false, &Channels[Channel]);
 }
 
+void MusicManager::PauseMusic(bool bPuase, int Channel)
+{
+	if(Channel>32)
+		return ;
+
+	Channels[Channel]->setPaused(bPuase) ;
+}
+
 void MusicManager::StopMusic(int Channel)
 {
 	if (Channel > 32)

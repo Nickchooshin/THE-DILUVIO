@@ -1,12 +1,11 @@
 #include "Friends.h"
 #include "Sprite.h"
-#include "LoadManager.h"
-
-#include "D3dDevice.h"
-
-//
 #include "Effect_SparkImpact.h"
 #include "Effect_RanchoEat.h"
+
+#include "D3dDevice.h"
+#include "LoadManager.h"
+#include "MusicManager.h"
 
 CFriends::CFriends() : m_pESparkImpact(NULL),
 					   m_ImgSize(0, 0), m_ColSize(0, 0),
@@ -20,14 +19,16 @@ CFriends::CFriends() : m_pESparkImpact(NULL),
 					   m_bRespiration(false),
 					   m_fAnimationTime(0.0f),
 					   m_nRanchoAlpha(306),
-					   m_bSEAbility(false),
-					   m_pSEAbility(NULL),
+					   m_bSEWater(false), m_bSESpark(false), m_bSEAbility(false),
+					   m_pSEWater(NULL), m_pSESpark(NULL), m_pSEAbility(NULL),
 					   m_State(STAND), m_prevState(STAND)
 {
 	m_fVecGravity = -0.3f ;
 
 	m_pESparkImpact = new CEffect_SparkImpact() ;
 	m_pESparkImpact->Init() ;
+
+	m_pSEWater = g_MusicManager->LoadMusic("Resource/Sound/SE_Water.mp3", false, false) ;
 }
 CFriends::~CFriends()
 {
@@ -88,6 +89,11 @@ void CFriends::Update()
 	if(m_bStun)
 		m_State = STUN ;
 
+	if((m_cDynamicState & UNDERWATER)!=UNDERWATER)
+		m_bSEWater = false ;
+	if((m_cDynamicState & SPARK)!=SPARK)
+		m_bSESpark = false ;
+
 	Animation() ;
 
 	m_pESparkImpact->SetVisible(m_bShock) ;
@@ -103,10 +109,26 @@ void CFriends::SendEventMessage(char *EventMessage, void *pData)
 
 	if(len==5 && strcmp(EventMessage, "SPARK")==0)
 	{
+		m_cDynamicState |= SPARK ;
+
+		if(!m_bShock)
+		{
+			m_bSESpark = true ;
+			g_MusicManager->PlayMusic(m_pSESpark, 1) ;
+		}
+
 		m_bShock = true ;
 	}
 	else if(len==5 && strcmp(EventMessage, "WATER")==0)
 	{
+		m_cDynamicState |= UNDERWATER ;
+
+		if(!m_bSEWater)
+		{
+			m_bSEWater = true ;
+			g_MusicManager->PlayMusic(m_pSEWater, 1) ;
+		}
+
 		if(!m_bUnVisible && m_State==STAND && !m_bRespiration)
 			m_bStun = true ;
 	}
@@ -183,6 +205,9 @@ void CFriends::EventClear()
 {
 	m_bShock = false ;
 	m_bRespiration = false ;
+
+	m_cDynamicState &= ~UNDERWATER ;
+	m_cDynamicState &= ~SPARK ;
 }
 
 void CFriends::Render()

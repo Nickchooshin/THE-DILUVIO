@@ -35,7 +35,8 @@ private :
 	CEffect_Bubble *m_pEffect_Bubble ;
 	CEffect_Soul *m_pEffect_Soul ;
 
-	FMOD::Sound *m_pSEJump, *m_pSESkill ;
+	bool m_bSEWater ;
+	FMOD::Sound *m_pSEJump, *m_pSESkill, *m_pSEWater ;
 
 public :
 	CHero() ;

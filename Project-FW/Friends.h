@@ -22,8 +22,8 @@ protected :
 	float m_fAnimationTime ;
 	int m_nRanchoAlpha ;
 
-	bool m_bSEAbility ;
-	FMOD::Sound *m_pSEAbility ;
+	bool m_bSEWater, m_bSESpark, m_bSEAbility ;
+	FMOD::Sound *m_pSEWater, *m_pSESpark, *m_pSEAbility ;
 
 	enum State { STAND=0, ABSORB, RELEASE, STUN } ;
 	State m_State, m_prevState ;

@@ -45,6 +45,11 @@ void CFriends_Vento::Update()
 
 	if(m_bStun)
 		m_State = STUN ;
+	
+	if((m_cDynamicState & UNDERWATER)!=UNDERWATER)
+		m_bSEWater = false ;
+	if((m_cDynamicState & SPARK)!=SPARK)
+		m_bSESpark = false ;
 
 	if(!m_bShock && (m_State==STAND))
 	{

@@ -45,6 +45,11 @@ void CFriends_Okulo::Update()
 	if(m_bStun)
 		m_State = STUN ;
 	
+	if((m_cDynamicState & UNDERWATER)!=UNDERWATER)
+		m_bSEWater = false ;
+	if((m_cDynamicState & SPARK)!=UNDERWATER)
+		m_bSESpark = false ;
+	
 	if(!m_bShock && (m_State==STAND))
 	{
 		m_pEAbility->SetVisible(true) ;

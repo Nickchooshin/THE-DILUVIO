@@ -159,7 +159,8 @@ void SceneGame::Destroy()
 {
 	g_CameraManager->AllCameraClear() ;
 
-	g_MusicManager->StopMusic() ;
+	g_MusicManager->StopMusic(0) ;
+	g_MusicManager->StopMusic(1) ;
 	g_MusicManager->StopMusic(2) ;
 	g_MusicManager->StopMusic(3) ;
 	g_MusicManager->StopMusic(4) ;
@@ -195,6 +196,11 @@ void SceneGame::Update(float dt)
 		m_pMenuButton[2]->SetPosition(CameraPos.x, CameraPos.y + ((fWinHeight/2) - 524.0f)) ;
 
 		m_bMenu = true ;
+
+		g_MusicManager->PauseMusic(true, 1) ;
+		g_MusicManager->PauseMusic(true, 2) ;
+		g_MusicManager->PauseMusic(true, 3) ;
+		g_MusicManager->PauseMusic(true, 4) ;
 	}
 
 	if(m_bMenu)
@@ -287,6 +293,11 @@ void SceneGame::GameMenu()
 		if(m_nSelectMenuNum==0)
 		{
 			m_bMenu = false ;
+
+			g_MusicManager->PauseMusic(false, 1) ;
+			g_MusicManager->PauseMusic(false, 2) ;
+			g_MusicManager->PauseMusic(false, 3) ;
+			g_MusicManager->PauseMusic(false, 4) ;
 		}
 		else if(m_nSelectMenuNum==1)
 		{

@@ -15,6 +15,9 @@ protected :
 	bool m_bGravity ;
 	bool m_bDeath ;
 
+	enum DynamicState { AIR=1, UNDERWATER=2, SPARK=4 } ;
+	char m_cDynamicState ;
+
 	Vector m_vForce ;
 
 public :

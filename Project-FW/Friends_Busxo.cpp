@@ -61,6 +61,11 @@ void CFriends_Busxo::Update()
 
 	if(m_bStun)
 		m_State = STUN ;
+	
+	if((m_cDynamicState & UNDERWATER)!=UNDERWATER)
+		m_bSEWater = false ;
+	if((m_cDynamicState & SPARK)!=SPARK)
+		m_bSESpark = false ;
 
 	Animation() ;
 
@@ -118,8 +123,8 @@ void CFriends_Busxo::Update()
 	}
 	else if(m_bSEAbility)
 	{
-		g_MusicManager->StopMusic(3) ;
 		m_bSEAbility = false ;
+		g_MusicManager->StopMusic(3) ;
 	}
 
 	m_pESparkImpact->SetVisible(m_bShock) ;

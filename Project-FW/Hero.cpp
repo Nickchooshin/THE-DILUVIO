@@ -30,7 +30,8 @@ CHero::CHero() : m_ImgSize(0, 0),
 				 m_Dying(SINK),
 				 m_pFC_UI(NULL),
 				 m_pEffect_Bubble(NULL), m_pEffect_Soul(NULL),
-				 m_pSEJump(NULL), m_pSESkill(NULL)
+				 m_bSEWater(false),
+				 m_pSEJump(NULL), m_pSESkill(NULL), m_pSEWater(NULL)
 {
 	m_fVecSpeed = 2.5f ;
 	m_fVecJump = 7.5f ;
@@ -167,6 +168,7 @@ void CHero::Init()
 
 	m_pSEJump = g_MusicManager->LoadMusic("Resource/Sound/SE_Jump.mp3", false, false) ;
 	m_pSESkill = g_MusicManager->LoadMusic("Resource/Sound/SE_Skill.mp3", false, true) ;
+	m_pSEWater = g_MusicManager->LoadMusic("Resource/Sound/SE_Water.mp3", false, false) ;
 }
 
 CObjects::Direction CHero::GetDirection()
@@ -181,6 +183,9 @@ void CHero::Update()
 		Death() ;
 		return ;
 	}
+	
+	if((m_cDynamicState & UNDERWATER)!=UNDERWATER)
+		m_bSEWater = false ;
 
 	Move() ;
 	Animation() ;
@@ -226,6 +231,14 @@ void CHero::SendEventMessage(char *EventMessage, void *pData)
 	}
 	else if(len==5 && strcmp(EventMessage, "WATER")==0)
 	{
+		m_cDynamicState |= UNDERWATER ;
+
+		if(!m_bSEWater)
+		{
+			m_bSEWater = true ;
+			g_MusicManager->PlayMusic(m_pSEWater, 1) ;
+		}
+
 		if(!m_bRespiration)
 			m_bDeath = true ;
 	}
@@ -242,6 +255,8 @@ void CHero::SendEventMessage(char *EventMessage, void *pData)
 void CHero::EventClear()
 {
 	m_bRespiration = false ;
+
+	m_cDynamicState &= ~UNDERWATER ;
 }
 
 void CHero::SetBoundingBox()
@@ -353,7 +368,7 @@ void CHero::Move()
 
 			m_bJump = true ;
 
-			g_MusicManager->PlayMusic(m_pSEJump, 1) ;
+			g_MusicManager->PlayMusic(m_pSEJump, 2) ;
 		}
 	}
 

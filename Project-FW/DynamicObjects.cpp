@@ -9,6 +9,7 @@ CDynamicObjects::CDynamicObjects() : m_fVecSpeed(0.0f), m_fVecJump(0.0f),
 									 m_bAir(true),
 									 m_bGravity(true),
 									 m_bDeath(false),
+									 m_cDynamicState(0),
 									 m_vForce(0.0f, 0.0f)
 {
 }

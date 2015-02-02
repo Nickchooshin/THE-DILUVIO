@@ -22,6 +22,7 @@ public:
 
 	FMOD::Sound* LoadMusic(char *Filename, bool isStream, bool isLoop = true);
 	void PlayMusic(FMOD::Sound* Sound, int Channel = 0);
+	void PauseMusic(bool bPuase = true, int Channel = 0) ;
 	void StopMusic(int Channel = 0);
 	void Loop();
 
