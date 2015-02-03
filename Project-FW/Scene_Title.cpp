@@ -1,5 +1,6 @@
 #include "Scene_Title.h"
 #include "Scene_StageSelect.h"
+#include "Scene_Extra.h"
 
 #include "Keyboard.h"
 #include "Mouse.h"
@@ -19,7 +20,7 @@ SceneTitle::SceneTitle() : m_pBackground(NULL),
 						   m_nHelpNum(0),
 						   m_bFadeOut(false),
 						   m_fTime(0.0f),
-						   m_pBGM(NULL)
+						   m_pBGM(NULL), m_pSEButton(NULL)
 {
 	for(int i=0; i<4; i++)
 	{
@@ -97,6 +98,7 @@ void SceneTitle::Init()
 	m_pBlank->SetAlpha(0) ;
 	
 	m_pBGM = g_MusicManager->LoadMusic("Resource/Sound/BGM_Title.mp3", true, true) ;
+	m_pSEButton = g_MusicManager->LoadMusic("Resource/Sound/SE_Button.mp3", false, false) ;
 	g_MusicManager->PlayMusic(m_pBGM) ;
 }
 
@@ -127,14 +129,14 @@ void SceneTitle::Update(float dt)
 
 	if(g_Keyboard->IsPressDown(DIK_RETURN) || g_Keyboard->IsPressDown(DIK_SPACE))
 	{
+		g_MusicManager->PlayMusic(m_pSEButton, 5) ;
+
 		switch(m_nMenuNum)
 		{
 		case 0 :
+		case 1 :
 		case 3 :
 			m_bFadeOut = true ;
-			return ;
-
-		case 1 :
 			return ;
 
 		case 2 :
@@ -205,6 +207,10 @@ void SceneTitle::FadeOut()
 		{
 		case 0 :
 			g_SceneManager->ChangeScene(SceneStageSelect::scene()) ;
+			return ;
+
+		case 1 :
+			g_SceneManager->ChangeScene(SceneExtra::scene()) ;
 			return ;
 
 		case 3 :

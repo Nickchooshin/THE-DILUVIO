@@ -47,7 +47,7 @@ void CFriends_Okulo::Update()
 	
 	if((m_cDynamicState & UNDERWATER)!=UNDERWATER)
 		m_bSEWater = false ;
-	if((m_cDynamicState & SPARK)!=UNDERWATER)
+	if((m_cDynamicState & SPARK)!=SPARK)
 		m_bSESpark = false ;
 	
 	if(!m_bShock && (m_State==STAND))

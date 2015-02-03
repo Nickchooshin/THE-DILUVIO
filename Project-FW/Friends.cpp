@@ -29,6 +29,7 @@ CFriends::CFriends() : m_pESparkImpact(NULL),
 	m_pESparkImpact->Init() ;
 
 	m_pSEWater = g_MusicManager->LoadMusic("Resource/Sound/SE_Water.mp3", false, false) ;
+	m_pSESpark = g_MusicManager->LoadMusic("Resource/Sound/SE_Spark.mp3", false, false) ;
 }
 CFriends::~CFriends()
 {
@@ -111,7 +112,7 @@ void CFriends::SendEventMessage(char *EventMessage, void *pData)
 	{
 		m_cDynamicState |= SPARK ;
 
-		if(!m_bShock)
+		if(!m_bSESpark)
 		{
 			m_bSESpark = true ;
 			g_MusicManager->PlayMusic(m_pSESpark, 2) ;

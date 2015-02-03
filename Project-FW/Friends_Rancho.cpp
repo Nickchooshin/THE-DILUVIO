@@ -113,7 +113,7 @@ void CFriends_Rancho::SendEventMessage(char *EventMessage, void *pData)
 	{
 		m_cDynamicState |= SPARK ;
 
-		if(!m_bShock)
+		if(!m_bSESpark)
 		{
 			m_bSESpark = true ;
 			g_MusicManager->PlayMusic(m_pSESpark, 2) ;

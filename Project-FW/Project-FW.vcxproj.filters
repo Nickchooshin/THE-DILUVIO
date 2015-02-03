@@ -214,6 +214,9 @@
     <ClCompile Include="Scene_Game.cpp">
       <Filter>Scene\Game</Filter>
     </ClCompile>
+    <ClCompile Include="Scene_Extra.cpp">
+      <Filter>Scene\Extra</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h" />
@@ -436,6 +439,9 @@
     <ClInclude Include="Scene_Game.h">
       <Filter>Scene\Game</Filter>
     </ClInclude>
+    <ClInclude Include="Scene_Extra.h">
+      <Filter>Scene\Extra</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Input">
@@ -509,6 +515,9 @@
     </Filter>
     <Filter Include="Scene\Game">
       <UniqueIdentifier>{6e91e47f-8961-413e-821a-8ca705c2ee18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\Extra">
+      <UniqueIdentifier>{9fb747e3-a250-4dd1-84a2-ea03e406a716}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

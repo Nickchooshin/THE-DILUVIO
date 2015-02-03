@@ -35,7 +35,7 @@ SceneGame::SceneGame() : m_pHero(NULL),
 						 m_bMenu(false),
 						 m_nSelectMenuNum(0),
 						 m_GameEndMenuState(NONE),
-						 m_pBGM(NULL)
+						 m_pBGM(NULL), m_pSEButton(NULL)
 {
 	int i ;
 
@@ -152,6 +152,7 @@ void SceneGame::Init()
 	g_DynamicObjects_List->AddMainCharObjects(m_pHero) ;
 
 	m_pBGM = g_MusicManager->LoadMusic("Resource/Sound/BGM_InGame.mp3", true) ;
+	m_pSEButton = g_MusicManager->LoadMusic("Resource/Sound/SE_Button.mp3", false, false) ;
 	g_MusicManager->PlayMusic(m_pBGM) ;
 }
 
@@ -290,6 +291,8 @@ void SceneGame::GameMenu()
 		
 	if(g_Keyboard->IsPressDown(DIK_RETURN) || g_Keyboard->IsPressDown(DIK_SPACE))
 	{
+		g_MusicManager->PlayMusic(m_pSEButton, 5) ;
+
 		if(m_nSelectMenuNum==0)
 		{
 			m_bMenu = false ;
@@ -359,6 +362,8 @@ void SceneGame::GameEndMenu()
 		
 		if(g_Keyboard->IsPressDown(DIK_RETURN) || g_Keyboard->IsPressDown(DIK_SPACE))
 		{
+			g_MusicManager->PlayMusic(m_pSEButton, 5) ;
+
 			if(m_nSelectMenuNum==0)
 			{
 				g_SceneManager->ChangeScene(SceneGame::scene()) ;

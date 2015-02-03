@@ -26,7 +26,7 @@ private :
 	enum GameEndMenuState { NONE=0, MENU_IN, BUTTON_IN, SHOW } ;
 	GameEndMenuState m_GameEndMenuState ;
 
-	FMOD::Sound *m_pBGM ;
+	FMOD::Sound *m_pBGM, *m_pSEButton ;
 
 public :
 	static Scene* scene() ;

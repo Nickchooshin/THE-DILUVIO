@@ -19,7 +19,7 @@ private :
 	bool m_bFadeOut ;
 	float m_fTime ;
 
-	FMOD::Sound *m_pBGM ;
+	FMOD::Sound *m_pBGM, *m_pSEButton ;
 
 public :
 	static Scene* scene() ;
