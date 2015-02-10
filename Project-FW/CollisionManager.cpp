@@ -158,4 +158,21 @@ void CCollisionManager::CollisionY()
 			bCollision = col.YCollision(pDynamicObject, pTile) ;
 		}
 	}
+	
+	//********** DynamicObjects_List Collision 2 **********//
+	for(int Index_o=0; Index_o<ObjectSize; Index_o++)
+	{
+		pDynamicObject = DynamicObjects_List[Index_o] ;
+
+		if(pDynamicObject==g_DynamicObjects_List->GetMainChar())
+			continue ;
+
+		for(int Index_o2=0; Index_o2<ObjectSize; Index_o2++)
+		{
+			if(Index_o==Index_o2)
+				continue ;
+
+			col.YCollision(DynamicObjects_List[Index_o2], DynamicObjects_List[Index_o]) ;
+		}
+	}
 }
