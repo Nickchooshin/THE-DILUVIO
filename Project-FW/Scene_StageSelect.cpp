@@ -16,6 +16,7 @@
 
 #include "StageProgress.h"
 #include "ScrollBackground.h"
+#include "Hero.h"
 
 SceneStageSelect::SceneStageSelect() : m_fWinWidth((float)g_D3dDevice->GetWinWidth()), m_fWinHeight((float)g_D3dDevice->GetWinHeight()),
 									   m_pBackground(NULL),
@@ -126,6 +127,8 @@ void SceneStageSelect::Init()
 	m_pPlayer->Init(64.0f, 64.0f, "Resource/Image/Char/Main_character.png") ;
 	m_pPlayer->SetPosition(32.0f + ((g_StageProgress->GetSelectChapter()-1) * 240.0f), m_fWinHeight - 672.0f) ;
 	m_pPlayer->SetTextureUV(64.0f, 64.0f, 128.0f, 128.0f) ;
+	if(CHero::m_bExVersion)
+		m_pPlayer->SetTexture("Resource/Image/Char/Main_character_Ex.png") ;
 	
 	m_pGoal = new CSprite ;
 	m_pGoal->Init("Resource/Image/StageSelect/Castle.png") ;

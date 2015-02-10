@@ -15,6 +15,7 @@
 #include "D3dDevice.h"
 
 #include "StageProgress.h"
+#include "Hero.h"
 
 SceneTitle::SceneTitle() : m_pBackground(NULL),
 						   m_pConstruction(NULL),
@@ -24,6 +25,7 @@ SceneTitle::SceneTitle() : m_pBackground(NULL),
 						   m_bOpenExtra(false),
 						   m_bFadeOut(false),
 						   m_fTime(0.0f),
+						   m_nKonamiCode(0),
 						   m_pBGM(NULL), m_pSEButton(NULL)
 {
 	for(int i=0; i<4; i++)
@@ -112,6 +114,7 @@ void SceneTitle::Init()
 	
 	m_pBGM = g_MusicManager->LoadMusic("Resource/Sound/BGM_Title.mp3", true, true) ;
 	m_pSEButton = g_MusicManager->LoadMusic("Resource/Sound/SE_Button.mp3", false, false) ;
+	m_pSECoin = g_MusicManager->LoadMusic("Resource/Sound/SE_Coin.mp3", false, false) ;
 	g_MusicManager->PlayMusic(m_pBGM) ;
 }
 
@@ -139,6 +142,7 @@ void SceneTitle::Update(float dt)
 	}
 
 	MenuSelect() ;
+	KonamiCode() ;
 
 	if(g_Keyboard->IsPressDown(DIK_RETURN) || g_Keyboard->IsPressDown(DIK_SPACE))
 	{
@@ -242,4 +246,54 @@ void SceneTitle::FadeOut()
 	}
 
 	m_fTime += g_D3dDevice->GetTime() ;
+}
+
+void SceneTitle::KonamiCode()
+{
+	const bool bKeyDown = g_Keyboard->IsPressDown() ;
+	const int prevKonamiCode = m_nKonamiCode ;
+
+	if(!bKeyDown)
+		return ;
+
+	if(g_Keyboard->IsPressDown(DIK_UP))
+	{
+		if(m_nKonamiCode<2)
+			++m_nKonamiCode ;
+		else if(m_nKonamiCode==2)
+			return ;
+	}
+	else if(m_nKonamiCode<4 && g_Keyboard->IsPressDown(DIK_DOWN))
+	{
+		++m_nKonamiCode ;
+	}
+	else if(m_nKonamiCode<8)
+	{
+		if(m_nKonamiCode%2==0 && g_Keyboard->IsPressDown(DIK_LEFT))
+		{
+			++m_nKonamiCode ;
+		}
+		else if(m_nKonamiCode%2==1 && g_Keyboard->IsPressDown(DIK_RIGHT))
+		{
+			++m_nKonamiCode ;
+		}
+	}
+	else if(m_nKonamiCode==8 && g_Keyboard->IsPressDown(DIK_B))
+	{
+		++m_nKonamiCode ;
+	}
+	else if(m_nKonamiCode==9 && g_Keyboard->IsPressDown(DIK_A))
+	{
+		++m_nKonamiCode ;
+	}
+	
+	if(m_nKonamiCode==10)
+	{
+		m_nKonamiCode = 0 ;
+		CHero::m_bExVersion = !CHero::m_bExVersion ;
+
+		g_MusicManager->PlayMusic(m_pSECoin, 5) ;
+	}
+	else if(m_nKonamiCode==prevKonamiCode)
+		m_nKonamiCode = 0 ;
 }

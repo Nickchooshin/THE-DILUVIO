@@ -16,6 +16,8 @@ CEffect_Bubble::~CEffect_Bubble()
 void CEffect_Bubble::Init()
 {
 	LoadDat("Resource/Data/Effect/Bubble.dat") ;
+	if(CHero::m_bExVersion)
+		m_pSprite->SetTexture("Resource/Image/Effect/Bubble_Ex.png") ;
 }
 
 void CEffect_Bubble::SetDirection()

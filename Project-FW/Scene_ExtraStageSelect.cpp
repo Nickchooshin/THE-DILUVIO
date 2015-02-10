@@ -15,6 +15,7 @@
 #include "D3dDevice.h"
 
 #include "StageProgress.h"
+#include "Hero.h"
 
 SceneExtraStageSelect::SceneExtraStageSelect() : m_fWinWidth((float)g_D3dDevice->GetWinWidth()), m_fWinHeight((float)g_D3dDevice->GetWinHeight()),
 												 m_pBackground(NULL),
@@ -94,6 +95,8 @@ void SceneExtraStageSelect::Init()
 	m_pPlayer->Init(64.0f, 64.0f, "Resource/Image/Char/Main_character.png") ;
 	m_pPlayer->SetPosition(32.0f + ((g_StageProgress->GetSelectStage()-1) * 120.0f), m_fWinHeight - 672.0f) ;
 	m_pPlayer->SetTextureUV(64.0f, 64.0f, 128.0f, 128.0f) ;
+	if(CHero::m_bExVersion)
+		m_pPlayer->SetTexture("Resource/Image/Char/Main_character_Ex.png") ;
 
 	m_pCastle = new CSprite ;
 	m_pCastle->Init("Resource/Image/StageSelect/Castle.png") ;

@@ -21,7 +21,9 @@ private :
 	bool m_bFadeOut ;
 	float m_fTime ;
 
-	FMOD::Sound *m_pBGM, *m_pSEButton ;
+	int m_nKonamiCode ;
+
+	FMOD::Sound *m_pBGM, *m_pSEButton, *m_pSECoin ;
 
 public :
 	static Scene* scene() ;
@@ -38,4 +40,6 @@ private :
 	void MenuSelect() ;
 	void HelpMenu() ;
 	void FadeOut() ;
+
+	void KonamiCode() ;
 } ;

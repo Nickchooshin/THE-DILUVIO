@@ -16,6 +16,8 @@
 #include "LoadManager.h"
 #include "MusicManager.h"
 
+bool CHero::m_bExVersion = false ;
+
 CHero::CHero() : m_ImgSize(0, 0),
 				 m_nNowFrame(0),
 				 m_nStandFrame(0), m_nMoveFrame(0), m_nJumpFrame(0), m_nAbsorbFrame(0), m_nReleaseFrame(0),
@@ -152,6 +154,8 @@ void CHero::Init()
 
 	m_pSprite = new CSprite ;
 	m_pSprite->Init((float)m_ImgSize.x, (float)m_ImgSize.y, image_path) ;
+	if(m_bExVersion)
+		m_pSprite->SetTexture("Resource/Image/Char/Main_character_Ex.png") ;
 	m_pSprite->SetTextureUV((float)(m_Stand_RightIndex.x * m_ImgSize.x), (float)(m_Stand_RightIndex.y * m_ImgSize.y),
 							(float)((m_Stand_RightIndex.x+1) * m_ImgSize.x), (float)((m_Stand_RightIndex.y+1) * m_ImgSize.y)) ;
 

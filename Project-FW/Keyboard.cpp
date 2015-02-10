@@ -101,3 +101,24 @@ bool Keyboard::IsPressUp(BYTE Button)
 
 	return false ;
 }
+
+bool Keyboard::IsPressDown()
+{
+	for(int i=0; i<256; i++)
+	{
+		if(IsPressDown(i))
+			return true ;
+	}
+
+	return false ;
+}
+bool Keyboard::IsPressUp()
+{
+	for(int i=0; i<256; i++)
+	{
+		if(IsPressUp(i))
+			return true ;
+	}
+
+	return false ;
+}

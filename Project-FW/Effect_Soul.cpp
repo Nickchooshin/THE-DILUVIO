@@ -16,6 +16,8 @@ CEffect_Soul::~CEffect_Soul()
 void CEffect_Soul::Init()
 {
 	LoadDat("Resource/Data/Effect/Soul.dat") ;
+	if(CHero::m_bExVersion)
+		m_pSprite->SetTexture("Resource/Image/Effect/Soul_Ex.png") ;
 }
 
 void CEffect_Soul::SetDirection()

@@ -37,6 +37,8 @@ private :
 
 	bool m_bSEWater ;
 	FMOD::Sound *m_pSEJump, *m_pSESkill, *m_pSEWater ;
+public :
+	static bool m_bExVersion ;
 
 public :
 	CHero() ;

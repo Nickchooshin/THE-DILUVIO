@@ -23,6 +23,9 @@ public :
 	bool IsButtonUp(BYTE Button) ;
 	bool IsPressDown(BYTE Button) ;
 	bool IsPressUp(BYTE Button) ;
+
+	bool IsPressDown() ;
+	bool IsPressUp() ;
 } ;
 
 #define g_Keyboard Keyboard::GetInstance()
