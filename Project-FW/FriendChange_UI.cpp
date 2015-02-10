@@ -148,9 +148,11 @@ void CFriendChange_UI::Update()
 	{
 		if(m_StateF==DISABLE)
 			SetFadeState(FADE_IN) ;
-
+		
 		m_fFadeTime = 0.0f ;
+		m_nNowAlpha = 255 ;
 		m_StateC = RIGHT ;
+		m_StateF = ENABLE ;
 	}
 	else if(m_StateC==NONE && g_Keyboard->IsButtonDown(DIK_S))
 	{
@@ -158,7 +160,9 @@ void CFriendChange_UI::Update()
 			SetFadeState(FADE_IN) ;
 		
 		m_fFadeTime = 0.0f ;
+		m_nNowAlpha = 255 ;
 		m_StateC = LEFT ;
+		m_StateF = ENABLE ;
 	}
 
 	for(int i=0; i<5; i++)
@@ -336,7 +340,11 @@ void CFriendChange_UI::SetCirclePosition()
 		y = (y * m_fRY) + m_fY ;
 
 		Position index ;
-		index = g_Friends_List->GetFriend(m_nIconListIndex[i])->GetIconIndex() ;
+		CFriends *pFriend = g_Friends_List->GetFriend(m_nIconListIndex[i]) ;
+		if(pFriend!=NULL)
+			index = pFriend->GetIconIndex() ;
+		else
+			index = Position(0, 0) ;
 		m_pSIcon[i]->SetTextureUV((float)(index.x * 24), (float)(index.y * 24),
 								  (float)((index.x+1) * 24), (float)((index.y+1) * 24)) ;
 

@@ -290,7 +290,7 @@ void CHero::Move()
 		// 현재 선택되어있는 친구가 방출되어 있지 않다면
 		int index = m_pFC_UI->GetSelectedIndex() ;
 		CFriends *pFriend = g_Friends_List->GetFriend(index) ;
-		if(!pFriend->GetRelease())
+		if(pFriend!=NULL && !pFriend->GetRelease())
 		{
 			// 캐릭터가 바라보는 방향의 타일 좌표를 구한다
 			float fX ;

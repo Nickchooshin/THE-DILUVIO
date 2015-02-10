@@ -17,6 +17,8 @@ private :
 	CSprite *m_pMenu, *m_pEndMenu ;
 	CSprite *m_pMenuButton[3], *m_pEndMenuButton[2] ;
 
+	CSprite *m_pBlank ;
+
 	float m_fTime ;
 
 	bool m_bTutorial ;

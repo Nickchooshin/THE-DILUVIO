@@ -14,11 +14,10 @@
 
 #include "D3dDevice.h"
 
-#include "LoadManager.h"
 #include "StageProgress.h"
 #include "ScrollBackground.h"
 
-SceneStageSelect::SceneStageSelect() : m_fWinWidth((int)g_D3dDevice->GetWinWidth()), m_fWinHeight((int)g_D3dDevice->GetWinHeight()),
+SceneStageSelect::SceneStageSelect() : m_fWinWidth((float)g_D3dDevice->GetWinWidth()), m_fWinHeight((float)g_D3dDevice->GetWinHeight()),
 									   m_pBackground(NULL),
 									   m_pBackground_Brick(NULL), m_pStageFrame(NULL), m_pStageNameFrame(NULL),
 									   m_pPlayer(NULL), m_pGoal(NULL), m_pTile(NULL),
@@ -89,6 +88,8 @@ void SceneStageSelect::Init()
 {
 	g_CameraManager->AllCameraClear() ;
 	g_CameraManager->AddCamera(new CCamera()) ;
+
+	g_StageProgress->SetMapType(g_StageProgress->GAME) ;
 
 	m_pBackground = new CScrollBackground ;
 	m_pBackground->Init(1024.0f, 768.0f, "Resource/Image/StageSelect/Background.png") ;

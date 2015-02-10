@@ -7,15 +7,20 @@ class CStageProgress : public Singleton<CStageProgress>
 {
 public :
 	enum StageState { NONE=0, CLEAR, OVER } ;
+	enum MapType { GAME=0, EXTRA } ;
 	static const int nChapterMaxStage[5] ;
 private :
 	int m_nChapterProgress, m_nStageProgress, m_nTutorialProgress ;
 	int m_nSelectChapter, m_nSelectStage ;
 	int m_nChapterMoveSelectedStageMax ;	// Chapter 가 이동될 때 선택되는 스테이지 최대치
+	bool m_bExtra ;
+	int m_nExtraSelectStage ;
 
 	StageState m_NowStageState ;
+	MapType m_MapType ;
 
 	std::string m_strMapName[5][9] ;
+	char m_cExtraProgress[9] ;
 
 public :
 	CStageProgress() ;
@@ -28,7 +33,9 @@ public :
 	const int GetTutorialProgress() ;
 	const int GetSelectChapter() const ;
 	const int GetSelectStage() const ;
+	const bool BeExtra() const ;
 	const StageState NowStageState() const ;
+	const MapType GetMapType() const ;
 
 	const char* GetSelectMapName() ;
 
@@ -41,10 +48,18 @@ public :
 	void StageOver() ;
 	bool LastStageClear() ;
 
+	void SetMapType(MapType mapType) ;
 private :
+	bool NextStage_Game() ;
+	bool PrevStage_Game() ;
+	bool NextStage_Extra() ;
+	bool PrevStage_Extra() ;
+
 	void StageProgressSave() ;
 	bool StageProgressLoad() ;
 	bool TutorialProgressCheck(const char progress) ;
+
+	void Reset() ;
 } ;
 
 #define g_StageProgress CStageProgress::GetInstance()

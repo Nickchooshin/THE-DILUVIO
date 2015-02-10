@@ -1,6 +1,6 @@
 #include "Scene_Title.h"
 #include "Scene_StageSelect.h"
-#include "Scene_Extra.h"
+#include "Scene_ExtraStageSelect.h"
 
 #include "Keyboard.h"
 #include "Mouse.h"
@@ -14,10 +14,14 @@
 
 #include "D3dDevice.h"
 
+#include "StageProgress.h"
+
 SceneTitle::SceneTitle() : m_pBackground(NULL),
+						   m_pConstruction(NULL),
 						   m_pBlank(NULL),
 						   m_nMenuNum(0),
 						   m_nHelpNum(0),
+						   m_bOpenExtra(false),
 						   m_bFadeOut(false),
 						   m_fTime(0.0f),
 						   m_pBGM(NULL), m_pSEButton(NULL)
@@ -32,6 +36,9 @@ SceneTitle::~SceneTitle()
 {
 	if(m_pBackground!=NULL)
 		delete m_pBackground ;
+
+	if(m_pConstruction!=NULL)
+		delete m_pConstruction ;
 
 	if(m_pBlank!=NULL)
 		delete m_pBlank ;
@@ -90,6 +97,12 @@ void SceneTitle::Init()
 		m_pHelp[i]->Init(filepath) ;
 		m_pHelp[i]->SetPosition(fWinWidth / 2.0f, fWinHeight / 2.0f) ;
 	}
+
+	m_pConstruction = new CSprite ;
+	m_pConstruction->Init("Resource/Image/Extra/Button_Construction.png") ;
+	m_pConstruction->SetPosition(933.0f, fWinHeight - 455.0f) ;
+
+	m_bOpenExtra = g_StageProgress->BeExtra() ;
 
 	m_pBlank = new CSprite ;
 	m_pBlank->Init(fWinWidth, fWinHeight, "Resource/Image/blank.png") ;
@@ -155,6 +168,9 @@ void SceneTitle::Render()
 	for(int i=0; i<4; i++)
 		m_pButton[i]->Render() ;
 
+	if(!m_bOpenExtra)
+		m_pConstruction->Render() ;
+
 	if(m_nHelpNum!=0)
 		m_pHelp[m_nHelpNum-1]->Render() ;
 
@@ -170,10 +186,16 @@ void SceneTitle::MenuSelect()
 	{
 		if(m_nMenuNum>0)
 			--m_nMenuNum ;
+
+		if(!m_bOpenExtra && m_nMenuNum==1)
+			--m_nMenuNum ;
 	}
 	if(g_Keyboard->IsPressDown(DIK_DOWN))
 	{
 		if(m_nMenuNum<3)
+			++m_nMenuNum ;
+
+		if(!m_bOpenExtra && m_nMenuNum==1)
 			++m_nMenuNum ;
 	}
 
@@ -210,7 +232,7 @@ void SceneTitle::FadeOut()
 			return ;
 
 		case 1 :
-			g_SceneManager->ChangeScene(SceneExtra::scene()) ;
+			g_SceneManager->ChangeScene(SceneExtraStageSelect::scene()) ;
 			return ;
 
 		case 3 :

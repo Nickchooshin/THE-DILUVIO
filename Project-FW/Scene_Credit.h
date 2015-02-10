@@ -11,8 +11,8 @@ private :
 	CSprite *m_pBackground, *m_pCredit ;
 	CSprite *m_pBlank ;
 
-	bool m_bFadeOut ;
-	float m_fTime, m_fFadeOut ;
+	bool m_bFadeIn, m_bFadeOut ;
+	float m_fTime, m_fFadeTime ;
 
 	FMOD::Sound *m_pBGM ;
 

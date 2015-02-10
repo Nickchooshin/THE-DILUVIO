@@ -1,5 +1,6 @@
 #include "Scene_Game.h"
 #include "Scene_StageSelect.h"
+#include "Scene_ExtraStageSelect.h"
 #include "Scene_Credit.h"
 
 #include "Keyboard.h"
@@ -30,6 +31,7 @@ SceneGame::SceneGame() : m_pHero(NULL),
 						 m_pMapBackground(NULL),
 						 m_pTutorial(NULL),
 						 m_pEndMenu(NULL),
+						 m_pBlank(NULL),
 						 m_fTime(0.0f),
 						 m_bTutorial(false),
 						 m_bMenu(false),
@@ -64,6 +66,8 @@ SceneGame::~SceneGame()
 		delete m_pMenu ;
 	if(m_pEndMenu!=NULL)
 		delete m_pEndMenu ;
+	if(m_pBlank!=NULL)
+		delete m_pBlank ;
 
 	for(i=0; i<3; i++)
 	{
@@ -148,6 +152,11 @@ void SceneGame::Init()
 	m_pEndMenuButton[1]->Init(296.0f, 78.0f, "Resource/Image/Menu/Button_Select.png") ;
 	m_pEndMenuButton[1]->SetTextureUV(0.0f, 0.0f, 296.0f, 78.0f) ;
 	m_pEndMenuButton[1]->SetAlpha(0) ;
+
+	m_pBlank = new CSprite ;
+	m_pBlank->Init(1024.0f, 768.0f, "Resource/Image/blank.png") ;
+	m_pBlank->SetRGB(0, 0, 0) ;
+	m_pBlank->SetAlpha(0) ;
 
 	g_DynamicObjects_List->AddMainCharObjects(m_pHero) ;
 
@@ -243,10 +252,12 @@ void SceneGame::Update(float dt)
 
 		D3DXVECTOR3 CameraPos = g_CameraManager->GetPosition() ;
 		float fWinHeight = (float)g_D3dDevice->GetWinHeight() ;
-
+		
 		m_pEndMenu->SetPosition(CameraPos.x, CameraPos.y) ;
 		m_pEndMenuButton[0]->SetPosition(CameraPos.x, CameraPos.y + ((fWinHeight/2) - 450.0f)) ;
 		m_pEndMenuButton[1]->SetPosition(CameraPos.x, CameraPos.y + ((fWinHeight/2) - 550.0f)) ;
+		
+		m_pBlank->SetPosition(CameraPos.x, CameraPos.y) ;
 	}
 }
 
@@ -277,6 +288,9 @@ void SceneGame::Render()
 
 	if(m_bTutorial)
 		m_pTutorial->Render() ;
+
+	if(g_StageProgress->LastStageClear())
+		m_pBlank->Render() ;
 }
 
 void SceneGame::Tutorial()
@@ -309,7 +323,16 @@ void SceneGame::GameMenu()
 		}
 		else
 		{
-			g_SceneManager->ChangeScene(SceneStageSelect::scene()) ;
+			switch(g_StageProgress->GetMapType())
+			{
+			case CStageProgress::GAME :
+				g_SceneManager->ChangeScene(SceneStageSelect::scene()) ;
+				break ;
+
+			case CStageProgress::EXTRA :
+				g_SceneManager->ChangeScene(SceneExtraStageSelect::scene()) ;
+				break ;
+			}
 			return ;
 		}
 	}
@@ -317,6 +340,22 @@ void SceneGame::GameMenu()
 
 void SceneGame::GameEndMenu()
 {
+	if(g_StageProgress->LastStageClear())
+	{
+		int nAlpha = (int)((m_fTime / 3.0f) * 255.0f) ;
+		m_pBlank->SetAlpha(nAlpha) ;
+
+		if(m_fTime>=3.0f)
+		{
+			g_SceneManager->ChangeScene(SceneCredit::scene()) ;
+
+			return ;
+		}
+
+		m_fTime += g_D3dDevice->GetTime() ;
+		return ;
+	}
+
 	if(m_GameEndMenuState==MENU_IN)
 	{
 		int nAlpha = (int)((m_fTime / 1.0f) * 255.0f) ;
@@ -327,10 +366,6 @@ void SceneGame::GameEndMenu()
 			m_fTime = 0.0f ;
 			m_GameEndMenuState = BUTTON_IN ;
 			m_pEndMenu->SetAlpha(255) ;
-
-			// 임시 엔딩으로 넘어가기
-			if(g_StageProgress->LastStageClear())
-				g_SceneManager->ChangeScene(SceneCredit::scene()) ;
 
 			return ;
 		}
@@ -371,7 +406,16 @@ void SceneGame::GameEndMenu()
 			}
 			else
 			{
-				g_SceneManager->ChangeScene(SceneStageSelect::scene()) ;
+				switch(g_StageProgress->GetMapType())
+				{
+				case CStageProgress::GAME :
+					g_SceneManager->ChangeScene(SceneStageSelect::scene()) ;
+					break ;
+
+				case CStageProgress::EXTRA :
+					g_SceneManager->ChangeScene(SceneExtraStageSelect::scene()) ;
+					break ;
+				}
 				return ;
 			}
 		}
