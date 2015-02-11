@@ -80,11 +80,8 @@ void CFriends_Rompo::Update()
 		Dash(x, y, 'L') ;
 
 		if(m_bUsingAbility)
-		{
 			m_bUsingAbility = false ;
-			g_MusicManager->StopMusic(4) ;
-		}
-		if(!m_bUsingAbility && (m_pEAbilityL->BeVisible() || m_pEAbilityR->BeVisible()))
+		if((m_pEAbilityL->BeVisible() || m_pEAbilityR->BeVisible()))
 		{
 			m_bUsingAbility = true ;
 			g_MusicManager->PlayMusic(m_pSEAbility, 2) ;

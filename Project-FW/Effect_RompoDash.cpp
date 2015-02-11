@@ -2,6 +2,7 @@
 #include "Sprite.h"
 
 #include "D3dDevice.h"
+#include "MusicManager.h"
 
 #include "Friends_List.h"
 #include "MapTiles_List.h"
@@ -54,6 +55,8 @@ void CEffect_RompoDash::Dash()
 
 void CEffect_RompoDash::Crash()
 {
+	if(m_State!=EFFECT2)
+		g_MusicManager->StopMusic(4) ;
 	m_State = EFFECT2 ;
 
 	if(m_cDirection=='L')
