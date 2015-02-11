@@ -1,6 +1,6 @@
 #include "StageProgress.h"
+#include "SaveData.h"
 #include <stdio.h>
-#include <Windows.h>
 
 const int CStageProgress::nChapterMaxStage[5] = {8, 9, 8, 7, 5 } ;
 
@@ -12,10 +12,8 @@ const char TUTORIAL_5 = 16 ;
 const char TUTORIAL_6 = 32 ;
 const char TUTORIAL_7 = 64 ;
 
-CStageProgress::CStageProgress() : m_nChapterProgress(1), m_nStageProgress(1), m_nTutorialProgress(0),
-								   m_nSelectChapter(1), m_nSelectStage(1),
+CStageProgress::CStageProgress() : m_nSelectChapter(1), m_nSelectStage(1),
 								   m_nChapterMoveSelectedStageMax(1),
-								   m_bExtra(false),
 								   m_nExtraSelectStage(1),
 								   m_NowStageState(NONE)
 {
@@ -36,13 +34,10 @@ CStageProgress::CStageProgress() : m_nChapterProgress(1), m_nStageProgress(1), m
 		fclose(pFile) ;
 	}
 
-	for(int i=0; i<9; i++)
-		m_cExtraProgress[i] = '0' ;
+	g_SaveData->Load() ;
 
-	StageProgressLoad() ;
-
-	m_nSelectChapter = m_nChapterProgress ;
-	m_nSelectStage = m_nStageProgress ;
+	m_nSelectChapter = g_SaveData->m_nChapterProgress ;
+	m_nSelectStage = g_SaveData->m_nStageProgress ;
 	m_nChapterMoveSelectedStageMax = m_nSelectStage ;
 }
 CStageProgress::~CStageProgress()
@@ -56,12 +51,12 @@ void CStageProgress::Init()
 
 const int CStageProgress::GetChapterProgress() const
 {
-	return m_nChapterProgress ;
+	return g_SaveData->m_nChapterProgress ;
 }
 
 const int CStageProgress::GetStageProgress() const
 {
-	return m_nStageProgress ;
+	return g_SaveData->m_nStageProgress ;
 }
 
 const int CStageProgress::GetTutorialProgress()
@@ -125,7 +120,7 @@ const int CStageProgress::GetSelectStage() const
 
 const bool CStageProgress::BeExtra() const
 {
-	return m_bExtra ;
+	return g_SaveData->m_bExtra ;
 }
 
 const CStageProgress::StageState CStageProgress::NowStageState() const
@@ -179,7 +174,7 @@ bool CStageProgress::PrevStage()
 
 void CStageProgress::NextChapter()
 {
-	if(m_nSelectChapter<m_nChapterProgress)
+	if(m_nSelectChapter<g_SaveData->m_nChapterProgress)
 	{
 		++m_nSelectChapter ;
 
@@ -211,32 +206,32 @@ void CStageProgress::StageClear()
 {
 	m_NowStageState = CLEAR ;
 
-	if(m_MapType==GAME && m_nSelectChapter==m_nChapterProgress && m_nSelectStage==m_nStageProgress)
+	if(m_MapType==GAME && m_nSelectChapter==g_SaveData->m_nChapterProgress && m_nSelectStage==g_SaveData->m_nStageProgress)
 	{
-		if(m_nStageProgress<nChapterMaxStage[m_nSelectChapter-1])
+		if(g_SaveData->m_nStageProgress<nChapterMaxStage[m_nSelectChapter-1])
 		{
-			++m_nStageProgress ;
+			++g_SaveData->m_nStageProgress ;
 		}
-		else if(m_nChapterProgress<5)
+		else if(g_SaveData->m_nChapterProgress<5)
 		{
-			++m_nChapterProgress ;
-			m_nStageProgress = 1 ;
+			++g_SaveData->m_nChapterProgress ;
+			g_SaveData->m_nStageProgress = 1 ;
 		}
 
-		StageProgressSave() ;
+		g_SaveData->Save() ;
 	}
 	else if(m_MapType==EXTRA)
 	{
-		if(m_cExtraProgress[m_nExtraSelectStage-1]=='0')
+		if(g_SaveData->m_cExtraProgress[m_nExtraSelectStage-1]=='0')
 		{
-			m_cExtraProgress[m_nExtraSelectStage-1] = '1' ;
+			g_SaveData->m_cExtraProgress[m_nExtraSelectStage-1] = '1' ;
 
-			StageProgressSave() ;
+			g_SaveData->Save() ;
 
 			bool bAllClear=true ;
 			for(int i=0; i<9; i++)
 			{
-				if(m_cExtraProgress[i]=='0')
+				if(g_SaveData->m_cExtraProgress[i]=='0')
 				{
 					bAllClear = false ;
 					break ;
@@ -245,7 +240,7 @@ void CStageProgress::StageClear()
 
 			if(bAllClear)
 			{
-				Reset() ;
+				g_SaveData->Reset() ;
 				return ;
 			}
 		}
@@ -263,7 +258,7 @@ bool CStageProgress::LastStageClear()
 	{
 		if(m_nSelectChapter==5 && m_nSelectStage==nChapterMaxStage[m_nSelectChapter-1])
 		{
-			m_bExtra = true ;
+			g_SaveData->m_bExtra = true ;
 			return true ;
 		}
 	}
@@ -280,7 +275,7 @@ bool CStageProgress::NextStage_Game()
 {
 	if(m_nSelectStage<nChapterMaxStage[m_nSelectChapter-1])
 	{
-		if(m_nSelectChapter<m_nChapterProgress || m_nSelectStage<m_nStageProgress)
+		if(m_nSelectChapter<g_SaveData->m_nChapterProgress || m_nSelectStage<g_SaveData->m_nStageProgress)
 		{
 			++m_nSelectStage ;
 			m_nChapterMoveSelectedStageMax = m_nSelectStage ;
@@ -290,7 +285,7 @@ bool CStageProgress::NextStage_Game()
 	}
 	else if(m_nSelectChapter<5)
 	{
-		if(m_nSelectChapter<m_nChapterProgress)
+		if(m_nSelectChapter<g_SaveData->m_nChapterProgress)
 		{
 			++m_nSelectChapter ;
 			m_nSelectStage = 1 ;
@@ -348,74 +343,13 @@ bool CStageProgress::PrevStage_Extra()
 	return false ;
 }
 
-void CStageProgress::StageProgressSave()
-{
-	FILE *pFile = fopen("Resource/Data/.sav", "wb") ;
-
-	fprintf(pFile, "%d%d%03d%d%s", m_nChapterProgress, m_nStageProgress, m_nTutorialProgress, m_bExtra, m_cExtraProgress) ;
-
-	fclose(pFile) ;
-}
-
-bool CStageProgress::StageProgressLoad()
-{
-	FILE *pFile = fopen("Resource/Data/.sav", "rb") ;
-
-	if(pFile==NULL)
-		return false ;
-
-	char value[16] ;
-
-	fscanf(pFile, "%s", &value) ;
-	m_nChapterProgress = (value[0] - '0') ;
-	m_nStageProgress = (value[1] - '0') ;
-	m_nTutorialProgress = ((value[2] - '0') * 100) + ((value[3] - '0') * 10) + (value[4] - '0') ;
-	m_bExtra = (bool)(value[5] - '0') ;
-	memcpy(m_cExtraProgress, &value[6], 9) ;
-
-	fclose(pFile) ;
-
-	return true ;
-}
-
 bool CStageProgress::TutorialProgressCheck(const char progress)
 {
-	if((m_nTutorialProgress & progress) == progress)
+	if((g_SaveData->m_nTutorialProgress & progress) == progress)
 		return true ;
 
-	m_nTutorialProgress |= progress ;
-	StageProgressSave() ;
+	g_SaveData->m_nTutorialProgress |= progress ;
+	g_SaveData->Save() ;
 
 	return false ;
-}
-
-void CStageProgress::Reset()
-{
-	remove("Resource/Data/.sav") ;
-
-	HANDLE h_token;
-	TOKEN_PRIVILEGES privilege_info;
-
-	// 현재 프로세스의 권한과 관련된 정보를 변경하기 위해 토큰정보를 엽니다.
-	if(!OpenProcessToken(GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES |
-											  TOKEN_QUERY, &h_token))
-	{
-		// 권한과 관련된 정보 접근에 실패함..
-		return ;
-	}
-
-	// 현재 프로세스가 SE_SHUTDOWN_NAME 권한을 사용할수 있도록 설정한다.
-	LookupPrivilegeValue(NULL, SE_SHUTDOWN_NAME, &privilege_info.Privileges[0].Luid);
-	privilege_info.PrivilegeCount = 1;
-	privilege_info.Privileges[0].Attributes = SE_PRIVILEGE_ENABLED;
-
-	// 지정한 값으로 권한을 조정한다.
-	AdjustTokenPrivileges(h_token, FALSE, &privilege_info, 0, (PTOKEN_PRIVILEGES)NULL, 0);
-	if(GetLastError() != ERROR_SUCCESS)
-	{
-		// 권한 조정에 실패한 경우...
-		return ;
-	}
-
-	ExitWindowsEx(EWX_REBOOT | EWX_FORCE, 0) ;
 }

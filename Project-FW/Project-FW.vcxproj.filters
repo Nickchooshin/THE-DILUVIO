@@ -217,6 +217,9 @@
     <ClCompile Include="Scene_ExtraStageSelect.cpp">
       <Filter>Scene\ExtraStageSelect</Filter>
     </ClCompile>
+    <ClCompile Include="SaveData.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h" />
@@ -441,6 +444,9 @@
     </ClInclude>
     <ClInclude Include="Scene_ExtraStageSelect.h">
       <Filter>Scene\ExtraStageSelect</Filter>
+    </ClInclude>
+    <ClInclude Include="SaveData.h">
+      <Filter>Data</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

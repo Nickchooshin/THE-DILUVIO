@@ -126,6 +126,7 @@
     <ClCompile Include="MusicManager.cpp" />
     <ClCompile Include="Objects.cpp" />
     <ClCompile Include="Friends_Okulo.cpp" />
+    <ClCompile Include="SaveData.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SampleScene.cpp" />
     <ClCompile Include="Scene_Credit.cpp" />
@@ -161,6 +162,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraManager.h" />
     <ClInclude Include="CollisionManager.h" />
+    <ClInclude Include="SaveData.h" />
     <ClInclude Include="Scene_Credit.h" />
     <ClInclude Include="Effect_Bubble.h" />
     <ClInclude Include="Effect_BusxoAbility.h" />
