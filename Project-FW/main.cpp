@@ -25,7 +25,7 @@ INT WINAPI WinMain( HINSTANCE hInst, HINSTANCE, LPSTR, INT )
 
 	g_SceneManager->StartScene(SceneLogo::scene()) ;
 
-	WinSystem.WinSet("THE DILUVIO - 1.00v (fixed)", WS_OVERLAPPED | WS_SYSMENU | WS_MINIMIZEBOX, 1024, 768) ;	// WS_THICKFRAME - 윈도우창 늘리기/줄이기 크기조정 지원안함.
+	WinSystem.WinSet("THE DILUVIO - 1.00v (fixed 2)", WS_OVERLAPPED | WS_SYSMENU | WS_MINIMIZEBOX, 1024, 768) ;	// WS_THICKFRAME - 윈도우창 늘리기/줄이기 크기조정 지원안함.
 	WinSystem.WinMsg() ;
 	WinSystem.WinEnd() ;
 
