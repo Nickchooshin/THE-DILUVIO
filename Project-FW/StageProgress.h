@@ -28,6 +28,7 @@ public :
 	const int GetChapterProgress() const ;
 	const int GetStageProgress() const ;
 	const int GetTutorialProgress() ;
+	const char GetExtraStageProgress(int index) const ;
 	const int GetSelectChapter() const ;
 	const int GetSelectStage() const ;
 	const bool BeExtra() const ;

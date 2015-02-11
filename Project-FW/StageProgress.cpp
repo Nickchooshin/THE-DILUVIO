@@ -94,6 +94,11 @@ const int CStageProgress::GetTutorialProgress()
 	return 0 ;
 }
 
+const char CStageProgress::GetExtraStageProgress(int index) const
+{
+	return g_SaveData->m_cExtraProgress[index] ;
+}
+
 const int CStageProgress::GetSelectChapter() const
 {
 	switch(m_MapType)
@@ -222,16 +227,16 @@ void CStageProgress::StageClear()
 	}
 	else if(m_MapType==EXTRA)
 	{
-		if(g_SaveData->m_cExtraProgress[m_nExtraSelectStage-1]=='0')
+		if(g_SaveData->m_cExtraProgress[m_nExtraSelectStage-1]==0)
 		{
-			g_SaveData->m_cExtraProgress[m_nExtraSelectStage-1] = '1' ;
+			g_SaveData->m_cExtraProgress[m_nExtraSelectStage-1] = 1 ;
 
 			g_SaveData->Save() ;
 
 			bool bAllClear=true ;
 			for(int i=0; i<9; i++)
 			{
-				if(g_SaveData->m_cExtraProgress[i]=='0')
+				if(g_SaveData->m_cExtraProgress[i]==0)
 				{
 					bAllClear = false ;
 					break ;

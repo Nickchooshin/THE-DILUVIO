@@ -12,15 +12,15 @@ private :
 
 	CSprite *m_pBackground ;
 	CSprite *m_pStageFrame, *m_pStageNameFrame ;
-	CSprite *m_pPlayer, *m_pCastle, *m_pTile ;
+	CSprite *m_pProgress[9], *m_pPlayer, *m_pCastle, *m_pTile ;
 	CSprite *m_pPrev, *m_pNext ;
 	CSprite *m_pStageNumber, *m_pStageName ;
 	CSprite **m_pStagePreview_List ;
 
 	bool m_bPressPrev, m_bPressNext ;
 
-	float m_fPlayerAnimationTime ;
-	int m_nPlayerFrame ;
+	float m_fFlagAnimationTime, m_fPlayerAnimationTime ;
+	int m_nFlagFrame, m_nPlayerFrame ;
 
 	FMOD::Sound *m_pBGM ;
 
@@ -38,5 +38,6 @@ public :
 private :
 	void StageSelect() ;
 
+	void FlagAnimation() ;
 	void PlayerAnimation() ;
 } ;

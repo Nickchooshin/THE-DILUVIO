@@ -7,7 +7,7 @@ SaveData::SaveData() : m_nChapterProgress(1), m_nStageProgress(1), m_nTutorialPr
 {
 	
 	for(int i=0; i<9; i++)
-		m_cExtraProgress[i] = '0' ;
+		m_cExtraProgress[i] = 0 ;
 }
 SaveData::~SaveData()
 {

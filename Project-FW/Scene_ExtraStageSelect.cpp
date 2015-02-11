@@ -25,10 +25,13 @@ SceneExtraStageSelect::SceneExtraStageSelect() : m_fWinWidth((float)g_D3dDevice-
 												 m_pStageNumber(NULL), m_pStageName(NULL),
 												 m_pStagePreview_List(NULL),
 												 m_bPressPrev(false), m_bPressNext(false),
-												 m_fPlayerAnimationTime(0.0f),
-												 m_nPlayerFrame(0),
+												 m_fFlagAnimationTime(0.0f), m_fPlayerAnimationTime(0.0f),
+												 m_nFlagFrame(0), m_nPlayerFrame(0),
 												 m_pBGM(NULL)
 {
+	for(int i=0; i<9; i++)
+		m_pProgress[i] = NULL ;
+
 	m_pStagePreview_List = new CSprite*[9] ;
 	for(int i=0; i<9; i++)
 		m_pStagePreview_List[i] = NULL ;
@@ -43,6 +46,11 @@ SceneExtraStageSelect::~SceneExtraStageSelect()
 	if(m_pStageNameFrame!=NULL)
 		delete m_pStageNameFrame ;
 
+	for(int i=0; i<9; i++)
+	{
+		if(m_pProgress[i]!=NULL)
+			delete m_pProgress[i] ;
+	}
 	if(m_pPlayer!=NULL)
 		delete m_pPlayer ;
 	if(m_pCastle!=NULL)
@@ -90,6 +98,17 @@ void SceneExtraStageSelect::Init()
 	m_pStageNameFrame = new CSprite ;
 	m_pStageNameFrame->Init("Resource/Image/StageSelect/StageNameFrame.png") ;
 	m_pStageNameFrame->SetPosition(425.0f, m_fWinHeight - 50.0f) ;
+
+	for(int i=0; i<9; i++)
+	{
+		m_pProgress[i] = new CSprite ;
+		m_pProgress[i]->Init(64.0f, 64.0f, "Resource/Image/StageSelect/Flag.png") ;
+		m_pProgress[i]->SetPosition(32.0f + (i * 120.0f), m_fWinHeight - 629.0f) ;
+		if(g_StageProgress->GetExtraStageProgress(i))
+			m_pProgress[i]->SetTextureUV(0.0f, 64.0f, 64.0f, 128.0f) ;
+		else
+			m_pProgress[i]->SetTextureUV(0.0f, 0.0f, 64.0f, 64.0f) ;
+	}
 
 	m_pPlayer = new CSprite ;
 	m_pPlayer->Init(64.0f, 64.0f, "Resource/Image/Char/Main_character.png") ;
@@ -157,6 +176,7 @@ void SceneExtraStageSelect::Update(float dt)
 
 	StageSelect() ;
 	
+	FlagAnimation() ;
 	PlayerAnimation() ;
 	m_pPlayer->SetPositionX(32.0f + ((g_StageProgress->GetSelectStage()-1) * 120.0f)) ;
 
@@ -188,6 +208,7 @@ void SceneExtraStageSelect::Render()
 	{
 		m_pCastle->SetPosition(32.0f + (i * 120.0f), m_fWinHeight - 672.0f) ;
 		m_pCastle->Render() ;
+		m_pProgress[i]->Render() ;
 	}
 	m_pPlayer->Render() ;
 
@@ -242,6 +263,27 @@ void SceneExtraStageSelect::StageSelect()
 		m_pStageNumber->SetTextureUV(0.0f, ((nowStage-1) * 40.0f), 225.0f, (nowStage * 40.0f)) ;
 		m_pStageName->SetTextureUV(0.0f, ((nowStage-1) * 30.0f), 256.0f, (nowStage * 30.0f)) ;
 	}
+}
+
+void SceneExtraStageSelect::FlagAnimation()
+{
+	if(m_fFlagAnimationTime>=0.2f)
+	{
+		int Frame = (int)(m_fFlagAnimationTime / 0.2f) ;
+		m_fFlagAnimationTime -= Frame * 0.2f ;
+		Frame %= 6 ;
+		m_nFlagFrame += Frame ;
+		m_nFlagFrame %= 6 ;
+		
+		float left, right ;
+		left = (float)(m_nFlagFrame * 64) ;
+		right = (float)((m_nFlagFrame+1) * 64) ;
+
+		for(int i=0; i<9; i++)
+			m_pProgress[i]->SetTextureU(left, right) ;
+	}
+	
+	m_fFlagAnimationTime += g_D3dDevice->GetTime() ;
 }
 
 void SceneExtraStageSelect::PlayerAnimation()
